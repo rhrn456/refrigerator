@@ -6,7 +6,7 @@
 	  <setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 <typeAliases>
-	<typeAlias type="com.multi.personalfridge.admin.AdminDTO" alias="Admin"/>
+	<typeAlias type="com.multi.personalfridge.dto.UserDTO" alias="User"/>
 </typeAliases>  
 
 

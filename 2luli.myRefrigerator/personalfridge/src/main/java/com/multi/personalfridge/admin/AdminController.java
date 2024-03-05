@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.multi.personalfridge.dto.UserDTO;
+
 @Controller
 public class AdminController {
 
@@ -15,7 +17,7 @@ public class AdminController {
 	
 		@GetMapping("/")
 		public String getAlluser(Model model) {
-			List<AdminDTO> users = service.getAlluser();
+			List<UserDTO> users = service.getAlluser();
 			System.out.println(users);
 			model.addAttribute("users",users);
 			return "main";
