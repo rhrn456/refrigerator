@@ -12,14 +12,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ProductDTO {
-	private int productid;
-	private String productname;
-	private String productcontent;
-	private String productquantity;
-	private int productprice;
-	private String productimg;
-	private String appenddate;
-	private String limitdate;
-	private String productcategory;
+
+	private int productId;
+	private String productName;
+	private String productContent;
+	private String productQuantity;
+	private int productPrice;
+	private String productImg;
+	private String appendDate;
+	private String limitDate;
+	private String productCategory;
 	
 }
