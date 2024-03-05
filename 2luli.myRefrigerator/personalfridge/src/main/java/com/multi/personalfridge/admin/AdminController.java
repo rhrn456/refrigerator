@@ -24,6 +24,7 @@ public class AdminController {
 			//테스트용 변경점
 			//테스트용 변경점 test2
 			//테스트용 변경점 test2
+			//테스트용 변경점 test2
 		}
 	
 }
