@@ -1,5 +1,17 @@
 package com.multi.personalfridge.dto;
 
-public class BoardCategoryDTO {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+public class BoardCategoryDTO {
+	private int b_category_no;
+	private String b_category_name;
 }
