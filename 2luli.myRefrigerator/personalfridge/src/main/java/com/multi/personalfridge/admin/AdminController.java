@@ -19,7 +19,7 @@ public class AdminController {
 			System.out.println(users);
 			model.addAttribute("users",users);
 			return "main";
-			
+			//테스트용 변경점
 		}
 	
 }
