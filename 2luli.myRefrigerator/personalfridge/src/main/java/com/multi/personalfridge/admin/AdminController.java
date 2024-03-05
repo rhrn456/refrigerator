@@ -20,6 +20,7 @@ public class AdminController {
 			model.addAttribute("users",users);
 			return "main";
 			//테스트용 변경점
+			//테스트용 변경점 test2
 		}
 	
 }
