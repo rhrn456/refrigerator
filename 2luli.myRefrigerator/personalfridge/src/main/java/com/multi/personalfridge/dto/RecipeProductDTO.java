@@ -1,5 +1,20 @@
 package com.multi.personalfridge.dto;
 
-public class RecipeProductDTO {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+public class RecipeProductDTO {
+	
+	private int recipeProductId;
+	private int recipeId; 
+	private int productId; 
+	private int recipeIngredieproductQuantity; 
 }
