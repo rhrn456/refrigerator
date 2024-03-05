@@ -13,9 +13,9 @@ import lombok.ToString;
 @ToString
 public class CommentDTO {
 	
-	private int comment_no;				
-	private int boardid;			
-	private String c_content;
-	private String regdate;
-	private String userid;
+	private int commentNo;				
+	private int boardId;			
+	private String cContent;
+	private String regDate;
+	private String userId;
 }
