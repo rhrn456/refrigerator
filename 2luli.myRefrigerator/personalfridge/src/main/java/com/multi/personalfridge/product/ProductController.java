@@ -15,11 +15,4 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-		@GetMapping("/")
-		public String getAlluser(Model model) {
-			List<ProductDTO> products = productService.getAllSepcialProduct();
-			System.out.println(products);
-			model.addAttribute("products",products);
-			return "index";
-		}
 }

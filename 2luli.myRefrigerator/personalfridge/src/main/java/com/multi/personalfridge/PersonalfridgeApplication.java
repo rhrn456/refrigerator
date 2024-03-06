@@ -5,10 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
+@MapperScan({"com.multi.personalfridge.admin", 
+			 "com.multi.personalfridge.product", 
+			 "com.multi.personalfridge.recipe"})
 @SpringBootApplication
-@MapperScan(basePackages= "com.multi.personalfridge.admin")
-@MapperScan(basePackages = "com.multi.personalfridge.product")
-@MapperScan(basePackages= "com.multi.personalfridge.common")
 public class PersonalfridgeApplication {
 
 	public static void main(String[] args) {
