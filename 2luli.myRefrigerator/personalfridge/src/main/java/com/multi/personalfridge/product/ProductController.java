@@ -17,7 +17,7 @@ public class ProductController {
 	
 		@GetMapping("/")
 		public String getAlluser(Model model) {
-			List<ProductDTO> products = productService.getAllProduct();
+			List<ProductDTO> products = productService.getAllSepcialProduct();
 			System.out.println(products);
 			model.addAttribute("products",products);
 			return "index";

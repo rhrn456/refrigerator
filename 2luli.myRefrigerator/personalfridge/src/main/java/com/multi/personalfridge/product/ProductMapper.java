@@ -9,6 +9,6 @@ import com.multi.personalfridge.dto.ProductDTO;
 @Mapper
 public interface ProductMapper {
 
-	List<ProductDTO> getAllProduct();
+	List<ProductDTO> getAllSepcialProduct();
 	
 }
