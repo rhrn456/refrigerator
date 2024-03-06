@@ -7,7 +7,7 @@
 	</settings>
 <typeAliases>
 	<typeAlias type="com.multi.personalfridge.dto.UserDTO" alias="User"/>
-</typeAliases>  
-
+	<typeAlias type="com.multi.personalfridge.dto.RecipeDTO" alias="Recipe"/>
+</typeAliases>
 
 </configuration>

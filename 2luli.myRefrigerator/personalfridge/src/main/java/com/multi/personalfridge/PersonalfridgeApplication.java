@@ -13,6 +13,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @SpringBootApplication
 @MapperScan(basePackages= "com.multi.personalfridge.admin")
+@MapperScan(basePackages= "com.multi.personalfridge.common")
 public class PersonalfridgeApplication {
 
 	public static void main(String[] args) {
