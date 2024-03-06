@@ -22,5 +22,6 @@ public class ProductDTO {
 	private String appendDate;
 	private String limitDate;
 	private String productCategory;
+    private boolean specialProduct;
 	
 }
