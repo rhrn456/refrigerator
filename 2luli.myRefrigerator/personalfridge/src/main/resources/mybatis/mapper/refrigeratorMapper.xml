@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.multi.personalfridge.refrigerator.RefrigeratorMapper">
+	<select id="getRefrigeratorId" parameterType="String" resultType="_int">
+		select refrigerator_id
+		from refrigerator
+		where user_id = #{userId}
+	</select>
+	
+	<select id="getRefrigeratorProduct" parameterType="_int" resultType="RefrigeratorProdcut">
+		select *
+		from refrigerator_product
+		where refrigerator_id = #{refrigeratorId}
+	</select>
+	
+	<insert id="insertRefrigeratorProdcut" parameterType="RefrigeratorProdcut">
+		insert into refrigerator_product(product_name, product_quantity, refrigerator_id, append_date, limit_date)
+		values (#{productName}, #{productQuantity}, #{refrigeratorId}, now(), #{limitDate})
+	</insert>
+</mapper>

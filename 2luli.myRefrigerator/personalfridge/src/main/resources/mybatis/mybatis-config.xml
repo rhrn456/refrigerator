@@ -9,6 +9,7 @@
 	<typeAlias type="com.multi.personalfridge.dto.UserDTO" alias="User"/>
 	<typeAlias type="com.multi.personalfridge.dto.ProductDTO" alias="Product"/>
 	<typeAlias type="com.multi.personalfridge.dto.RecipeDTO" alias="Recipe"/>
+	<typeAlias type="com.multi.personalfridge.dto.RefrigeratorProdcutDTO" alias="RefrigeratorProdcut"/>
 </typeAliases>
 
 
