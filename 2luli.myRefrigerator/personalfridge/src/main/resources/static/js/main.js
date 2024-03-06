@@ -11,7 +11,6 @@
     };
     spinner(0);
 
-
     // Fixed Navbar
     $(window).scroll(function () {
         if ($(window).width() < 992) {
@@ -29,7 +28,7 @@
         } 
     });
     
-    
+
    // Back to top button
    $(window).scroll(function () {
     if ($(this).scrollTop() > 300) {
@@ -42,7 +41,6 @@
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
     });
-
 
     // Testimonial carousel
     $(".testimonial-carousel").owlCarousel({
@@ -77,7 +75,6 @@
         }
     });
 
-
     // vegetable carousel
     $(".vegetable-carousel").owlCarousel({
         autoplay: true,
@@ -111,7 +108,6 @@
         }
     });
 
-
     // Modal Video
     $(document).ready(function () {
         var $videoSrc;
@@ -128,8 +124,6 @@
             $("#video").attr('src', $videoSrc);
         })
     });
-
-
 
     // Product Quantity
     $('.quantity button').on('click', function () {
