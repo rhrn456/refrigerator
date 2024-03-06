@@ -17,9 +17,9 @@ public class ProductService {
         this.productMapper = productMapper;
     }
 	
-	public List<ProductDTO> getAllProduct() {
+	public List<ProductDTO> getAllSepcialProduct() {
 		
-		return productMapper.getAllProduct();
+		return productMapper.getAllSepcialProduct();
 	}
 
 }

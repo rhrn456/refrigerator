@@ -25,9 +25,9 @@
                              <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">쇼핑</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="/shop" class="dropdown-item">(음식)레시피</a>
-                                    <a href="/shop" class="dropdown-item">식재료</a>
-                                    <a href="/shop" class="dropdown-item">특가 상품</a>
+                                    <a href="/recipeshop" class="dropdown-item">(음식)레시피</a>
+                                    <a href="/productshop" class="dropdown-item">식재료</a>
+                                    <a href="/specialproductshop" class="dropdown-item">특가 상품</a>
                                 </div>
                                 </div>
                             <div class="nav-item dropdown">

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.product.ProductMapper">
 
-	<select id ="getAllProduct" resultType="Product">
+	<select id ="getAllSepcialProduct" resultType="Product">
 	select *
 	from product
 	where special_product = 1
