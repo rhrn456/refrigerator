@@ -16,7 +16,7 @@ import lombok.ToString;
 public class MileageDTO {
 
 	private String userId;
-	private int mileage;
+	private Integer mileage;
 	private Date mileageEarnedDate;
 	private Date mileageExpirationDate;
 }

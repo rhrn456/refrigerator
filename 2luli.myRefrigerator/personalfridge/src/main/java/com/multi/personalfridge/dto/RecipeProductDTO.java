@@ -16,5 +16,5 @@ public class RecipeProductDTO {
 	private int recipeProductId;
 	private int recipeId; 
 	private int productId; 
-	private int recipeIngredieproductQuantity; 
+	private Integer recipeIngredieproductQuantity; 
 }

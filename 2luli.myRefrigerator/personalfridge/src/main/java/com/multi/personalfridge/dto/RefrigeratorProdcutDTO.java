@@ -17,10 +17,9 @@ public class RefrigeratorProdcutDTO {
 
 	
 	private int refrigeratorProduct_id; 
-	private  String productName; 
-	private  int productQuantity;
-	private  int refrigeratorId; 
-	private  Date appendDate; 
-	private  Date limitDate; 
-	private  String refrigeratorProductcol;
+	private String productName; 
+	private Integer productQuantity;
+	private int refrigeratorId; 
+	private Date appendDate; 
+	private Date limitDate; 
 }
