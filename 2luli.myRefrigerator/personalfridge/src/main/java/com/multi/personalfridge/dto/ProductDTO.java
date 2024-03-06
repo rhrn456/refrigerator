@@ -17,10 +17,11 @@ public class ProductDTO {
 	private String productName;
 	private String productContent;
 	private String productQuantity;
-	private int productPrice;
+	private Integer productPrice;
 	private String productImg;
 	private String appendDate;
 	private String limitDate;
 	private String productCategory;
+    private boolean specialProduct;
 	
 }

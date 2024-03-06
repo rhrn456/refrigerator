@@ -15,12 +15,34 @@ public class AdminController {
 	@Autowired
 	AdminService service;
 	
-		@GetMapping("/")
-		public String getAlluser(Model model) {
-			List<UserDTO> users = service.getAlluser();
-			System.out.println(users);
-			model.addAttribute("users",users);
-			return "main";
+//		@GetMapping("/")
+//		public String getAlluser(Model model) {
+//			List<UserDTO> users = service.getAlluser();
+//			System.out.println(users);
+//			model.addAttribute("users",users);
+//			return "index";
+//		}
+		
+		@GetMapping("/shop")
+		public String shop() {
+
+			return "shop";
 		}
-	
+		
+		@GetMapping("/shop-detail")
+		public String shopdetail() {
+
+			return "shop-detail";
+		}
+		
+		@GetMapping("/contact")
+		public String contact() {
+
+			return "contact";
+		}
+		@GetMapping("/cart")
+		public String cart() {
+
+			return "cart";
+		}
 }
