@@ -14,12 +14,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardDTO {
-	private int boardNo;
+	private int board_no;
 	private String title;
 	private String content;
-	private String userId;
-	private int bCategoryNo;
-	private int productId;
-	private Date boardCreatDate;
+	private String user_id;
+	private int b_category_no;
+	private int product_id;
+	private Date board_create_date;
 	private int hit;
 }

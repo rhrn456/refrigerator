@@ -14,9 +14,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReviewDTO {
-	private int reviewId;
-	private String reviewContent;
-	private String userId;
-	private int recipeId;
-	private Timestamp createReviewDate;
+	private int review_id;
+	private String review_content;
+	private String user_id;
+	private int recipe_id;
+	private Timestamp create_review_date;
 }

@@ -16,10 +16,10 @@ import lombok.ToString;
 public class RefrigeratorProdcutDTO {
 
 	
-	private int refrigeratorProduct_id; 
-	private String productName; 
-	private Integer productQuantity;
-	private int refrigeratorId; 
-	private Date appendDate; 
-	private Date limitDate; 
+	private int refrigerator_product_id; 
+	private String product_name; 
+	private Integer product_quantity;
+	private int refrigerator_id; 
+	private Date append_date; 
+	private Date limit_date; 
 }

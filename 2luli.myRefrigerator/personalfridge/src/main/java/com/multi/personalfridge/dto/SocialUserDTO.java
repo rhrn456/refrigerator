@@ -13,9 +13,9 @@ import lombok.ToString;
 @ToString
 public class SocialUserDTO {
 
-	private String accessToken;
-	private String snsType;
-	private String userId;
+	private String access_token;
+	private String sns_type;
+	private String user_id;
 	
 	
 	

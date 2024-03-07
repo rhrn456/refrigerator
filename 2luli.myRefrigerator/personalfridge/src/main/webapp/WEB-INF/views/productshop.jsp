@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
  <head>
@@ -28,6 +30,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        
     </head>
 
     <body>
@@ -66,11 +69,11 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Product Shop</h1>
+            <h1 class="text-center text-white display-6">Special Product Shop</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="/recipeshop">Recipe Shop</a></li>
-                <li class="breadcrumb-item active text-white">Product Shop</li>
-                <li class="breadcrumb-item"><a href="/specialproductshhop">Special Product Shop</a></li>
+                <li class="breadcrumb-item"><a href="/productshop">Product</a></li>
+                <li class="breadcrumb-item active text-white">Special Product Shop</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -79,334 +82,116 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Fresh fruits shop</h1>
+                <h1 class="mb-4">Special Product Shop</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
-                            <div class="col-xl-3">
-                                <div class="input-group w-100 mx-auto d-flex">
-                                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                                </div>
-                            </div>
+								<div class="col-xl-3">
+								    <div class="input-group w-100 mx-auto d-flex">
+								    	<!-- <input id="searchInput1" type="text"> -->
+								       <input id=searchInput1 type="text" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" style="margin-bottom: 20px;"> 
+								        <button id="searchButton" class="btn btn-primary p-3" style="margin-bottom: 20px;"><i class="fa fa-search"></i></button>
+								    </div>
+								</div>
                             <div class="col-6"></div>
-                            <div class="col-xl-3">
-                                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                                    <label for="fruits">Default Sorting:</label>
-                                    <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                        <option value="volvo">Nothing</option>
-                                        <option value="saab">Popularity</option>
-                                        <option value="opel">Organic</option>
-                                        <option value="audi">Fantastic</option>
-                                    </select>
-                                </div>
-                            </div>
+       
                         </div>
                         <div class="row g-4">
                             <div class="col-lg-3">
                                 <div class="row g-4">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <h4>Categories</h4>
+                                            <h4>카테고리</h4>
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
-                                                        <span>(3)</span>
+									                <div class="d-flex justify-content-between allproduct">
+									                    <a href="/productshop"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
+									                </div>
+									            </li>
+                                                <li>
+                                                    <div class="d-flex justify-content-between product-category">
+                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>가공 식품</a>
+                                                        
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
-                                                        <span>(5)</span>
+                                                    <div class="d-flex justify-content-between product-category">
+                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>야채</a>
+                                                     
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
-                                                        <span>(2)</span>
+                                                    <div class="d-flex justify-content-between product-category">
+                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>과일</a>
+                                                      
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
-                                                        <span>(8)</span>
+                                                    <div class="d-flex justify-content-between product-category">
+                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>육류/생선</a>
+                                                       
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>Pumpkin</a>
-                                                        <span>(5)</span>
+                                                    <div class="d-flex justify-content-between product-category">
+                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>향신료</a>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4 class="mb-2">Price</h4>
-                                            <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                            <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>Additional</h4>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                                <label for="Categories-1"> Organic</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                                <label for="Categories-2"> Fresh</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                                <label for="Categories-3"> Sales</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                                <label for="Categories-4"> Discount</label>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                                <label for="Categories-5"> Expired</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-3">Featured products</h4>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
-                                        </div>
-                                    </div>
+
                                     <div class="col-lg-12">
                                         <div class="position-relative">
                                             <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
                                             <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                                <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
+                                                <h3 class="text-secondary fw-bold">Special <br> Products <br> Banner</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9">
-                                <div class="row g-4 justify-content-center">
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Grapes</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Grapes</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Raspberries</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Apricots</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-3.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Banana</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Oranges</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-2.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Raspberries</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Grapes</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="img/fruite-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>Oranges</h4>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="#" class="rounded">&laquo;</a>
-                                            <a href="#" class="active rounded">1</a>
-                                            <a href="#" class="rounded">2</a>
-                                            <a href="#" class="rounded">3</a>
-                                            <a href="#" class="rounded">4</a>
-                                            <a href="#" class="rounded">5</a>
-                                            <a href="#" class="rounded">6</a>
-                                            <a href="#" class="rounded">&raquo;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+														<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
+							<c:set var="pageSize" value="9" />
+							<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
+							
+							<div class="col-lg-9">
+							    <div class="row g-4 justify-content-center">
+							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
+							        <c:forEach var="product" items="${products}" begin="${(currentPage - 1) * pageSize}" varStatus="loop">
+							            <c:if test="${loop.index < currentPage * pageSize && loop.index >= (currentPage - 1) * pageSize}">
+							                <div class="col-md-6 col-lg-6 col-xl-4">
+							                    <div class="rounded position-relative fruite-item">
+							                        <div class="fruite-img">
+							                            <img src="${product.product_img}" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">
+							                        </div>
+							                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${product.product_category}</div>
+							                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+							                            <h4>${product.product_name}</h4>
+							                            <p>${product.product_content}</p>
+							                            <p>유통기한 : ${product.limit_date}</p>
+							                            <div class="d-flex justify-content-between flex-lg-wrap">
+							                                <p class="text-dark fs-5 fw-bold mb-0">${product.product_price}</p>
+							                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+							                            </div>
+							                        </div>
+							                    </div>
+							                </div>
+							            </c:if>
+							        </c:forEach>
+							    </div>
+								<div class="col-12">
+								     <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer">
+    									  <!-- 총 페이지 수 계산 -->
+								        <c:set var="totalPages" value="${pageRequestDTO.totalPages}" />
+								        <!-- 페이지 링크 생성 -->
+										<c:forEach var="pageNumber" begin="1" end="${totalPages}">
+										    <a href="#"  class="rounded ${pageNumber == currentPage ? 'active' : ''}">${pageNumber}</a>
+										</c:forEach>
+								    </div>
+								</div>
+							</div>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -522,5 +307,235 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+		<script>
+		$(document).ready(function() {
+		    var selectedCategory = "";
+		    var totalPage = ${pageRequestDTO.totalPages};
+		    console.log(totalPage);
+		    // 카테고리 링크 클릭 시
+		    $('.product-category a').click(function(e) {
+		        e.preventDefault(); // 기본 동작 방지
+		
+		        var category = $(this).text().trim(); // 선택된 카테고리 텍스트 가져오기
+		        console.log(category);
+		        selectedCategory = category;
+		        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
+		
+		        // AJAX 요청 보내기
+		        getProductsByCategory(category, 1); // 페이지 번호 1로 초기화
+		        
+		    });
+		
+		 // 페이지 버튼 클릭 이벤트 핸들러 등록
+		    $('#paginationContainer').on('click', 'a', function(e) {
+		        e.preventDefault();
+		        var keyword = $('.form-control').val();
+		        var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
+		        var totalPage = ${pageRequestDTO.totalPages}; // totalPage 변수 정의 및 초기화
+		        console.log(keyword);
+		        if(selectedCategory == ""){
+		            getProductsBy(page);
+		        } else if(keyword !== ""){
+		        	getProductsByKeyword(keyword, page);
+		        } else {
+		            getProductsByCategory(selectedCategory, page);
+		        }
+		    });
+		});
+		
+		
+		//모든 재료 페이지 번호를 받아 상품 목록을 가져오는 함수
+		function getProducts(page) {
+		    var pageSize = 9; // 페이지당 아이템 수
+		    console.log("성공");
+		    $.ajax({
+		        type: "GET",
+		        url: "/getAllProduct",
+		        data: {
+		            category: '',
+		            page: page,
+		            pageSize: pageSize 
+		        },
+		        success: function(response) {
+		            // 성공적으로 데이터를 받았을 때 처리하는 로직
+		            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
+		            productsContainer.empty(); // 기존 상품 목록 비우기
+		            console.log(response);
+		            // 받아온 데이터를 페이지에 맞게 출력
+		            $.each(response.products, function(index, product) {
+		                // 상품 정보를 HTML로 생성하는 코드
+		                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
+		                    '<div class="rounded position-relative fruite-item">' +
+		                    '<div class="fruite-img">' +
+		                    '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
+		                    '</div>' +
+		                    '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
+		                    '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
+		                    '<h4>' + product.product_name + '</h4>' +
+		                    '<p>' + product.product_content + '</p>' +
+		                    '<p>' + "유통기한 :" + product.limit_date + '</p>' +
+		                    '<div class="d-flex justify-content-between flex-lg-wrap">' +
+		                    '<p class="text-dark fs-5 fw-bold mb-0">' + product.product_price + '</p>' +
+		                    '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>' +
+		                    '</div>' +
+		                    '</div>' +
+		                    '</div>' +
+		                    '</div>';
+		                productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+		            });
+
+		        },
+		        error: function(xhr, status, error) {
+		            // 에러 처리 로직
+		            console.error(error);
+		        }
+		    });
+		}
+				
+		
+		// 카테고리와 페이지 번호를 받아 상품 목록을 가져오는 함수
+		function getProductsByCategory(category, page) {
+		    var pageSize = 9; // 페이지당 아이템 수
+		 	console.log(category);
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/getProductsByCategory",
+		        data: {
+		            category: category,
+		            page: page,
+		            pageSize: pageSize // 페이지 크기도 함께 전송
+		        },
+		        success: function(response) {
+		            // 성공적으로 데이터를 받았을 때 처리하는 로직
+		            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
+		            productsContainer.empty(); // 기존 상품 목록 비우기
+		            console.log(response);
+		            // 받아온 데이터를 페이지에 맞게 출력
+		            $.each(response.products, function(index, product) {
+		                // 상품 정보를 HTML로 생성하는 코드
+		                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
+	                    '<div class="rounded position-relative fruite-item">' +
+	                    '<div class="fruite-img">' +
+	                    '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
+	                    '</div>' +
+	                    '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
+	                    '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
+	                    '<h4>' + product.product_name + '</h4>' +
+	                    '<p>' + product.product_content + '</p>' +
+	                    '<p>' + "유통기한 :" + product.limit_date + '</p>' +
+	                    '<div class="d-flex justify-content-between flex-lg-wrap">' +
+	                    '<p class="text-dark fs-5 fw-bold mb-0">' + product.product_price + '</p>' +
+	                    '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>' +
+	                    '</div>' +
+	                    '</div>' +
+	                    '</div>' +
+	                    '</div>';
+		                productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+		            });
+		            // 페이지 버튼 생성
+     
+		            createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
+		        },
+		        error: function(xhr, status, error) {
+		            // 에러 처리 로직
+		            console.error(error);
+		        }
+		    });
+		}
+		
+		
+		//검색 페이지 
+		// 검색 버튼 클릭 시 검색 실행
+			$('#searchButton').on('click', function() {
+				console.log("실행");
+			    executeSearch();
+			});
+			
+			// Enter 키를 누를 때 검색 실행
+			$('#searchInput1').on('keypress', function(e) {
+			    if (e.which === 13) { // Enter 키를 누르면
+			        executeSearch();
+			    }
+			});
+			
+			// 검색 실행 함수
+			function executeSearch() {
+			    var keyword = $('#searchInput1').val().trim();
+			    	//document.getElementById("searchInput1").value;
+			    //$('#searchInput').val().trim();
+				console.log("실행");
+				console.log("키워드" + keyword);
+			  
+			        getProductsByKeyword(keyword, 1);
+			  
+			}
+			
+			//검색한 단어로 상품 불러오기
+			function getProductsByKeyword(keyword, page) {
+				console.log("실행");
+				console.log(keyword);
+			    var pageSize = 9;
+			    // AJAX 요청 보내기
+			    $.ajax({
+			        type: "GET",
+			        url: "/searchProduct",
+			        data: {
+			            keyword: keyword,
+			            page: page,
+			            pageSize: pageSize
+			        },
+			        success: function(response) {
+			            // 성공적으로 데이터를 받았을 때 처리하는 로직
+			            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
+			            productsContainer.empty(); // 기존 상품 목록 비우기
+			            
+			            console.log(response); // 받아온 데이터 확인용
+			            
+			            // 받아온 데이터를 페이지에 맞게 출력
+			            $.each(response.products, function(index, product) {
+			                // 상품 정보를 HTML로 생성하는 코드
+			                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
+		                    '<div class="rounded position-relative fruite-item">' +
+		                    '<div class="fruite-img">' +
+		                    '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
+		                    '</div>' +
+		                    '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
+		                    '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
+		                    '<h4>' + product.product_name + '</h4>' +
+		                    '<p>' + product.product_content + '</p>' +
+		                    '<p>' + "유통기한 :" + product.limit_date + '</p>' +
+		                    '<div class="d-flex justify-content-between flex-lg-wrap">' +
+		                    '<p class="text-dark fs-5 fw-bold mb-0">' + product.product_price + '</p>' +
+		                    '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>' +
+		                    '</div>' +
+		                    '</div>' +
+		                    '</div>' +
+		                    '</div>';
+			                productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+			            });
+
+			            createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
+			        },
+			        error: function(xhr, status, error) {
+			            // 에러 처리 로직
+			            console.error(error);
+			        }
+			    });
+			}
+		
+		//페이지 버튼 생성 함수
+		function createPaginationButtons(totalPages, currentPage) {
+		    var paginationContainer = $('#paginationContainer');
+		    console.log("페이지 요기");
+		    paginationContainer.empty(); // 기존 페이지 버튼 제거
+		    // 페이지 수만큼 버튼 생성
+		    for (var i = 1; i <= totalPages; i++) {
+		        var button = $('<a href="#" class="rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
+		        paginationContainer.append(button);
+		    }
+		
+		}
+		</script>
     </body>
 </html>

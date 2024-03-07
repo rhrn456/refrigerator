@@ -12,6 +12,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RefrigeratorDTO {
-	private int refrigeratorId;
-	private String userId;
+	private int refrigerator_id;
+	private String user_id;
 }

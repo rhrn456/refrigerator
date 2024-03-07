@@ -13,16 +13,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserDTO {
-	private String userId;
+	private String user_id;
 	private String password;
-	private String userName;
+	private String user_name;
 	private String mail;
 	private String adress;
 	private Integer phone;
-	private Boolean adminNum;
-	private Boolean managerNum;
-	private Timestamp createUserDate;
-	private Timestamp deleteUserDate;
-	private Boolean deletePlug;
-	private String deleteContent;
+	private Boolean admin_num;
+	private Boolean manager_num;
+	private Timestamp create_user_date;
+	private Timestamp delete_user_date;
+	private Boolean delete_plug;
+	private String delete_content;
 }

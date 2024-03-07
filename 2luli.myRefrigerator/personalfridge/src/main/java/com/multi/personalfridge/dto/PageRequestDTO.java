@@ -1,5 +1,8 @@
 package com.multi.personalfridge.dto;
 
+
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +14,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RecipeProductDTO {
-	
-	private int recipe_product_id;
-	private int recipe_id; 
-	private int product_id; 
-	private Integer product_quantity; 
+public class PageRequestDTO {
+    private int totalPages;
+    private int currentPage;
+
+ 
 }
