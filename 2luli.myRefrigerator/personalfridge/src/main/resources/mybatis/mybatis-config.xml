@@ -2,14 +2,12 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<settings>
-	  <setting name="mapUnderscoreToCamelCase" value="true"/>
-	</settings>
 <typeAliases>
 	<typeAlias type="com.multi.personalfridge.dto.UserDTO" alias="User"/>
 	<typeAlias type="com.multi.personalfridge.dto.ProductDTO" alias="Product"/>
 	<typeAlias type="com.multi.personalfridge.dto.RecipeDTO" alias="Recipe"/>
+	<typeAlias type="com.multi.personalfridge.dto.BoardDTO" alias="Board"/>
+	<typeAlias type="com.multi.personalfridge.dto.BoardCategoryDTO" alias="Category"/>
 </typeAliases>
-
 
 </configuration>

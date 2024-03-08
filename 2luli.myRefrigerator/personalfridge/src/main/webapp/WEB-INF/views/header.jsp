@@ -9,7 +9,6 @@
                     <div class="top-link pe-2">
                         <a href="#" class="text-white"><small class="text-white mx-2">
                         소가구를 위한 1~2인분 음식 과 레시피를 제공하고 기호에 맞춰 음식을 알려주는 AI 추천 음식 서비스 재료를 원터치로 구매하고 나의 냉장고에서 재료 관리까지.</small></a>
-
                     </div>
                 </div>
             </div>
@@ -33,13 +32,12 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">게시판</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">공지 게시판</a>
-                                    <a href="chackout.html" class="dropdown-item">공유 게시판</a>
-                                    <a href="testimonial.html" class="dropdown-item">나만의 레시피 게시판</a>
+                                    <a href="/board" class="dropdown-item">공지 게시판</a>
+                                    <a href="/board" class="dropdown-item">공유 게시판</a>
+                                    <a href="/board" class="dropdown-item">나만의 레시피 게시판</a>
                                 </div>
                             </div>
                             <a href="/contact" class="nav-item nav-link">고객센터</a>
-							
                         </div>
                        <div class="d-flex m-3 me-0">
 						    <form id="searchForm" action="yourMappingUrl" method="get" class="d-flex align-items-center me-4">

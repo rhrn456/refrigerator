@@ -24,8 +24,6 @@ public class CommonController {
 	    this.recipeService = recipeService;
 	}
 	
-	
-	
 	@GetMapping("/")
 	public String getMainRecipe(Model model) {
 		List<RecipeDTO> recipe = recipeService.getAllrecipe();
@@ -40,16 +38,19 @@ public class CommonController {
 
 		return "contact";
 	}
+	
 	@GetMapping("/cart")
 	public String cart() {
 
-		return "shop-detail";
+		return "cart";
 	}
+	
 	@GetMapping("/recipeshop")
 	public String recipeshop() {
 		
 		return "recipeshop";
 	}
+	
 	@GetMapping("/productshop")
 	public String productshop() {
 		
@@ -61,5 +62,10 @@ public class CommonController {
 		List<ProductDTO> products = productService.getAllSepcialProduct();
 		model.addAttribute("products",products);
 		return "specialproductshop";
+	}
+	
+	@GetMapping("/board")
+	public String board() {
+		return "board/board";
 	}
 }

@@ -13,10 +13,10 @@ import lombok.ToString;
 @ToString
 public class RecipeDTO {
 	private int recipeId;
-	private String recipeName;
-	private String recipeContent;
+	private String recipe_name;
+	private String recipe_content;
 	private String ingredient;
-	private String recipeCategory;
-	private String recipeImg;
-	private String nutritionFacts;
+	private String recipe_category;
+	private String recipe_img;
+	private String nutrition_facts;
 }
