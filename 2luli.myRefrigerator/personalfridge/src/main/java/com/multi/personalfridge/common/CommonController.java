@@ -43,7 +43,7 @@ public class CommonController {
 	@GetMapping("/cart")
 	public String cart() {
 
-		return "shop-detail";
+		return "cart";
 	}
 	@GetMapping("/recipeshop")
 	public String recipeshop() {
