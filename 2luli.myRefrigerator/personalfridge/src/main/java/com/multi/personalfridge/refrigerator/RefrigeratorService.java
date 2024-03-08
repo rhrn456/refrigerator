@@ -25,6 +25,16 @@ public class RefrigeratorService {
 		int result = refrigeratorMapper.insertRefrigeratorProdcut(refrigeratorProdcut);
 		return result == 0 ? false : true;
 	}
+
+	public boolean deleteRefrigeratorProduct(int refrigeratorProductId) {
+		int result = refrigeratorMapper.deleteRefrigeratorProduct(refrigeratorProductId);
+		return result == 0 ? false : true;
+	}
+
+	public boolean updateRefrigeratorProduct(RefrigeratorProdcutDTO refrigeratorProdcut) {
+		int result = refrigeratorMapper.updateRefrigeratorProduct(refrigeratorProdcut);
+		return result == 0 ? false : true;
+	}
 	
 	
 }

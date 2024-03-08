@@ -15,4 +15,8 @@ public interface RefrigeratorMapper {
 
 	int insertRefrigeratorProdcut(RefrigeratorProdcutDTO refrigeratorProdcut);
 
+	int deleteRefrigeratorProduct(int refrigeratorProductId);
+
+	int updateRefrigeratorProduct(RefrigeratorProdcutDTO refrigeratorProdcut);
+
 }

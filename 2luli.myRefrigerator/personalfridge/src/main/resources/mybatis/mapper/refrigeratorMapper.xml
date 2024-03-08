@@ -4,17 +4,29 @@
 	<select id="getRefrigeratorId" parameterType="String" resultType="_int">
 		select refrigerator_id
 		from refrigerator
-		where user_id = #{userId}
+		where user_id = #{user_id}
 	</select>
 	
 	<select id="getRefrigeratorProduct" parameterType="_int" resultType="RefrigeratorProdcut">
 		select *
 		from refrigerator_product
-		where refrigerator_id = #{refrigeratorId}
+		where refrigerator_id = #{refrigerator_id}
+		order by limit_date		
 	</select>
 	
 	<insert id="insertRefrigeratorProdcut" parameterType="RefrigeratorProdcut">
 		insert into refrigerator_product(product_name, product_quantity, refrigerator_id, append_date, limit_date)
-		values (#{productName}, #{productQuantity}, #{refrigeratorId}, now(), #{limitDate})
+		values (#{product_name}, #{product_quantity}, #{refrigerator_id}, now(), #{limit_date})
 	</insert>
+	
+	<delete id="deleteRefrigeratorProduct" parameterType="_int">
+		delete from refrigerator_product
+		where refrigerator_product_id = #{refrigerator_product_id}
+	</delete>
+	
+	<update id="updateRefrigeratorProduct" parameterType="RefrigeratorProdcut">
+		update refrigerator_product
+		set product_name = #{product_name}, product_quantity = #{product_quantity}, append_date = now(), limit_date = #{limit_date}
+		where refrigerator_product_id = #{refrigerator_product_id}
+	</update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.multi.personalfridge.refrigerator;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 
@@ -45,21 +49,29 @@ public class RefrigeratorController {
 		return mv;
 	}
 	
-	//비동기로 처리 할 예정
+	//비동기로 재료을 추가
 	@PostMapping("/insertRefrigeratorProduct")
 	public ResponseEntity<String> postMethodName(@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut) {
-		refrigeratorProdcut.setRefrigeratorId(1);
 		System.out.println(refrigeratorProdcut);
 		boolean result = refrigeratorService.insertRefrigeratorProdcut(refrigeratorProdcut);
 		return ResponseEntity.ok("재료가 냉장고에 성공적으로 추가되었습니다.");
 	}
 	
+	//비동기로 재료를 제거
 	@PostMapping("/deleteRefrigeratorProduct")
-	public ResponseEntity<String> deleteRefrigeratorProduct(@RequestBody Integer refrigeratorProdcutId) {
-		System.out.println(refrigeratorProdcutId);
+	public ResponseEntity<String> deleteRefrigeratorProduct(@RequestParam("refrigeratorProductId") int refrigeratorProductId) {
+		boolean result = refrigeratorService.deleteRefrigeratorProduct(refrigeratorProductId);
 
 	    return ResponseEntity.ok("제품이 성공적으로 삭제되었습니다.");
 	}
 	
+	//재료 수정
+	@PutMapping("/updateRefrigeratorProduct")
+	public void updateRefrigeratorProduct(/*@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut*/) {
+		RefrigeratorProdcutDTO refrigeratorProdcut = new RefrigeratorProdcutDTO();
+		
+		boolean result = refrigeratorService.updateRefrigeratorProduct(refrigeratorProdcut);
+		
+	}
 	
 }

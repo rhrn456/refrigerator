@@ -51,10 +51,10 @@ $(document).ready(function(){
         var refrigeratorId = $("#refrigeratorId").val();
         
         var data = {
-            productName: productName,
-            productQuantity: productQuantity,
-            limitDate: limitDate,
-            refrigeratorId: refrigeratorId
+            product_name: productName,
+            product_quantity: productQuantity,
+            limit_date: limitDate,
+            refrigerator_id: refrigeratorId
         };
         
         $.ajax({
@@ -73,16 +73,55 @@ $(document).ready(function(){
     });
 });
 
+function showEditForm(refrigeratorProductId, productName, productQuantity, limitDate) {
+    $("#editProductName").val(productName);
+    $("#editProductQuantity").val(productQuantity);
+    $("#editLimitDate").val(limitDate);
+    $("#editProductId").val(refrigeratorProductId);
+    
+    $("#editForm").show();
+}
+
+$("#editForm").submit(function(e) {
+    e.preventDefault();
+    
+    var productName = $("#editProductName").val();
+    var productQuantity = $("#editProductQuantity").val();
+    var limitDate = $("#editLimitDate").val();
+    var refrigeratorProductId = $("#editProductId").val();
+    
+    var data = {
+        productName: productName,
+        productQuantity: productQuantity,
+        limitDate: limitDate,
+        refrigeratorProductId: refrigeratorProductId
+    };
+    
+    $.ajax({
+        type: "PUT",
+        contentType: "application/json",
+        url: "/updateRefrigeratorProduct",
+        data: JSON.stringify(data),
+        success: function(response){
+            alert(response);
+            window.location.href = window.location.href; // 새로고침
+        },
+        error: function(xhr, status, error){
+            console.error(xhr.responseText);
+        }
+    });
+});
+
 function deleteProduct(refrigeratorProductId) {
-    if (confirm("이 제품을 삭제하시겠습니까?")) {
+    if (confirm("이 재료를 삭제하시겠습니까?")) {
         $.ajax({
             type: "POST",
-            contentType: "application/json",
             url: "/deleteRefrigeratorProduct",
+            contentType: "application/x-www-form-urlencoded",
             data: { refrigeratorProductId: refrigeratorProductId },
             success: function(response){
                 alert(response);
-                window.location.href = window.location.href;
+                window.location.href = window.location.href; // 새로고침
             },
             error: function(xhr, status, error){
                 console.error(xhr.responseText);
@@ -90,6 +129,7 @@ function deleteProduct(refrigeratorProductId) {
         });
     }
 }
+
 </script>
 </head>
 <body>
@@ -105,17 +145,20 @@ function deleteProduct(refrigeratorProductId) {
     </tr>
     <c:forEach var="product" items="${refrigeratorProductList}">
       <tr>
-        <td>${product.productName}</td>
-        <td>${product.productQuantity}</td>
-        <td>${product.appendDate}</td>
-        <td>${product.limitDate}</td>
-        <td><button type="button" onclick="deleteProduct(${product.refrigeratorProductId})">삭제</button></td>
+        <td>${product.product_name}</td>
+        <td>${product.product_quantity}</td>
+        <td>${product.append_date}</td>
+        <td>${product.limit_date}</td>
+        <td>
+        	<button type="button" onclick="showEditForm(${product.refrigerator_product_id}, '${product.product_name}', ${product.product_quantity}, '${product.limit_date}')">수정</button>
+        	<button type="button" onclick="deleteProduct(${product.refrigerator_product_id})">삭제</button>
+        </td>
       </tr>
     </c:forEach>
   </table>
   
   <form id="productForm">
-  	<input type="hidden" id="refrigeratorId" name="refrigeratorId" value="${product.refrigeratorId}">
+  	<input type="hidden" id="refrigeratorId" name="refrigeratorId" value="${refrigeratorProductList.get(0).refrigerator_id}">
   
     <label for="productName">이름:</label>
     <input type="text" id="productName" name="productName"><br><br>
