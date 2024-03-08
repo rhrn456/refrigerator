@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.user.UserMapper">
+	<!-- 회원가입  -->
+	<insert id="insertUser" parameterType="User">
+        INSERT INTO user (user_id, password, user_name, mail, adress, phone, admin_num, manager_num, create_user_date)
+        VALUES (#{user_id}, #{password}, #{user_name}, #{mail}, #{adress}, #{phone}, false, false, now())
+    </insert>
+	
+	<!-- 로그인  -->
+	<select id="login" 
+			parameterType="string" 
+			resultMap="User">
+        SELECT * FROM user
+        WHERE user_id = #{user_id} AND password = #{password}
+    </select>
+    
+    <!-- 회원 정보 수정 -->
+	<update id="updateUser" parameterType="User">
+	    UPDATE user
+	    SET 
+	    	user_Id = #{user_Id}
+	    	password = #{password},
+	        user_name = #{user_name},
+	        mail = #{mail},
+	        adress = #{adress},
+	        phone = #{phone},
+	    WHERE user_id = #{user_id} 
+	</update>
+
+	<!-- 회원 삭제 -->
+	<delete id="deleteUser" parameterType="String">
+	    UPDATE user
+	    SET delete_plug = true ,delete_user_date = now(),delete_content= #{delete_content} 
+	    WHERE user_id = #{user_id} AND password = #{password}
+	</delete>
+
+	
+	<!-- 회원 상세정보 조회 -->
+	<select id="getUserById" 
+			parameterType="string" 
+			resultMap="User">
+        SELECT * FROM users
+        WHERE user_id = #{user_id}
+    </select>
+
+
+
+
+
 
 </mapper>
