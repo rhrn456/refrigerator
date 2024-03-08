@@ -1,6 +1,6 @@
 package com.multi.personalfridge.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +20,6 @@ public class BoardDTO {
 	private String user_id;
 	private int b_category_no;
 	private int product_id;
-	private Date board_create_date;
-	private int hit;
+	private Timestamp board_creat_date;
+	private Integer hit;
 }

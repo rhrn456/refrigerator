@@ -28,6 +28,7 @@ public class CommonController {
 	}
 	
 	//메인 화면 데이터(레시피, 특가 상품)
+
 	@GetMapping("/")
 	public String getMainRecipe(Model model) {
 		List<RecipeDTO> recipe = recipeService.getAllrecipe();
@@ -44,6 +45,7 @@ public class CommonController {
 		return "contact";
 	}
 	
+
 	// 장바구니
 	@GetMapping("/cart")
 	public String cart() {
@@ -51,6 +53,7 @@ public class CommonController {
 		return "cart";
 	}
 	
+
 	//레시비 목록
 	@GetMapping("/recipeshop")
 	public String recipeshop() {
@@ -96,8 +99,10 @@ public class CommonController {
 	    return "specialproductshop";
 	}
 	
-	
-	
-	
-	    
+
+	@GetMapping("/board")
+	public String board() {
+		return "board/board";
+	}
+
 }
