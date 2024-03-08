@@ -67,16 +67,13 @@ public class CommonController {
 		int pageSize = 9;
 		List<ProductDTO> productsList = productService.getAllProduct();
 	    List<ProductDTO> products = productService.getAllProductPage(page, pageSize);
-	    System.out.println(productsList.size());
 	    int totalProducts = productsList.size();
 	    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    pageRequestDTO.setTotalPages(totalPage);
-	    System.out.println(pageRequestDTO.getTotalPages());
 	    pageRequestDTO.setCurrentPage(page);
 	    model.addAttribute("products", products);
 	    model.addAttribute("pageRequestDTO", pageRequestDTO);
-	    System.out.println(model);
 		return "productshop";
 	}
 	
@@ -86,16 +83,13 @@ public class CommonController {
 		int pageSize = 9;
 		List<ProductDTO> productsList = productService.getAllSepcialProduct();
 	    List<ProductDTO> products = productService.getAllSepcialProductPage(page, pageSize);
-	    System.out.println(productsList.size());
 	    int totalProducts = productsList.size();
 	    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    pageRequestDTO.setTotalPages(totalPage);
-	    System.out.println(pageRequestDTO.getTotalPages());
 	    pageRequestDTO.setCurrentPage(page);
 	    model.addAttribute("products", products);
 	    model.addAttribute("pageRequestDTO", pageRequestDTO);
-	    System.out.println(model);
 	    return "specialproductshop";
 	}
 	

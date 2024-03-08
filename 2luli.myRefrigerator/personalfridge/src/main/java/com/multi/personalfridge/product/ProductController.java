@@ -28,18 +28,14 @@ public class ProductController {
 	public Map<String, Object> getProductsBySearch(@RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
-	    System.out.println(keyword);
 	    List<ProductDTO> products = productService.getProductsBykeywordAndPage(keyword, page, pageSize);
 	    List<ProductDTO> productList = productService.getProductsBykeyword(keyword);
-	    System.out.println(productList);
-	    System.out.println(products);
 	    int totalProducts = productList.size();
 	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 	    pageRequestDTO.setTotalPages(totalPages);
 	    pageRequestDTO.setCurrentPage(page);
 	    parameters.put("products", products);
 	    parameters.put("pageRequestDTO", pageRequestDTO);
-	    System.out.println(parameters);
 	    return parameters;
 	}
 	
@@ -57,7 +53,6 @@ public class ProductController {
 	    pageRequestDTO.setCurrentPage(page);
 	    parameters.put("products", products);
 	    parameters.put("pageRequestDTO", pageRequestDTO);
-	    System.out.println(parameters);
 	    return parameters;
 	}
 	
@@ -75,18 +70,14 @@ public class ProductController {
 	public Map<String, Object> getSpecialProductsBySearch(@RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
-	    System.out.println(keyword);
 	    List<ProductDTO> products = productService.getSpecialProductsBykeywordAndPage(keyword, page, pageSize);
 	    List<ProductDTO> productList = productService.getSpecialProductsBykeyword(keyword);
-	    System.out.println(productList);
-	    System.out.println(products);
 	    int totalProducts = productList.size();
 	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 	    pageRequestDTO.setTotalPages(totalPages);
 	    pageRequestDTO.setCurrentPage(page);
 	    parameters.put("products", products);
 	    parameters.put("pageRequestDTO", pageRequestDTO);
-	    System.out.println(parameters);
 	    return parameters;
 	}
 	
@@ -104,7 +95,6 @@ public class ProductController {
 	    pageRequestDTO.setCurrentPage(page);
 	    parameters.put("products", products);
 	    parameters.put("pageRequestDTO", pageRequestDTO);
-	    System.out.println(parameters);
 	    return parameters;
 	}
 	

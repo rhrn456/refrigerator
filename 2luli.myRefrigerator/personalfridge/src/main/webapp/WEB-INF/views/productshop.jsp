@@ -311,13 +311,11 @@
 		$(document).ready(function() {
 		    var selectedCategory = "";
 		    var totalPage = ${pageRequestDTO.totalPages};
-		    console.log(totalPage);
 		    // 카테고리 링크 클릭 시
 		    $('.product-category a').click(function(e) {
 		        e.preventDefault(); // 기본 동작 방지
 		
 		        var category = $(this).text().trim(); // 선택된 카테고리 텍스트 가져오기
-		        console.log(category);
 		        selectedCategory = category;
 		        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
 		
@@ -332,7 +330,6 @@
 		        var keyword = $('.form-control').val();
 		        var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
 		        var totalPage = ${pageRequestDTO.totalPages}; // totalPage 변수 정의 및 초기화
-		        console.log(keyword);
 		        if(selectedCategory == ""){
 		            getProductsBy(page);
 		        } else if(keyword !== ""){
@@ -347,7 +344,6 @@
 		//모든 재료 페이지 번호를 받아 상품 목록을 가져오는 함수
 		function getProducts(page) {
 		    var pageSize = 9; // 페이지당 아이템 수
-		    console.log("성공");
 		    $.ajax({
 		        type: "GET",
 		        url: "/getAllProduct",
@@ -396,7 +392,6 @@
 		// 카테고리와 페이지 번호를 받아 상품 목록을 가져오는 함수
 		function getProductsByCategory(category, page) {
 		    var pageSize = 9; // 페이지당 아이템 수
-		 	console.log(category);
 		    
 		    $.ajax({
 		        type: "GET",
@@ -448,7 +443,6 @@
 		//검색 페이지 
 		// 검색 버튼 클릭 시 검색 실행
 			$('#searchButton').on('click', function() {
-				console.log("실행");
 			    executeSearch();
 			});
 			
@@ -463,18 +457,14 @@
 			function executeSearch() {
 			    var keyword = $('#searchInput1').val().trim();
 			    	//document.getElementById("searchInput1").value;
-			    //$('#searchInput').val().trim();
-				console.log("실행");
-				console.log("키워드" + keyword);
-			  
+			    //$('#searchInput').val().trim();	  
 			        getProductsByKeyword(keyword, 1);
 			  
 			}
 			
 			//검색한 단어로 상품 불러오기
 			function getProductsByKeyword(keyword, page) {
-				console.log("실행");
-				console.log(keyword);
+				
 			    var pageSize = 9;
 			    // AJAX 요청 보내기
 			    $.ajax({
@@ -489,8 +479,6 @@
 			            // 성공적으로 데이터를 받았을 때 처리하는 로직
 			            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
 			            productsContainer.empty(); // 기존 상품 목록 비우기
-			            
-			            console.log(response); // 받아온 데이터 확인용
 			            
 			            // 받아온 데이터를 페이지에 맞게 출력
 			            $.each(response.products, function(index, product) {
@@ -527,7 +515,6 @@
 		//페이지 버튼 생성 함수
 		function createPaginationButtons(totalPages, currentPage) {
 		    var paginationContainer = $('#paginationContainer');
-		    console.log("페이지 요기");
 		    paginationContainer.empty(); // 기존 페이지 버튼 제거
 		    // 페이지 수만큼 버튼 생성
 		    for (var i = 1; i <= totalPages; i++) {

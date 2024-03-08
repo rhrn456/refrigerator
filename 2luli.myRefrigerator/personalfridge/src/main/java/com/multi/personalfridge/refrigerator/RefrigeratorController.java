@@ -33,10 +33,10 @@ public class RefrigeratorController {
 		ModelAndView mv = new ModelAndView();
 		
 		UserDTO user = new UserDTO();/*테스트용 제거할 것*/
-		user.setUserId("asd");/*테스트용 제거할 것*/		
+		user.setUser_id("asd");/*테스트용 제거할 것*/		
 		
 		//유저 아이디와 맞는 냉장고아이디를 불러옴
-		int refrigeratorId = refrigeratorService.getRefrigeratorId(user.getUserId());
+		int refrigeratorId = refrigeratorService.getRefrigeratorId(user.getUser_id());
 		
 		mv.addObject("refrigeratorId", refrigeratorId); /*테스트용 제거할 것*/ 
 		

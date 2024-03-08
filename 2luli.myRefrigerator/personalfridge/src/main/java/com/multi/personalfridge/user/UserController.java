@@ -50,11 +50,11 @@ public class UserController {
 	
 	
  // 사용자 삭제
-    @GetMapping("/{userId}")
-    public String deleteUser(@PathVariable String userId, @PathVariable String password) {
-        userService.deleteUser(userId, password);
-        return "redirect:/";
-    }
+//    @GetMapping("/{userId}")
+//    public String deleteUser(@PathVariable String userId, @PathVariable String password) {
+//        userService.deleteUser(userId, password);
+//        return "redirect:/";
+//    }
 
     // 사용자 정보 수정
     @PostMapping("/{userId}")
@@ -64,10 +64,10 @@ public class UserController {
     }
 	
     
-    // 사용자 상세 정보 조회
-    @GetMapping("/{userId}")
-    public UserDTO getUserById(@PathVariable String userId) {
-    	return userService.getUserById(userId);
-    }
+//    // 사용자 상세 정보 조회
+//    @GetMapping("/{userId}")
+//    public UserDTO getUserById(@PathVariable String userId) {
+//    	return userService.getUserById(userId);
+//    }
 	
 }
