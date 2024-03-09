@@ -43,7 +43,19 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+
 $(document).ready(function(){
+	
+	function showEditForm(refrigeratorProductId, productName, productQuantity, limitDate) {
+	    $("#editProductName").val(productName);
+	    $("#editProductQuantity").val(productQuantity);
+	    $("#editLimitDate").val(limitDate);
+	    $("#editProductId").val(refrigeratorProductId);
+	    
+	    $("#editForm").show();
+	}
+	
     $("#submitForm").click(function(){
         var productName = $("#productName").val();
         var productQuantity = $("#productQuantity").val();
@@ -72,15 +84,6 @@ $(document).ready(function(){
         });
     });
 });
-
-function showEditForm(refrigeratorProductId, productName, productQuantity, limitDate) {
-    $("#editProductName").val(productName);
-    $("#editProductQuantity").val(productQuantity);
-    $("#editLimitDate").val(limitDate);
-    $("#editProductId").val(refrigeratorProductId);
-    
-    $("#editForm").show();
-}
 
 $("#editForm").submit(function(e) {
     e.preventDefault();
@@ -156,6 +159,9 @@ function deleteProduct(refrigeratorProductId) {
       </tr>
     </c:forEach>
   </table>
+	<form id="editForm" style="display: none;">
+	  gdgd
+	</form>
   
   <form id="productForm">
   	<input type="hidden" id="refrigeratorId" name="refrigeratorId" value="${refrigeratorProductList.get(0).refrigerator_id}">
@@ -170,6 +176,11 @@ function deleteProduct(refrigeratorProductId) {
     <input type="date" id="limitDate" name="limitDate"><br><br>
     
     <button type="button" id="submitForm">추가</button>
-  </form>
+  </form>  
+  <c:if test="${not empty overLimitProduct.get(0)}">
+  	<c:forEach var="message" items="${overLimitProduct}">
+  		${message}
+  	</c:forEach>
+  </c:if>
 </body>
 </html>
