@@ -17,6 +17,5 @@ import lombok.ToString;
 public class PageRequestDTO {
     private int totalPages;
     private int currentPage;
-
- 
+    
 }

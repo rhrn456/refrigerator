@@ -387,7 +387,7 @@
 		        }
 		    });
 		}
-				
+		
 		
 		// 카테고리와 페이지 번호를 받아 상품 목록을 가져오는 함수
 		function getProductsByCategory(category, page) {

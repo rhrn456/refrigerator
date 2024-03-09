@@ -32,9 +32,12 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">게시판</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="/board" class="dropdown-item">공지 게시판</a>
-                                    <a href="/board" class="dropdown-item">공유 게시판</a>
-                                    <a href="/board" class="dropdown-item">나만의 레시피 게시판</a>
+                                    <a href="/board?CategoryNo=1" class="dropdown-item">공지사항</a>
+                                    <a href="/board?CategoryNo=2" class="dropdown-item">공유 게시판</a>
+                                    <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
+                                    <script type="text/javascript">
+                                    	history.replaceState({}, null, location.pathname);
+                                    </script>
                                 </div>
                             </div>
                             <a href="/contact" class="nav-item nav-link">고객센터</a>

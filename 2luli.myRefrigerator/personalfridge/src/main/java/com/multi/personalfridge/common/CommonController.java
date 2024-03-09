@@ -93,10 +93,4 @@ public class CommonController {
 	    return "specialproductshop";
 	}
 	
-
-	@GetMapping("/board")
-	public String board() {
-		return "board/board";
-	}
-
 }
