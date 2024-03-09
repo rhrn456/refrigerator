@@ -16,8 +16,9 @@ import lombok.ToString;
 @ToString
 public class LikeDTO {
 
-	private int like_id;
+	private Integer like_id;
 	private String user_id;
 	private int recipe_id;
 	private Timestamp like_date;
+	private int board_no;
 }

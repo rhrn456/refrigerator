@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class CommentDTO {
 	
-	private int comment_no;				
+	private Integer comment_no;				
 	private int board_no;			
 	private String c_content;
 	private String reg_date;

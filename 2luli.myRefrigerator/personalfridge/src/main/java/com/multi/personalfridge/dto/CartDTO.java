@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CartDTO {
-	private int cart_id;
+	private Integer cart_id;
 	private String user_id;
 	private int product_id;
 	private Integer product_quantity;

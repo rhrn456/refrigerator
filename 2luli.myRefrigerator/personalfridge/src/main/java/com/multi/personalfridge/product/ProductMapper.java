@@ -52,7 +52,10 @@ public interface ProductMapper {
 	//특가 상품 카테고리 가져 오기
 	List<ProductDTO> getSpecialProductsByCategory(String category);
 
+
 	//특가 상품 --------------------------------------------------------------END
 
+	//특가, 재료 모두가져오기
+	List<ProductDTO> getFullProduct();
 	
 }

@@ -28,6 +28,9 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+         <!-- Navbar start -->
+       <%@ include file="header.jsp" %>
+        <!-- Navbar End -->
     </head>
 
     <body>
@@ -39,9 +42,7 @@
         <!-- Spinner End -->
 
 
-               <!-- Navbar start -->
-       <%@ include file="header.jsp" %>
-        <!-- Navbar End -->
+ 
 
 
         <!-- Modal Search Start -->

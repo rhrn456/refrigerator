@@ -12,6 +12,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardCategoryDTO {
-	private int b_category_no;
+	private Integer b_category_no;
 	private String b_category_name;
 }

@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReviewDTO {
-	private int review_id;
+	private Integer review_id;
 	private String review_content;
 	private String user_id;
 	private int recipe_id;

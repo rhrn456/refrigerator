@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <div class="container-fluid fixed-top">
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
@@ -14,7 +15,7 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="/" class="navbar-brand"><h1 class="text-primary display-6">나의 작은 냉장고</h1></a>
+                    <a href="/" class="navbar-brand"><h1 class="text-primary display-6">우리집 AI 냉장고</h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -53,7 +54,7 @@
 						        <i class="fa fa-shopping-bag fa-2x"></i>
 						        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
 						    </a>
-						    <a href="#" class="my-auto">
+						    <a href="/admin" class="my-auto">
 						        <i class="fas fa-user fa-2x"></i>
 						    </a>
 						</div>
