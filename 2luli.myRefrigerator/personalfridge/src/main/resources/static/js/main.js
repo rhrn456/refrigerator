@@ -143,3 +143,36 @@
 
 })(jQuery);
 
+	//slidebar
+	document.addEventListener("DOMContentLoaded", function() {
+        // 모든 nav-link 요소를 찾습니다.
+        var navLinks = document.querySelectorAll('.nav-link');
+
+        // nav-link 요소에 대한 클릭 이벤트를 처리합니다.
+        navLinks.forEach(function(navLink) {
+            navLink.addEventListener('click', function() {
+                // 현재 클릭된 nav-link 요소의 data-target 속성 값을 가져옵니다.
+                var targetId = navLink.getAttribute('data-target');
+
+                // 가져온 targetId로 해당 요소를 찾습니다.
+                var targetElement = document.querySelector(targetId);
+
+                // 찾은 요소가 존재하고, 'collapse' 클래스를 포함하는지 확인합니다.
+                if (targetElement && targetElement.classList.contains('collapse')) {
+                    // 해당 요소의 collapse 상태를 토글합니다.
+                    targetElement.classList.toggle('show');
+                }
+
+                // 모든 collapse 요소를 찾습니다.
+                var allCollapses = document.querySelectorAll('.collapse');
+
+                // 클릭된 nav-link 요소와 다른 collapse 요소를 숨깁니다.
+                allCollapses.forEach(function(collapse) {
+                    if (collapse !== targetElement) {
+                        collapse.classList.remove('show');
+                    }
+                });
+            });
+        });
+    });
+

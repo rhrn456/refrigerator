@@ -116,6 +116,12 @@ public class ProductService {
 		return productMapper.getSpecialProductsByCategory(category);
 	}
 
-
 	 //특가 상품---------------------------------------------------------------END
+	
+	//특가, 재료 모두 가져오기
+	public List<ProductDTO> getFullProduct() {
+		
+		return productMapper.getFullProduct();
+	}
+
 }

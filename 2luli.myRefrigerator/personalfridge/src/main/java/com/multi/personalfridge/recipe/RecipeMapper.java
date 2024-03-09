@@ -11,4 +11,8 @@ import com.multi.personalfridge.dto.UserDTO;
 public interface RecipeMapper {
 
 	public List<RecipeDTO> getAllrecipe();
+
+	public int insertRecipe(RecipeDTO recipe);
+
+	public RecipeDTO getReturnInsertRecipe(String recipe_name);
 }

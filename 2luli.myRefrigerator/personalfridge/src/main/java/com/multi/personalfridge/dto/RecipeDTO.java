@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RecipeDTO {
-	private int recipe_id;
+	private Integer recipe_id;
 	private String recipe_name;
 	private String recipe_content;
 	private String ingredient;

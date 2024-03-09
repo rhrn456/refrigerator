@@ -6,4 +6,17 @@
 		SELECT * FROM recipe
 	</select>
 	
+	<insert id="insertRecipe"
+		parameterType="Recipe">
+		INSERT INTO recipe (recipe_name, recipe_content, ingredient, recipe_category, recipe_img,nutrition_facts
+		)
+		VALUES (#{recipe_name}, #{recipe_content}, #{ingredient},
+		#{recipe_category},#{recipe_img},#{nutrition_facts}
+		)
+	</insert>
+	
+	<select id="getReturnInsertRecipe" resultType="Recipe">
+		SELECT * FROM recipe
+		WHERE recipe_name = #{recipe_name}
+	</select>
 </mapper>

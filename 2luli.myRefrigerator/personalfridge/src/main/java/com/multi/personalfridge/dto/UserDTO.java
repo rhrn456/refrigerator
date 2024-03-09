@@ -19,8 +19,7 @@ public class UserDTO {
 	private String mail;
 	private String adress;
 	private Integer phone;
-	private Boolean admin_num;
-	private Boolean manager_num;
+	private int job_num;
 	private Timestamp create_user_date;
 	private Timestamp delete_user_date;
 	private Boolean delete_plug;

@@ -20,4 +20,19 @@ public class RecipeService {
 		return recipeMapper.getAllrecipe();
 	}
 
+	public boolean insertRecipe(RecipeDTO recipe) {
+		try {
+			recipeMapper.insertRecipe(recipe);
+			return true; 
+		}catch (Exception e) {
+			e.printStackTrace();
+		 return false; 
+		}
+	}
+
+	public RecipeDTO getReturnInsertRecipe(String recipe_name) {
+		
+		return recipeMapper.getReturnInsertRecipe(recipe_name);
+	}
+
 }
