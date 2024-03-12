@@ -160,7 +160,10 @@ function deleteProduct(refrigeratorProductId) {
     </c:forEach>
   </table>
 	<form id="editForm" style="display: none;">
-	  gdgd
+		<input type="text" id="editProductName">
+		<input type="text" id="editProductQuantity">
+		<input type="date" id="editLimitDate">
+		<input type="hidden" id="editProductId">
 	</form>
   
   <form id="productForm">
