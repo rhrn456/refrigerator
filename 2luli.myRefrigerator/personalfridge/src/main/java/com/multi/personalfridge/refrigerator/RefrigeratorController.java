@@ -93,10 +93,11 @@ public class RefrigeratorController {
 	
 	//재료 수정
 	@PutMapping("/updateRefrigeratorProduct")
-	public void updateRefrigeratorProduct(/*@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut*/) {
-		RefrigeratorProdcutDTO refrigeratorProdcut = new RefrigeratorProdcutDTO();
-		
+	public ResponseEntity<String> updateRefrigeratorProduct(@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut) {
+//		RefrigeratorProdcutDTO refrigeratorProdcut = new RefrigeratorProdcutDTO();
+		System.out.println(refrigeratorProdcut);
 		boolean result = refrigeratorService.updateRefrigeratorProduct(refrigeratorProdcut);
+		return ResponseEntity.ok("재료 정보가 성공적으로 업데이트 되었습니다");
 		
 	}
 	

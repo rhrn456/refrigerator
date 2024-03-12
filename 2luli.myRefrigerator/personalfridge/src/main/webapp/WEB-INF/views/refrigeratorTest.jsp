@@ -40,21 +40,16 @@
   button:hover {
     background-color: #45a049;
   }
+  #editForm {
+    display: none;
+    margin-top: 20px;
+  }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
 
 $(document).ready(function(){
-	
-	function showEditForm(refrigeratorProductId, productName, productQuantity, limitDate) {
-	    $("#editProductName").val(productName);
-	    $("#editProductQuantity").val(productQuantity);
-	    $("#editLimitDate").val(limitDate);
-	    $("#editProductId").val(refrigeratorProductId);
-	    
-	    $("#editForm").show();
-	}
 	
     $("#submitForm").click(function(){
         var productName = $("#productName").val();
@@ -83,36 +78,36 @@ $(document).ready(function(){
             }
         });
     });
-});
-
-$("#editForm").submit(function(e) {
-    e.preventDefault();
     
-    var productName = $("#editProductName").val();
-    var productQuantity = $("#editProductQuantity").val();
-    var limitDate = $("#editLimitDate").val();
-    var refrigeratorProductId = $("#editProductId").val();
-    
-    var data = {
-        productName: productName,
-        productQuantity: productQuantity,
-        limitDate: limitDate,
-        refrigeratorProductId: refrigeratorProductId
-    };
-    
+    $("#updateForm").click(function(){
+  	  var refrigeratorProductId = $("#editProductId").val();
+  	  var productName = $("#editProductName").val();
+  	  var productQuantity = $("#editProductQuantity").val();
+  	  var limitDate = $("#editLimitDate").val();
+	  var refrigeratorId = $("#refrigeratorId").val();
+  	  
+  	  var data = {
+  	    refrigerator_product_id: refrigeratorProductId,
+  	    product_name: productName,
+  	    product_quantity: productQuantity,
+  	    limit_date: limitDate,
+  	    refrigerator_id: refrigeratorId
+  	  };
+  	  
     $.ajax({
-        type: "PUT",
-        contentType: "application/json",
-        url: "/updateRefrigeratorProduct",
-        data: JSON.stringify(data),
-        success: function(response){
-            alert(response);
-            window.location.href = window.location.href; // 새로고침
-        },
-        error: function(xhr, status, error){
-            console.error(xhr.responseText);
-        }
+      type: "PUT",
+      contentType: "application/json",
+      url: "/updateRefrigeratorProduct", 
+      data: JSON.stringify(data),
+      success: function(response){
+        alert(response);
+        window.location.href = window.location.href; // 페이지 새로고침
+      },
+      error: function(xhr, status, error){
+        console.error(xhr.responseText);
+      }
     });
+  });
 });
 
 function deleteProduct(refrigeratorProductId) {
@@ -131,6 +126,15 @@ function deleteProduct(refrigeratorProductId) {
             }
         });
     }
+}
+
+function showEditForm(refrigeratorProductId, productName, productQuantity, limitDate) {
+	  $("#editProductName").val(productName);
+	  $("#editProductQuantity").val(productQuantity);
+	  $("#editLimitDate").val(limitDate);
+	  $("#editProductId").val(refrigeratorProductId);
+	  
+	  $("#editForm").show();
 }
 
 </script>
@@ -153,18 +157,12 @@ function deleteProduct(refrigeratorProductId) {
         <td>${product.append_date}</td>
         <td>${product.limit_date}</td>
         <td>
-        	<button type="button" onclick="showEditForm(${product.refrigerator_product_id}, '${product.product_name}', ${product.product_quantity}, '${product.limit_date}')">수정</button>
-        	<button type="button" onclick="deleteProduct(${product.refrigerator_product_id})">삭제</button>
+        	<button type="button" onclick="showEditForm('${product.refrigerator_product_id}', '${product.product_name}', '${product.product_quantity}', '${product.limit_date}')">수정</button>
+          	<button type="button" onclick="deleteProduct(${product.refrigerator_product_id})">삭제</button>
         </td>
       </tr>
     </c:forEach>
   </table>
-	<form id="editForm" style="display: none;">
-		<input type="text" id="editProductName">
-		<input type="text" id="editProductQuantity">
-		<input type="date" id="editLimitDate">
-		<input type="hidden" id="editProductId">
-	</form>
   
   <form id="productForm">
   	<input type="hidden" id="refrigeratorId" name="refrigeratorId" value="${refrigeratorProductList.get(0).refrigerator_id}">
@@ -179,7 +177,23 @@ function deleteProduct(refrigeratorProductId) {
     <input type="date" id="limitDate" name="limitDate"><br><br>
     
     <button type="button" id="submitForm">추가</button>
-  </form>  
+  </form> 
+  
+  <form id="editForm">
+	  <input type="hidden" id="editProductId" name="editProductId">
+	  
+	  <label for="editProductName">이름:</label>
+	  <input type="text" id="editProductName" name="editProductName"><br><br>
+	  
+	  <label for="editProductQuantity">재고:</label>
+	  <input type="text" id="editProductQuantity" name="editProductQuantity"><br><br>
+	  
+	  <label for="editLimitDate">소비 기한:</label>
+	  <input type="date" id="editLimitDate" name="editLimitDate"><br><br>
+	  
+	  <button type="button" id="updateForm">수정 완료</button>
+	</form>
+ 
   <c:if test="${not empty overLimitProduct.get(0)}">
   	<c:forEach var="message" items="${overLimitProduct}">
   		${message}
