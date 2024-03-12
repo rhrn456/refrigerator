@@ -35,17 +35,70 @@
 	    SET delete_plug = true ,delete_user_date = now(),delete_content= #{delete_content} 
 	    WHERE user_id = #{user_id} AND password = #{password}
 	</delete>
+	
 
 	
 	<!-- 회원 상세정보 조회 -->
 	<select id="getUserById" 
 			parameterType="string" 
 			resultType="User">
-        SELECT * FROM users
+        SELECT * FROM user
         WHERE user_id = #{user_id}
     </select>
 
+	<!-- 모든 회원 조회 -->
+	<select id="getAlluser"  resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0
+    </select>
 
+	<!-- 모든 회원 조회 페이지 -->
+	<select id="getAllUserPage"  parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+	<!-- 모든 회원 검색 조회-->
+	<select id="getAlluserByKeyword" parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0 
+		AND (
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+            OR user_name LIKE CONCAT('%', #{keyword}, '%')
+            OR mail LIKE CONCAT('%', #{keyword}, '%')
+            OR adress LIKE CONCAT('%', #{keyword}, '%')
+            OR phone LIKE CONCAT('%', #{keyword}, '%')
+        )
+    </select>
+    
+	<!-- 모든 회원 검색 조회 페이지 -->
+	<select id="getAllUserByKewordPage"  parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0
+    	<if test='keyword != ""'>
+        AND (
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+            OR user_name LIKE CONCAT('%', #{keyword}, '%')
+            OR mail LIKE CONCAT('%', #{keyword}, '%')
+            OR adress LIKE CONCAT('%', #{keyword}, '%')
+            OR phone LIKE CONCAT('%', #{keyword}, '%')
+        )
+    </if>
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+    <!-- 회원 삭제 -->
+   	<delete id="deleteUserAdmin" parameterType="String">
+  		 DELETE FROM user WHERE user_id = #{user_id};
+	</delete>
+	
+	<!-- 사용자 -> 매니저 등록 -->
+	<update id="userUpdateToManager" parameterType="String">
+	    UPDATE user
+	    SET job_num = 1
+	    WHERE user_id = #{user_id} 
+	</update>
 
 
 

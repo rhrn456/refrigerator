@@ -1,10 +1,15 @@
 package com.multi.personalfridge.user;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.UserDTO;
 
 
@@ -41,7 +46,57 @@ public class UserService {
 	public UserDTO getUserById(String userId) {
 		return userMapper.getUserById(userId);
 	}
-	
+
+	public List<UserDTO> getAlluser() {
+		
+		return userMapper.getAlluser();
+	}
+
+	public List<UserDTO> getAllUserPage(int page, int pageSize) {
+		int offset = (page - 1) * pageSize;
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("pageSize", pageSize);
+		parameters.put("offset", offset);
+		return userMapper.getAllUserPage(parameters);
+	}
+
+	public boolean deleteUserAdmin(String user_id) {
+		try {
+			userMapper.deleteUserAdmin(user_id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+
+	public boolean userUpdateToManager(String user_id) {
+		try {
+			userMapper.userUpdateToManager(user_id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+
+	public List<UserDTO> getAlluserByKeyword(String keyword) {
+		Map<String, String> parameters = new HashMap<>();
+		parameters.put("keyword", keyword);
+		return userMapper. getAlluserByKeyword(parameters);
+	}
+
+	public List<UserDTO> getAllUserByKewordPage(String keyword, int page, int pageSize) {
+		int offset = (page - 1) * pageSize;
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("keyword", keyword);
+		parameters.put("pageSize", pageSize);
+		parameters.put("offset", offset);
+		return userMapper.getAllUserByKewordPage(parameters);
+	}
+
+
+
 	
 	
 	

@@ -27,7 +27,7 @@ public class ProductService {
     	return productMapper.getAllProduct();
     }
     
-    //일반 상품 모두 보여주기
+    //일반 상품 모두 페이지 보여주기
     public List<ProductDTO> getAllProductPage(int page, int pageSize) {
     	int offset = (page - 1) * pageSize;
 		Map<String, Object> parameters = new HashMap<>();
@@ -118,10 +118,45 @@ public class ProductService {
 
 	 //특가 상품---------------------------------------------------------------END
 	
-	//특가, 재료 모두 가져오기
+	//일반 상품 모두 가져오기
 	public List<ProductDTO> getFullProduct() {
 		
 		return productMapper.getFullProduct();
 	}
+
+	//일반/특가 상품 등록
+	public boolean ProductPlus(ProductDTO product) {
+		try {
+			productMapper.ProductPlus(product);
+		return true; 
+	
+		}catch (Exception e) {
+			e.printStackTrace();
+		 return false; 
+		}
+	}
+
+	//상품 삭제
+	public boolean productDeletById(int product_id) {
+		try {
+			productMapper.productDeletById(product_id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+
+	//상품 가져오기
+	public ProductDTO getProductById(int product_id) {
+		
+		return productMapper.getProductById(product_id);
+	}
+
+	//상품 업데이트
+	public void productUpdate(ProductDTO product) {
+		productMapper.productUpdate(product);
+	}
+
 
 }

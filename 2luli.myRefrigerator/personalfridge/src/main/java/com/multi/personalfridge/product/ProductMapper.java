@@ -55,7 +55,19 @@ public interface ProductMapper {
 
 	//특가 상품 --------------------------------------------------------------END
 
-	//특가, 재료 모두가져오기
+	//일반 상품 모두가져오기
 	List<ProductDTO> getFullProduct();
+	
+	//특가/일반 삼품 등록
+	int ProductPlus(ProductDTO product);
+
+	//상품 삭제
+	int productDeletById(int product_id);
+
+	ProductDTO getProductById(int product_id);
+
+	void productUpdate(ProductDTO product);
+
+
 	
 }

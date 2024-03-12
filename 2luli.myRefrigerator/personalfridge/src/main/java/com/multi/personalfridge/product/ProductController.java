@@ -45,14 +45,20 @@ public class ProductController {
 	public Map<String, Object> getProductsByCategory(@RequestParam String category, @RequestParam int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
-	    List<ProductDTO> products = productService.getProductsByCategoryAndPage(category, page, pageSize);
-	    List<ProductDTO> productList = productService.getProductsByCategory(category);
-	    int totalProducts = productList.size();
-	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-	    pageRequestDTO.setTotalPages(totalPages);
-	    pageRequestDTO.setCurrentPage(page);
-	    parameters.put("products", products);
-	    parameters.put("pageRequestDTO", pageRequestDTO);
+	    int totalProducts;
+	      if(category == "") {
+	    	List<ProductDTO> productList = productService.getAllProduct();
+	    	totalProducts = productList.size();
+	    }else {
+		    List<ProductDTO> productList = productService.getProductsByCategory(category);
+		    totalProducts = productList.size();  
+	    }
+	      List<ProductDTO> products = productService.getProductsByCategoryAndPage(category, page, pageSize);
+	      int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+		    pageRequestDTO.setTotalPages(totalPages);
+		    pageRequestDTO.setCurrentPage(page);
+		    parameters.put("products", products);
+		    parameters.put("pageRequestDTO", pageRequestDTO);
 	    return parameters;
 	}
 	
@@ -87,9 +93,15 @@ public class ProductController {
 	public Map<String, Object> getSpecialProductsByCategory(@RequestParam String category, @RequestParam int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
+	    int totalProducts;
+	    if(category == "") {
+	 	    List<ProductDTO> productList = productService.getAllSepcialProduct();
+	 	    totalProducts = productList.size();
+	    }else {
+		    List<ProductDTO> productList = productService.getSpecialProductsByCategory(category);
+		    totalProducts = productList.size();
+		    }
 	    List<ProductDTO> products = productService.getSpecialProductsByCategoryAndPage(category, page, pageSize);
-	    List<ProductDTO> productList = productService.getSpecialProductsByCategory(category);
-	    int totalProducts = productList.size();
 	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 	    pageRequestDTO.setTotalPages(totalPages);
 	    pageRequestDTO.setCurrentPage(page);

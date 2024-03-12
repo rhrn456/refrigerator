@@ -41,14 +41,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span style="color:white; font-weight: bold;">데이터</span>
+                    <span style="color:white; font-weight: bold;">데이터 등록</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">데이터 관리:</h6>
                         <a class="collapse-item" href="/insertRecipe">레시피 추가</a>
-                        <a class="collapse-item" href="/insertProduct">재료 추가</a>
-                        <a class="collapse-item" href="/insertSpecialProduct">특가 상품 추가</a>
+                        <a class="collapse-item" href="/insertProduct">일반/특가상품 추가</a>
                     </div>
                 </div>
             </li>
@@ -64,8 +63,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">계정 관리:</h6>
-                        <a class="collapse-item" href="">사용자 관리</a>
-                        <a class="collapse-item" href="">매니저 관리</a>
+                        <a class="collapse-item" href="/userListadmin">사용자 관리</a>
+                        <a class="collapse-item" href="/managerListadmin">매니저 관리</a>
                     </div>
                 </div>
             </li>
@@ -83,31 +82,29 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span style="color:white; font-weight: bold;">페이지</span>
+                    <span style="color:white; font-weight: bold;">데이터 목록</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">데이터 리스트:</h6>
+                        <a class="collapse-item" href="">레시피</a>
+                        <a class="collapse-item" href="/productAllList">일반 상품</a>
+                        <a class="collapse-item" href="/SpecialProductAllList">특가 상품</a>
                         <h6 class="collapse-header">게시판:</h6>
-                        <a class="collapse-item" href="login.html">공지 목록</a>
-                        <a class="collapse-item" href="register.html">공유 목록</a>
-                        <a class="collapse-item" href="forgot-password.html">나만의 레시피 목록</a>
+                        <a class="collapse-item" href="">공지 목록</a>
+                        <a class="collapse-item" href="">공유 목록</a>
+                        <a class="collapse-item" href="">나만의 레시피 목록</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/chartboard">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span style="color:white; font-weight: bold;">게시판 차트</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span style="color:white; font-weight: bold;">회원 목록</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
