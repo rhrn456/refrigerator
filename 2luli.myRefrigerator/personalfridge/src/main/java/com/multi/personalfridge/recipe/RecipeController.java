@@ -32,48 +32,6 @@ public class RecipeController {
         this.recipeProductService = recipeProductService;
     }
     
-	@GetMapping("/RecipePlus")
-	public String insertRecipe(@ModelAttribute RecipeDTO recipe, Model model) {
-		System.out.println(recipe);
-	    boolean result = recipeService.insertRecipe(recipe);
-	    RecipeDTO onerecipe = recipeService.getReturnInsertRecipe(recipe.getRecipe_name());
-	    List<ProductDTO> productList = productService.getFullProduct();
-	    System.out.println(productList);
-	    System.out.println(productList.size());
-	    System.out.println(onerecipe);
-	    if (result) {
-	    	model.addAttribute("onerecipe",onerecipe);
-	    	model.addAttribute("productList",productList);
-	        return "admin/plusrecipeproducts";
-	    }
-	    return "error";
-	}
 	
-	@GetMapping("/RecipeProductPlus")
-	public String PlustRecipeProducts(@RequestParam("recipeProducts") String recipeProductsJson) { 
-	    ObjectMapper objectMapper = new ObjectMapper(); 
-	    System.out.println(recipeProductsJson); 
-	    
-	    try {
-	        // JSON 문자열을 RecipeProductDTO 배열로 변환
-	        RecipeProductDTO[] recipeProducts = objectMapper.readValue(recipeProductsJson, RecipeProductDTO[].class);
-	        
-	        // 모든 제품을 처리하기 위해 루프 사용
-	        for (RecipeProductDTO product : recipeProducts) {
-	            // 변경된 데이터를 recipeProductService에 전달
-	            boolean result = recipeProductService.PlustRecipeProducts(product);
-	            if (!result) {
-	                // 처리 중 문제 발생 시 에러 반환
-	                return "error";
-	            }
-	        }
-	        // 모든 제품이 성공적으로 처리된 경우에만 성공 반환
-	        return "redirect:/admin";
-	    } catch (JsonProcessingException e) {
-	        // JSON 파싱에 실패한 경우에 대한 예외 처리
-	        e.printStackTrace();
-	        return "error";
-	    }
-	}
 
 }

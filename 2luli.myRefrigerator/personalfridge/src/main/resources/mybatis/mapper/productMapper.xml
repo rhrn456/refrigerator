@@ -2,11 +2,37 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.product.ProductMapper">
 	
-	<!-- 재료, 특가 상품 전부가져오기 -->
+	<!-- 상품 전부가져오기 -->
 	<select id ="getFullProduct" resultType="Product">
 	select *
 	from product
 	</select>
+	
+	<!-- 상품 id조회 가져오기 -->
+	<select id ="getProductById" parameterType="int" resultType="Product">
+	select *
+	from product
+    where product_id = #{product_id}
+	</select>
+	
+	<update id="productUpdate" parameterType="Product">
+	update product set product_name = #{product_name}, 
+						product_content = #{product_content}, 
+						product_quantity = #{product_quantity},
+						product_price = #{product_price},
+						product_img = #{product_img},
+						limit_date = #{limit_date},
+						product_category = #{product_category},
+						special_product = #{special_product}
+	where product_id = #{product_id}
+	</update>
+	<!-- 상품 삭제 -->
+	<delete id="productDeletById" parameterType="int">
+    	delete
+    	from product 
+    	where product_id = #{product_id}
+    </delete>
+	
 	
 	<!-- 일반 상품 START -->
 	
@@ -110,4 +136,11 @@
 	where product_category = #{product_category} AND special_product = 1
 	</select>
     <!-- 특가 상품 END -->
+    
+    <!-- 일반/특가 상품 등록 -->
+    <insert id="ProductPlus" parameterType="Product">
+    INSERT INTO product (product_name, product_content, product_quantity, product_price, product_img, limit_date, product_category,special_product)
+    VALUES (#{product_name}, #{product_content}, #{product_quantity}, #{product_price}, #{product_img}, #{limit_date},  #{product_category}, #{special_product})
+	</insert>
+	
 </mapper>

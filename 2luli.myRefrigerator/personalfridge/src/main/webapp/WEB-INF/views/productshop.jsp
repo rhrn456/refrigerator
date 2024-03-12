@@ -169,7 +169,7 @@
 							                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
 							                            <h4>${product.product_name}</h4>
 							                            <p>${product.product_content}</p>
-							                            <p>유통기한 : ${product.limit_date}</p>
+							                            <p>유통기한 : 구매일로부터 ${product.limit_date}일</p>
 							                            <div class="d-flex justify-content-between flex-lg-wrap">
 							                                <p class="text-dark fs-5 fw-bold mb-0">${product.product_price}</p>
 							                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
@@ -233,7 +233,7 @@
 		        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
 		
 		        // AJAX 요청 보내기
-		        getProductsByCategory(category, 1); // 페이지 번호 1로 초기화
+		        getProductsByCategory(selectedCategory, 1); // 페이지 번호 1로 초기화
 		        
 		    });
 		
@@ -244,7 +244,7 @@
 		        var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
 		        var totalPage = ${pageRequestDTO.totalPages}; // totalPage 변수 정의 및 초기화
 		        if(selectedCategory == ""){
-		            getProductsBy(page);
+		        	getProducts(page);
 		        } else if(keyword !== ""){
 		        	getProductsByKeyword(keyword, page);
 		        } else {
@@ -261,39 +261,13 @@
 		        type: "GET",
 		        url: "/getProductsByCategory",
 		        data: {
-		            category: '',
+		            category: "",
 		            page: page,
 		            pageSize: pageSize 
 		        },
 		        success:  function(response) {
-		            // 성공적으로 데이터를 받았을 때 처리하는 로직
-		            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
-		            productsContainer.empty(); // 기존 상품 목록 비우기
-		            console.log(response);
-		            // 받아온 데이터를 페이지에 맞게 출력
-		            $.each(response.products, function(index, product) {
-		                // 상품 정보를 HTML로 생성하는 코드
-		                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
-		                    '<div class="rounded position-relative fruite-item">' +
-		                    '<div class="fruite-img">' +
-		                    '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
-		                    '</div>' +
-		                    '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
-		                    '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
-		                    '<h4>' + product.product_name + '</h4>' +
-		                    '<p>' + product.product_content + '</p>' +
-		                    '<p>' + "유통기한 :" + product.limit_date + '</p>' +
-		                    '<div class="d-flex justify-content-between flex-lg-wrap">' +
-		                    '<p class="text-dark fs-5 fw-bold mb-0">' + product.product_price + '</p>' +
-		                    '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>' +
-		                    '</div>' +
-		                    '</div>' +
-		                    '</div>' +
-		                    '</div>';
-		                productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
-		            });
-
-		        },
+		        	updateProducts(response);
+                },
 		        error: function(xhr, status, error) {
 		            // 에러 처리 로직
 		            console.error(error);
@@ -305,7 +279,6 @@
 		// 카테고리와 페이지 번호를 받아 상품 목록을 가져오는 함수
 		function getProductsByCategory(category, page) {
 		    var pageSize = 9; // 페이지당 아이템 수
-		    
 		    $.ajax({
 		        type: "GET",
 		        url: "/getProductsByCategory",
@@ -315,36 +288,8 @@
 		            pageSize: pageSize // 페이지 크기도 함께 전송
 		        },
 		        success: function(response) {
-		            // 성공적으로 데이터를 받았을 때 처리하는 로직
-		            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
-		            productsContainer.empty(); // 기존 상품 목록 비우기
-		            console.log(response);
-		            // 받아온 데이터를 페이지에 맞게 출력
-		            $.each(response.products, function(index, product) {
-		                // 상품 정보를 HTML로 생성하는 코드
-		                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
-	                    '<div class="rounded position-relative fruite-item">' +
-	                    '<div class="fruite-img">' +
-	                    '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
-	                    '</div>' +
-	                    '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
-	                    '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
-	                    '<h4>' + product.product_name + '</h4>' +
-	                    '<p>' + product.product_content + '</p>' +
-	                    '<p>' + "유통기한 :" + product.limit_date + '</p>' +
-	                    '<div class="d-flex justify-content-between flex-lg-wrap">' +
-	                    '<p class="text-dark fs-5 fw-bold mb-0">' + product.product_price + '</p>' +
-	                    '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>' +
-	                    '</div>' +
-	                    '</div>' +
-	                    '</div>' +
-	                    '</div>';
-		                productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
-		            });
-		            // 페이지 버튼 생성
-     
-		            createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
-		        },
+		        	updateProducts(response);
+                },
 		        error: function(xhr, status, error) {
 		            // 에러 처리 로직
 		            console.error(error);
@@ -389,35 +334,8 @@
 			            pageSize: pageSize
 			        },
 			        success: function(response) {
-			            // 성공적으로 데이터를 받았을 때 처리하는 로직
-			            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
-			            productsContainer.empty(); // 기존 상품 목록 비우기
-			            
-			            // 받아온 데이터를 페이지에 맞게 출력
-			            $.each(response.products, function(index, product) {
-			                // 상품 정보를 HTML로 생성하는 코드
-			                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
-		                    '<div class="rounded position-relative fruite-item">' +
-		                    '<div class="fruite-img">' +
-		                    '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
-		                    '</div>' +
-		                    '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
-		                    '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
-		                    '<h4>' + product.product_name + '</h4>' +
-		                    '<p>' + product.product_content + '</p>' +
-		                    '<p>' + "유통기한 :" + product.limit_date + '</p>' +
-		                    '<div class="d-flex justify-content-between flex-lg-wrap">' +
-		                    '<p class="text-dark fs-5 fw-bold mb-0">' + product.product_price + '</p>' +
-		                    '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>' +
-		                    '</div>' +
-		                    '</div>' +
-		                    '</div>' +
-		                    '</div>';
-			                productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
-			            });
-
-			            createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
-			        },
+			        	updateProducts(response);
+	                },
 			        error: function(xhr, status, error) {
 			            // 에러 처리 로직
 			            console.error(error);
@@ -425,6 +343,36 @@
 			    });
 			}
 		
+        // 받아온 상품 정보를 업데이트하는 함수
+        function updateProducts(response) {
+        	// 성공적으로 데이터를 받았을 때 처리하는 로직
+            var productsContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
+            productsContainer.empty(); // 기존 상품 목록 비우기
+            // 받아온 데이터를 페이지에 맞게 출력
+            $.each(response.products, function(index, product) {
+                // 상품 정보를 HTML로 생성하는 코드
+                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
+                '<div class="rounded position-relative fruite-item">' +
+                '<div class="fruite-img">' +
+                '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
+                '</div>' +
+                '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
+                '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
+                '<h4>' + product.product_name + '</h4>' +
+                '<p>' + product.product_content + '</p>' +
+                '<p>' + "유통기한 : 구매일로부터 " + product.limit_date + "일" + '</p>' +
+                '<div class="d-flex justify-content-between flex-lg-wrap">' +
+                '<p class="text-dark fs-5 fw-bold mb-0">' + product.product_price + '</p>' +
+                '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+                productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+            });
+
+            createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
+        }
 		//페이지 버튼 생성 함수
 		function createPaginationButtons(totalPages, currentPage) {
 		    var paginationContainer = $('#paginationContainer');
@@ -436,6 +384,7 @@
 		    }
 		
 		}
+		
 		</script>
     </body>
 </html>
