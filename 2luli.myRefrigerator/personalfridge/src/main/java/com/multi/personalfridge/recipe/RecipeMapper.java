@@ -15,4 +15,7 @@ public interface RecipeMapper {
 	public int insertRecipe(RecipeDTO recipe);
 
 	public RecipeDTO getReturnInsertRecipe(String recipe_name);
+	
+
+
 }
