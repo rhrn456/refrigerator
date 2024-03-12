@@ -32,7 +32,7 @@ public class RecipeController {
 	@RequestMapping("/insertRecipe")
 	public void insertRecipe(RecipeDTO recipeDTO) {
 		//System.out.println(recipeDTO);
-		int insertrecipe = recipeservice.insertRecipe(recipeDTO);
+		boolean insertrecipe = recipeservice.insertRecipe(recipeDTO);
 		//WEB-INF/views/insertInit.jsp
 		System.out.println(insertrecipe);
 	}

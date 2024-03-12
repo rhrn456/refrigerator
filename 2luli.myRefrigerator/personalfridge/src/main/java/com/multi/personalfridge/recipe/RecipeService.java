@@ -17,11 +17,6 @@ public class RecipeService {
 	
 
 	
-	public int insertRecipe1(RecipeDTO recipeDTO) {
-		System.out.println(recipeDTO);
-		return recipeMapper.insertRecipe(recipeDTO);
-	}
-	
 	//레시피목록
 	public List<RecipeDTO> recipeList() {
 		List<RecipeDTO> recipeList = recipeMapper.getAllrecipe();
