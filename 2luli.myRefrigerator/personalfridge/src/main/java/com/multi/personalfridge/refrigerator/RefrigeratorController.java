@@ -30,8 +30,6 @@ public class RefrigeratorController {
 	
 	@Autowired
 	RefrigeratorService refrigeratorService;	
-	@Autowired
-	private EmailService emailService;
 	
 	//나의 냉장고 들어왔을때 메인페이지
 	@GetMapping("/refrigerator")                      //세션 유저변수명
@@ -56,7 +54,6 @@ public class RefrigeratorController {
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);		
 		mv.setViewName("refrigeratorTest");
 		
-		//현재날자와 소비기한을 비교해서 알려줌
 		String date = dateFormat.format(now).toString();
 		String[] nowDate = date.split("-"); 
 		List<String> overLimitProduct = new ArrayList<String>();
@@ -74,17 +71,7 @@ public class RefrigeratorController {
 				
 		}
 		
-		mv.addObject("overLimitProduct", overLimitProduct);/*테스트용 추후삭제*/
-		
-		//메일로 보낼 String으로 변환
-		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < overLimitProduct.size() - 1; i++) {
-			str.append(overLimitProduct.get(i) + ", ");
-		}
-		str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");
-		
-		//이메일 보내기                     보낼이메일주소            제목              내용
-//		emailService.sendSimpleMessage("dudans8wk@naver.com", "소비기한 알림", str.toString());
+		mv.addObject("overLimitProduct", overLimitProduct);
 		
 		return mv;
 	}
@@ -136,4 +123,3 @@ public class RefrigeratorController {
 	
 	
 }
-// 레시피추천(재료별로검색할수있게해서 인기있는레시피 2~3가지 추천), 재료구매시 자동추가 (재료아이디정보를 받아와서 넣어줄것임), 정렬, my냉장고 연결
