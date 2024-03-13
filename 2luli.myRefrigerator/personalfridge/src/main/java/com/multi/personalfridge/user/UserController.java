@@ -23,7 +23,7 @@ public class UserController {
     }
 	
     // 로그인
-	@GetMapping("/login")
+	@GetMapping("/loginpage")
 	public String login() {
 		return "login";
 	}
@@ -42,7 +42,7 @@ public class UserController {
 	}
 	
 	//일반 회원가입
-	@PostMapping("/insert")
+	@PostMapping("/signup")
 	public String insertUser(UserDTO dto) {
 		int result = userService.insertUser(dto);
 		
