@@ -137,6 +137,21 @@ function showEditForm(refrigeratorProductId, productName, productQuantity, limit
 	  $("#editForm").show();
 }
 
+function shareProduct(refrigeratorProductId){
+	$.ajax({
+		type: "POST",
+		url: "/shareProduct",
+		data: {refrigeratorProductId: refrigeratorProductId},
+        success: function(response){
+            alert(response);
+            window.location.href = window.location.href;
+        },
+        error: function(xhr, status, error){
+            console.error(xhr.responseText);
+        }
+	})
+}
+
 </script>
 </head>
 <body>
@@ -159,6 +174,7 @@ function showEditForm(refrigeratorProductId, productName, productQuantity, limit
         <td>
         	<button type="button" onclick="showEditForm('${product.refrigerator_product_id}', '${product.product_name}', '${product.product_quantity}', '${product.limit_date}')">수정</button>
           	<button type="button" onclick="deleteProduct(${product.refrigerator_product_id})">삭제</button>
+          	<button type="button" onclick="shareProduct(${product.refrigerator_product_id})">공유</button>
         </td>
       </tr>
     </c:forEach>

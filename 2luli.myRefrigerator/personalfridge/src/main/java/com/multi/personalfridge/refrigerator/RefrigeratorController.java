@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,9 +79,14 @@ public class RefrigeratorController {
 	//비동기로 재료을 추가
 	@PostMapping("/insertRefrigeratorProduct")
 	public ResponseEntity<String> postMethodName(@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut) {
-		System.out.println(refrigeratorProdcut);
+		System.out.println(refrigeratorProdcut);/*확인용 추후삭제*/
 		boolean result = refrigeratorService.insertRefrigeratorProdcut(refrigeratorProdcut);
-		return ResponseEntity.ok("재료가 냉장고에 성공적으로 추가되었습니다.");
+		
+		if (result) {
+			return ResponseEntity.ok("재료가 냉장고에 성공적으로 추가되었습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("재료를 냉장고에 추가하는데 실패하였습니다.");
+		}
 	}
 	
 	//비동기로 재료를 제거
@@ -88,17 +94,32 @@ public class RefrigeratorController {
 	public ResponseEntity<String> deleteRefrigeratorProduct(@RequestParam("refrigeratorProductId") int refrigeratorProductId) {
 		boolean result = refrigeratorService.deleteRefrigeratorProduct(refrigeratorProductId);
 
-	    return ResponseEntity.ok("제품이 성공적으로 삭제되었습니다.");
+		if (result) {
+			return ResponseEntity.ok("재료가 성공적으로 삭제되었습니다.");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("재료 삭제에 실패하였습니다.");
+		}
+	}
+	
+	//재료 공유 refrigeratorProductId를 받아와서 게시판 폼에 관련정보를 받아와 쏴줄 예정
+	@PostMapping("/shareProduct")
+	public void shareProduct(@RequestParam("refrigeratorProductId") int refrigeratorProductId) {
+		System.out.println(refrigeratorProductId);/*테스트용 추후삭제*/
 	}
 	
 	//재료 수정
 	@PutMapping("/updateRefrigeratorProduct")
 	public ResponseEntity<String> updateRefrigeratorProduct(@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut) {
-//		RefrigeratorProdcutDTO refrigeratorProdcut = new RefrigeratorProdcutDTO();
-		System.out.println(refrigeratorProdcut);
+		System.out.println(refrigeratorProdcut);/*확인용 추후삭제*/
 		boolean result = refrigeratorService.updateRefrigeratorProduct(refrigeratorProdcut);
-		return ResponseEntity.ok("재료 정보가 성공적으로 업데이트 되었습니다");
 		
+		if (result) {
+			return ResponseEntity.ok("재료 정보가 성공적으로 업데이트 되었습니다");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("재료 정보 업데이트에 실패했습니다.");
+		}		
 	}
+	
+	
 	
 }
