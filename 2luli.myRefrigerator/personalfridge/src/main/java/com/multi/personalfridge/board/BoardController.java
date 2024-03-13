@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.multi.personalfridge.dto.BoardDTO;
-import com.multi.personalfridge.dto.UserDTO;
 
 @Controller
 public class BoardController {
@@ -51,12 +50,12 @@ public class BoardController {
 	}
 	
 	// Create
-	@GetMapping("/board")
-	public String insertForm() {
-		return "/insert";
-	}
+//	@GetMapping("/board")
+//	public String insertForm() {
+//		return "/insert";
+//	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/insertBoard")
 	public String insertBoard(BoardDTO newBoard) {
 		boolean result = service.insertBoard(newBoard);
 		
@@ -68,12 +67,12 @@ public class BoardController {
 	}
 	
 	// Update
-	@GetMapping("/board")
-	public String updateForm() {
-		return "/update";
-	}
+//	@GetMapping("/board")
+//	public String updateForm() {
+//		return "/update";
+//	}
 	
-	@PutMapping("/modify")
+	@PutMapping("/modifyBoard")
 	public String updateBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard) {
 		boolean result = false;
 		BoardDTO board = null;
@@ -95,7 +94,7 @@ public class BoardController {
 	}
 	
 	// Delete
-	@DeleteMapping("/delete")
+	@DeleteMapping("/deleteBoard")
 	public String deleteBoardByBoardNo(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO board) {
 		
 		board = service.deleteBoardByBoardNo(boardNo);
