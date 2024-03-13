@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Fruitables - Vegetable Website Template</title>
+        <title>우리집 AI 냉장고</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -197,9 +197,9 @@
         </div>
         <!-- Vesitable Shop End -->
 
-         <!-- footer start -->
-       <%@ include file="footer.jsp" %>
-        <!-- footer End -->
+		<!-- footer start -->
+		<%@ include file="footer.jsp" %>
+		<!-- footer End -->
 		
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   

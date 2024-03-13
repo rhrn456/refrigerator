@@ -65,7 +65,7 @@
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Contact</h4>
                             <p>Team : 2luli</p>
-                            <p>Members : 강수현, 김유림, 송기영,<br>양혁진, 이혜진, 조서현</p>
+                            <p>Members : 강수현, 김유림, 송기영,<br>양혁진, 조서현</p>
                             <p>Multi Campus Final Project</p>
                             <p>결제 수단</p>
                             <img src="img/payment.png" class="img-fluid" alt="">

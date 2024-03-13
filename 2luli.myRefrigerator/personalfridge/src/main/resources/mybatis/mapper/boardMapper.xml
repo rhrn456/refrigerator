@@ -2,8 +2,27 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.board.BoardMapper">
 	
-	<select id="getBoard" parameterType="_int" resultType="Board">
-		SELECT * FROM board WHERE b_category_no = #{b_category_no}
+	<select id="getAllBoardByCategoryNo" parameterType="_int" resultType="Board">
+		SELECT board_no, title, content, user_id, board_create_date, hit
+		FROM board WHERE b_category_no = #{b_category_no}
 	</select>
+	
+	<select id="getBoardByBoardNo" parameterType="_int" resultType="Board">
+		SELECT title, content, user_id, board_create_date, hit, b_category_name
+		FROM board b, board_category c WHERE b.b_category_no = c.b_category_no AND board_no = #{board_no}
+	</select>
+	
+	<insert id="insertBoard" parameterType="map">
+		INSERT INTO board(title, content, user_id, b_category_no)
+		VALUES (#{title}, #{content}, #{user_id}, #{b_category_no})
+	</insert>
+	
+	<update id="updateBoard" parameterType="map">
+		UPDATE board SET title = #{title}, content = #{content} WHERE board_no = #{board_no}
+	</update>
+	
+	<delete id="deleteBoardByBoardNo" parameterType="_int">
+		DELETE FROM board WHERE board_no = #{board_no}
+	</delete>
 	
 </mapper>

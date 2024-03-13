@@ -32,7 +32,7 @@ public class RecipeService {
 	public boolean insertRecipe(RecipeDTO recipe) {
 		try {
 			recipeMapper.insertRecipe(recipe);
-			return true; 
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		 return false; 
