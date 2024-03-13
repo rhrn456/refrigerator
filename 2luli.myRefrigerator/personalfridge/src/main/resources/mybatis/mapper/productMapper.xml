@@ -55,16 +55,23 @@
 	<select id ="getProductsBykeywordAndPage"  parameterType="map"  resultType="Product">
 	select *
 	from product
-	where special_product = 0 AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	where special_product = 0 
+	AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	<if test='category != ""'>
+         AND product_category = #{category}
+     </if>
 	LIMIT #{pageSize} OFFSET #{offset}
 	</select> 
 	
 	<!-- 일반 상품 검색 가져오기 -->
-	<select id ="getProductsBykeyword" resultType="Product">
+	<select id ="getProductsBykeyword" parameterType="map" resultType="Product">
 	SELECT *
 	FROM product
 	WHERE special_product = 0 
-	AND product_name LIKE CONCAT('%', #{product_name}, '%');
+	AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	<if test='category != ""'>
+         AND product_category = #{category}
+     </if>
 	</select>
 	
 	<!-- 일반 상품 카테고리  OR 일반 모든 상품 2Page/페이징 -->
@@ -77,11 +84,14 @@
      LIMIT #{pageSize} OFFSET #{offset}
   	</select>
   	
-  	<!-- 일반 상품 카테고리 가져 오기 -->
-  	<select id ="getProductsByCategory" resultType="Product">
+  	<!-- 일반 상품 카테고리 OR 모두 가져 오기 -->
+  	<select id ="getProductsByCategory" parameterType="map"  resultType="Product">
 	select *
 	from product
-	where product_category = #{product_category} AND special_product = 0
+	where special_product = 0
+	<if test='category != ""'>
+      AND  product_category = #{category} 
+    </if>
 	</select>
 	
 	<!-- 일반 상품 END -->
@@ -107,16 +117,23 @@
 	<select id ="getSpecialProductsBykeywordAndPage"  parameterType="map"  resultType="Product">
 	select *
 	from product
-	where special_product = 1 AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	where special_product = 1 
+	AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	 <if test='category != ""'>
+      AND  product_category = #{category} 
+     </if>
 	LIMIT #{pageSize} OFFSET #{offset}
 	</select> 
 	
 	<!-- 특가 상품 검색 가져오기-->
-	<select id ="getSpecialProductsBykeyword" resultType="Product">
+	<select id ="getSpecialProductsBykeyword" parameterType="map"  resultType="Product">
 	SELECT *
-	FROM product
-	WHERE special_product = 1 AND 
-	product_name LIKE CONCAT('%', #{product_name}, '%');
+    FROM product
+    WHERE special_product = 1 
+    AND product_name LIKE CONCAT('%', #{keyword}, '%')
+     <if test='category != ""'>
+         AND product_category = #{category}
+     </if>
 	</select>
 	
     <!-- 특가 상품 카테고리 OR 특가 모든 상품 2Page/페이징 -->
@@ -129,11 +146,14 @@
      LIMIT #{pageSize} OFFSET #{offset}
     </select>
     
-    <!-- 특가 상품 카테고리 가져오기 -->	
+    <!-- 특가 상품 카테고리 OR 특가 모든 상품 가져오기 -->	
 	<select id ="getSpecialProductsByCategory" resultType="Product">
 	select *
 	from product
-	where product_category = #{product_category} AND special_product = 1
+	where special_product = 1
+	<if test='category != ""'>
+    AND  product_category = #{category} 
+    </if>
 	</select>
     <!-- 특가 상품 END -->
     

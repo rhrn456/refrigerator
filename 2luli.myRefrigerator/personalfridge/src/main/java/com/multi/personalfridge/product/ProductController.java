@@ -25,40 +25,36 @@ public class ProductController {
 	//일반 상품 검색/페이징
 	@GetMapping("/searchProduct")
 	@ResponseBody
-	public Map<String, Object> getProductsBySearch(@RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
+	public Map<String, Object> getProductsBySearch(@RequestParam String category, @RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
-	    List<ProductDTO> products = productService.getProductsBykeywordAndPage(keyword, page, pageSize);
-	    List<ProductDTO> productList = productService.getProductsBykeyword(keyword);
+	    List<ProductDTO> products = productService.getProductsBykeywordAndPage(category, keyword, page, pageSize);
+	    List<ProductDTO> productList = productService.getProductsBykeyword(category, keyword);
 	    int totalProducts = productList.size();
 	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 	    pageRequestDTO.setTotalPages(totalPages);
 	    pageRequestDTO.setCurrentPage(page);
+	    System.out.println(products);
+	    System.out.println(pageRequestDTO);    
 	    parameters.put("products", products);
 	    parameters.put("pageRequestDTO", pageRequestDTO);
 	    return parameters;
 	}
 	
-	//일반 상품 카테고리/페이징
+	//일반 상품 전체/카테고리 페이징
 	@GetMapping("/getProductsByCategory")
 	@ResponseBody
 	public Map<String, Object> getProductsByCategory(@RequestParam String category, @RequestParam int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
-	    int totalProducts;
-	      if(category == "") {
-	    	List<ProductDTO> productList = productService.getAllProduct();
-	    	totalProducts = productList.size();
-	    }else {
-		    List<ProductDTO> productList = productService.getProductsByCategory(category);
-		    totalProducts = productList.size();  
-	    }
-	      List<ProductDTO> products = productService.getProductsByCategoryAndPage(category, page, pageSize);
-	      int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-		    pageRequestDTO.setTotalPages(totalPages);
-		    pageRequestDTO.setCurrentPage(page);
-		    parameters.put("products", products);
-		    parameters.put("pageRequestDTO", pageRequestDTO);
+	    List<ProductDTO> productList = productService.getProductsByCategory(category);
+	    List<ProductDTO> products = productService.getProductsByCategoryAndPage(category, page, pageSize);
+	    int totalProducts = productList.size();  
+	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+	    pageRequestDTO.setTotalPages(totalPages);
+	    pageRequestDTO.setCurrentPage(page);
+	    parameters.put("products", products);
+	    parameters.put("pageRequestDTO", pageRequestDTO);
 	    return parameters;
 	}
 	
@@ -73,11 +69,11 @@ public class ProductController {
 	//특가 상품 검색/페이징
 	@GetMapping("/searchSpecialProduct")
 	@ResponseBody
-	public Map<String, Object> getSpecialProductsBySearch(@RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
+	public Map<String, Object> getSpecialProductsBySearch(@RequestParam String category, @RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
-	    List<ProductDTO> products = productService.getSpecialProductsBykeywordAndPage(keyword, page, pageSize);
-	    List<ProductDTO> productList = productService.getSpecialProductsBykeyword(keyword);
+	    List<ProductDTO> products = productService.getSpecialProductsBykeywordAndPage(category, keyword, page, pageSize);
+	    List<ProductDTO> productList = productService.getSpecialProductsBykeyword(category, keyword);
 	    int totalProducts = productList.size();
 	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 	    pageRequestDTO.setTotalPages(totalPages);
@@ -93,15 +89,9 @@ public class ProductController {
 	public Map<String, Object> getSpecialProductsByCategory(@RequestParam String category, @RequestParam int page, @RequestParam int pageSize) {
 	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	    Map<String, Object> parameters = new HashMap<>();
-	    int totalProducts;
-	    if(category == "") {
-	 	    List<ProductDTO> productList = productService.getAllSepcialProduct();
-	 	    totalProducts = productList.size();
-	    }else {
-		    List<ProductDTO> productList = productService.getSpecialProductsByCategory(category);
-		    totalProducts = productList.size();
-		    }
+		List<ProductDTO> productList = productService.getSpecialProductsByCategory(category);
 	    List<ProductDTO> products = productService.getSpecialProductsByCategoryAndPage(category, page, pageSize);
+	    int totalProducts = productList.size();
 	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 	    pageRequestDTO.setTotalPages(totalPages);
 	    pageRequestDTO.setCurrentPage(page);

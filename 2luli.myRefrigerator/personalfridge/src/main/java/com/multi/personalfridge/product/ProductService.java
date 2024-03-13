@@ -37,9 +37,10 @@ public class ProductService {
     }
     
     //일반 상품 검색 페이지 보여주기
-	public List<ProductDTO> getProductsBykeywordAndPage(String keyword, int page, int pageSize) {
+	public List<ProductDTO> getProductsBykeywordAndPage(String category, String keyword, int page, int pageSize) {
 		int offset = (page - 1) * pageSize;
 	    Map<String, Object> parameters = new HashMap<>();
+	    parameters.put("category", category);
 	    parameters.put("keyword", keyword);
 	    parameters.put("pageSize", pageSize);
 	    parameters.put("offset", offset);
@@ -47,9 +48,11 @@ public class ProductService {
 	}
 	
 	//일반 상품 검색 모두 가져오기
-	public List<ProductDTO> getProductsBykeyword(String keyword) {
-		
-		return productMapper.getProductsBykeyword(keyword);
+	public List<ProductDTO> getProductsBykeyword(String category, String keyword) {
+	    Map<String, Object> parameters = new HashMap<>();
+	    parameters.put("category", category);
+	    parameters.put("keyword", keyword);
+		return productMapper.getProductsBykeyword(parameters);
 	}
 	
 	//일반 상품 카테고리 페이지 보여주기
@@ -64,8 +67,9 @@ public class ProductService {
 	
 	//일반 상품 카테고리 모두 가져오기
 	public List<ProductDTO> getProductsByCategory(String category) {
-		
-		return productMapper.getProductsByCategory(category);
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("category", category);
+		return productMapper.getProductsByCategory(parameters);
 	}
 	
     //일반 상품---------------------------------------------------------------END
@@ -88,18 +92,22 @@ public class ProductService {
 	}
 	
 	 //특가 상품 검색 페이지 보여주기
-	public List<ProductDTO> getSpecialProductsBykeywordAndPage(String keyword, int page, int pageSize) {
+	public List<ProductDTO> getSpecialProductsBykeywordAndPage( String category, String keyword, int page, int pageSize) {
 		int offset = (page - 1) * pageSize;
 	    Map<String, Object> parameters = new HashMap<>();
+	    System.out.println("카테고리" + category);
+	    parameters.put("category", category);
 	    parameters.put("keyword", keyword);
 	    parameters.put("pageSize", pageSize);
 	    parameters.put("offset", offset);
 	    return productMapper.getSpecialProductsBykeywordAndPage(parameters);
 	}
 	//특가 상품 검색 모두 가져오기
-	public List<ProductDTO> getSpecialProductsBykeyword(String keyword) {
-		
-		return productMapper.getSpecialProductsBykeyword(keyword);
+	public List<ProductDTO> getSpecialProductsBykeyword(String category, String keyword) {
+		 Map<String, Object> parameters = new HashMap<>();
+		 parameters.put("category", category);
+		 parameters.put("keyword", keyword);
+		return productMapper.getSpecialProductsBykeyword(parameters);
 	}
 	//특가 상품 카테고리 페이지 보여주기
 	public List<ProductDTO> getSpecialProductsByCategoryAndPage(String category, int page, int pageSize) {
@@ -112,8 +120,9 @@ public class ProductService {
 	}
 	//특가 상품 카테고리 모두 가져오기
 	public List<ProductDTO> getSpecialProductsByCategory(String category) {
-		
-		return productMapper.getSpecialProductsByCategory(category);
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("category", category);
+		return productMapper.getSpecialProductsByCategory(parameters);
 	}
 
 	 //특가 상품---------------------------------------------------------------END

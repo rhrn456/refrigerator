@@ -128,7 +128,7 @@
 			
 
 		<div class="col-lg-11">
-       <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 620px; ">
+       <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 490px; ">
            <c:forEach var="product" items="${productlist}">
                 <div class="card">
                 <div class="card-head"> <!-- 수정 및 삭제 버튼을 포함할 요소 -->
@@ -156,7 +156,7 @@
             </c:forEach>
             </div>
             <div class="col-12">
-                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:390px;">
+                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:130px;">
                     <!-- 총 페이지 수 계산 -->
                     <c:set var="totalPages" value="${pageRequestDTO.totalPages}" />
                     <!-- 페이지 링크 생성 -->
@@ -253,6 +253,9 @@
 <script>
     $(document).ready(function() {
         var selectedCategory = ""; // 선택된 카테고리를 저장할 변수
+	    var category ="";
+        var keyword = "";
+	    console.log("카테고리" + category);
         // 페이지 로드 시 초기 페이지 버튼 생성
         createPaginationButtons(${pageRequestDTO.totalPages}, ${currentPage});
         // 수정/삭제버튼 생성
@@ -267,7 +270,6 @@
      // 검색 버튼 클릭 및 엔터 키 이벤트를 바인딩
         function bindSearchEvents() {
             $('#searchButton').on('click', function() {
-            	console.log("클릭");
                 executeSearch();
             });
 
@@ -280,8 +282,9 @@
 
         // 검색 실행 함수
         function executeSearch() {
-            var keyword = $('#searchInput1').val().trim();
-            getProductsByKeyword(keyword, 1);
+            keyword = $('#searchInput1').val().trim();
+            console.log("검색  실행 카테고리:" + category);
+            getProductsByKeyword(category, keyword, 1);
         }
 			
 			
@@ -362,7 +365,7 @@
         // 카테고리 링크 클릭 시
          $('.col-lg-11').on('click', '.product-category a', function(e) {
 	        e.preventDefault();
-	        var category = $(this).text().trim();
+	        category = $(this).text().trim();
 	        selectedCategory = category;
 	        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
 	        console.log("카테고리 클릭: " + selectedCategory);
@@ -373,13 +376,17 @@
         // 페이지 버튼 클릭 이벤트 핸들러 등록
         $('#paginationContainer').on('click', 'a', function(e) {
             e.preventDefault();
+            console.log("페이지 버튼 클린 카테고리:" + category);
+            console.log("페이지 버튼 클린 키워드:" + keyword);
             var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
-            var keyword = $('.form-control').val();
-            if (selectedCategory === "") {
+            if (selectedCategory === "" && keyword === "") {
+            	console.log("1");
                 getProductsAll(page); // 선택된 카테고리가 없으면 전체 상품 불러오기
             } else if(keyword !== ""){
-	        	getProductsByKeyword(keyword, page);
+            	console.log("2");
+            	getProductsByKeyword(category, keyword, page);
 	        } else {
+	        	console.log("3");
 	            getProductsByCategory(selectedCategory, page);
 	        }
         });
@@ -428,14 +435,17 @@
         }
         
 		//검색한 단어로 상품 불러오기
-		function getProductsByKeyword(keyword, page) {
-			
+		function getProductsByKeyword(category, keyword, page) {
+        	console.log("검색  실행 진짜 카테고리:" + category);
+        	console.log("검색  실행 진짜 키워드:" + keyword);
+        	console.log("검색  실행 진짜 페이지:" + page);
 		    var pageSize = 12;
 		    // AJAX 요청 보내기
 		    $.ajax({
 		        type: "GET",
 		        url: "/searchProduct",
 		        data: {
+		        	category : category,
 		            keyword: keyword,
 		            page: page,
 		            pageSize: pageSize

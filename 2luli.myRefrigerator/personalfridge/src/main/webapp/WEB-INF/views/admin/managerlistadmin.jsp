@@ -57,19 +57,17 @@
 	        margin-bottom: 5px;
 	        color:black;
 	        display: flex;
-	        flex-direction: column; /* 위아래로 버튼을 배치하기 위해 필요 */
 	        
 	    }
 	
 		.cardbtn {
 		    position: absolute;
-		    top: 50%; /* 부모 요소의 상단에서 50% 떨어진 위치로 설정 */
+		    top: 48%; /* 부모 요소의 상단에서 50% 떨어진 위치로 설정 */
 		    transform: translateY(-50%); /* 버튼의 중심을 부모 요소의 중심에 맞춤 */
 		    right: 10px;
 		    font-size: 14px;
 		    text-align: center; /* 버튼을 가운데 정렬하기 위해 필요 */
 		    display: flex;
-		    flex-direction: column; /* 위아래로 버튼을 배치하기 위해 필요 */  
 		}
 		.modal-container {
 	         display: none;
@@ -115,18 +113,13 @@
                 <div class="card">
                    <div class="card-head"> <!-- 삭제 버튼을 포함할 요소 -->
                         <div class="cardbtn">
-                        	<button class="btn btn-primary update-user-btn" 
-			                        style="width: fit-content; ">사용자 전환</button>
 			       		</div>
 			        </div>
        				<div class="card-info">
                     <div class="user-id" style="display: none;">${user.user_id}</div>
        				<div class="user-name" style="display: none;">${user.user_name}</div>
                         <a>아이디 : ${user.user_id}</a>
-                        <a>이름 : ${user.user_name}</a>
-                        <a>이메일 : ${user.mail}</a>
-                        <a>주소 : ${user.adress}</a>
-                        <a>핸드폰 : ${user.phone}</a>
+                        <a style=margin-left:10px;>이름 : ${user.user_name}</a>
                         </div>
                 </div>
             </c:forEach>
@@ -177,6 +170,7 @@
     
 <script>
 $(document).ready(function() {
+    var keyword = "";
     // 페이지 로드 시 초기 페이지 버튼 생성
     createPaginationButtons(${pageRequestDTO.totalPages}, ${currentPage});
     // 수정/삭제버튼 생성
@@ -199,7 +193,7 @@ $(document).ready(function() {
 
     // 검색 실행 함수
     function executeSearch() {
-        var keyword = $('#searchInput1').val().trim();
+         keyword = $('#searchInput1').val().trim();
          getManagerByKeyword(keyword, 1);
     }
 
@@ -207,7 +201,6 @@ $(document).ready(function() {
     $('#paginationContainer').on('click', 'a', function(e) {
         e.preventDefault();
         var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
-        var keyword = $('.form-control').val();
         if (keyword !== "") {
         	getManagerByKeyword(keyword, page); 
         } else {
@@ -270,10 +263,7 @@ $(document).ready(function() {
                 '<div class="user-id" style="display: none;">' + user.user_id + '</div>' +
                 '<div class="user-name" style="display: none;">' + user.user_name + '</div>' +
                 '<a>아이디 : ' +user.user_id + '</a>' +
-                '<a>이름 : ' + user.user_name + '</a>' +
-                '<a>이메일 : ' + user.mail + '</a>' +
-                '<a>주소 : ' + user.adress + '</a>' +
-                '<a>핸드폰 : ' + user.phone + '</a>' +
+                '<a style=margin-left:10px;>이름 : ' + user.user_name + '</a>' +
                 '</div>' +
                 '</div>';
             UserListContainer.append(userHTML); // 새로운 상품을 기존의 상품 목록에 추가
@@ -299,7 +289,6 @@ $(document).ready(function() {
     
     //검생창 생성 함수
     function initializeSearchField() {
-    	console.log("검색 생성");
         var inputGroupHTML = `
         	<div class="input-group mb-3" style="margin-left:140px;">
             <div class="input-group-prepend">

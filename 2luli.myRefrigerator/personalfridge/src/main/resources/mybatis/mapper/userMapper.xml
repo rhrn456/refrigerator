@@ -63,6 +63,7 @@
 	<select id="getAlluserByKeyword" parameterType="map" resultType="User">
         SELECT * FROM user
         WHERE job_num = 0 
+        <if test='keyword != ""'>
 		AND (
             user_id LIKE CONCAT('%', #{keyword}, '%')
             OR user_name LIKE CONCAT('%', #{keyword}, '%')
@@ -70,6 +71,7 @@
             OR adress LIKE CONCAT('%', #{keyword}, '%')
             OR phone LIKE CONCAT('%', #{keyword}, '%')
         )
+        </if>
     </select>
     
 	<!-- 모든 회원 검색 조회 페이지 -->

@@ -93,20 +93,14 @@ public class AdminController {
 	}
 	
 	//사용자 리스트 페이지
-	@GetMapping("getAllUserAndPage")
+	@GetMapping("/getAllUserAndPage")
 	@ResponseBody
 	public Map<String, Object> userListAndPageAdmin(@RequestParam String keyword, @RequestParam int page, @RequestParam int pageSize, Model model) {
 	   PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	   Map<String, Object> parameters = new HashMap<>();
-	   int totalProducts;
-	   if(keyword == "") {
-		   List<UserDTO> userpage = userService.getAlluser();
-		   totalProducts = userpage.size();
-	    }else {
-	       List<UserDTO> userpage = userService.getAlluserByKeyword(keyword);
-		   totalProducts = userpage.size();
-		    }
+	   List<UserDTO> userpage = userService.getAlluserByKeyword(keyword);
    	   List<UserDTO> userlist = userService.getAllUserByKewordPage(keyword, page, pageSize);
+   	   int totalProducts = userpage.size();
 	   int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
 	   pageRequestDTO.setTotalPages(totalPage);
 	   pageRequestDTO.setCurrentPage(page);
@@ -163,15 +157,9 @@ public class AdminController {
 	public Map<String, Object> ManagerListAndPageAdmin(@RequestParam String keyword, @RequestParam int page, @RequestParam int pageSize, Model model) {
 	   PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	   Map<String, Object> parameters = new HashMap<>();
-	   int totalProducts;
-	   if(keyword == "") {
-		   List<UserDTO> userpage = adminService.getAllManager();
-		   totalProducts = userpage.size();
-	    }else {
-	       List<UserDTO> userpage = adminService.getAllManagerByKeyword(keyword);
-		   totalProducts = userpage.size();
-		    }
+	   List<UserDTO> userpage = adminService.getAllManagerByKeyword(keyword);
 	   List<UserDTO> userlist = adminService.getAllManagerByKeywordPage(keyword, page, pageSize);
+	   int totalProducts = userpage.size();
 	   int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
 	   pageRequestDTO.setTotalPages(totalPage);
 	   pageRequestDTO.setCurrentPage(page);

@@ -83,7 +83,7 @@
         
         
 		<!-- 레시피 추가 박스 -->
-			<div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 320px;">
+			<div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 200px;">
 			    <div class="col-xl-8 col-lg-7">
 			        <div class="card shadow mb-4">
 			            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -91,23 +91,20 @@
 			            </div>
 			            <!-- Card Body -->
 			            <div class="card-body">   
-			                <input type="text" id="recipe_name" placeholder="레시피 이름" class="form-control mb-3">
-			                <textarea id="recipe_content" placeholder="레시피 내용" class="form-control mb-3" rows="5"></textarea>
-			                <input type="text" id="ingredient" placeholder="재료" class="form-control mb-3">
+			                <input type="text" id="recipe_name" placeholder="레시피 이름" class="form-control mb-3" required>
+			                <textarea id="recipe_content" placeholder="레시피 내용" class="form-control mb-3" rows="5" required></textarea>
+			                <input type="text" id="ingredient" placeholder="재료" class="form-control mb-3" required>
 			                <div class="dropdown">
 			                    <select id="recipe_category" class="form-control mb-3" style="width: 180px;">
 			                        <option value="" selected disabled hidden>레시피 카테고리</option>
-			                        <option value="한식">한식</option>
-			                        <option value="중식">중식</option>
-			                        <option value="양식">양식</option>
-			                        <option value="일식">일식</option>
-			                        <option value="베트남식">베트남식</option>
-			                        <option value="유럽식">유럽식</option>
+			                        <option value="밥">밥</option>
+			                        <option value="국/찌개">극/찌개</option>
+			                        <option value="반찬">반찬</option>
 			                    </select>
 			                    <div class="arrow-icon">&#9660;</div>
 			                </div>
-			                <input type="text" id="recipe_img" placeholder="음식 이미지" class="form-control mb-3">
-			                <input type="text" id="nutrition_facts" placeholder="영양 성분" class="form-control mb-3">
+			                <input type="text" id="recipe_img" placeholder="음식 이미지" class="form-control mb-3" required>
+			                <input type="text" id="nutrition_facts" placeholder="영양 성분" class="form-control mb-3" required>
 			                <!-- 확인 버튼 -->
 			                <button id="confirmButton" class="btn btn-primary">등록</button>
 			            </div>
@@ -163,7 +160,11 @@
       var recipe_category = document.getElementById('recipe_category').value;
       var recipe_img = document.getElementById('recipe_img').value;
       var nutrition_facts = document.getElementById('nutrition_facts').value;
-
+	
+      if (recipe_name.trim() === '' || recipe_content.trim() === '' || ingredient.trim() === '' || recipe_category.trim() === '' || recipe_img.trim() === '' || nutrition_facts.trim() === '') {
+          alert('빈칸에 입력해주세요');
+          return; // 빈 값이 있으면 함수 종료
+      }
       // Data validation can be added here
 
       // Redirect to /insertRecipe with data

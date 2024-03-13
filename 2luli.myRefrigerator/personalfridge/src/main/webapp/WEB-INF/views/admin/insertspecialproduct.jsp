@@ -83,7 +83,7 @@
         
         
 		<!-- 재료 추가 박스 -->
-			<div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 320px;">
+			<div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 200px;">
 			    <div class="col-xl-8 col-lg-7">
 			        <div class="card shadow mb-4">
 			            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

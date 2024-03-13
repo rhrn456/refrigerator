@@ -41,6 +41,9 @@
     </head>
 
  <body>
+ <header>
+ 
+ </header>
   		<!-- Slidebar start -->
        <%@ include file="adminslidebar.jsp" %>
         <!-- Slidebar End -->
