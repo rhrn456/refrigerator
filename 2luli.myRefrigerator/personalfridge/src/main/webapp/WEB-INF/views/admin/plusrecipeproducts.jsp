@@ -36,6 +36,16 @@
     <!-- Navbar End -->
 
     <style>
+   	   	.card{
+   	   	margin-top:10px;
+   	   	}
+	    .card-info {
+	        font-size: 20px;
+	        display: flex;
+	        justify-content: space-between; 
+	        color:black;
+	        
+	    }
         /* Dropdown styles */
         .dropdown {
             position: relative;
@@ -71,6 +81,44 @@
             right: 10px;
             cursor: pointer;
         }
+        
+        /* 모달 스타일 */
+		.modal {
+		  display: none; /* 모달 숨김 */
+		  position: fixed;
+		  z-index: 1;
+		  left: 50%;
+		  top: 50%;
+		  transform: translate(-50%, -50%);
+		  width: 100%;
+		  height: 100%;
+		  overflow: hidden;
+		  background-color: rgba(0, 0, 0, 0.4);
+		}
+		
+		.modal-content {
+		  background-color: #fefefe;
+		  margin: 10% auto;
+		  padding: 20px;
+		  border: 1px solid #888;
+		  width: 400px;
+		  height:680px;
+		}
+		
+		.close {
+		  color: #aaaaaa;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+		
+		.close:hover,
+		.close:focus {
+		  color: #000;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+
     </style>
 </head>
 
@@ -80,25 +128,20 @@
     <!-- Slidebar End -->
 
     <!-- 레시피 추가 박스 -->
-    <div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 320px;">
+    <div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 190px;">
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">레시피 등록</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">레시피 재료 등록</h6>
                 </div>
+  
                 <!-- Card Body -->
                 <div class="card-body">   
-                
                     <input id="recipe_id" value="${onerecipe.recipe_id}" class="form-control mb-3" readonly>
-                    <div class="dropdown">
-                        <select id="recipe_ingredient" class="form-control mb-3" style="width: 180px;">
-                            <option value="" selected disabled hidden>레시피 재료</option>
-                            <c:forEach items="${productList}" var="product">
-                                <option value="${product.product_id}">${product.product_name}</option>
-                            </c:forEach>
-                        </select>
-                        <div class="arrow-icon" onclick="toggleDropdown()">&#9660;</div>
-                    </div>
+        				<div style="display: flex; flex-direction: row; margin-bottom:12px;">
+						    <button id="openModalButton" class="btn btn-primary">모달 열기</button>
+						    <input type="text" id="selectedIngredient" class="form-control" style="margin-left:5px;width: 180px;" placeholder="레시피 재료" readonly>
+						</div>
                     <input type="text" id="product_quantity" placeholder="수량" class="form-control mb-3">
                     <!-- 확인 버튼 -->
                     <button id="confirmButton" class="btn btn-primary">등록</button>
@@ -109,8 +152,39 @@
             </div>
         </div>
     </div>
+
     <!-- 레시피 추가 박스 끝 -->
-                
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    	<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
+		<c:set var="pageSize" value="12" />
+		<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
+    <div class="col-lg-11" style="margin-left:20px;">
+       <div class="row justify-content-center">
+ 		 <c:forEach var="product" items="${productlist}">
+ 		<div class="card">
+ 		 <div class="card-info">
+                     <div class="product-id" style="display: none;">${product.product_id}</div>
+       				<div class="product-name" style="display: none;">${product.product_name}</div>
+                        <a>${product.product_name}</a>
+                    </div>
+                </div>
+ 		 </c:forEach>
+          </div>
+          <div class="col-12">
+                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" >
+                    <!-- 총 페이지 수 계산 -->
+                    <c:set var="totalPages" value="${pageRequestDTO.totalPages}" />
+                    <!-- 페이지 링크 생성 -->
+                    <c:forEach var="pageNumber" begin="1" end="${totalPages}">
+                        <a href="#" class="rounded ${pageNumber == currentPage ? 'active' : ''}">${pageNumber}</a>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
     <!-- footer start -->
     <%@ include file="../footer.jsp" %>
     <!-- footer End -->
@@ -129,15 +203,155 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-        // 저장된 레시피 제품들의 배열
+
+    var category ="";
+    var keyword = "";
+    var page = 1;
+    initializeSearchField();
+    bindSearchEvents();
+    
+    // openModalButton에 클릭 이벤트 연결
+    document.getElementById('openModalButton').onclick = openModal;
+
+    // 모달 닫기 버튼에 클릭 이벤트 연결
+    document.getElementsByClassName('close')[0].onclick = closeModal;
+    
+ // 모달 열기 함수
+    function openModal() {
+        document.getElementById('myModal').style.display = 'block';
+        getProductsByKeyword(category, keyword, page);
+    }
+
+    // 모달 닫기 함수
+    function closeModal() {
+        document.getElementById('myModal').style.display = 'none';
+        $('#searchInput1').val(''); // 검색어 비우기
+        category = ""; // 카테고리 초기화
+        keyword = ""; // 키워드 초기화
+        page = 1; // 페이지 번호 초기화
+        getProductsByKeyword(category, keyword, page); // 초기화된 상태로 상품 불러오기
+    }
+
+	
+	//중복 방지
+    function bindSearchEvents() {
+    	
+    	 
+        $('#searchButton').off().on('click', function() {
+            console.log("실행");
+            executeSearch();
+        });
+
+        $('#searchInput1').off().on('keypress', function(e) {
+            if (e.which === 13) { // Enter 키를 누르면
+                executeSearch();
+            }
+        });
+    }
+
+		$('#paginationContainer').on('click', 'a', function(e) {
+			 e.preventDefault();
+			 getProductsByKeyword(category, keyword, page);
+		
+		});
+		
+		
+		// 페이지 버튼 클릭 이벤트 핸들러 등록
+		$('#paginationContainer').on('click', 'a', function(e) {
+		    e.preventDefault();
+		    page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
+		    getProductsByKeyword(category, keyword, page);
+		
+		});
+		
+		// 검색 실행 함수
+		function executeSearch() {
+		    keyword = $('#searchInput1').val().trim();
+		    getProductsByKeyword(category, keyword, 1);
+		}
+		
+		//검색한 단어로 상품 불러오기
+		function getProductsByKeyword(category, keyword, page) {
+		
+		    var pageSize = 10;
+		    // AJAX 요청 보내기
+		    $.ajax({
+		        type: "GET",
+		        url: "/searchProduct",
+		        data: {
+		        	category : category,
+		            keyword: keyword,
+		            page: page,
+		            pageSize: pageSize
+		        },
+		        success: function(response) {
+		        	updateProducts(response);
+		        },
+		        error: function(xhr, status, error) {
+		            // 에러 처리 로직
+		            console.error(error);
+		        }
+		    });
+		}
+		
+		// 받아온 상품 정보를 업데이트하는 함수
+		function updateProducts(response) {
+			var productsContainer = $('.col-lg-11 .row');
+		    productsContainer.empty(); // 기존 상품 목록 비우기
+			
+		    // 받아온 데이터를 페이지에 맞게 출력
+			$.each(response.products, function(index, product) {
+			    // 상품 정보를 HTML로 생성하는 코드
+			    var productHTML = '<div class="card">' +
+			        '<div class="card-info">' +
+			        '<div class="product-id" style="display: none;">' + product.product_id + '</div>' +
+			        '<div class="product-name" style="display: none;">' + product.product_name + '</div>' +
+			        '<a style="margin-top:4px;">' + product.product_name + '</a>' + 
+			        '<button id="confirmButton3" class="btn plus-btn"style="font-size:15px;">추가</button>' + // 추가 버튼 추가
+			        '</div>' +
+			        '</div>';
+			    productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+			});
+		    // 페이징 버튼 업데이트
+		    createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
+		    bindSearchEvents();
+		}
+		
+		// 페이지 버튼 생성 함수
+		function createPaginationButtons(totalPages, currentPage) {
+		    var paginationContainer = $('#paginationContainer');
+		    paginationContainer.empty(); // 기존 페이지 버튼 제거
+		    // 페이지 수만큼 버튼 생성
+		    for (var i = 1; i <= totalPages; i++) {
+		        var button = $('<a href="#" class="rounded" style="margin-top:-30px;" ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
+		        paginationContainer.append(button);
+		    }
+		}
+		
+		//검생창 생성 함수
+		function initializeSearchField() {
+		    var inputGroupHTML = `
+		        <div class="input-group mb-3">
+		            <input type="text" class="form-control" style="margin-botto:5px;" placeholder="상품 검색" id="searchInput1">
+		            <div class="input-group-append">
+		                <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
+		            </div>
+		        </div>`;
+		    // 새로운 입력 필드 추가
+		    $('.col-lg-11').prepend(inputGroupHTML);
+		   
+		}
+
+// 저장된 레시피 제품들의 배열
         var recipeProducts = [];
         var recipeItems = [];
 		//데이터 변수에 저장
         function addProduct() {
             var recipe_id = document.getElementById('recipe_id').value;
-            var product_id = document.getElementById('recipe_ingredient').value;
-            var product_name = document.getElementById('recipe_ingredient').options[document.getElementById('recipe_ingredient').selectedIndex].text;
+            var product_id = $('#selectedIngredient').data('product-id');
+            var product_name = $('#selectedIngredient').val();
             var product_quantity = document.getElementById('product_quantity').value;
+
 			//전송할 데이터
             var recipeProduct = {
             	recipe_id : recipe_id,
@@ -149,12 +363,13 @@
                 product_name : product_name,
                 product_quantity : product_quantity
             };
-            recipeProducts.push(recipeProduct);
+           
             recipeItems.push(recipeItem);
+            recipeProducts.push(recipeProduct);
             renderProductList();
 			//완료되면 초기화
             document.getElementById('product_quantity').value = '';
-            document.getElementById('recipe_ingredient').value = '';
+            document.getElementById('selectedIngredient').value = '';
         }
         
         //레시피 재료 삭제
@@ -164,7 +379,27 @@
             renderProductList(); 
         }
         function sendProducts() {
+        	 if (recipeProducts.length === 0) {
+        	        alert('빈칸에 입력해주세요');
+        	        return;
+        	    }
+
+        	    var isEmpty = false;
+        	    recipeProducts.forEach(function(product) {
+        	        if (!product.recipe_id || !product.product_id || !product.product_quantity) {
+        	            // 빈 값이 하나라도 있으면 isEmpty를 true로 설정
+        	            isEmpty = true;
+        	            return; // 반복문 종료
+        	        }
+        	    });
+
+        	    if (isEmpty) {
+        	        alert('빈칸에 입력해주세요');
+        	        return;
+        	    }
+
             var productListString = JSON.stringify(recipeProducts);
+            console.log(productListString);
             window.location.href = '/RecipeProductPlus?recipeProducts=' + encodeURIComponent(productListString);
         }
         	
@@ -191,10 +426,28 @@
                 productList.appendChild(productListItem);
             });
         }
+        
+        $(document).on('click', '#confirmButton3', function() {
+            var selectedProductName = $(this).siblings('.product-name').text(); // 선택된 제품명
+            var selectedProductId = $(this).siblings('.product-id').text();
+            console.log("실행");
+            selectItem(selectedProductName, selectedProductId);
+        });
+        function selectItem(selectedProductName,selectedProductId) {
+            
+            // 선택된 제품명과 ID를 선택된 재료 입력 필드에 설정
+            $('#selectedIngredient').val(selectedProductName);
+            $('#selectedIngredient').attr('data-product-id', selectedProductId);
+            console.log(selectedProductName);
+            console.log(selectedProductId);
 
+            // 모달 닫기
+            closeModal();
+        }
         // 버튼 클릭 이벤트
         document.getElementById('confirmButton').addEventListener('click', sendProducts);
         document.getElementById('confirmButton2').addEventListener('click', addProduct);
+        
     </script>
 
 </body>

@@ -23,13 +23,13 @@ public interface ProductMapper {
 	List<ProductDTO> getProductsBykeywordAndPage(Map parameters);
 	
 	//일반 상품 검색 가져 오기
-	List<ProductDTO> getProductsBykeyword(String keyword);
+	List<ProductDTO> getProductsBykeyword(Map parameters);
 	
 	//일반 상품 카테고리/페이징
 	List<ProductDTO> getProductsByCategoryAndPage(Map parameters);
 	
 	//일반 상품 카테고리 가져 오기
-	List<ProductDTO> getProductsByCategory(String category);
+	List<ProductDTO> getProductsByCategory(Map parameters);
 	//일반 상품 --------------------------------------------------------------END
 	
 	//특가 상품 --------------------------------------------------------------START
@@ -44,13 +44,13 @@ public interface ProductMapper {
 	List<ProductDTO> getSpecialProductsBykeywordAndPage(Map parameters);
 
 	//특가 상품 검색 가져 오기
-	List<ProductDTO> getSpecialProductsBykeyword(String keyword);
+	List<ProductDTO> getSpecialProductsBykeyword(Map parameters);
 
 	//특가 상품 카테고리/페이징
 	List<ProductDTO> getSpecialProductsByCategoryAndPage(Map parameters);
 
 	//특가 상품 카테고리 가져 오기
-	List<ProductDTO> getSpecialProductsByCategory(String category);
+	List<ProductDTO> getSpecialProductsByCategory(Map parameters);
 
 
 	//특가 상품 --------------------------------------------------------------END

@@ -83,11 +83,11 @@
         
         
 		<!-- 재료 추가 박스 -->
-			<div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 320px;">
+			<div class="row justify-content-center" style="margin-top: 200px; width: 80%; margin-left: 190px;">
 			    <div class="col-xl-8 col-lg-7">
 			        <div class="card shadow mb-4">
 			            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			                <h6 class="m-0 font-weight-bold text-primary">재료 등록</h6>
+			                <h6 class="m-0 font-weight-bold text-primary">상품 등록</h6>
 			            </div>
 			            <!-- Card Body -->
 			            <div class="card-body">   

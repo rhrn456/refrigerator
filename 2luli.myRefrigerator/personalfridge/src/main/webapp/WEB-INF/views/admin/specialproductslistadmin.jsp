@@ -128,7 +128,7 @@
 		<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
 		
 		<div class="col-lg-11">
-       <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 620px; ">
+       <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 490px; ">
            <c:forEach var="product" items="${productlist}">
                 <div class="card">
                    <div class="card-head"> <!-- 수정 및 삭제 버튼을 포함할 요소 -->
@@ -156,13 +156,45 @@
             </c:forEach>
             </div>
             <div class="col-12">
-                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:390px;">
+                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:130px;">
                     <!-- 총 페이지 수 계산 -->
                     <c:set var="totalPages" value="${pageRequestDTO.totalPages}" />
                     <!-- 페이지 링크 생성 -->
-                    <c:forEach var="pageNumber" begin="1" end="${totalPages}">
-                        <a href="#" class="rounded ${pageNumber == currentPage ? 'active' : ''}">${pageNumber}</a>
-                    </c:forEach>
+                   <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:130px;">
+					    <!-- 페이지 링크 생성 -->
+					    <c:forEach var="pageNumber" begin="1" end="${totalPages}">
+					        <a href="#" class="rounded ${pageNumber == currentPage ? 'active' : ''}">${pageNumber}</a>
+					    </c:forEach>
+<%--     페이지 화살표링크
+	<div class="row justify-content-center">
+			<div class="col-auto">
+				<nav class="page navigation">
+					<ul class="pagination">
+						<c:if test="${pageInfo.prev}">
+							<li class="page-item">
+								<a class="page-link" aria-label="Previous" 
+									href="/page?pageNum=${pageInfo.startPage - 1}&amount=${pageInfo.pageRequest.amount}">Prev</a>
+							</li>
+						</c:if>
+						<c:forEach var="num" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+							<li class="page-item ${pageInfo.pageRequest.pageNum == num ? "active" : ""}">
+								<a class="page-link" href="/page?pageNum=${num}&amount=10">${num}</a>
+							</li>
+						</c:forEach>
+						
+						<c:if test="${pageInfo.next}">
+							<li class="page-item next">
+								<a class="page-link" aria-label="next" 
+									href="/page?pageNum=${pageInfo.endPage + 1}&amount=${pageInfo.pageRequest.amount}">Next</a>
+							</li>
+						</c:if>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					 --%>
+
+					</div>
                 </div>
             </div>
         </div>
@@ -252,9 +284,8 @@
     <script src="js/main.js"></script>
 <script>
 	$(document).ready(function() {
-	    var selectedCategory = ""; // 선택된 카테고리를 저장할 변수
 	    var category ="";
-	    console.log(category);
+	    var keyword = "";
 	    // 페이지 로드 시 초기 페이지 버튼 생성
 	    createPaginationButtons(${pageRequestDTO.totalPages}, ${currentPage});
 	    // 수정/삭제버튼 생성
@@ -265,6 +296,8 @@
 	    //검색 이벤트 생성
         bindSearchEvents();
 
+	    
+	    
      // 검색 버튼 클릭 및 엔터 키 이벤트를 바인딩
         function bindSearchEvents() {
             $('#searchButton').on('click', function() {
@@ -281,9 +314,9 @@
         // 검색 실행 함수
         function executeSearch() {
             var keyword = $('#searchInput1').val().trim();
-            getProductsByKeyword(keyword, 1);
+            getSpecialProductsByKeyword(category, keyword, 1);
+
         }
-		
         //제품 수정 모달
  		function openProductModal(productId) {
             // AJAX 요청 보내기
@@ -362,10 +395,10 @@
          $('.col-lg-11').on('click', '.product-category a', function(e) {
 	        e.preventDefault();
 	        category = $(this).text().trim();
-	        selectedCategory = category;
+	        keyword = "";
 	        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
 	        // AJAX 요청 보내기
-	        getSpecialProductsByCategory(selectedCategory, 1); // 페이지 번호 1로 초기화
+	        getSpecialProductsByCategory(category, 1); // 페이지 번호 1로 초기화
    		 });
 		
         
@@ -374,12 +407,12 @@
              e.preventDefault();
              var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
              var keyword = $('.form-control').val();
-             if (selectedCategory === "") {
+             if (category === "" && keyword === "") {
             	 getSpeicalProductsAll(page); // 선택된 카테고리가 없으면 전체 상품 불러오기
              } else if(keyword !== ""){
-            	 getSpecialProductsByKeyword(keyword, page);
+            	 getSpecialProductsByKeyword(category, keyword, page);
  	        } else {
-           		 getSpecialProductsByCategory(selectedCategory, page);
+           		 getSpecialProductsByCategory(category, page);
  	        }
          });
 
@@ -423,14 +456,14 @@
             });
         }
 		
-        function getSpecialProductsByKeyword(keyword, page) {
-			
+        function getSpecialProductsByKeyword(category, keyword, page) {
 		    var pageSize = 12;
 		    // AJAX 요청 보내기
 		    $.ajax({
 		        type: "GET",
 		        url: "/searchSpecialProduct",
 		        data: {
+		        	category : category,
 		            keyword: keyword,
 		            page: page,
 		            pageSize: pageSize
@@ -537,30 +570,8 @@
 		        }
 		    });
 		}
-        
-	      //검색 페이지 
-		// 검색 버튼 클릭 시 검색 실행
-			$('#searchButton').on('click', function() {
-			    executeSearch();
-			    console.log("실행");
-			});
-			
-			// Enter 키를 누를 때 검색 실행
-			$('#searchInput1').on('keypress', function(e) {
-			    if (e.which === 13) { // Enter 키를 누르면
-			        executeSearch();
-			        console.log("실행");
-			    }
-			});
-			// 검색 실행 함수
-			function executeSearch() {
-				 console.log("실행");
-			    var keyword = $('#searchInput1').val().trim();
-			    	//document.getElementById("searchInput1").value;
-			    //$('#searchInput').val().trim();	  
-			        getSpecialProductsByKeyword(keyword, 1);
-			  
-			}
+
+
         // 카테고리를 그리는 함수
         function drawCategories() {
             var categoryHTML = `
@@ -595,11 +606,6 @@
                         <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
                     </div>
                 </div>`;
-
-            // 기존 입력 필드가 있다면 삭제
-            $('#searchInput1').remove();
-            $('#searchButton').remove();
-
             // 새로운 입력 필드 추가
             $('.col-lg-11 .row').prepend(inputGroupHTML);
 
