@@ -104,9 +104,6 @@
        <%@ include file="adminslidebar.jsp" %>
         <!-- Slidebar End -->
         
-        	<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
-		<c:set var="pageSize" value="12" />
-		<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
 		
 		<div class="col-lg-11">
        <div class="row justify-content-center" style="margin-top: 200px; width: 40%; margin-left: 620px; ">
@@ -125,14 +122,40 @@
                 </div>
             </c:forEach>
             </div>
-            <div class="col-12">
-                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:170px;">
-                    <!-- 총 페이지 수 계산 -->
-                    <c:set var="totalPages" value="${pageRequestDTO.totalPages}" />
-                    <!-- 페이지 링크 생성 -->
-                    <c:forEach var="pageNumber" begin="1" end="${totalPages}">
-                        <a href="#" class="rounded ${pageNumber == currentPage ? 'active' : ''}">${pageNumber}</a>
-                    </c:forEach>
+             <div class="col-12">
+                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:130px;" >
+	                 <!-- 총 페이지 수 계산 -->
+                    <c:set var="totalPages" value="${pageInfo.pageAmount}" />
+					<div class="col-auto">
+					    <nav class="page navigation">
+					        <ul class="pagination">
+					            <!-- Prev 버튼 -->
+					            <c:if test="${pageInfo.prev}">
+					                <li class="page-item">
+					                    <a class="page-link rounded ${pageInfo.startPage - 1 == pageInfo.currentPage ? 'active' : ''}"
+					                       href="#" data-value="${pageInfo.startPage - 1}" aria-label="Previous">Prev</a>
+					                </li>
+					            </c:if>
+					            
+					            <!-- 페이지 버튼 -->
+					            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
+					                <li class="page-item">
+					                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
+					                        ${pageNumber}
+					                    </a>
+					                </li>
+					            </c:forEach>
+					            
+					            <!-- Next 버튼 -->
+					            <c:if test="${pageInfo.next}">
+					                <li class="page-item next">
+					                    <a class="page-link rounded ${pageInfo.endPage + 1 == pageInfo.currentPage ? 'active' : ''}"
+					                       href="#" data-value="${pageInfo.endPage + 1}" aria-label="next">Next</a>
+					                </li>
+					            </c:if>
+					        </ul>
+					    </nav>
+                      </div>
                 </div>
             </div>
         </div>
@@ -183,8 +206,7 @@
 <script>
 $(document).ready(function() {
     var keyword = "";
-    // 페이지 로드 시 초기 페이지 버튼 생성
-    createPaginationButtons(${pageRequestDTO.totalPages}, ${currentPage});
+    var page = 1;
     // 수정/삭제버튼 생성
     addUpdateAndDeleteButtons();
     initializeSearchField();
@@ -212,7 +234,11 @@ $(document).ready(function() {
     // 페이지 버튼 클릭 이벤트 핸들러 등록
     $('#paginationContainer').on('click', 'a', function(e) {
         e.preventDefault();
-        var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
+        var page = $(this).data('value'); // 클릭된 링크의 data-value 속성 값을 가져오기
+        if (page === 'Prev' || page === 'Next') {
+		        // Prev 또는 Next 링크를 클릭한 경우
+		        page = $(this).attr('value');
+		    } 
         if (keyword !== "") {
         	getUserByKeyword(keyword, page); 
         } else {
@@ -282,22 +308,44 @@ $(document).ready(function() {
             UserListContainer.append(userHTML); // 새로운 상품을 기존의 상품 목록에 추가
         });
 
+        $('#paginationContainer').empty();
         // 페이징 버튼 업데이트
-        createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
+        createPaginationButtons(response.pageInfo);
         addUpdateAndDeleteButtons();
         initializeSearchField();
         bindSearchEvents();
     }
 
     // 페이지 버튼 생성 함수
-    function createPaginationButtons(totalPages, currentPage) {
+    function createPaginationButtons(pageInfo) {
         var paginationContainer = $('#paginationContainer');
-        paginationContainer.empty(); // 기존 페이지 버튼 제거
-        // 페이지 수만큼 버튼 생성
-        for (var i = 1; i <= totalPages; i++) {
-            var button = $('<a href="#" class="rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
-            paginationContainer.append(button);
+        var paginationHTML =
+            '<div class="col-auto">' +
+            '<nav class="page navigation">' +
+            '<ul class="pagination">';
+
+        if (pageInfo.prev) {
+            paginationHTML += '<li class="page-item">' +
+                '<a class="page-link rounded ' + (pageInfo.startPage - 1 === pageInfo.currentPage ? 'active' : '') + '" aria-label="Previous" data-value="' + (pageInfo.startPage - 1) + '" href="#">Prev</a>' +
+                '</li>';
         }
+
+        for (var num = pageInfo.startPage; num <= pageInfo.endPage; num++) {
+            paginationHTML += '<li class="page-item ' + (pageInfo.currentPage == num ? "active" : "") + '">' +
+                '<a class="page-link rounded ' + (num == pageInfo.currentPage ? 'active' : '') + '" href="#" data-value="' + num + '">' + num + '</a>' +
+                '</li>';
+        }
+
+        if (pageInfo.next) {
+            paginationHTML += '<li class="page-item next">' +
+                '<a class="page-link rounded" aria-label="next" data-value="' + (pageInfo.endPage + 1) + '" href="#">Next</a>' +
+                '</li>';
+        }
+
+        paginationHTML += '</ul>' +
+            '</nav>' +
+            '</div>';
+        paginationContainer.append(paginationHTML);
     }
 	
     //검생창 생성 함수

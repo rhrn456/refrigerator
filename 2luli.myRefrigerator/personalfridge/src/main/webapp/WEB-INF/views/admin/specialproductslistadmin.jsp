@@ -123,9 +123,7 @@
        <%@ include file="adminslidebar.jsp" %>
         <!-- Slidebar End -->
         
-        	<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
-		<c:set var="pageSize" value="12" />
-		<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
+  
 		
 		<div class="col-lg-11">
        <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 490px; ">
@@ -155,46 +153,40 @@
                 </div>
             </c:forEach>
             </div>
-            <div class="col-12">
-                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:130px;">
-                    <!-- 총 페이지 수 계산 -->
-                    <c:set var="totalPages" value="${pageRequestDTO.totalPages}" />
-                    <!-- 페이지 링크 생성 -->
-                   <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:130px;">
-					    <!-- 페이지 링크 생성 -->
-					    <c:forEach var="pageNumber" begin="1" end="${totalPages}">
-					        <a href="#" class="rounded ${pageNumber == currentPage ? 'active' : ''}">${pageNumber}</a>
-					    </c:forEach>
-<%--     페이지 화살표링크
-	<div class="row justify-content-center">
-			<div class="col-auto">
-				<nav class="page navigation">
-					<ul class="pagination">
-						<c:if test="${pageInfo.prev}">
-							<li class="page-item">
-								<a class="page-link" aria-label="Previous" 
-									href="/page?pageNum=${pageInfo.startPage - 1}&amount=${pageInfo.pageRequest.amount}">Prev</a>
-							</li>
-						</c:if>
-						<c:forEach var="num" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
-							<li class="page-item ${pageInfo.pageRequest.pageNum == num ? "active" : ""}">
-								<a class="page-link" href="/page?pageNum=${num}&amount=10">${num}</a>
-							</li>
-						</c:forEach>
-						
-						<c:if test="${pageInfo.next}">
-							<li class="page-item next">
-								<a class="page-link" aria-label="next" 
-									href="/page?pageNum=${pageInfo.endPage + 1}&amount=${pageInfo.pageRequest.amount}">Next</a>
-							</li>
-						</c:if>
-								</ul>
-							</nav>
-						</div>
-					</div>
-					 --%>
-
-					</div>
+              <div class="col-12">
+                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" style="margin-left:130px;" >
+	                 <!-- 총 페이지 수 계산 -->
+                    <c:set var="totalPages" value="${pageInfo.pageAmount}" />
+					<div class="col-auto">
+					    <nav class="page navigation">
+					        <ul class="pagination">
+					            <!-- Prev 버튼 -->
+					            <c:if test="${pageInfo.prev}">
+					                <li class="page-item">
+					                    <a class="page-link rounded ${pageInfo.startPage - 1 == pageInfo.currentPage ? 'active' : ''}"
+					                       href="#" data-value="${pageInfo.startPage - 1}" aria-label="Previous">Prev</a>
+					                </li>
+					            </c:if>
+					            
+					            <!-- 페이지 버튼 -->
+					            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
+					                <li class="page-item">
+					                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
+					                        ${pageNumber}
+					                    </a>
+					                </li>
+					            </c:forEach>
+					            
+					            <!-- Next 버튼 -->
+					            <c:if test="${pageInfo.next}">
+					                <li class="page-item next">
+					                    <a class="page-link rounded ${pageInfo.endPage + 1 == pageInfo.currentPage ? 'active' : ''}"
+					                       href="#" data-value="${pageInfo.endPage + 1}" aria-label="next">Next</a>
+					                </li>
+					            </c:if>
+					        </ul>
+					    </nav>
+                      </div>
                 </div>
             </div>
         </div>
@@ -286,8 +278,7 @@
 	$(document).ready(function() {
 	    var category ="";
 	    var keyword = "";
-	    // 페이지 로드 시 초기 페이지 버튼 생성
-	    createPaginationButtons(${pageRequestDTO.totalPages}, ${currentPage});
+	    var page = 1;
 	    // 수정/삭제버튼 생성
 	    addEditAndDeleteButtons();
 	    //검생 창 생성
@@ -372,7 +363,6 @@
                 "product_category": $('#product_category').val(),
                 "special_product": $('input[name="product_type"]:checked').val() === "1" ? true : false
             };
-			console.log(formData);
             // AJAX 요청 보내기
             $.ajax({
                 type: 'POST',
@@ -381,7 +371,6 @@
                 data: JSON.stringify(formData),
                 success: function(response) {
                     // 성공적으로 처리된 경우에 대한 동작 수행
-                    console.log("업데이트 성공");
                     location.reload();
                 },
                 error: function(xhr, status, error) {
@@ -405,8 +394,12 @@
          // 페이지 버튼 클릭 이벤트 핸들러 등록
          $('#paginationContainer').on('click', 'a', function(e) {
              e.preventDefault();
-             var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
+             page = $(this).data('value'); // 클릭된 링크의 data-value 속성 값을 가져오기
              var keyword = $('.form-control').val();
+             if (page === 'Prev' || page === 'Next') {
+ 		        // Prev 또는 Next 링크를 클릭한 경우
+ 		        page = $(this).attr('value');
+ 		    } 
              if (category === "" && keyword === "") {
             	 getSpeicalProductsAll(page); // 선택된 카테고리가 없으면 전체 상품 불러오기
              } else if(keyword !== ""){
@@ -481,7 +474,6 @@
         function updateProducts(response) {
             var productsContainer = $('.col-lg-11 .row'); // 상품 목록 컨테이너 선택
             productsContainer.empty(); // 기존 상품 목록 비우기
-
             // 받아온 데이터를 페이지에 맞게 출력
             $.each(response.products, function(index, product) {
                 // 상품 정보를 HTML로 생성하는 코드
@@ -501,9 +493,10 @@
                     '</div>';
                 productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
             });
-
+            //기존 버튼 제거
+            $('#paginationContainer').empty();
             // 페이징 버튼 업데이트
-            createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
+            createPaginationButtons(response.pageInfo);
             // 카테고리 다시 그리기
             addEditAndDeleteButtons();
             initializeSearchField()
@@ -511,16 +504,38 @@
             bindSearchEvents();
         }
 
-        // 페이지 버튼 생성 함수
-        function createPaginationButtons(totalPages, currentPage) {
+     // 페이지 버튼 생성 함수
+        function createPaginationButtons(pageInfo) {
             var paginationContainer = $('#paginationContainer');
-            paginationContainer.empty(); // 기존 페이지 버튼 제거
-            // 페이지 수만큼 버튼 생성
-            for (var i = 1; i <= totalPages; i++) {
-                var button = $('<a href="#" class="rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
-                paginationContainer.append(button);
+            var paginationHTML =
+                '<div class="col-auto">' +
+                '<nav class="page navigation">' +
+                '<ul class="pagination">';
+
+            if (pageInfo.prev) {
+                paginationHTML += '<li class="page-item">' +
+                    '<a class="page-link rounded ' + (pageInfo.startPage - 1 === pageInfo.currentPage ? 'active' : '') + '" aria-label="Previous" data-value="' + (pageInfo.startPage - 1) + '" href="#">Prev</a>' +
+                    '</li>';
             }
+
+            for (var num = pageInfo.startPage; num <= pageInfo.endPage; num++) {
+                paginationHTML += '<li class="page-item ' + (pageInfo.currentPage == num ? "active" : "") + '">' +
+                    '<a class="page-link rounded ' + (num == pageInfo.currentPage ? 'active' : '') + '" href="#" data-value="' + num + '">' + num + '</a>' +
+                    '</li>';
+            }
+
+            if (pageInfo.next) {
+                paginationHTML += '<li class="page-item next">' +
+                    '<a class="page-link rounded" aria-label="next" data-value="' + (pageInfo.endPage + 1) + '" href="#">Next</a>' +
+                    '</li>';
+            }
+
+            paginationHTML += '</ul>' +
+                '</nav>' +
+                '</div>';
+            paginationContainer.append(paginationHTML);
         }
+        
      // 수정과 삭제 버튼을 추가하는 함수
 		function addEditAndDeleteButtons() {
 		    // 모든 card-info 요소에 대해 작업

@@ -333,15 +333,27 @@
 .fruite .fruite-item .fruite-img img:hover {
     transform: scale(1.3);
 }
+
+ .fruite-item p {
+        white-space: nowrap; /* 줄바꿈 방지 */
+        overflow: hidden; /* 넘치는 내용 숨기기 */
+        text-overflow: ellipsis; /* 넘치는 내용에 대한 생략 부호 (...) 추가 */
+    }
 /*** Fruits End ***/
 
 
 /*** vesitable Start ***/
+
 .vesitable .vesitable-item {
     height: 100%;
     transition: 0.5s;
 }
 
+.vesitable-img {
+    height: 200px; /* 카드의 높이를 설정하세요 */
+    background-size: cover; /* 이미지를 카드에 맞게 조정 */
+    background-position: center; /* 이미지를 가운데 정렬 */
+}
 .vesitable .vesitable-item:hover {
     box-shadow: 0 0 55px rgba(0, 0, 0, 0.4);
 }
@@ -468,7 +480,7 @@
 
 /*** Single Page Start ***/
 .pagination {
-    display: inline-block;
+    display: inline-flex;
 }
   
 .pagination a {

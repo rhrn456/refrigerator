@@ -82,7 +82,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Special Product Shop</h1>
+                <h1 class="mb-4">Product Shop</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -152,20 +152,18 @@
                                 </div>
                             </div>
 														<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
-							<c:set var="pageSize" value="9" />
-							<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
+						
 							
 							<div class="col-lg-9">
 							    <div class="row g-4 justify-content-center">
 							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
-							        <c:forEach var="product" items="${products}" begin="${(currentPage - 1) * pageSize}" varStatus="loop">
-							            <c:if test="${loop.index < currentPage * pageSize && loop.index >= (currentPage - 1) * pageSize}">
+							        <c:forEach var="product" items="${products}" >
 							                <div class="col-md-6 col-lg-6 col-xl-4">
 							                    <div class="rounded position-relative fruite-item">
 							                        <div class="fruite-img">
 							                            <img src="${product.product_img}" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">
 							                        </div>
-							                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${product.product_category}</div>
+							                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; background-color: green !important;">${product.product_category}</div>
 							                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
 							                            <h4>${product.product_name}</h4>
 							                            <p>${product.product_content}</p>
@@ -177,20 +175,45 @@
 							                        </div>
 							                    </div>
 							                </div>
-							            </c:if>
 							        </c:forEach>
 							    </div>
-								<div class="col-12">
-								     <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer">
-    									  <!-- 총 페이지 수 계산 -->
-								        <c:set var="totalPages" value="${pageRequestDTO.totalPages}" />
-								        <!-- 페이지 링크 생성 -->
-										<c:forEach var="pageNumber" begin="1" end="${totalPages}">
-										    <a href="#"  class="rounded ${pageNumber == currentPage ? 'active' : ''}">${pageNumber}</a>
-										</c:forEach>
-								    </div>
-								</div>
-							</div>
+								 <div class="col-12">
+						                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" >
+							                 <!-- 총 페이지 수 계산 -->
+						                    <c:set var="totalPages" value="${pageInfo.pageAmount}" />
+											<div class="col-auto">
+											    <nav class="page navigation">
+											        <ul class="pagination">
+											            <!-- Prev 버튼 -->
+											            <c:if test="${pageInfo.prev}">
+											                <li class="page-item">
+											                    <a class="page-link rounded ${pageInfo.startPage - 1 == pageInfo.currentPage ? 'active' : ''}"
+											                       href="#" data-value="${pageInfo.startPage - 1}" aria-label="Previous">Prev</a>
+											                </li>
+											            </c:if>
+											            
+											            <!-- 페이지 버튼 -->
+											            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
+											                <li class="page-item">
+											                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
+											                        ${pageNumber}
+											                    </a>
+											                </li>
+											            </c:forEach>
+											            
+											            <!-- Next 버튼 -->
+											            <c:if test="${pageInfo.next}">
+											                <li class="page-item next">
+											                    <a class="page-link rounded ${pageInfo.endPage + 1 == pageInfo.currentPage ? 'active' : ''}"
+											                       href="#" data-value="${pageInfo.endPage + 1}" aria-label="next">Next</a>
+											                </li>
+											            </c:if>
+											        </ul>
+											    </nav>
+						                      </div>
+						                </div>
+						            </div> <!-- col-12 끝 -->
+							   </div>
 							</div>
                         </div>
                     </div>
@@ -222,36 +245,40 @@
     <script src="js/main.js"></script>
 		<script>
 		$(document).ready(function() {
-		    var selectedCategory = "";
-		    var totalPage = ${pageRequestDTO.totalPages};
+			var category ="";
+		    var keyword = "";
+		    var page = 1;
+		    
 		    // 카테고리 링크 클릭 시
 		    $('.product-category a').click(function(e) {
 		        e.preventDefault(); // 기본 동작 방지
-		
-		        var category = $(this).text().trim(); // 선택된 카테고리 텍스트 가져오기
-		        selectedCategory = category;
+		        category = $(this).text().trim(); // 선택된 카테고리 텍스트 가져오기
 		        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
 		
 		        // AJAX 요청 보내기
-		        getProductsByCategory(selectedCategory, 1); // 페이지 번호 1로 초기화
+		        getProductsByCategory(category, 1); // 페이지 번호 1로 초기화
 		        
 		    });
 		
 		 // 페이지 버튼 클릭 이벤트 핸들러 등록
 		    $('#paginationContainer').on('click', 'a', function(e) {
 		        e.preventDefault();
-		        var keyword = $('.form-control').val();
-		        var page = $(this).text().trim(); // 클릭된 페이지 번호 가져오기
-		        var totalPage = ${pageRequestDTO.totalPages}; // totalPage 변수 정의 및 초기화
-		        if(selectedCategory == ""){
+		        keyword = $('.form-control').val();
+		        page = $(this).data('value'); // 클릭된 링크의 data-value 속성 값을 가져오기
+		        if (page === 'Prev' || page === 'Next') {
+	 		        // Prev 또는 Next 링크를 클릭한 경우
+	 		        page = $(this).attr('value');
+	 		    } 
+		        if(category === "" && keyword === ""){
 		        	getProducts(page);
 		        } else if(keyword !== ""){
-		        	getProductsByKeyword(keyword, page);
+		        	getProductsByKeyword(category, keyword, page);
 		        } else {
-		            getProductsByCategory(selectedCategory, page);
+		            getProductsByCategory(category, page);
 		        }
 		    });
-		});
+
+
 		
 		
 		//모든 재료 페이지 번호를 받아 상품 목록을 가져오는 함수
@@ -313,22 +340,20 @@
 			
 			// 검색 실행 함수
 			function executeSearch() {
-			    var keyword = $('#searchInput1').val().trim();
-			    	//document.getElementById("searchInput1").value;
-			    //$('#searchInput').val().trim();	  
-			        getProductsByKeyword(keyword, 1);
+			    keyword = $('#searchInput1').val().trim();  
+			    getProductsByKeyword(category, keyword, 1);
 			  
 			}
 			
 			//검색한 단어로 상품 불러오기
-			function getProductsByKeyword(keyword, page) {
-				
+			function getProductsByKeyword(category, keyword, page) {
 			    var pageSize = 9;
 			    // AJAX 요청 보내기
 			    $.ajax({
 			        type: "GET",
 			        url: "/searchProduct",
 			        data: {
+			        	category : category,
 			            keyword: keyword,
 			            page: page,
 			            pageSize: pageSize
@@ -356,7 +381,7 @@
                 '<div class="fruite-img">' +
                 '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
                 '</div>' +
-                '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
+                '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; background-color: green !important;">' + product.product_category + '</div>' +
                 '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
                 '<h4>' + product.product_name + '</h4>' +
                 '<p>' + product.product_content + '</p>' +
@@ -371,19 +396,43 @@
                 productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
             });
 
-            createPaginationButtons(response.pageRequestDTO.totalPages, response.pageRequestDTO.currentPage);
+            $('#paginationContainer').empty();
+            // 페이징 버튼 업데이트
+            createPaginationButtons(response.pageInfo);
         }
-		//페이지 버튼 생성 함수
-		function createPaginationButtons(totalPages, currentPage) {
-		    var paginationContainer = $('#paginationContainer');
-		    paginationContainer.empty(); // 기존 페이지 버튼 제거
-		    // 페이지 수만큼 버튼 생성
-		    for (var i = 1; i <= totalPages; i++) {
-		        var button = $('<a href="#" class="rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
-		        paginationContainer.append(button);
-		    }
+        function createPaginationButtons(pageInfo) {
+            var paginationContainer = $('#paginationContainer');
+            var paginationHTML =
+                '<div class="col-auto">' +
+                '<nav class="page navigation">' +
+                '<ul class="pagination">';
+
+            if (pageInfo.prev) {
+                paginationHTML += '<li class="page-item">' +
+                    '<a class="page-link rounded ' + (pageInfo.startPage - 1 === pageInfo.currentPage ? 'active' : '') + '" aria-label="Previous" data-value="' + (pageInfo.startPage - 1) + '" href="#">Prev</a>' +
+                    '</li>';
+            }
+
+            for (var num = pageInfo.startPage; num <= pageInfo.endPage; num++) {
+                paginationHTML += '<li class="page-item ' + (pageInfo.currentPage == num ? "active" : "") + '">' +
+                    '<a class="page-link rounded ' + (num == pageInfo.currentPage ? 'active' : '') + '" href="#" data-value="' + num + '">' + num + '</a>' +
+                    '</li>';
+            }
+
+            if (pageInfo.next) {
+                paginationHTML += '<li class="page-item next">' +
+                    '<a class="page-link rounded" aria-label="next" data-value="' + (pageInfo.endPage + 1) + '" href="#">Next</a>' +
+                    '</li>';
+            }
+
+            paginationHTML += '</ul>' +
+                '</nav>' + // 수정된 부분: nav 태그 닫기
+                '</div>';
+            paginationContainer.append(paginationHTML);
+        }
+        
 		
-		}
+		});
 		
 		</script>
     </body>

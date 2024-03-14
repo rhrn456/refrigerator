@@ -68,12 +68,18 @@ public class CommonController {
 		List<ProductDTO> productsList = productService.getAllProduct();
 	    List<ProductDTO> products = productService.getAllProductPage(page, pageSize);
 	    int totalProducts = productsList.size();
-	    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
-	    pageRequestDTO.setTotalPages(totalPage);
-	    pageRequestDTO.setCurrentPage(page);
+	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalProducts)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
 	    model.addAttribute("products", products);
-	    model.addAttribute("pageRequestDTO", pageRequestDTO);
+	    model.addAttribute("pageInfo", pageRequestDTO);
 		return "productshop";
 	}
 	
@@ -84,12 +90,18 @@ public class CommonController {
 		List<ProductDTO> productsList = productService.getAllSepcialProduct();
 	    List<ProductDTO> products = productService.getAllSepcialProductPage(page, pageSize);
 	    int totalProducts = productsList.size();
-	    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
-	    pageRequestDTO.setTotalPages(totalPage);
-	    pageRequestDTO.setCurrentPage(page);
+	    int totalPages = (int) Math.ceil((double) totalProducts / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalProducts)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
 	    model.addAttribute("products", products);
-	    model.addAttribute("pageRequestDTO", pageRequestDTO);
+	    model.addAttribute("pageInfo", pageRequestDTO);
 	    return "specialproductshop";
 	}
 	
