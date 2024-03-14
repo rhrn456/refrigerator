@@ -2,6 +2,7 @@ package com.multi.personalfridge.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,41 +16,41 @@ import com.multi.personalfridge.dto.UserDTO;
 @Controller
 public class UserController {
 
-	private final UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
-	
+    
     // 로그인
-	@GetMapping("/loginpage")
-	public String login() {
-		return "login";
-	}
-	
-	@PostMapping("/login")
-    public UserDTO login(@RequestParam String userId, @RequestParam String password) {
-		return userService.login(userId, password);
-		
+    @GetMapping("/loginpage")
+    public String login() {
+        return "login";
     }
-	
-	
-	//회원가입
-	@GetMapping("/join")
-	public String join() {
-		return "join"; 
-	}
-	
-	//일반 회원가입
-	@PostMapping("/signup")
-	public String insertUser(UserDTO dto) {
-		int result = userService.insertUser(dto);
-		
-		return "redirect:/";
-	}
-	
-	
+    
+    @PostMapping("/login")
+    public UserDTO login(@RequestParam String userId, @RequestParam String password) {
+        return userService.login(userId, password);
+        
+    }
+    
+    
+    //회원가입
+    @GetMapping("/join")
+    public String join() {
+        return "join"; 
+    }
+    
+    //일반 회원가입
+    @PostMapping("/signup")
+    public String insertUser(UserDTO dto) {
+        int result = userService.insertUser(dto);
+        
+        return "redirect:/";
+    }
+    
+    
  // 사용자 삭제
 //    @GetMapping("/{userId}")
 //    public String deleteUser(@PathVariable String userId, @PathVariable String password) {
@@ -63,23 +64,34 @@ public class UserController {
         userService.updateUser(userId, userDTO);
         return "redirect:/{userId}";
     }
-	
+    
     
 //    // 사용자 상세 정보 조회
 //    @GetMapping("/{userId}")
 //    public UserDTO getUserById(@PathVariable String userId) {
-//    	return userService.getUserById(userId);
+//        return userService.getUserById(userId);
 //    }
-	
+    
+    
+    //마이페이지 접속
+    @GetMapping("/mypagein")
+    public String MyPageIn(Model model) {
+        String userId = "testuser"; // 유저테스트 정보 주입
+         UserDTO user = userService.getUserById(userId);
+         System.out.println(user);
+         model.addAttribute("user",user);
+        return "mypage";
+    }
  // 마이페이지 조회
     @GetMapping("/mypage")
     public ModelAndView myPage(@RequestParam("userId") String userId) {
+        userId = "usertest"; // 유저테스트 정보 주입
         ModelAndView mav = new ModelAndView("mypage");
         UserDTO user = userService.getUserById(userId);
         mav.addObject("user", user);
         return mav;
     }
-
+    
     // 마이페이지 정보 업데이트
     @PostMapping("/mypage/update")
     public String updateMyPage(@ModelAttribute UserDTO user) {
@@ -94,3 +106,4 @@ public class UserController {
 //        return "redirect:/login";
 //    }
 }
+
