@@ -15,6 +15,7 @@
     where product_id = #{product_id}
 	</select>
 	
+	<!-- 상품 업데이트 하가 -->
 	<update id="productUpdate" parameterType="Product">
 	update product set product_name = #{product_name}, 
 						product_content = #{product_content}, 
@@ -74,7 +75,7 @@
      </if>
 	</select>
 	
-	<!-- 일반 상품 카테고리  OR 일반 모든 상품 2Page/페이징 -->
+	<!-- 일반 상품 카테고리  OR 일반 모든 상품 페이징 -->
    <select id="getProductsByCategoryAndPage" parameterType="map" resultType="Product">
      SELECT * FROM product
      WHERE special_product = 0 

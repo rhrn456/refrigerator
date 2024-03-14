@@ -34,7 +34,7 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     	<link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
      <!-- Navbar start -->
        <%@ include file="../header.jsp" %>
         <!-- Navbar End -->
@@ -99,7 +99,7 @@
 	         color: black; 
 	         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
 		}
-		
+
 		.modal-content {
 		    text-align: center;
 		    display: flex;
@@ -129,28 +129,34 @@
 
 		<div class="col-lg-11">
        <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 490px; ">
-           <c:forEach var="product" items="${productlist}">
+           <c:forEach var="recipe" items="${recipelist}">
                 <div class="card">
-                <div class="card-head"> <!-- 수정 및 삭제 버튼을 포함할 요소 -->
-                  <div class="regular-product">일반 상품</div>
+	                 <c:choose>
+					    <c:when test="${recipe.recipe_category == '밥'}">
+					        <div class="regular-product" style="background-color: green;">${recipe.recipe_category}</div>
+					    </c:when>
+					    <c:when test="${recipe.recipe_category == '국/찌개'}">
+					        <div class="regular-product" style="background-color: orange;">${recipe.recipe_category}</div>
+					    </c:when>
+					    <c:when test="${recipe.recipe_category == '반찬'}">
+					        <div class="regular-product" style="background-color: skyblue;">${recipe.recipe_category}</div>
+					    </c:when>
+					    <c:otherwise>
+					        <div class="regular-product">${recipe.recipe_category}</div>
+					    </c:otherwise>
+					</c:choose>
                      	<div class="cardbtn">
-				            <button class="btn btn-primary edit-product-btn" 
+				            <button class="btn btn-primary edit-recipe-btn" 
 			                        style="width: fit-content;"
 			                        data-toggle="modal"
 			                        >수정</button>
 				            <button class="btn btn-danger" 
 				            		style="width: fit-content;">삭제</button>
 			       		</div>
-			        </div>
                     <div class="card-info">
-                     <div class="product-id" style="display: none;">${product.product_id}</div>
-       				<div class="product-name" style="display: none;">${product.product_name}</div>
-                        <a>${product.product_name}</a>
-                        <a>가격: ${product.product_price}</a>
-                    </div>
-                    <div class="card-details">
-                        <a>${product.product_category}</a>
-                        <a>수량: ${product.product_quantity}</a>
+                     <div class="recipe-id" style="display: none;">${recipe.recipe_id}</div>
+       				<div class="recipe-name" style="display: none;">${recipe.recipe_name}</div>
+                        <a>${recipe.recipe_name}</a>
                     </div>
                 </div>
             </c:forEach>
@@ -173,7 +179,7 @@
 					            <!-- 페이지 버튼 -->
 					            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
 					                <li class="page-item">
-					                    <a href="#" class="page-link rounded ${pageNumber == currentPage ? 'active' : ''}" data-value="${pageNumber}">
+					                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
 					                        ${pageNumber}
 					                    </a>
 					                </li>
@@ -192,12 +198,11 @@
                 </div>
             </div>
         </div>
-    
-			<!-- 상품 삭제 모달 창 -->
+    <!-- 상품 삭제 모달 창 -->
 	    <div id="modalContainer" class="modal-container">
 		    <div class="modal-content">
-		        <p>상품을 정말 삭제하시겠습니까?</p>
-		        <p>상품 이름: <span class="product-name"></span></p>
+		        <p>레시피를 정말 삭제하시겠습니까?</p>
+		        <p>레시피 이름: <span class="recipe-name"></span></p>
 		        <div class="button-container">
 			        <button id="confirmDeleteButton" class="modal-button" style="background-color: red; color: white;">네</button>
 			        <button id="cancelDeleteButton" class="modal-button" style="background-color: green; color: white;">아니오</button>
@@ -207,57 +212,52 @@
    
    
 			<!-- 수정 모달 -->
-			<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
-			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <h5 class="modal-title" id="editProductModalLabel">상품 정보 수정</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<div class="modal fade" id="editRecipeModal" tabindex="-1" role="dialog" aria-labelledby="editRecipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="editRecipeModalLabel" style="margin-left:150px;">레시피 정보 수정</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-			            </div>
-			            <div class="modal-body">
-			                <form id="editForm" action="/ProductUpdateAdmin" method="post">
-			                    <!-- 수정할 상품 정보 입력 폼 -->
-			                    <div class="form-group">
-			                    	<input type="hidden" id="product_id" name="product_id">
-			                        <label for="product_name">상품 이름</label>
-			                        <input type="text" class="form-control" id="product_name" name="product_name">
-			                    </div>
-			                    <div class="form-group">
-			                        <label for="product_content">내용</label>
-			                        <input type="text" class="form-control" id="product_content" name="product_content">
-			                    </div>
-			                    <div class="form-group">
-			                        <label for="product_quantity">수량</label>
-			                        <input type="text" class="form-control" id="product_quantity" name="product_quantity">
-			                    </div>
-			                    <div class="form-group">
-			                        <label for="product_price">가격</label>
-			                        <input type="text" class="form-control" id="product_price" name="product_price">
-			                    </div>
-			                    <div class="form-group">
-			                        <label for="product_img">상품 이미지</label>
-			                        <input type="text" class="form-control" id="product_img" name="product_img">
-			                    </div>
-			                    <div class="form-group">
-			                        <label for="limit_date">유통 기한</label>
-			                        <input type="text" class="form-control" id="limit_date" name="limit_date">
-			                    </div>
-			                    <div class="form-group">
-			                        <label for="product_category">카테고리</label>
-			                        <input type="text" class="form-control" id="product_category" name="product_category">
-			                    </div>
-			                    <div class="form-group">
-			                       <label><input type="radio" id="normal_product" name="product_type" value="0"> 일반</label>
-							        <label><input type="radio" id="special_product" name="product_type" value="1"> 특가</label>
-							    </div>
-			                    <button type="submit" class="btn btn-primary">저장</button>
-			                </form>
-			            </div>
-			        </div>
-			    </div>
-			</div>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" action="/RecipeUpdateAdmin" method="post">
+                    <div class="form-group">
+                        <input type="hidden" id="recipe_id" name="recipe_id">
+                        <label for="recipe_name">레시피 이름</label>
+                        <input type="text" class="form-control" id="recipe_name" name="recipe_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipe_content">레시피 내용</label>
+                        <textarea class="form-control" id="recipe_content" name="recipe_content" rows="6" cols="50"></textarea> <!-- 조정된 크기 -->
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredient">재료</label>
+                        <input type="text" class="form-control" id="ingredient" name="ingredient">
+                    </div>
+					<div class="form-group" style="text-align: center;">
+					    <label for="recipe_category">카테고리</label>
+					    <select id="recipe_category_select" class="form-control mb-3" name="recipe_category" style="text-align: center;">
+					        <option value="밥">밥</option>
+					        <option value="국/찌개">국/찌개</option>
+					        <option value="반찬">반찬</option>
+					    </select>
+					</div>
+                    <div class="form-group">
+                        <label for="recipe_img">레시피 이미지</label>
+                        <input type="text" class="form-control" id="recipe_img" name="recipe_img">
+                    </div>
+                    <div class="form-group">
+                        <label for="nutrition_facts">영양 성분</label>
+                        <input type="text" class="form-control" id="nutrition_facts" name="nutrition_facts">
+                    </div>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
    
    		<!-- footer start -->
        <%@ include file="../footer.jsp" %>
@@ -276,8 +276,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
 <script>
-    $(document).ready(function() {
+   $(document).ready(function() {
 	    var category ="";
         var keyword = "";
         // 수정/삭제버튼 생성
@@ -290,7 +291,7 @@
         bindSearchEvents();
 
      // 검색 버튼 클릭 및 엔터 키 이벤트를 바인딩
-        function bindSearchEvents() {
+         function bindSearchEvents() {
             $('#searchButton').on('click', function() {
                 executeSearch();
             });
@@ -305,37 +306,31 @@
         // 검색 실행 함수
         function executeSearch() {
             keyword = $('#searchInput1').val().trim();
-            getProductsByKeyword(category, keyword, 1);
+            getRecipeByKeyword(category, keyword, 1);
         }
 			
 			
         // 제품 수정 모달 열기
-        function openProductModal(productId) {
+        function openRecipeModal(recipeId) {
             // AJAX 요청 보내기
             $.ajax({
                 type: "GET",
-                url: "/findproduct",
+                url: "/findrecipe",
                 data: {
-                    product_id: productId
+                    recipe_id: recipeId
                 },
                 success: function(response) {
                     // 반환된 데이터를 모달에 채워 넣기
-                    $('#product_id').val(response.product_id); // 상품 이름 입력 필드에 값 설정
-                    $('#product_name').val(response.product_name); // 상품 이름 입력 필드에 값 설정
-                    $('#product_content').val(response.product_content); // 내용 입력 필드에 값 설정
-                    $('#product_quantity').val(response.product_quantity); // 수량 입력 필드에 값 설정
-                    $('#product_price').val(response.product_price); // 가격 입력 필드에 값 설정
-                    $('#product_img').val(response.product_img); // 상품 이미지 입력 필드에 값 설정
-                    $('#limit_date').val(response.limit_date); // 유통 기한 입력 필드에 값 설정
-                    $('#product_category').val(response.product_category); // 카테고리 입력 필드에 값 설정
-                    if (response.special_product === false) {
-                        $('#normal_product').prop('checked', true); // 일반 상품 라디오 버튼 체크
-                    } else {
-                        $('#special_product').prop('checked', true); // 특가 상품 라디오 버튼 체크
-                    }
+                    $('#recipe_id').val(response.recipe_id); // 상품 이름 입력 필드에 값 설정
+                    $('#recipe_name').val(response.recipe_name); // 상품 이름 입력 필드에 값 설정
+                    $('#recipe_content').val(response.recipe_content); // 내용 입력 필드에 값 설정
+                    $('#ingredient').val(response.ingredient); // 수량 입력 필드에 값 설정
+                    $('#recipe_category_select').val(response.recipe_category); // 카테고리 선택 입력 필드에 값 설정
+                    $('#recipe_img').val(response.recipe_img); // 상품 이미지 입력 필드에 값 설정
+                    $('#nutrition_facts').val(response.nutrition_facts); // 유통 기한 입력 필드에 값 설정
 
                     // 수정 모달 열기
-                    $('#editProductModal').modal('show');
+                    $('#editRecipeModal').modal('show');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -343,8 +338,8 @@
             });
         }
         // 수정 모달 닫기
-        $('#editProductModal .close').click(function() {
-            $('#editProductModal').modal('hide'); // 모달 닫기
+        $('#editRecipeModal .close').click(function() {
+            $('#editRecipeModal').modal('hide'); // 모달 닫기
         });
         
         $('#editForm').submit(function(event) {
@@ -353,21 +348,19 @@
 		
             // 폼 데이터를 JSON 형식으로 직렬화
             var formData = {
-                "product_id": $('#product_id').val(),
-                "product_name": $('#product_name').val(),
-                "product_content": $('#product_content').val(),
-                "product_quantity": $('#product_quantity').val(),
-                "product_price": $('#product_price').val(),
-                "product_img": $('#product_img').val(),
-                "limit_date": $('#limit_date').val(),
-                "product_category": $('#product_category').val(),
-                "special_product": $('input[name="product_type"]:checked').val() === "1" ? true : false
+                "recipe_id": $('#recipe_id').val(),
+                "recipe_name": $('#recipe_name').val(),
+                "recipe_content": $('#recipe_content').val(),
+                "ingredient": $('#ingredient').val(),
+                "recipe_category": $('#recipe_category_select').val(), 
+                "recipe_img": $('#recipe_img').val(),
+                "nutrition_facts": $('#nutrition_facts').val(),
             };
 			console.log(formData);
             // AJAX 요청 보내기
             $.ajax({
                 type: 'POST',
-                url: '/ProductUpdateAdmin',
+                url: '/RecipeUpdateAdmin',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function(response) {
@@ -383,13 +376,13 @@
    
         
         // 카테고리 링크 클릭 시
-         $('.col-lg-11').on('click', '.product-category a', function(e) {
+         $('.col-lg-11').on('click', '.Recipe-category a', function(e) {
 	        e.preventDefault();
 	        category = $(this).text().trim();
 	        keyword = "";
 	        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
 	        // AJAX 요청 보내기
-	        getProductsByCategory(category, 1); // 페이지 번호 1로 초기화
+	        getRecipeByCategory(category, 1); // 페이지 번호 1로 초기화
    		 });
 
         // 페이지 버튼 클릭 이벤트 핸들러 등록
@@ -402,27 +395,27 @@
  		        page = $(this).attr('value');
  		    } 
             if (category === "" && keyword === "") {
-                getProductsAll(page); // 선택된 카테고리가 없으면 전체 상품 불러오기
+            	getRecipeAll(page); // 선택된 카테고리가 없으면 전체 상품 불러오기
             } else if(keyword !== ""){
-            	getProductsByKeyword(category, keyword, page);
+            	getRecipeByKeyword(category, keyword, page);
 	        } else {
-	            getProductsByCategory(category, page);
+	        	getRecipeByCategory(category, page);
 	        }
         });
 
         // 페이지 로드 함수 - 선택된 카테고리 없이 모든 상품 불러오기
-        function getProductsAll(page) {
-            var pageSize = 12; // 페이지당 아이템 수
+        function getRecipeAll(page) {
+            var pageSize = 8; // 페이지당 아이템 수
             $.ajax({
                 type: "GET",
-                url: "/getProductsByCategory",
+                url: "/getRecipeByCategory",
                 data: {
                     category: "",
                     page: page,
                     pageSize: pageSize
                 },
                 success: function(response) {
-                    updateProducts(response);
+                	updateRecipes(response);
                   
                 },
                 error: function(xhr, status, error) {
@@ -432,18 +425,18 @@
         }
 
         // 카테고리별 상품 불러오기
-        function getProductsByCategory(category, page) {
-            var pageSize = 12; // 페이지당 아이템 수
+        function getRecipeByCategory(category, page) {
+            var pageSize = 8; // 페이지당 아이템 수
             $.ajax({
                 type: "GET",
-                url: "/getProductsByCategory",
+                url: "/getRecipeByCategory",
                 data: {
                     category: category,
                     page: page,
                     pageSize: pageSize
                 },
                 success: function(response) {
-                    updateProducts(response);
+                	updateRecipes(response);
                 
                 },
                 
@@ -454,12 +447,12 @@
         }
         
 		//검색한 단어로 상품 불러오기
-		function getProductsByKeyword(category, keyword, page) {
-		    var pageSize = 12;
+		function getRecipeByKeyword(category, keyword, page) {
+		    var pageSize = 8;
 		    // AJAX 요청 보내기
 		    $.ajax({
 		        type: "GET",
-		        url: "/searchProduct",
+		        url: "/searchRecipe",
 		        data: {
 		        	category : category,
 		            keyword: keyword,
@@ -467,7 +460,7 @@
 		            pageSize: pageSize
 		        },
 		        success: function(response) {
-		        	updateProducts(response);
+		        	updateRecipes(response);
                 },
 		        error: function(xhr, status, error) {
 		            // 에러 처리 로직
@@ -477,38 +470,56 @@
 		}
 
         // 받아온 상품 정보를 업데이트하는 함수
-        function updateProducts(response) {
-            var productsContainer = $('.col-lg-11 .row'); // 상품 목록 컨테이너 선택
-            productsContainer.empty(); // 기존 상품 목록 비우기
-
-            // 받아온 데이터를 페이지에 맞게 출력
-			$.each(response.products, function(index, product) {
-			    // 상품 정보를 HTML로 생성하는 코드
-			    var productType = '<div class="regular-product">일반 상품</div>';
-			    var productHTML = '<div class="card">' +
-			        '<div class="regular">' + productType + '</div>' +
-			        '<div class="card-info">' +
-			        '<div class="product-id" style="display: none;">' + product.product_id + '</div>' +
-			        '<div class="product-name" style="display: none;">' + product.product_name + '</div>' +
-			        '<a>' + product.product_name + '</a>' +
-			        '<a>가격: ' + product.product_price + '</a>' +
-			        '</div>' +
-			        '<div class="card-details">' +
-			        '<a>' + product.product_category + '</a>' +
-			        '<a>수량: ' + product.product_quantity + '</a>' +
-			        '</div>' +
-			        '</div>';
-			    productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
-			});
-			  $('#paginationContainer').empty();
-            // 페이징 버튼 업데이트
-            createPaginationButtons(response.pageInfo); // 카테고리 다시 그리기
-            addEditAndDeleteButtons();
-            initializeSearchField()
-            drawCategories();
-            bindSearchEvents();
-        }
-
+        function updateRecipes(response) {
+		    var recipesContainer = $('.col-lg-11 .row'); // 상품 목록 컨테이너 선택
+		    recipesContainer.empty(); // 기존 상품 목록 비우기
+		
+		    // 받아온 데이터를 페이지에 맞게 출력
+		    $.each(response.recipes, function(index, recipe) { // recipe로 수정
+		        // 레시피 카테고리에 따라 HTML 생성
+		        var recipeCategoryHTML = createRecipeHTML(recipe.recipe_category);
+		
+		        // 레시피 카드 HTML 생성
+		        var recipeHTML = '<div class="card">' +
+		            recipeCategoryHTML +
+		            '<div class="card-info">' +
+		            '<div class="recipe-id" style="display: none;">' + recipe.recipe_id + '</div>' +
+		            '<div class="recipe-name" style="display: none;">' + recipe.recipe_name + '</div>' +
+		            '<a>' + recipe.recipe_name + '</a>' +
+		            '</div>' +
+		            '</div>';
+		        console.log(recipeHTML);
+		        recipesContainer.append(recipeHTML); // 새로운 레시피를 기존의 레시피 목록에 추가
+		    });
+		
+		    // 페이징 버튼 업데이트
+		    $('#paginationContainer').empty();
+		    createPaginationButtons(response.pageInfo); // 카테고리 다시 그리기
+		    addEditAndDeleteButtons();
+		    initializeSearchField()
+		    drawCategories();
+		    bindSearchEvents();
+		} 
+		
+		function createRecipeHTML(recipeCategory) {
+		    var backgroundColor;
+		    switch (recipeCategory) {
+		        case '밥':
+		            backgroundColor = 'green';
+		            break;
+		        case '국/찌개':
+		            backgroundColor = 'orange';
+		            break;
+		        case '반찬':
+		            backgroundColor = 'skyblue';
+		            break;
+		        default:
+		            backgroundColor = ''; // Default background color
+		    }
+		    var html = '<div class="regular-product" style="background-color: ' + backgroundColor + ';">' + recipeCategory + '</div>';
+		    return html;
+		}
+        
         // 페이지 버튼 생성 함수
         function createPaginationButtons(pageInfo) {
         	 var paginationContainer = $('#paginationContainer');
@@ -542,13 +553,13 @@
          }
         
      // 수정과 삭제 버튼을 추가하는 함수
-		function addEditAndDeleteButtons() {
+		 function addEditAndDeleteButtons() {
 		    // 모든 card-info 요소에 대해 작업
 		    $('.card-info').each(function() {
 		        // 현재 요소에 새로운 버튼 추가
 		        var ButtonsHTML = `
 		            <div class="cardbtn">
-		                <button class="btn btn-primary edit-product-btn" 
+		                <button class="btn btn-primary edit-recipe-btn" 
 		                        style="width: fit-content;"
 		                        data-toggle="modal"
 		                        >수정</button>
@@ -560,59 +571,56 @@
 		    });
 		
 		    // 수정 버튼과 삭제 버튼에 대한 이벤트 리스너 추가
-		    $('.edit-product-btn').click(function() {
-		        var productId = $(this).closest('.card').find('.product-id').text();
-		        openProductModal(productId);
+		    $('.edit-recipe-btn').click(function() {
+		        var recipeId = $(this).closest('.card').find('.recipe-id').text();
+		        console.log(recipeId);
+		        openRecipeModal(recipeId);
 		    });
 		
 		    $('.btn-danger').click(function() {
-		        var productId = $(this).closest('.card').find('.product-id').text();
-		        var productName = $(this).closest('.card').find('.product-name').text();
+		        var recipeId = $(this).closest('.card').find('.recipe-id').text();
+		        var recipeName = $(this).closest('.card').find('.recipe-name').text();
 		        // 삭제 모달을 표시하고 확인 버튼과 취소 버튼에 대한 이벤트 리스너 추가
 		        var modalContainer = document.getElementById("modalContainer");
 		        var confirmButton = document.getElementById("confirmDeleteButton");
 		        var cancelButton = document.getElementById("cancelDeleteButton");
 		        var modalContent = document.querySelector('.modal-content');
-		        var modalProductName = modalContent.querySelector('.product-name');
+		        var modalRecipeName = modalContent.querySelector('.recipe-name');
 		
 		        // 모달 내용 설정
-		        modalProductName.textContent = productName;
+		        modalRecipeName.textContent = recipeName;
 		        modalContainer.style.display = "block"; // 모달 열기
-		        confirmButton.dataset.productId = productId; // 확인 버튼의 data-product-id 속성에 product_id 설정
+		        confirmButton.dataset.recipeId = recipeId; // 확인 버튼의 data-product-id 속성에 product_id 설정
 		
 		        cancelButton.onclick = function() {
 		            modalContainer.style.display = "none";
 		        }
 		
 		        confirmButton.onclick = function() {
-		            var productId = confirmButton.dataset.productId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
-		            window.location.href = '/productdeleteadmin/' + productId; // 해당 product_id를 사용하여 삭제 URL로 이동
+		            var recipeId = confirmButton.dataset.recipeId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
+		            window.location.href = '/recipedeleteadmin/' + recipeId; // 해당 product_id를 사용하여 삭제 URL로 이동
 		        }
 		    });
 		}
         
 
 			
-			
+	
         // 카테고리를 그리는 함수
         function drawCategories() {
             var categoryHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">     
                     <h4>카테고리</h4>
-                    <div class="list-unstyled allproduct-categorie">
-                        <div class="d-flex justify-content-center product-topcategory"style="margin: 0 -15px;">
-                            <a href="/productAllList" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
+                    <div class="list-unstyled allrecipe-categorie">
+                        <div class="d-flex justify-content-center recipe-topcategory"style="margin: 0 -15px;">
+                            <a href="/RecipeListAdmin" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>모든 레시피</a>
                             <span>|</span>
-                            <div class="d-flex justify-content-center product-category">
-                            <a href="#" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>가공 식품</a>
+                            <div class="d-flex justify-content-center Recipe-category">
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>밥</a>
                             <span>|</span>
-                            <a href="#" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>야채</a>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>국/찌개</a>
                             <span>|</span>
-                            <a href="#" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>과일</a>
-                            <span>|</span>
-                            <a href="#" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>육류/생선</a>
-                            <span>|</span>
-                            <a href="#" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>향신료</a>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>반찬</a>
                         </div>
                       </div>
                     </div>	
@@ -633,9 +641,9 @@
            
         }
     });
+ 
 
 
-
-   </script>
+   </script> 
 </body>
 </html>

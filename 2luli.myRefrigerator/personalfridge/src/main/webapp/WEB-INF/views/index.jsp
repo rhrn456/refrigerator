@@ -31,6 +31,7 @@
         <!-- Navbar start -->
        <%@ include file="header.jsp" %>
         <!-- Navbar End -->
+
     </head>
 
     <body>
@@ -181,10 +182,10 @@
                     <div class="vesitable-img">
                         <img src="${ProductDTO.product_img}" class="img-fluid w-100 rounded-top" alt="">
                     </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">${ProductDTO.product_category}</div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px; background-color:#ffb524 !important;">${ProductDTO.product_category}</div>
                     <div class="p-4 rounded-bottom">
-                        <h4>${ProductDTO.product_name}</h4>
-                        <p>${ProductDTO.product_content}</p>
+                          <a style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 25px !important;"class="prodcut-title">${ProductDTO.product_name}</a>
+    					   <p style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 18px !important;" class="prodcut-content">${ProductDTO.product_content}</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">${ProductDTO.product_price}</p>
                             <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>

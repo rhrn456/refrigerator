@@ -98,12 +98,12 @@
 			                    <select id="recipe_category" class="form-control mb-3" style="width: 180px;">
 			                        <option value="" selected disabled hidden>레시피 카테고리</option>
 			                        <option value="밥">밥</option>
-			                        <option value="국/찌개">극/찌개</option>
+			                        <option value="국/찌개">국/찌개</option>
 			                        <option value="반찬">반찬</option>
 			                    </select>
 			                    <div class="arrow-icon">&#9660;</div>
 			                </div>
-			                <input type="text" id="recipe_img" placeholder="음식 이미지" class="form-control mb-3" required>
+			                <input type="text" id="recipe_img" placeholder="레시피 이미지" class="form-control mb-3" required>
 			                <input type="text" id="nutrition_facts" placeholder="영양 성분" class="form-control mb-3" required>
 			                <!-- 확인 버튼 -->
 			                <button id="confirmButton" class="btn btn-primary">등록</button>

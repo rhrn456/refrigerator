@@ -87,7 +87,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">데이터 리스트:</h6>
-                        <a class="collapse-item" href="">레시피</a>
+                        <a class="collapse-item" href="/RecipeListAdmin">레시피</a>
                         <a class="collapse-item" href="/productAllList">일반 상품</a>
                         <a class="collapse-item" href="/SpecialProductAllList">특가 상품</a>
                         <h6 class="collapse-header">게시판:</h6>

@@ -72,8 +72,108 @@ public class AdminController {
 	//차트 보드
 	@GetMapping("/chartboard")
 	public String chartboard() {
-		return "admin/chartboard";
+		return "admin/plusrecipeproducts";
 	}
+	//레시피 관련 START------------------------------------------------------------------------
+	//레시피 리스트 페이지
+	@GetMapping("/RecipeListAdmin")
+	public String RecipeListAdmin(@RequestParam(defaultValue ="1") int page,Model model) {
+		int pageSize = 8;
+		List<RecipeDTO> recipelist = recipeService.getAllRecipePage(page, pageSize);
+		List<RecipeDTO> recipes = recipeService.getAllrecipe();
+		System.out.println(recipelist);
+		System.out.println(recipes.size());
+		int totalRecipe = recipes.size();
+		int totalPages = (int) Math.ceil((double) totalRecipe / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalRecipe)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
+		model.addAttribute("recipelist",recipelist);
+		 model.addAttribute("pageInfo", pageRequestDTO);
+		return "admin/recipelsitadmin";
+	}
+	
+	//레시피 검색/페이징
+		@GetMapping("/searchRecipe")
+		@ResponseBody
+		public Map<String, Object> getRecipeBySearch(@RequestParam String category, @RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
+		    Map<String, Object> parameters = new HashMap<>();
+		    List<RecipeDTO> recipes = recipeService.getRecipesBykeywordAndPage(category, keyword, page, pageSize);
+		    List<RecipeDTO> recipeList = recipeService.getRecipesBykeyword(category, keyword);
+		    int totalRecipes = recipeList.size();
+		    int totalPages = (int) Math.ceil((double) totalRecipes / pageSize); 
+			if(totalPages >5) {
+				totalPages = 5;
+			}
+		    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+											.total(totalRecipes)
+											.pageAmount(totalPages)
+											.currentPage(page)
+											.amount(pageSize)
+											.build();  
+		    parameters.put("recipes", recipes);
+		    parameters.put("pageInfo", pageRequestDTO);
+		    return parameters;
+		}
+		
+		//레시피 전체/카테고리 페이징
+		@GetMapping("/getRecipeByCategory")
+		@ResponseBody
+		public Map<String, Object> getRecipeByCategory(@RequestParam String category, @RequestParam int page, @RequestParam int pageSize) {
+		    Map<String, Object> parameters = new HashMap<>();
+		    List<RecipeDTO> recipeList = recipeService.getRecipesByCategory(category);
+		    List<RecipeDTO> recipes = recipeService.getRecipesByCategoryAndPage(category, page, pageSize);
+		    int totalRecipes = recipeList.size();  
+		    int totalPages = (int) Math.ceil((double) totalRecipes / pageSize); 
+			if(totalPages >5) {
+				totalPages = 5;
+			}
+		    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+											.total(totalRecipes)
+											.pageAmount(totalPages)
+											.currentPage(page)
+											.amount(pageSize)
+											.build();
+		    parameters.put("recipes", recipes);
+		    parameters.put("pageInfo", pageRequestDTO);
+		    return parameters;
+		}
+		
+	//레시피 삭제
+	@GetMapping("/recipedeleteadmin/{recipe_id}")
+	public String RecipeDeleteAdmin(@PathVariable int recipe_id) {
+		boolean result = recipeService.recipeDeletById(recipe_id);
+		if(result) {
+			return "redirect:/SpecialProductAllList";
+		}else {
+		return "error";
+		}
+	}
+	
+    @PostMapping("/RecipeUpdateAdmin")
+    @ResponseBody
+    public String RecipeUpdateAdmin(@RequestBody RecipeDTO recipeDTO) {
+        // 받아온 데이터를 사용하여 상품 업데이트 작업 수행
+        recipeService.recipetUpdate(recipeDTO);
+        return "success"; // 성공적으로 업데이트되었음을 클라이언트에게 반환
+    }
+	
+	//수정하기위에 데이터 던져주기
+	@GetMapping("/findrecipe")
+	@ResponseBody
+	public RecipeDTO FindRecipe(@RequestParam int recipe_id) {
+		RecipeDTO recipe =  recipeService.getRecipeById(recipe_id);
+		return recipe;
+	}
+	//레시피 관련 END ---------------------------------------------------------------------
+	
+	
 	
 	//사용자 관련 START --------------------------------------------------------------------
 	//사용자 리스트
@@ -82,12 +182,18 @@ public class AdminController {
 		int pageSize = 12;
 		List<UserDTO> userlist = userService.getAllUserPage(page, pageSize);
 		List<UserDTO> userpage = userService.getAlluser();
-		int totalProducts = userpage.size();
-	    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
-	    pageRequestDTO.setTotalPages(totalPage);
-	    pageRequestDTO.setCurrentPage(page);
-		model.addAttribute("pageRequestDTO", pageRequestDTO);
+		int totalUsers = userpage.size();
+		int totalPages = (int) Math.ceil((double) totalUsers / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalUsers)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
+		model.addAttribute("pageInfo", pageRequestDTO);
 		model.addAttribute("userlist",userlist);
 		return "admin/userlistadmin";
 	}
@@ -96,16 +202,22 @@ public class AdminController {
 	@GetMapping("/getAllUserAndPage")
 	@ResponseBody
 	public Map<String, Object> userListAndPageAdmin(@RequestParam String keyword, @RequestParam int page, @RequestParam int pageSize, Model model) {
-	   PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	   Map<String, Object> parameters = new HashMap<>();
 	   List<UserDTO> userpage = userService.getAlluserByKeyword(keyword);
    	   List<UserDTO> userlist = userService.getAllUserByKewordPage(keyword, page, pageSize);
-   	   int totalProducts = userpage.size();
-	   int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-	   pageRequestDTO.setTotalPages(totalPage);
-	   pageRequestDTO.setCurrentPage(page);
+   	   int totalUsers = userpage.size();
+	   	int totalPages = (int) Math.ceil((double) totalUsers / pageSize); 
+		if(totalPages > 5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalUsers)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
 	   parameters.put("userlist", userlist);
-	   parameters.put("pageRequestDTO", pageRequestDTO);
+	   parameters.put("pageInfo", pageRequestDTO);
 	   return parameters;
 	}
 	//사용자-> 매니저 등록
@@ -141,12 +253,18 @@ public class AdminController {
 		int pageSize = 12;
 		List<UserDTO> userlist = adminService.getAllManagerPage(page, pageSize);
 		List<UserDTO> userpage = adminService.getAllManager();
-		int totalProducts = userpage.size();
-	    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
-	    pageRequestDTO.setTotalPages(totalPage);
-	    pageRequestDTO.setCurrentPage(page);
-		model.addAttribute("pageRequestDTO", pageRequestDTO);
+		int totalUsers = userpage.size();
+		int totalPages = (int) Math.ceil((double) totalUsers / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+									.total(totalUsers)
+									.pageAmount(totalPages)
+									.currentPage(page)
+									.amount(pageSize)
+									.build();
+		model.addAttribute("pageInfo", pageRequestDTO);
 		model.addAttribute("userlist",userlist);
 		return "admin/managerlistadmin";
 	}
@@ -155,16 +273,22 @@ public class AdminController {
 	@GetMapping("getAllManagerrAndPage")
 	@ResponseBody
 	public Map<String, Object> ManagerListAndPageAdmin(@RequestParam String keyword, @RequestParam int page, @RequestParam int pageSize, Model model) {
-	   PageRequestDTO pageRequestDTO = new PageRequestDTO();
 	   Map<String, Object> parameters = new HashMap<>();
 	   List<UserDTO> userpage = adminService.getAllManagerByKeyword(keyword);
 	   List<UserDTO> userlist = adminService.getAllManagerByKeywordPage(keyword, page, pageSize);
-	   int totalProducts = userpage.size();
-	   int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-	   pageRequestDTO.setTotalPages(totalPage);
-	   pageRequestDTO.setCurrentPage(page);
+	   int totalUsers = userpage.size();
+	   int totalPages = (int) Math.ceil((double) totalUsers / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalUsers)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
 	   parameters.put("userlist", userlist);
-	   parameters.put("pageRequestDTO", pageRequestDTO);
+	   parameters.put("pageInfo", pageRequestDTO);
 	   return parameters;
 	}
 	
@@ -240,12 +364,18 @@ public class AdminController {
 		List<ProductDTO> productlist = productService.getAllProductPage(page, pageSize);
 		List<ProductDTO> products = productService.getAllProduct();
 		int totalProducts = products.size();
-	    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
-	    pageRequestDTO.setTotalPages(totalPage);
-	    pageRequestDTO.setCurrentPage(page);
+		int totalPages = (int) Math.ceil((double) totalProducts / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalProducts)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
 		model.addAttribute("productlist",productlist);
-		 model.addAttribute("pageRequestDTO", pageRequestDTO);
+		 model.addAttribute("pageInfo", pageRequestDTO);
 		 return "admin/productslistadmin";
 	}
 	
@@ -259,12 +389,19 @@ public class AdminController {
 			List<ProductDTO> productlist = productService.getAllSepcialProductPage(page, pageSize);
 			List<ProductDTO> products = productService.getAllSepcialProduct();
 			int totalProducts = products.size();
-		    int totalPage = (int) Math.ceil((double) totalProducts / pageSize);
-		    PageRequestDTO pageRequestDTO = new PageRequestDTO();
-		    pageRequestDTO.setTotalPages(totalPage);
-		    pageRequestDTO.setCurrentPage(page);
+			int totalPages = (int) Math.ceil((double) totalProducts / pageSize); 
+			if(totalPages >5) {
+				totalPages = 5;
+			}
+		    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+											.total(totalProducts)
+											.pageAmount(totalPages)
+											.currentPage(page)
+											.amount(pageSize)
+											.build();
+		    System.out.println(pageRequestDTO); 
 			model.addAttribute("productlist",productlist);
-			 model.addAttribute("pageRequestDTO", pageRequestDTO);
+			 model.addAttribute("pageInfo", pageRequestDTO);
 			 return "admin/specialproductslistadmin";
 		}
 		
