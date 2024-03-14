@@ -4,12 +4,18 @@
 	
 	<select id="getAllBoardByCategoryNo" parameterType="_int" resultType="Board">
 		SELECT board_no, title, content, user_id, board_create_date, hit
-		FROM board WHERE b_category_no = #{b_category_no}
+		FROM board WHERE b_category_no = #{CategoryNo}
+	</select>
+	
+	<select id="getBoardByCategoryAndPage" parameterType="map" resultType="Board">
+		SELECT board_no, title, content, user_id, board_create_date, hit
+		FROM board WHERE b_category_no = #{CategoryNo}
+	    LIMIT #{pageSize} OFFSET #{offset}
 	</select>
 	
 	<select id="getBoardByBoardNo" parameterType="_int" resultType="Board">
 		SELECT title, content, user_id, board_create_date, hit, b_category_name
-		FROM board b, board_category c WHERE b.b_category_no = c.b_category_no AND board_no = #{board_no}
+		FROM board b, board_category c WHERE b.b_category_no = c.b_category_no AND board_no = #{boardNo}
 	</select>
 	
 	<insert id="insertBoard" parameterType="map">
