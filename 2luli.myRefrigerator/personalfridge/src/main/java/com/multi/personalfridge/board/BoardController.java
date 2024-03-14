@@ -35,12 +35,13 @@ public class BoardController {
 		} else if(CategoryNo == 3) {
 			Category = "myRecipe";
 		} else {
-			return "/404";
+			return "../404";
 		}
 		
 		return "board/" + Category;
 	}
 	
+	@GetMapping("/getBoardByBoardNo")
 	public String getBoardByBoardNo(@RequestParam("boardNo") int boardNo, Model model) {
 		
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
@@ -50,30 +51,30 @@ public class BoardController {
 	}
 	
 	// Create
-//	@GetMapping("/board")
-//	public String insertForm() {
-//		return "/insert";
-//	}
+	@GetMapping("/createBoard")
+	public String insertForm() {
+		return "/insertBoard";
+	}
 	
 	@PostMapping("/insertBoard")
 	public String insertBoard(BoardDTO newBoard) {
 		boolean result = service.insertBoard(newBoard);
 		
 		if(result) {
-			return "/index";
+			return "../index";
 		} else {
-			return "/404";
+			return "../404";
 		}
 	}
 	
 	// Update
-//	@GetMapping("/board")
-//	public String updateForm() {
-//		return "/update";
-//	}
+	@GetMapping("/updateBoard")
+	public String updateForm() {
+		return "/modifyBoard";
+	}
 	
 	@PutMapping("/modifyBoard")
-	public String updateBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard) {
+	public String modifyBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard) {
 		boolean result = false;
 		BoardDTO board = null;
 		
@@ -88,7 +89,7 @@ public class BoardController {
 		if(result) {
 			return "/boardDetail/" + boardNo;
 		} else {
-			return "/404";
+			return "../404";
 		}
 		
 	}
