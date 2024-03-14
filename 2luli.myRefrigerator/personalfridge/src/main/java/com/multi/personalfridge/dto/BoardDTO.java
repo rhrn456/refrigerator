@@ -19,7 +19,7 @@ public class BoardDTO {
 	private String content;
 	private String user_id;
 	private int b_category_no;
-	private Timestamp board_creat_date;
+	private Timestamp board_create_date;
 	private Integer hit;
 	private Integer refrigerator_product_id;
 }
