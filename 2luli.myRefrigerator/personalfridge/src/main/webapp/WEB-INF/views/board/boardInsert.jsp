@@ -83,73 +83,36 @@
 										</ul>
 									</div>
 								</div>
+								
+							</div>
+						</div>
+						<div class="col-lg-9">
+							<div class="row">
+							    <div class="col-xl-8 col-lg-7" style="width: 80%">
+							        <div class="card shadow mb-4">
+							            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+							                <h6 class="m-0 font-weight-bold text-primary">게시글 등록</h6>
+							            </div>
+							            <!-- Card Body -->
+							            <div class="card-body">
+							                <input type="text" id="title" placeholder="제목" class="form-control mb-3" required>
+							                <textarea id="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
+							                <div class="dropdown">
+							                    <select id="b_category_no" class="form-control mb-3" style="width: 180px;">
+							                        <option value="" selected disabled hidden>게시판 종류</option>
+							                        <option value="notice">공지사항</option>
+							                        <option value="shareBoard">공유 게시판</option>
+							                        <option value="myRecipe">나만의 레시피</option>
+							                    </select>
+							                </div>
+							                <!-- 확인 버튼 -->
+							                <button id="confirmButton" class="btn btn-primary">등록</button>
+							            </div>
+							        </div>
+							    </div>
 							</div>
 						</div>
 						
-						<div class="col-lg-9">
-							<div class="row g-4 justify-content-center">
-								<table>
-									<thead>
-										<tr>
-											<th>글 번호</th>
-											<th>제목</th>
-											<th>I D</th>
-											<th>작성날짜</th>
-											<th>조회수</th>
-										</tr>
-									</thead>
-									<c:forEach items="${boards}" var="board">
-											<tbody>
-												<tr>
-													<td>${board.board_no}</td>
-													<td><a href="/view?boardNo=${board.board_no}">${board.title}</a></td>
-													<td>${board.user_id}</td>
-													<td><fmt:formatDate value="${board.board_create_date}" pattern="yyyy-MM-dd" /></td>
-													<td>${board.hit}</td>
-												</tr>
-											</tbody>
-									</c:forEach>
-								</table>
-								
-								<div class="col-12">
-					                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer">
-						                <!-- 총 페이지 수 계산 -->
-					                    <c:set var="totalPages" value="${pageInfo.pageAmount}" />
-										<div class="col-auto">
-										    <nav class="page navigation">
-										        <ul class="pagination">
-										            <!-- Prev 버튼 -->
-										            <c:if test="${pageInfo.prev}">
-										                <li class="page-item">
-										                    <a class="page-link rounded ${pageInfo.startPage - 1 == pageInfo.currentPage ? 'active' : ''}"
-										                       href="#" data-value="${pageInfo.startPage - 1}" aria-label="Previous">Prev</a>
-										                </li>
-										            </c:if>
-										            
-										            <!-- 페이지 버튼 -->
-										            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
-										                <li class="page-item">
-										                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
-										                        ${pageNumber}
-										                    </a>
-										                </li>
-										            </c:forEach>
-										            
-										            <!-- Next 버튼 -->
-										            <c:if test="${pageInfo.next}">
-										                <li class="page-item next">
-										                    <a class="page-link rounded ${pageInfo.endPage + 1 == pageInfo.currentPage ? 'active' : ''}"
-										                       href="#" data-value="${pageInfo.endPage + 1}" aria-label="next">Next</a>
-										                </li>
-										            </c:if>
-										        </ul>
-										    </nav>
-					                	</div>
-					                </div>
-					                <a href="/boardInsert" style="float:right; border: 1px solid #ffB524; padding:10px">글쓰기</a>
-					            </div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -174,49 +137,42 @@
 
 	<!-- Template Javascript -->
 	<script src="js/main.js">
-	var CategoryNo = "";
 	
-	function getBoardByCategoryNo(CategoryNo, page) {
-	    var pageSize = 10; // 페이지당 아이템 수
-	    
-	    $.ajax({
-	        type: "GET",
-	        url: "/getBoardByCategoryNo",
-	        data: {
-	        	CategoryNo : CategoryNo,
-	            page : page,
-	            pageSize : pageSize
-	        },
-	        success: function(response) {
-	        	updateBoards(response);
-            },
-	        error: function(xhr, status, error) {
-	            console.error(error);
+	function selectCategory(category) {
+	    document.getElementById("b_category_no").value = category;
+	    toggleDropdown();
+	  }
+	
+	  // Close the dropdown if the user clicks outside of it
+	  window.onclick = function(event) {
+	    if (!event.target.matches('.arrow-icon')) {
+	      var dropdowns = document.getElementsByClassName("dropdown-content");
+	      var i;
+	      for (i = 0; i < dropdowns.length; i++) {
+	        var openDropdown = dropdowns[i];
+	        if (openDropdown.classList.contains('show')) {
+	          openDropdown.classList.remove('show');
 	        }
-	    });
-	}
-	
-	function createPaginationButtons(totalPages, currentPage) {
-	    var paginationContainer = $('#paginationContainer');
-	    paginationContainer.empty();
-	    
-	    for (var i = 1; i <= totalPages; i++) {
-	        var button = $('<a href="#" class="page-link rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
-	        paginationContainer.append(button);
+	      }
 	    }
-	
-	}
-	
-	$('#paginationContainer').on('click', 'a', function(e) {
-	    e.preventDefault();
-	    page = $(this).data('value'); // 클릭된 링크의 data-value 속성 값을 가져오기
-	    if (page === 'Prev' || page === 'Next') {
-	        // Prev 또는 Next 링크를 클릭한 경우
-	        page = $(this).attr('value');
-	    }
-	    getBoardByCategoryNo(CategoryNo, page);
-	});
-	
+	  }
+	  
+	  document.getElementById('confirmButton').addEventListener('click', function() {
+	      var recipe_name = document.getElementById('recipe_name').value;
+	      var recipe_content = document.getElementById('recipe_content').value;
+	      var ingredient = document.getElementById('ingredient').value;
+	      var recipe_category = document.getElementById('recipe_category').value;
+	      var recipe_img = document.getElementById('recipe_img').value;
+	      var nutrition_facts = document.getElementById('nutrition_facts').value;
+		
+	      if (recipe_name.trim() === '' || recipe_content.trim() === '' || ingredient.trim() === '' || recipe_category.trim() === '' || recipe_img.trim() === '' || nutrition_facts.trim() === '') {
+	          alert('빈칸에 입력해주세요');
+	          return;
+	      }
+
+	      // Redirect to /insertRecipe with data
+	      window.location.href = '/RecipePlus?recipe_name=' + encodeURIComponent(recipe_name) + '&recipe_content=' + encodeURIComponent(recipe_content) + '&ingredient=' + encodeURIComponent(ingredient) + '&recipe_category=' + encodeURIComponent(recipe_category) + '&recipe_img=' + encodeURIComponent(recipe_img) + '&nutrition_facts=' + encodeURIComponent(nutrition_facts);
+	  });
 	</script>
 </body>
 </html>
