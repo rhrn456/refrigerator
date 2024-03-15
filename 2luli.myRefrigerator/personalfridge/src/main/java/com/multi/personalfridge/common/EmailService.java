@@ -1,4 +1,4 @@
-package com.multi.personalfridge.refrigerator;
+package com.multi.personalfridge.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

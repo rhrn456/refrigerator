@@ -11,6 +11,7 @@
 	<typeAlias type="com.multi.personalfridge.dto.RefrigeratorProdcutDTO" alias="RefrigeratorProdcut"/>
 	<typeAlias type="com.multi.personalfridge.dto.BoardDTO" alias="Board"/>
 	<typeAlias type="com.multi.personalfridge.dto.BoardCategoryDTO" alias="Category"/>
+	<typeAlias type="com.multi.personalfridge.dto.EmailSendDTO" alias="EmailSend"/>
 </typeAliases>
 
 </configuration>

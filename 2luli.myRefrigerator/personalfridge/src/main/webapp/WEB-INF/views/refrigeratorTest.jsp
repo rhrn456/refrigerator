@@ -165,23 +165,25 @@ function shareProduct(refrigeratorProductId){
       <th>소비 기한</th>
       <th>작업</th>
     </tr>
-    <c:forEach var="product" items="${refrigeratorProductList}">
-      <tr>
-        <td>${product.product_name}</td>
-        <td>${product.product_quantity}</td>
-        <td>${product.append_date}</td>
-        <td>${product.limit_date}</td>
-        <td>
-        	<button type="button" onclick="showEditForm('${product.refrigerator_product_id}', '${product.product_name}', '${product.product_quantity}', '${product.limit_date}')">수정</button>
-          	<button type="button" onclick="deleteProduct(${product.refrigerator_product_id})">삭제</button>
-          	<button type="button" onclick="shareProduct(${product.refrigerator_product_id})">공유</button>
-        </td>
-      </tr>
-    </c:forEach>
-  </table>
+    <c:if test="${0 != refrigeratorProductList.size()}">
+	    <c:forEach var="product" items="${refrigeratorProductList}">
+	      <tr>
+	        <td>${product.product_name}</td>
+	        <td>${product.product_quantity}</td>
+	        <td>${product.append_date}</td>
+	        <td>${product.limit_date}</td>
+	        <td>
+	        	<button type="button" onclick="showEditForm('${product.refrigerator_product_id}', '${product.product_name}', '${product.product_quantity}', '${product.limit_date}')">수정</button>
+	          	<button type="button" onclick="deleteProduct(${product.refrigerator_product_id})">삭제</button>
+	          	<button type="button" onclick="shareProduct(${product.refrigerator_product_id})">공유</button>
+	        </td>
+	      </tr>
+	    </c:forEach>
+    </c:if>
+  </table>  
   
   <form id="productForm">
-  	<input type="hidden" id="refrigeratorId" name="refrigeratorId" value="${refrigeratorProductList.get(0).refrigerator_id}">
+  	<input type="hidden" id="refrigeratorId" name="refrigeratorId" value="${refrigeratorId}">
   
     <label for="productName">이름:</label>
     <input type="text" id="productName" name="productName"><br><br>
@@ -208,12 +210,6 @@ function shareProduct(refrigeratorProductId){
 	  <input type="date" id="editLimitDate" name="editLimitDate"><br><br>
 	  
 	  <button type="button" id="updateForm">수정 완료</button>
-	</form>
- 
-  <c:if test="${not empty overLimitProduct.get(0)}">
-  	<c:forEach var="message" items="${overLimitProduct}">
-  		${message}
-  	</c:forEach>
-  </c:if>
+	</form> 
 </body>
 </html>
