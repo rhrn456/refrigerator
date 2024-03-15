@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,45 +44,44 @@ public class RefrigeratorController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		UserDTO user = new UserDTO();/*테스트용 제거 할 것*/
-		user.setUser_id("asd");/*테스트용 제거 할 것*/		
+		user.setUser_id("qwe");/*테스트용 제거 할 것*/		
 		
 		//유저 아이디와 맞는 냉장고아이디를 불러옴
 		int refrigeratorId = refrigeratorService.getRefrigeratorId(user.getUser_id());
 		System.out.println(refrigeratorId);
-		mv.addObject("refrigeratorId", refrigeratorId); /*테스트용 제거할 것*/ 
+		mv.addObject("refrigeratorId", refrigeratorId); 
 		
 		//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
-		System.out.println(refrigeratorProductList);/*테스트용 제거 할 것*/		
+		System.out.println(refrigeratorProductList.size());/*테스트용 제거 할 것*/	
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);		
 		mv.setViewName("refrigeratorTest");
 		
-		//현재날자와 소비기한을 비교해서 알려줌
-		String date = dateFormat.format(now).toString();
-		String[] nowDate = date.split("-"); 
-		List<String> overLimitProduct = new ArrayList<String>();
-		for (RefrigeratorProdcutDTO refrigeratorProdcut : refrigeratorProductList) {
-			String[] limitDate = refrigeratorProdcut.getLimit_date().toString().split("-");
-			if (Integer.parseInt(limitDate[0]) < Integer.parseInt(nowDate[0])) {
-				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
-			} else if (Integer.parseInt(limitDate[1]) < Integer.parseInt(nowDate[1])) {
-				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
-			} else if (Integer.parseInt(limitDate[2]) < Integer.parseInt(nowDate[2])) {
-				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
-			} else if (Integer.parseInt(limitDate[2]) < Integer.parseInt(nowDate[2]) + 3) {
-				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 곧 만료됩니다");
-			}
-				
-		}
+		//현재날자와 소비기한을 비교해서 알려줌 (삭제예정)
+//		String date = dateFormat.format(now).toString();
+//		String[] nowDate = date.split("-"); 
+//		List<String> overLimitProduct = new ArrayList<String>();
+//		for (RefrigeratorProdcutDTO refrigeratorProdcut : refrigeratorProductList) {
+//			String[] limitDate = refrigeratorProdcut.getLimit_date().toString().split("-");
+//			if (Integer.parseInt(limitDate[0]) < Integer.parseInt(nowDate[0])) {
+//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
+//			} else if (Integer.parseInt(limitDate[1]) < Integer.parseInt(nowDate[1])) {
+//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
+//			} else if (Integer.parseInt(limitDate[2]) < Integer.parseInt(nowDate[2])) {
+//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
+//			} else if (Integer.parseInt(limitDate[2]) < Integer.parseInt(nowDate[2]) + 3) {
+//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 곧 만료됩니다");
+//			}				
+//		}
 		
-		mv.addObject("overLimitProduct", overLimitProduct);/*테스트용 추후삭제*/
+//		mv.addObject("overLimitProduct", overLimitProduct);/*테스트용 추후삭제*/
 		
 		//메일로 보낼 String으로 변환
-		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < overLimitProduct.size() - 1; i++) {
-			str.append(overLimitProduct.get(i) + ", ");
-		}
-		str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");
+//		StringBuilder str = new StringBuilder();
+//		for (int i = 0; i < overLimitProduct.size() - 1; i++) {
+//			str.append(overLimitProduct.get(i) + ", ");
+//		}
+//		str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");
 		
 		//이메일 보내기                     보낼이메일주소            제목              내용
 //		emailService.sendSimpleMessage("dudans8wk@naver.com", "소비기한 알림", str.toString());
