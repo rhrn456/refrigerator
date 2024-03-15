@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,7 +35,7 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     	<link href="css/sb-admin-2.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
      <!-- Navbar start -->
        <%@ include file="../header.jsp" %>
         <!-- Navbar End -->
@@ -51,13 +52,16 @@
 	        position: relative; /* 부모 요소 기준으로 위치 지정 */
 	    }
 	
-	    .card-info {
-	        font-size: 23px;
-	        display: flex;
-	        margin-bottom: 5px;
-	        justify-content: space-between; 
-	        color:black;
-	    }
+		.card-info {
+		    font-size: 18px;
+		    display: flex;
+		    margin-bottom: 5px;
+		    justify-content: space-between; 
+		    color: black;
+		    overflow: hidden; /* 넘치는 텍스트를 가림 */
+		    text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+		    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+		}
 	
 	    .card-details {
 	        display: flex;
@@ -99,7 +103,7 @@
 	         color: black; 
 	         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
 		}
-
+		
 		.modal-content {
 		    text-align: center;
 		    display: flex;
@@ -113,6 +117,7 @@
 		.modal-button {
 		    width: 100px;
 		}
+
     </style>
     </head>
 
@@ -122,29 +127,34 @@
         <!-- Slidebar End -->
         
 
-
 		<div class="col-lg-11">
        <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 490px; ">
-           <c:forEach var="recipe" items="${recipelist}">
+           <c:forEach var="review" items="${reviews}">
                 <div class="card">
-	                 <c:choose>
-					    <c:when test="${recipe.recipe_category == '밥'}">
-					        <div class="regular-product" style="background-color: green;">${recipe.recipe_category}</div>
+						<c:choose>
+					    <c:when test="${review.recipe_category == '밥'}">
+					        <div class="regular-product" style="background-color: green;">${review.recipe_category}</div>
 					    </c:when>
-					    <c:when test="${recipe.recipe_category == '국/찌개'}">
-					        <div class="regular-product" style="background-color: orange;">${recipe.recipe_category}</div>
+					    <c:when test="${review.recipe_category == '국/찌개'}">
+					        <div class="regular-product" style="background-color: orange;">${review.recipe_category}</div>
 					    </c:when>
-					    <c:when test="${recipe.recipe_category == '반찬'}">
-					        <div class="regular-product" style="background-color: skyblue;">${recipe.recipe_category}</div>
+					    <c:when test="${review.recipe_category == '반찬'}">
+					        <div class="regular-product" style="background-color: skyblue;">${review.recipe_category}</div>
 					    </c:when>
 					    <c:otherwise>
 					        <div class="regular-product">${recipe.recipe_category}</div>
 					    </c:otherwise>
 					</c:choose>
                     <div class="card-info">
-                     <div class="recipe-id" style="display: none;">${recipe.recipe_id}</div>
-       				<div class="recipe-name" style="display: none;">${recipe.recipe_name}</div>
-                        <a>${recipe.recipe_name}</a>
+                     <div class="review-id" style="display: none;">${review.review_id}</div>
+       				<div class="user-id" style="display: none;">${review.user_id}</div>
+                        <a>작성자: ${review.user_id}</a>
+                        <a>레시피: ${review.recipe_name}</a>
+                    </div>
+                    <c:set var="createDate" value="${review.create_review_date}" />
+					<c:set var="formattedDate" value="${fn:substringBefore(createDate, ' ')}" />              
+                    <div class="card-details">
+                        <a>작성날짜: ${formattedDate}</a>
                     </div>
                 </div>
             </c:forEach>
@@ -167,7 +177,7 @@
 					            <!-- 페이지 버튼 -->
 					            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
 					                <li class="page-item">
-					                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
+					                    <a href="#" class="page-link rounded ${pageNumber == currentPage ? 'active' : ''}" data-value="${pageNumber}">
 					                        ${pageNumber}
 					                    </a>
 					                </li>
@@ -186,11 +196,12 @@
                 </div>
             </div>
         </div>
-    <!-- 상품 삭제 모달 창 -->
+    
+			<!-- 상품 삭제 모달 창 -->
 	    <div id="modalContainer" class="modal-container">
 		    <div class="modal-content">
-		        <p>레시피를 정말 삭제하시겠습니까?</p>
-		        <p>레시피 이름: <span class="recipe-name"></span></p>
+		        <p>리뷰를 정말 삭제하시겠습니까?</p>
+		        <p>작성자 : <span class="user-id"></span></p>
 		        <div class="button-container">
 			        <button id="confirmDeleteButton" class="modal-button" style="background-color: red; color: white;">네</button>
 			        <button id="cancelDeleteButton" class="modal-button" style="background-color: green; color: white;">아니오</button>
@@ -199,55 +210,35 @@
 		</div>
    
    
-			<!-- 수정 모달 -->
-<div class="modal fade" id="editRecipeModal" tabindex="-1" role="dialog" aria-labelledby="editRecipeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title" id="editRecipeModalLabel" style="margin-left:150px;">레시피 정보 수정</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<!-- 상세 보기 모달 -->
+			<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true" style="margin-top:200px;">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="reviewModalLabel">리뷰 상세 정보</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" action="/RecipeUpdateAdmin" method="post">
-                    <div class="form-group">
-                        <input type="hidden" id="recipe_id" name="recipe_id">
-                        <label for="recipe_name">레시피 이름</label>
-                        <input type="text" class="form-control" id="recipe_name" name="recipe_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipe_content">레시피 내용</label>
-                        <textarea class="form-control" id="recipe_content" name="recipe_content" rows="6" cols="50"></textarea> <!-- 조정된 크기 -->
-                    </div>
-                    <div class="form-group">
-                        <label for="ingredient">재료</label>
-                        <input type="text" class="form-control" id="ingredient" name="ingredient">
-                    </div>
-					<div class="form-group" style="text-align: center;">
-					    <label for="recipe_category">카테고리</label>
-					    <select id="recipe_category_select" class="form-control mb-3" name="recipe_category" style="text-align: center;">
-					        <option value="밥">밥</option>
-					        <option value="국/찌개">국/찌개</option>
-					        <option value="반찬">반찬</option>
-					    </select>
-					</div>
-                    <div class="form-group">
-                        <label for="recipe_img">레시피 이미지</label>
-                        <input type="text" class="form-control" id="recipe_img" name="recipe_img">
-                    </div>
-                    <div class="form-group">
-                        <label for="nutrition_facts">영양 성분</label>
-                        <input type="text" class="form-control" id="nutrition_facts" name="nutrition_facts">
-                    </div>
-                    <button type="submit" class="btn btn-primary">저장</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-   
-   
+			            </div>
+			            <div class="modal-body">
+			                    <!-- 수정할 상품 정보 입력 폼 -->
+			                    <div class="form-group">
+			                    	<input type="hidden" id="review_id" name="review_id">
+			                        <label for="user_id">작성자</label>
+			                        <input type="text" class="form-control" id="user_id" name="user_id" readonly>
+			                    </div>
+			                    <div class="form-group">
+			                        <label for="recipe_name">레시피 이름</label>
+			                        <input type="text" class="form-control" id="recipe_name" name="recipe_name" readonly>
+			                    </div>
+			                    <div class="form-group">
+			                        <label for="review_content">내용</label>
+			                        <textarea class="form-control" id="review_content" name="review_content" style="height: 150px; overflow-y: auto;" readonly></textarea>
+			                    </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
    
    		<!-- footer start -->
        <%@ include file="../footer.jsp" %>
@@ -266,12 +257,10 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
 <script>
-   $(document).ready(function() {
+    $(document).ready(function() {
 	    var category ="";
         var keyword = "";
-        var page = 1;
         // 수정/삭제버튼 생성
         addEditAndDeleteButtons();
         //검생 창 생성
@@ -282,7 +271,7 @@
         bindSearchEvents();
 
      // 검색 버튼 클릭 및 엔터 키 이벤트를 바인딩
-         function bindSearchEvents() {
+        function bindSearchEvents() {
             $('#searchButton').on('click', function() {
                 executeSearch();
             });
@@ -297,31 +286,28 @@
         // 검색 실행 함수
         function executeSearch() {
             keyword = $('#searchInput1').val().trim();
-            getRecipeByKeyword(category, keyword, 1);
+            console.log(keyword);
+            getReviewByKeyword(category, keyword, 1);
         }
 			
 			
         // 제품 수정 모달 열기
-        function openRecipeModal(recipeId) {
+        function openReviewModal(reviewId) {
             // AJAX 요청 보내기
             $.ajax({
                 type: "GET",
-                url: "/findrecipe",
+                url: "/getreviewInfo",
                 data: {
-                    recipe_id: recipeId
+                	review_id: reviewId
                 },
                 success: function(response) {
                     // 반환된 데이터를 모달에 채워 넣기
-                    $('#recipe_id').val(response.recipe_id); // 상품 이름 입력 필드에 값 설정
-                    $('#recipe_name').val(response.recipe_name); // 상품 이름 입력 필드에 값 설정
-                    $('#recipe_content').val(response.recipe_content); // 내용 입력 필드에 값 설정
-                    $('#ingredient').val(response.ingredient); // 수량 입력 필드에 값 설정
-                    $('#recipe_category_select').val(response.recipe_category); // 카테고리 선택 입력 필드에 값 설정
-                    $('#recipe_img').val(response.recipe_img); // 상품 이미지 입력 필드에 값 설정
-                    $('#nutrition_facts').val(response.nutrition_facts); // 유통 기한 입력 필드에 값 설정
-
+                    $('#review_id').val(response.review_id); // 상품 이름 입력 필드에 값 설정
+                    $('#user_id').val(response.user_id); // 상품 이름 입력 필드에 값 설정
+                    $('#recipe_name').val(response.recipe_name); // 내용 입력 필드에 값 설정
+                    $('#review_content').val(response.review_content); // 수량 입력 필드에 값 설정
                     // 수정 모달 열기
-                    $('#editRecipeModal').modal('show');
+                    $('#reviewModal').modal('show');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -329,43 +315,10 @@
             });
         }
         // 수정 모달 닫기
-        $('#editRecipeModal .close').click(function() {
-            $('#editRecipeModal').modal('hide'); // 모달 닫기
+        $('#reviewModal .close').click(function() {
+            $('#reviewModal').modal('hide'); // 모달 닫기
         });
-        
-        $('#editForm').submit(function(event) {
-            // 폼 기본 동작 방지
-            event.preventDefault();
-		
-            // 폼 데이터를 JSON 형식으로 직렬화
-            var formData = {
-                "recipe_id": $('#recipe_id').val(),
-                "recipe_name": $('#recipe_name').val(),
-                "recipe_content": $('#recipe_content').val(),
-                "ingredient": $('#ingredient').val(),
-                "recipe_category": $('#recipe_category_select').val(), 
-                "recipe_img": $('#recipe_img').val(),
-                "nutrition_facts": $('#nutrition_facts').val(),
-            };
-			console.log(formData);
-            // AJAX 요청 보내기
-            $.ajax({
-                type: 'POST',
-                url: '/RecipeUpdateAdmin',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function(response) {
-                    // 성공적으로 처리된 경우에 대한 동작 수행
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    // 오류 발생 시 처리
-                    console.error("오류 발생: " + error);
-                }
-            });
-        });
-   
-        
+
         // 카테고리 링크 클릭 시
          $('.col-lg-11').on('click', '.Recipe-category a', function(e) {
 	        e.preventDefault();
@@ -373,39 +326,40 @@
 	        keyword = "";
 	        $('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
 	        // AJAX 요청 보내기
-	        getRecipeByCategory(category, 1); // 페이지 번호 1로 초기화
+	        getReviewByCategory(category, 1); // 페이지 번호 1로 초기화
    		 });
 
         // 페이지 버튼 클릭 이벤트 핸들러 등록
         $('#paginationContainer').on('click', 'a', function(e) {
             e.preventDefault();
-            page = $(this).data('value'); // 클릭된 링크의 data-value 속성 값을 가져오기
+            var page = $(this).data('value'); // 클릭된 링크의 data-value 속성 값을 가져오기
+            keyword = $('.form-control').val();
             if (page === 'Prev' || page === 'Next') {
  		        // Prev 또는 Next 링크를 클릭한 경우
  		        page = $(this).attr('value');
  		    } 
             if (category === "" && keyword === "") {
-            	getRecipeAll(page); // 선택된 카테고리가 없으면 전체 상품 불러오기
+                getReviewAll(page); // 선택된 카테고리가 없으면 전체 상품 불러오기
             } else if(keyword !== ""){
-            	getRecipeByKeyword(category, keyword, page);
+            	getReviewByKeyword(category, keyword, page);
 	        } else {
-	        	getRecipeByCategory(category, page);
+	        	getReviewByCategory(category, page);
 	        }
         });
 
         // 페이지 로드 함수 - 선택된 카테고리 없이 모든 상품 불러오기
-        function getRecipeAll(page) {
-            var pageSize = 8; // 페이지당 아이템 수
+        function getReviewAll(page) {
+            var pageSize = 12; // 페이지당 아이템 수
             $.ajax({
                 type: "GET",
-                url: "/getRecipeByCategory",
+                url: "/getReviewByCategory",
                 data: {
                     category: "",
                     page: page,
                     pageSize: pageSize
                 },
                 success: function(response) {
-                	updateRecipes(response);
+                	updateReview(response);
                   
                 },
                 error: function(xhr, status, error) {
@@ -415,18 +369,18 @@
         }
 
         // 카테고리별 상품 불러오기
-        function getRecipeByCategory(category, page) {
-            var pageSize = 8; // 페이지당 아이템 수
+        function getReviewByCategory(category, page) {
+            var pageSize = 12; // 페이지당 아이템 수
             $.ajax({
                 type: "GET",
-                url: "/getRecipeByCategory",
+                url: "/getReviewByCategory",
                 data: {
                     category: category,
                     page: page,
                     pageSize: pageSize
                 },
                 success: function(response) {
-                	updateRecipes(response);
+                	updateReview(response);
                 
                 },
                 
@@ -437,12 +391,12 @@
         }
         
 		//검색한 단어로 상품 불러오기
-		function getRecipeByKeyword(category, keyword, page) {
-		    var pageSize = 8;
+		function getReviewByKeyword(category, keyword, page) {
+		    var pageSize = 12;
 		    // AJAX 요청 보내기
 		    $.ajax({
 		        type: "GET",
-		        url: "/searchRecipe",
+		        url: "/searchReview",
 		        data: {
 		        	category : category,
 		            keyword: keyword,
@@ -450,7 +404,7 @@
 		            pageSize: pageSize
 		        },
 		        success: function(response) {
-		        	updateRecipes(response);
+		        	updateReview(response);
                 },
 		        error: function(xhr, status, error) {
 		            // 에러 처리 로직
@@ -460,37 +414,41 @@
 		}
 
         // 받아온 상품 정보를 업데이트하는 함수
-        function updateRecipes(response) {
-		    var recipesContainer = $('.col-lg-11 .row'); // 상품 목록 컨테이너 선택
-		    recipesContainer.empty(); // 기존 상품 목록 비우기
+        function updateReview(response) {
+            var productsContainer = $('.col-lg-11 .row'); // 상품 목록 컨테이너 선택
+            productsContainer.empty(); // 기존 상품 목록 비우기
+
+            // 받아온 데이터를 페이지에 맞게 출력
+			$.each(response.reviews, function(index, review) {
+				
+			   var recipeCategoryHTML = createRecipeHTML(review.recipe_category);
+			   var createDate = new Date(review.create_review_date);
+		       var formattedDate = createDate.toISOString().split('T')[0]; 
+			    // 상품 정보를 HTML로 생성하는 코드
+			    var productHTML = '<div class="card">' +
+			    	recipeCategoryHTML +
+			        '<div class="card-info">' +
+			        '<div class="review-id" style="display: none;">' + review.review_id + '</div>' +
+			        '<div class="user-id" style="display: none;">' + review.user_id + '</div>' +
+			        '<a>작성자: ' + review.user_id + '</a>' +
+			        '<a>레시피: ' + review.recipe_name + '</a>' +
+			        '</div>' +
+			        '<div class="card-details">' +
+			        '<a>작성날짜: ' + formattedDate + '</a>' +
+			        '</div>' +
+			        '</div>';
+			    productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+			});
+            // 페이징 버튼 업데이트
+			$('#paginationContainer').empty();
+            createPaginationButtons(response.pageInfo); // 카테고리 다시 그리기
+            addEditAndDeleteButtons();
+            initializeSearchField()
+            drawCategories();
+            bindSearchEvents();
+        }
 		
-		    // 받아온 데이터를 페이지에 맞게 출력
-		    $.each(response.recipes, function(index, recipe) { // recipe로 수정
-		        // 레시피 카테고리에 따라 HTML 생성
-		        var recipeCategoryHTML = createRecipeHTML(recipe.recipe_category);
-		
-		        // 레시피 카드 HTML 생성
-		        var recipeHTML = '<div class="card">' +
-		            recipeCategoryHTML +
-		            '<div class="card-info">' +
-		            '<div class="recipe-id" style="display: none;">' + recipe.recipe_id + '</div>' +
-		            '<div class="recipe-name" style="display: none;">' + recipe.recipe_name + '</div>' +
-		            '<a>' + recipe.recipe_name + '</a>' +
-		            '</div>' +
-		            '</div>';
-		        recipesContainer.append(recipeHTML); // 새로운 레시피를 기존의 레시피 목록에 추가
-		    });
-		
-		    // 페이징 버튼 업데이트
-		    $('#paginationContainer').empty();
-		    createPaginationButtons(response.pageInfo); // 카테고리 다시 그리기
-		    addEditAndDeleteButtons();
-		    initializeSearchField()
-		    drawCategories();
-		    bindSearchEvents();
-		} 
-		
-		function createRecipeHTML(recipeCategory) {
+        function createRecipeHTML(recipeCategory) {
 		    var backgroundColor;
 		    switch (recipeCategory) {
 		        case '밥':
@@ -542,68 +500,58 @@
          }
         
      // 수정과 삭제 버튼을 추가하는 함수
-		 function addEditAndDeleteButtons() {
+		function addEditAndDeleteButtons() {
 		    // 모든 card-info 요소에 대해 작업
 		    $('.card-info').each(function() {
 		        // 현재 요소에 새로운 버튼 추가
 		        var ButtonsHTML = `
 		            <div class="cardbtn">
-		                <button class="btn btn-primary edit-recipe-btn" 
+		                <button class="btn btn-primary view-review-btn" 
 		                        style="width: fit-content;"
 		                        data-toggle="modal"
-		                        >수정</button>
+		                        >정보 보기</button>
 		                <button class="btn btn-danger" 
 		                        style="width: fit-content;">삭제</button>
-		                        <button class="btn btn-warning edit-ingredients-btn" 
-		                            style="width: fit-content;">재료 수정</button>
 		            </div>`;
 		        // 현재 요소의 내부에 새로운 버튼 추가
 		        $(this).prepend(ButtonsHTML);
 		    });
 		
 		    // 수정 버튼과 삭제 버튼에 대한 이벤트 리스너 추가
-		    $('.edit-recipe-btn').click(function() {
-		        var recipeId = $(this).closest('.card').find('.recipe-id').text();
-		        console.log(recipeId);
-		        openRecipeModal(recipeId);RecipePlus
-		    });
-		    
-		    //레시피 재료 변경하기
-		    $('.edit-ingredients-btn').click(function() {
-		        var recipeId = $(this).closest('.card').find('.recipe-id').text();
-		        console.log(recipeId);
-		        window.location.href = '/RecipePlus?recipe_id=' + recipeId;
+		    $('.view-review-btn').click(function() {
+		        var reviewId = $(this).closest('.card').find('.review-id').text();
+		        openReviewModal(reviewId);
 		    });
 		
 		    $('.btn-danger').click(function() {
-		        var recipeId = $(this).closest('.card').find('.recipe-id').text();
-		        var recipeName = $(this).closest('.card').find('.recipe-name').text();
+		        var reviewId = $(this).closest('.card').find('.review-id').text();
+		        var userId = $(this).closest('.card').find('.user-id').text();
 		        // 삭제 모달을 표시하고 확인 버튼과 취소 버튼에 대한 이벤트 리스너 추가
 		        var modalContainer = document.getElementById("modalContainer");
 		        var confirmButton = document.getElementById("confirmDeleteButton");
 		        var cancelButton = document.getElementById("cancelDeleteButton");
 		        var modalContent = document.querySelector('.modal-content');
-		        var modalRecipeName = modalContent.querySelector('.recipe-name');
+		        var modalReviewName = modalContent.querySelector('.user-id');
 		
 		        // 모달 내용 설정
-		        modalRecipeName.textContent = recipeName;
+		        modalReviewName.textContent = userId;
 		        modalContainer.style.display = "block"; // 모달 열기
-		        confirmButton.dataset.recipeId = recipeId; // 확인 버튼의 data-product-id 속성에 product_id 설정
+		        confirmButton.dataset.productId = reviewId; // 확인 버튼의 data-product-id 속성에 product_id 설정
 		
 		        cancelButton.onclick = function() {
 		            modalContainer.style.display = "none";
 		        }
 		
 		        confirmButton.onclick = function() {
-		            var recipeId = confirmButton.dataset.recipeId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
-		            window.location.href = '/recipedeleteadmin/' + recipeId; // 해당 product_id를 사용하여 삭제 URL로 이동
+		            var reviewId = confirmButton.dataset.reviewId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
+		            window.location.href = '/reviewdeleteadmin/' + reviewId; // 해당 product_id를 사용하여 삭제 URL로 이동
 		        }
 		    });
 		}
         
 
 			
-	
+			
         // 카테고리를 그리는 함수
         function drawCategories() {
             var categoryHTML = `
@@ -611,7 +559,7 @@
                     <h4>레시피 카테고리</h4>
                     <div class="list-unstyled allrecipe-categorie">
                         <div class="d-flex justify-content-center recipe-topcategory"style="margin: 0 -15px;">
-                            <a href="/RecipeListAdmin" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>모든 레시피</a>
+                            <a href="/ReviewRecipeAdmin" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>모든 레시피</a>
                             <span>|</span>
                             <div class="d-flex justify-content-center Recipe-category">
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>밥</a>
@@ -629,7 +577,7 @@
         function initializeSearchField() {
             var inputGroupHTML = `
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" style="margin-left:250px; max-width:300px;" placeholder="레시피 검색" id="searchInput1">
+                    <input type="text" class="form-control" style="margin-left:250px; max-width:300px;" placeholder="검색할 레시피 이름을 적어주세요" id="searchInput1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
                     </div>
@@ -639,9 +587,9 @@
            
         }
     });
- 
 
 
-   </script> 
+
+   </script>
 </body>
 </html>

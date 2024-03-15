@@ -4,8 +4,8 @@
 
 	<!-- 회원가입  -->
 	<insert id="insertUser" parameterType="User">
-        INSERT INTO user (user_id, password, user_name, mail, adress, phone, admin_num, manager_num, create_user_date)
-        VALUES (#{user_id}, #{password}, #{user_name}, #{mail}, #{adress}, #{phone}, false, false, now())
+        INSERT INTO user (user_id, password, user_name, mail, adress, phone)
+        VALUES (#{user_id}, #{password}, #{user_name}, #{mail}, #{adress}, #{phone})
     </insert>
 	
 	<!-- 로그인  -->
@@ -14,6 +14,14 @@
 			resultType="User">
         SELECT * FROM user
         WHERE user_id = #{user_id} AND password = #{password}
+    </select>
+    
+    <!-- 아이디 찾기 -->
+	<select id="getUserByEmailAndName" 
+			parameterType="string" 
+			resultType="User">
+        SELECT * FROM user
+        WHERE user_name = #{user_name} AND mail = #{mail}
     </select>
     
     <!-- 회원 정보 수정 -->

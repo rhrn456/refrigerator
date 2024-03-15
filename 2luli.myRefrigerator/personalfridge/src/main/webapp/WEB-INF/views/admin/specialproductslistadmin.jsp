@@ -92,7 +92,7 @@
 	         display: none;
 	         position: fixed;
 	         top: 50%;
-	         left: 56%;
+	         left: 50%;
 	         transform: translate(-50%, -50%);
 	         background-color: rgba(255, 255, 255, 1); 
 	         padding: 10px;
@@ -591,7 +591,7 @@
         function drawCategories() {
             var categoryHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">     
-                    <h4>카테고리</h4>
+                    <h4>특가 상품 카테고리</h4>
                     <div class="list-unstyled allproduct-categorie">
                         <div class="d-flex justify-content-center product-topcategory"style="margin: 0 -15px;">
                             <a href="/SpecialProductAllList" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
@@ -616,7 +616,7 @@
         function initializeSearchField() {
             var inputGroupHTML = `
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" style="margin-left:250px; max-width:300px;" placeholder="상품 검색" id="searchInput1">
+                    <input type="text" class="form-control" style="margin-left:250px; max-width:300px;" placeholder="특가 상품 검색" id="searchInput1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
                     </div>

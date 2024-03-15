@@ -73,7 +73,7 @@
 	         display: none;
 	         position: fixed;
 	         top: 50%;
-	         left: 56%;
+	         left: 50%;
 	         transform: translate(-50%, -50%);
 	         background-color: rgba(255, 255, 255, 1); 
 	         padding: 10px;
@@ -307,17 +307,6 @@ $(document).ready(function() {
     }
 
     // 페이지 버튼 생성 함수
-    function createPaginationButtons(totalPages, currentPage) {
-        var paginationContainer = $('#paginationContainer');
-        paginationContainer.empty(); // 기존 페이지 버튼 제거
-        // 페이지 수만큼 버튼 생성
-        for (var i = 1; i <= totalPages; i++) {
-            var button = $('<a href="#" class="rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
-            paginationContainer.append(button);
-        }
-    }
-    
-    //검생창 생성 함수
   function createPaginationButtons(pageInfo) {
         var paginationContainer = $('#paginationContainer');
         var paginationHTML =

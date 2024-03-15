@@ -57,4 +57,5 @@ public class AdminService {
 		parameters.put("keyword", keyword);
 		return adminmapper.getAllManagerByKeyword(parameters);
 	}
+
 }

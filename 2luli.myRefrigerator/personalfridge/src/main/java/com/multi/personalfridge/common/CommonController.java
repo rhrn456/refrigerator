@@ -1,6 +1,7 @@
 package com.multi.personalfridge.common;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,22 @@ public class CommonController {
 	
 	//메인 화면 데이터(레시피, 특가 상품)
 
+	
 	@GetMapping("/")
 	public String getMainRecipe(Model model) {
-		List<RecipeDTO> recipe = recipeService.getAllrecipe();
-		List<ProductDTO> products = productService.getAllSepcialProduct();
-		model.addAttribute("products",products);
-		model.addAttribute("recipe", recipe);
-		return "index";
+	    List<RecipeDTO> recipe = recipeService.getAllrecipe();
+	    List<ProductDTO> products = productService.getAllSepcialProduct();
+
+	    // 0부터 8까지의 상품 데이터만 선택하여 새로운 리스트에 추가
+	    List<ProductDTO> selectedProducts = new ArrayList<>();
+	    int maxIndex = Math.min(8, products.size() - 1); // 8과 상품 수 중 작은 값 선택
+	    for (int i = 0; i <= maxIndex; i++) {
+	        selectedProducts.add(products.get(i));
+	    }
+
+	    model.addAttribute("products", selectedProducts);
+	    model.addAttribute("recipe", recipe);
+	    return "index";
 	}
 	
 	//회사 정보

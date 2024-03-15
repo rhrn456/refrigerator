@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <style>
+
+    </style>
         <div class="container-fluid fixed-top">
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
@@ -54,9 +58,14 @@
 						        <i class="fa fa-shopping-bag fa-2x"></i>
 						        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
 						    </a>
-						    <a href="/admin" class="my-auto">
+							<div class="d-inline-flex align-items-center">
+						    <a href="/goPage" class="my-auto mr-3">
 						        <i class="fas fa-user fa-2x"></i>
 						    </a>
+						    <c:if test="${not empty sessionScope.userId}">
+						        <a href="/logout" id="unlock" class="fa fa-unlock-alt fa-2x"></a>
+						    </c:if>
+						</div>
 						</div>
                     </div>
                 </nav>

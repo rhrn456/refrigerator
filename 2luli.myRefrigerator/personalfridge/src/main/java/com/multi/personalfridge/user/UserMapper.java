@@ -14,13 +14,15 @@ public interface UserMapper {
 	// 회원가입
 	int insertUser(UserDTO dto);
 
-	UserDTO login(String userId, String password);
+	UserDTO login(String user_id, String password);
+	
+	UserDTO getUserByEmailAndName(String user_name, String mail);
 
-	int updateUser(String userId, UserDTO userDTO);
+	int updateUser(String user_id, UserDTO userDTO);
 
-	int deleteUser(String userId, String password);
+	int deleteUser(String user_id, String password);
 
-	UserDTO getUserById(String userId);
+	UserDTO getUserById(String user_id);
 
 	List<UserDTO> getAlluser();
 
@@ -33,6 +35,7 @@ public interface UserMapper {
 	List<UserDTO> getAlluserByKeyword(Map parameters);
 	
 	List<UserDTO> getAllUserByKewordPage(Map parameters);
+
 
 	
 }
