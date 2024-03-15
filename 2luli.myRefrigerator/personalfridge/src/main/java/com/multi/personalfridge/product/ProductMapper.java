@@ -65,7 +65,8 @@ public interface ProductMapper {
 	int productDeletById(int product_id);
 
 	ProductDTO getProductById(int product_id);
-
+	
+	//상품 정보 변경
 	void productUpdate(ProductDTO product);
 
 

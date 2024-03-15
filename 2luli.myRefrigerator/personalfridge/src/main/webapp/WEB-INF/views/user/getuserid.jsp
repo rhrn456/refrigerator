@@ -60,7 +60,7 @@ margin-top:230px;
 	                                        <h1 class="h4 text-gray-900 mb-2">아이디를 찾았습니다.</h1>
 	                                         <p class="mb-4" style="font-size:30px; font-weight: bold;">아이디: ${userId}</p>
 	                                        <div class="text-center">
-	                                        <a class="small" href="/findPassword">비밀번호를 잊어버리셨나요?</a>
+	                                        <a class="small" href="/findPasswordPage">비밀번호를 잊어버리셨나요?</a>
 	                                    </div>
 	                                    </div>
 	                                </div>

@@ -13,7 +13,7 @@
 			parameterType="string" 
 			resultType="User">
         SELECT * FROM user
-        WHERE user_id = #{user_id} AND password = #{password}
+        WHERE user_id = #{user_id} 
     </select>
     
     <!-- 아이디 찾기 -->
@@ -28,12 +28,12 @@
 	<update id="updateUser" parameterType="User">
 	    UPDATE user
 	    SET 
-	    	user_Id = #{user_Id}
+	    	user_id = #{user_id},
 	    	password = #{password},
 	        user_name = #{user_name},
 	        mail = #{mail},
 	        adress = #{adress},
-	        phone = #{phone},
+	        phone = #{phone}
 	    WHERE user_id = #{user_id} 
 	</update>
 

@@ -14,11 +14,11 @@ public interface UserMapper {
 	// 회원가입
 	int insertUser(UserDTO dto);
 
-	UserDTO login(String user_id, String password);
+	UserDTO login(String user_id);
 	
 	UserDTO getUserByEmailAndName(String user_name, String mail);
 
-	int updateUser(String user_id, UserDTO userDTO);
+	int updateUser(UserDTO user);
 
 	int deleteUser(String user_id, String password);
 

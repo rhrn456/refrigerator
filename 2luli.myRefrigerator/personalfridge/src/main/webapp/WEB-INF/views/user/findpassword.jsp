@@ -60,17 +60,19 @@ body {
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-2">비밀번호를 잊어버리셨나요?</h1>
-                                        <p class="mb-4">걱정하지 않으셔도 됩니다.<br>아래에 이메일 주소를 입력하세요. 비밀번호를  <br>재설정하실 수 있도록 링크를 보내드리겠습니다!</p>
+                                        <p class="mb-4">걱정하지 않으셔도 됩니다.<br>아래에 이메일 주소를 입력하세요. <br>임시비밀번호 를 보내드리겠습니다!</p>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="/findPassword" method="post">
+                                         <div class="form-group">
+								        <input type="mail" class="form-control form-control-user" id="mail" name="mail" placeholder="이메일" required>
+								   		 </div>
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                        </div>
-                                        <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                            Reset Password
-                                        </a>
+								            <input type="text" class="form-control form-control-user" id="user_name" name="user_name" placeholder="이름" required>
+								        </div>
+
+	                                     <button type="submit" class="btn btn-primary btn-user btn-block">
+								        비밀번호 찾기
+								    	</button>
                                     </form>
                                     <hr>
                                     <div class="text-center">

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="img/house-AI-Logo.png" />
     <style>
 
     </style>
@@ -19,7 +19,7 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="/" class="navbar-brand"><h1 class="text-primary display-6">우리집 AI 냉장고</h1></a>
+                    <a href="/" class="navbar-brand"><img src="img/house-AI-BI.png" style="width:200px;" ></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -54,6 +54,7 @@
 						            <i class="fas fa-search text-primary"></i>
 						        </button>
 						    </form>
+						    
 						    <a href="/cart" class="position-relative me-4 my-auto">
 						        <i class="fa fa-shopping-bag fa-2x"></i>
 						        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>

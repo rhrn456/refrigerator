@@ -23,13 +23,20 @@ public class UserService {
     }
 	
 	//로그인
-	public UserDTO login(String user_id, String password) {
-        return userMapper.login(user_id, password);
+	public UserDTO login(String user_id) {
+        return userMapper.login(user_id);
     }
 	
 	// 회원가입
-	public int insertUser(UserDTO dto) {
-		return userMapper.insertUser(dto);
+	public boolean insertUser(UserDTO dto) {
+		try {
+			userMapper.insertUser(dto);
+		return true; 
+	
+		}catch (Exception e) {
+			e.printStackTrace();
+		 return false; 
+		}
 	}
 	
 	// 회원탈퇴
@@ -38,9 +45,16 @@ public class UserService {
 	}
 
 	// 회원정보 수정
-	public int updateUser(String userId, UserDTO userDTO) {
-		return userMapper.updateUser(userId, userDTO);
-		
+	public boolean updateUser(UserDTO userDTO) {
+		System.out.println(userDTO);
+		try {
+			userMapper.updateUser(userDTO);
+		return true; 
+	
+		}catch (Exception e) {
+			e.printStackTrace();
+		 return false; 
+		}
 	}
 
 	public UserDTO getUserById(String userId) {

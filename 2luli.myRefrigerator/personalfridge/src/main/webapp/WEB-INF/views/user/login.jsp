@@ -70,12 +70,6 @@ margin-top:100px;
 									        <input type="password" class="form-control form-control-user"
 									            id="password" name="password" placeholder="Password" required>
 									    </div>
-									    <div class="form-group">
-									        <div class="custom-control custom-checkbox small">
-									            <input type="checkbox" class="custom-control-input" id="customCheck">
-									            <label class="custom-control-label" for="customCheck">Remember Me</label>
-									        </div>
-									    </div>
 									    <button type="submit" class="btn btn-primary btn-user btn-block">
 									        로그인
 									    </button>
@@ -90,7 +84,7 @@ margin-top:100px;
                                     <hr>
                                     <div class="text-center">
                                     	<a class="small" href="/findIdPage" style="margin-right:5px;">아이디를 잊어버리셨나요?</a>/
-                                        <a class="small" href="/findPassword">비밀번호를 잊어버리셨나요?</a>
+                                        <a class="small" href="/findPasswordPage">비밀번호를 잊어버리셨나요?</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="/signupPage">계정을 만드세요!</a>

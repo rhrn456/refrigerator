@@ -73,7 +73,7 @@ body {
 	                                </form>
 	                                <hr>
 	                                <div class="text-center">
-	                                    <a class="small" href="/findPassword">비밀번호를 잊어버리셨나요?</a>
+	                                    <a class="small" href="/findPasswordPage">비밀번호를 잊어버리셨나요?</a>
 	                                </div>
 	                                <div class="text-center">
 	                                    <a class="small" href="/loginPage">계정이 이미 있나요? 로그인!</a>
