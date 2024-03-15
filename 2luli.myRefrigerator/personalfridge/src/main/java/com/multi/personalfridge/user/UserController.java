@@ -31,8 +31,7 @@ public class UserController {
 	public String goPage(HttpServletRequest request) {
 		 String userId = (String) request.getSession().getAttribute("userId");
 	     Integer userAdmin = (Integer) request.getSession().getAttribute("userAdmin");
-	     System.out.println(userAdmin);
-
+	     		
 	            if (userAdmin != null && (userAdmin == 1 || userAdmin == 2)) {
 	                return "redirect:/admin";
 	                
@@ -54,9 +53,7 @@ public class UserController {
     //로그인
     @PostMapping("/Login")
     public String login(@RequestParam String user_id, @RequestParam String password, HttpSession session, RedirectAttributes redirectAttributes) {
-        System.out.println(user_id);
     	UserDTO user = userService.login(user_id, password);
-    	System.out.println(user);
     	session.setAttribute("userId", user.getUser_id());
         session.setAttribute("userAdmin", user.getJob_num());
     	if(user.getJob_num() == 0) {
