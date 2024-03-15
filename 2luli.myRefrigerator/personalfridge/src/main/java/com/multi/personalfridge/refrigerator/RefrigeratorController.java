@@ -36,24 +36,25 @@ public class RefrigeratorController {
 	
 	//나의 냉장고 들어왔을때 메인페이지
 	@GetMapping("/refrigerator")                      //세션 유저변수명
-	public ModelAndView getMethodName(/*@SessionAttribute("user") UserDTO user*/) {
+	public ModelAndView getMethodName(@SessionAttribute("userId") String user_id) {
 		ModelAndView mv = new ModelAndView();
+		System.out.println("현재접속중인 id : " + user_id);/*테스트용 추후 삭제*/
 		
 		//소비기한과 비교를 위한 현재 날짜 받아오기
 		java.util.Date now = new java.util.Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		UserDTO user = new UserDTO();/*테스트용 제거 할 것*/
-		user.setUser_id("qwe");/*테스트용 제거 할 것*/		
+//		UserDTO user = new UserDTO();/*테스트용 제거 할 것*/
+//		user.setUser_id("qwe");/*테스트용 제거 할 것*/		
 		
 		//유저 아이디와 맞는 냉장고아이디를 불러옴
-		int refrigeratorId = refrigeratorService.getRefrigeratorId(user.getUser_id());
-		System.out.println(refrigeratorId);
+		int refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);
+		System.out.println("현재 접속중인 냉장고 id : " + refrigeratorId);/*테스트용 추후 삭제*/
 		mv.addObject("refrigeratorId", refrigeratorId); 
 		
 		//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
-		System.out.println(refrigeratorProductList.size());/*테스트용 제거 할 것*/	
+		System.out.println("현재 냉장고의 제품 갯수 : " + refrigeratorProductList.size());/*테스트용 제거 할 것*/	
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);		
 		mv.setViewName("refrigeratorTest");
 		
