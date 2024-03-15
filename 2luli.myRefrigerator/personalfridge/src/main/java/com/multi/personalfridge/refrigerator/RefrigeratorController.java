@@ -35,20 +35,21 @@ public class RefrigeratorController {
 	private EmailService emailService;
 	
 	//나의 냉장고 들어왔을때 메인페이지
-	@GetMapping("/refrigerator")                      //세션 유저변수명
+	@GetMapping("/refrigerator")                     //세션 유저변수명
 	public ModelAndView getMethodName(@SessionAttribute("userId") String user_id) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("현재접속중인 id : " + user_id);/*테스트용 추후 삭제*/
 		
-		//소비기한과 비교를 위한 현재 날짜 받아오기
-		java.util.Date now = new java.util.Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
 //		UserDTO user = new UserDTO();/*테스트용 제거 할 것*/
 //		user.setUser_id("qwe");/*테스트용 제거 할 것*/		
 		
-		//유저 아이디와 맞는 냉장고아이디를 불러옴
-		int refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);
+		//유저 아이디와 맞는 냉장고아이디를 불러옴 (최초 접속시에는 생성)
+		Integer refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);
+		if (refrigeratorId == null) {
+			refrigeratorService.insertRefrigerator(user_id);
+			refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);			
+		}
+		
 		System.out.println("현재 접속중인 냉장고 id : " + refrigeratorId);/*테스트용 추후 삭제*/
 		mv.addObject("refrigeratorId", refrigeratorId); 
 		
@@ -57,35 +58,6 @@ public class RefrigeratorController {
 		System.out.println("현재 냉장고의 제품 갯수 : " + refrigeratorProductList.size());/*테스트용 제거 할 것*/	
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);		
 		mv.setViewName("refrigeratorTest");
-		
-		//현재날자와 소비기한을 비교해서 알려줌 (삭제예정)
-//		String date = dateFormat.format(now).toString();
-//		String[] nowDate = date.split("-"); 
-//		List<String> overLimitProduct = new ArrayList<String>();
-//		for (RefrigeratorProdcutDTO refrigeratorProdcut : refrigeratorProductList) {
-//			String[] limitDate = refrigeratorProdcut.getLimit_date().toString().split("-");
-//			if (Integer.parseInt(limitDate[0]) < Integer.parseInt(nowDate[0])) {
-//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
-//			} else if (Integer.parseInt(limitDate[1]) < Integer.parseInt(nowDate[1])) {
-//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
-//			} else if (Integer.parseInt(limitDate[2]) < Integer.parseInt(nowDate[2])) {
-//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 만료되었습니다");
-//			} else if (Integer.parseInt(limitDate[2]) < Integer.parseInt(nowDate[2]) + 3) {
-//				overLimitProduct.add(refrigeratorProdcut.getProduct_name() + "의 소비기한이 곧 만료됩니다");
-//			}				
-//		}
-		
-//		mv.addObject("overLimitProduct", overLimitProduct);/*테스트용 추후삭제*/
-		
-		//메일로 보낼 String으로 변환
-//		StringBuilder str = new StringBuilder();
-//		for (int i = 0; i < overLimitProduct.size() - 1; i++) {
-//			str.append(overLimitProduct.get(i) + ", ");
-//		}
-//		str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");
-		
-		//이메일 보내기                     보낼이메일주소            제목              내용
-//		emailService.sendSimpleMessage("dudans8wk@naver.com", "소비기한 알림", str.toString());
 		
 		return mv;
 	}

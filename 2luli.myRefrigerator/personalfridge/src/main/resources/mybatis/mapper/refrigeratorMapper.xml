@@ -19,6 +19,11 @@
 		values (#{product_name}, #{product_quantity}, #{refrigerator_id}, now(), #{limit_date})
 	</insert>
 	
+	<insert id="insertRefrigerator" parameterType="String">
+		insert into refrigerator(user_id)
+		values (#{user_id})
+	</insert>
+	
 	<delete id="deleteRefrigeratorProduct" parameterType="_int">
 		delete from refrigerator_product
 		where refrigerator_product_id = #{refrigerator_product_id}

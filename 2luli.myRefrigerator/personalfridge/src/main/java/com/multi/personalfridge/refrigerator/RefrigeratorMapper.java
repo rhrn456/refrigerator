@@ -9,7 +9,7 @@ import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 @Mapper
 public interface RefrigeratorMapper {
 
-	int getRefrigeratorId(String userId);
+	Integer getRefrigeratorId(String userId);
 
 	List<RefrigeratorProdcutDTO> getRefrigeratorProduct(int refrigeratorId);
 
@@ -18,5 +18,7 @@ public interface RefrigeratorMapper {
 	int deleteRefrigeratorProduct(int refrigeratorProductId);
 
 	int updateRefrigeratorProduct(RefrigeratorProdcutDTO refrigeratorProdcut);
+
+	int insertRefrigerator(String user_id);
 
 }

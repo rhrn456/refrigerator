@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.common.RandomStringGenerator;
 import com.multi.personalfridge.dto.UserDTO;
+import com.multi.personalfridge.refrigerator.RefrigeratorService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -106,7 +107,7 @@ public class UserController {
     public String insertUser(UserDTO user, HttpSession session) {
     	String hashedPassword = passwordEncoder.encode(user.getPassword());
     	user.setPassword(hashedPassword);
-        boolean result = userService.insertUser(user);
+        boolean result = userService.insertUser(user);        
         if(result) {
         	return "redirect:/loginPage";
         }

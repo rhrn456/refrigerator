@@ -20,8 +20,8 @@ public class AutoEmailSendService {
 	@Autowired
 	private EmailService emailService;
 	
-	// 24시간마다 작동
-	@Scheduled(fixedDelay = 86400000)
+	// 24시간마다 작동                 서버실행 최초에는 작동하지 않게 하고싶을 시 활성화
+	@Scheduled(fixedDelay = 86400000/*, initialDelay = 86400000*/)
 	public void run() {
 		System.out.println("스케줄러 작동");/*테스트용 추후 삭제*/		
 		
