@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.multi.personalfridge.dto.BoardDTO;
 import com.multi.personalfridge.dto.PageRequestDTO;
-import com.multi.personalfridge.dto.ProductDTO;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class BoardController {
@@ -87,13 +89,13 @@ public class BoardController {
 	
 	@GetMapping("/view")
 	public String getBoardByBoardNo(@RequestParam("boardNo") int boardNo, Model model) {
-		
+		service.updateHit(boardNo);
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
 		model.addAttribute("board", board);
 		
 		return "board/boardDetail";
 	}
-	
+
 	// Create
 	@GetMapping("/boardInsert")
 	public String insertForm() {
@@ -101,14 +103,27 @@ public class BoardController {
 	}
 	
 	@PostMapping("/insertBoard")
-	public String insertBoard(BoardDTO newBoard) {
+	public String insertBoard(@RequestParam("title") String title,
+								@RequestParam("content") String content,
+								@RequestParam("CategoryNo") int CategoryNo,
+								HttpServletRequest request) {
+		String Category = "";
+		BoardDTO newBoard = new BoardDTO();
+		
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		newBoard.setTitle(title);
+		newBoard.setContent(content);
+		newBoard.setB_category_no(CategoryNo);
+		newBoard.setUser_id(userId);
 		boolean result = service.insertBoard(newBoard);
 		
 		if(result) {
-			return "/";
+			return "redirect:/board?CategoryNo=" + CategoryNo;
 		} else {
 			return "../404";
 		}
+		
 	}
 	
 	// Update

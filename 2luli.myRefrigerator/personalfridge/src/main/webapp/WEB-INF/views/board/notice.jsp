@@ -146,7 +146,9 @@
 										    </nav>
 					                	</div>
 					                </div>
-					                <a href="/boardInsert" style="float:right; border: 1px solid #ffB524; padding:10px">글쓰기</a>
+					                <c:if test="${not empty sessionScope.userId}">
+					                	<a href="/boardInsert" style="float:right; border: 1px solid #ffB524; padding:10px">글쓰기</a>
+					                </c:if>
 					            </div>
 							</div>
 						</div>

@@ -7,13 +7,13 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 
 @MapperScan({"com.multi.personalfridge.user", 
-			 "com.multi.personalfridge.admin", 
-			 "com.multi.personalfridge.product", 
-			 "com.multi.personalfridge.recipe",
-			 "com.multi.personalfridge.review",
-			 "com.multi.personalfridge.refrigerator",
-			 "com.multi.personalfridge.board",
-			 "com.multi.personalfridge.common"})
+	 "com.multi.personalfridge.admin", 
+	 "com.multi.personalfridge.product", 
+	 "com.multi.personalfridge.recipe",
+	 "com.multi.personalfridge.review",
+	 "com.multi.personalfridge.refrigerator",
+	 "com.multi.personalfridge.board",
+	 "com.multi.personalfridge.common"})
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class PersonalfridgeApplication {
 

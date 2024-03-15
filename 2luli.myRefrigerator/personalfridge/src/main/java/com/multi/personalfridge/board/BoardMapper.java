@@ -25,6 +25,7 @@ public interface BoardMapper {
 
 	public List<BoardDTO> getBoardByCategoryAndPage(Map parameters);
 
+	public void updateHit(int boardNo);
 	
 	
 }

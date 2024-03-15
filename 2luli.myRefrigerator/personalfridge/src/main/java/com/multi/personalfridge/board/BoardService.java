@@ -64,5 +64,9 @@ public class BoardService {
 		    parameters.put("offset", offset);
 		    return mapper.getBoardByCategoryAndPage(parameters);
 	}
+
+	public void updateHit(int boardNo) {
+		mapper.updateHit(boardNo);
+	}
 	
 }

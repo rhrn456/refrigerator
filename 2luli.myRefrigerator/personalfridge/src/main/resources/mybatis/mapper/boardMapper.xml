@@ -18,13 +18,17 @@
 		FROM board b, board_category c WHERE b.b_category_no = c.b_category_no AND board_no = #{boardNo}
 	</select>
 	
-	<insert id="insertBoard" parameterType="map">
-		INSERT INTO board(title, content, user_id, b_category_no)
-		VALUES (#{title}, #{content}, #{user_id}, #{b_category_no})
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO board(title, content, user_id, b_category_no, board_create_date)
+		VALUES (#{title}, #{content}, #{user_id}, #{b_category_no}, now())
 	</insert>
 	
 	<update id="updateBoard" parameterType="map">
 		UPDATE board SET title = #{title}, content = #{content} WHERE board_no = #{board_no}
+	</update>
+	
+	<update id="updateHit" parameterType="_int">
+		UPDATE board SET hit = hit + 1 WHERE board_no = #{boardNo}
 	</update>
 	
 	<delete id="deleteBoardByBoardNo" parameterType="_int">
