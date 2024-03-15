@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @MapperScan({"com.multi.personalfridge.user", 
-			 "com.multi.personalfridge.admin", 
-			 "com.multi.personalfridge.product", 
-			 "com.multi.personalfridge.recipe",
-			 "com.multi.personalfridge.refrigerator",
-			 "com.multi.personalfridge.board"})
+	 "com.multi.personalfridge.admin", 
+	 "com.multi.personalfridge.product", 
+	 "com.multi.personalfridge.recipe",
+	 "com.multi.personalfridge.refrigerator",
+	 "com.multi.personalfridge.board"})
 @SpringBootApplication
 public class PersonalfridgeApplication {
 

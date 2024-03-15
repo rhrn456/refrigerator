@@ -1,10 +1,12 @@
 package com.multi.personalfridge.board;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.multi.personalfridge.dto.BoardDTO;
+import com.multi.personalfridge.dto.ProductDTO;
 
 @Mapper
 public interface BoardMapper {
@@ -18,6 +20,11 @@ public interface BoardMapper {
 	public int updateBoard(BoardDTO newBoard);
 
 	public BoardDTO deleteBoardByBoardNo(int boardNo);
+
+	public List<BoardDTO> getBoardByCategory(Map parameters);
+
+	public List<BoardDTO> getBoardByCategoryAndPage(Map parameters);
+
 	
 	
 }
