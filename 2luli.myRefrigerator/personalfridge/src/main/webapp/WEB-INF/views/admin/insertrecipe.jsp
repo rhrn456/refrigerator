@@ -133,7 +133,6 @@
     <script src="js/main.js"></script>
   <script>
 
-
   function selectCategory(category) {
     document.getElementById("recipe_category").value = category;
     toggleDropdown();

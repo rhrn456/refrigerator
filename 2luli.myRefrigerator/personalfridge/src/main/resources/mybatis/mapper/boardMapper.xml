@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="getBoardByBoardNo" parameterType="_int" resultType="Board">
-		SELECT title, content, user_id, board_create_date, hit, b_category_name
+		SELECT board_no, title, content, user_id, board_create_date, hit, b_category_name
 		FROM board b, board_category c WHERE b.b_category_no = c.b_category_no AND board_no = #{boardNo}
 	</select>
 	

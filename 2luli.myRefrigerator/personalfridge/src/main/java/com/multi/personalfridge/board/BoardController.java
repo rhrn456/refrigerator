@@ -85,7 +85,7 @@ public class BoardController {
 		return "board/" + Category;
 	}
 	
-	@GetMapping("/board/view")
+	@GetMapping("/view")
 	public String getBoardByBoardNo(@RequestParam("boardNo") int boardNo, Model model) {
 		
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
@@ -95,9 +95,9 @@ public class BoardController {
 	}
 	
 	// Create
-	@GetMapping("/createBoard")
+	@GetMapping("/boardInsert")
 	public String insertForm() {
-		return "/insertBoard";
+		return "board/boardInsert";
 	}
 	
 	@PostMapping("/insertBoard")
@@ -105,7 +105,7 @@ public class BoardController {
 		boolean result = service.insertBoard(newBoard);
 		
 		if(result) {
-			return "../index";
+			return "/";
 		} else {
 			return "../404";
 		}

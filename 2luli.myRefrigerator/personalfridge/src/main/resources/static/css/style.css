@@ -553,7 +553,7 @@ td {
   padding: 6px 15px;
 }
 th {
-  background: #42444e;
+  background: #81c408;
   color: #fff;
   text-align: left;
 }
@@ -564,14 +564,12 @@ tr:first-child th:last-child {
   border-top-right-radius: 6px;
 }
 td {
+  border-top: 1px solid #c6c9cc;
   border-right: 1px solid #c6c9cc;
   border-bottom: 1px solid #c6c9cc;
 }
 td:first-child {
   border-left: 1px solid #c6c9cc;
-}
-tr:nth-child(even) td {
-  background: #eaeaed;
 }
 tr:last-child td:first-child {
   border-bottom-left-radius: 6px;
