@@ -6,4 +6,19 @@
 		    INSERT INTO recipe_product (recipe_id, product_id, product_quantity)
 		    VALUES (#{recipe_id}, #{product_id}, #{product_quantity})
 		</insert>
+		
+
+		<select id="getRecipeProductListByRecipeId" parameterType="int" resultType="RecipeAndProduct">
+		 SELECT rp.recipe_product_id, rp.recipe_id, rp.product_id, rp.product_quantity, p.product_name
+	    FROM recipe_product rp
+	    JOIN product p ON rp.product_id = p.product_id
+	    WHERE rp.recipe_id = #{recipe_id}
+		</select>
+		
+		
+		<delete id="deleteRecipeProductsByRecipeId" parameterType="int">
+	    	delete
+	    	from recipe_product 
+	    	where recipe_id = #{recipe_id}
+	    </delete>
 </mapper>

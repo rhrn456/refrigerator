@@ -21,12 +21,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
+import com.multi.personalfridge.dto.RecipeAndProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
+import com.multi.personalfridge.dto.ReviewDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.product.ProductService;
 import com.multi.personalfridge.recipe.RecipeProductService;
 import com.multi.personalfridge.recipe.RecipeService;
+import com.multi.personalfridge.review.ReviewService;
 import com.multi.personalfridge.user.UserService;
 
 @Controller
@@ -35,6 +38,7 @@ public class AdminController {
 	private final RecipeService recipeService;
 	private final ProductService productService;
 	private final RecipeProductService recipeProductService;
+	private final ReviewService reviewService;
 	private final AdminService adminService;
 	private final UserService userService;
 	
@@ -42,11 +46,13 @@ public class AdminController {
 	public AdminController(RecipeService recipeService,
 							ProductService productService,
 							RecipeProductService recipeProductService,
+							ReviewService reviewService,
 							AdminService adminService,
 							UserService userService) {
 		this.recipeService = recipeService;
 	    this.productService = productService;
 	    this.recipeProductService = recipeProductService;
+	    this.reviewService = reviewService;
 	    this.adminService = adminService;
 	    this.userService = userService;
 	}
@@ -69,11 +75,14 @@ public class AdminController {
 		return "admin/isnertproduct";
 	}
 	
+	
 	//차트 보드
 	@GetMapping("/chartboard")
 	public String chartboard() {
 		return "admin/plusrecipeproducts";
 	}
+	
+	
 	//레시피 관련 START------------------------------------------------------------------------
 	//레시피 리스트 페이지
 	@GetMapping("/RecipeListAdmin")
@@ -81,8 +90,6 @@ public class AdminController {
 		int pageSize = 8;
 		List<RecipeDTO> recipelist = recipeService.getAllRecipePage(page, pageSize);
 		List<RecipeDTO> recipes = recipeService.getAllrecipe();
-		System.out.println(recipelist);
-		System.out.println(recipes.size());
 		int totalRecipe = recipes.size();
 		int totalPages = (int) Math.ceil((double) totalRecipe / pageSize); 
 		if(totalPages >5) {
@@ -171,6 +178,33 @@ public class AdminController {
 		RecipeDTO recipe =  recipeService.getRecipeById(recipe_id);
 		return recipe;
 	}
+	
+	//레시피 리뷰 페이지
+	@GetMapping("/ReviewRecipeAdmin")
+	public String ReviewRecipeAdmin(@RequestParam(defaultValue ="1") int page, Model model) {
+		int pageSize = 12; // 보여줄 아이템수 
+		String category ="";
+		List<ReviewDTO> reviews = reviewService.ReviewAndPage(category,page, pageSize);//전체 리뷰 페이징
+		List<ReviewDTO> reviewList = reviewService.getAllReviewList(category);// 전체 리뷰 가져오기
+		System.out.println(reviews);
+		System.out.println(reviewList);
+		int totalReviews = reviewList.size();//총 페이지수 구하기
+		int totalPages = (int) Math.ceil((double) totalReviews / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalReviews)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
+		model.addAttribute("pageInfo", pageRequestDTO);
+		model.addAttribute("reviews",reviews);
+		return "admin/recipereviewadmin";
+	}
+	
+	
 	//레시피 관련 END ---------------------------------------------------------------------
 	
 	
@@ -307,18 +341,28 @@ public class AdminController {
 	//매니저 관련 END-------------------------------------------------------------------
 	
 	//레시피 등록
-	@GetMapping("/RecipePlus")
-	public String insertRecipe(@ModelAttribute RecipeDTO recipe, Model model) {
-	    boolean result = recipeService.insertRecipe(recipe);
-	    RecipeDTO onerecipe = recipeService.getReturnInsertRecipe(recipe.getRecipe_name());
-	    List<ProductDTO> productList = productService.getFullProduct();
-	    if (result) {
-	    	model.addAttribute("onerecipe",onerecipe);
-	    	model.addAttribute("productList",productList);
-	        return "admin/plusrecipeproducts";
-	    }
-	    return "error";
-	}
+		@GetMapping("/RecipePlus")
+		public String insertRecipe(@ModelAttribute RecipeDTO recipe, Model model) throws JsonProcessingException {
+			ObjectMapper objectMapper = new ObjectMapper();;
+			List<ProductDTO> productList = productService.getFullProduct();
+			RecipeDTO onerecipe;
+			List<RecipeAndProductDTO> recipeproductList = null;
+			String recipeproductListJson = "0";
+			 if(recipe.getRecipe_name() != null) {
+			    boolean result = recipeService.insertRecipe(recipe);
+			    onerecipe = recipeService.getReturnInsertRecipe(recipe.getRecipe_name());
+			}else {
+				onerecipe = recipeService.getRecipeById(recipe.getRecipe_id());
+				recipeproductList = recipeProductService.getRecipeProductListByRecipeId(recipe.getRecipe_id());
+				recipeproductListJson = objectMapper.writeValueAsString(recipeproductList);
+			}
+				model.addAttribute("onerecipe",onerecipe);
+			    model.addAttribute("recipeproductListJson", recipeproductListJson);
+		    	model.addAttribute("productList",productList);
+		    	
+			return "admin/plusrecipeproducts";
+		}
+		
 	
 	//레시피 재료 등록
 	@GetMapping("/RecipeProductPlus")
@@ -328,6 +372,12 @@ public class AdminController {
 	    try {
 	        // JSON 문자열을 RecipeProductDTO 배열로 변환
 	        RecipeProductDTO[] recipeProducts = objectMapper.readValue(recipeProductsJson, RecipeProductDTO[].class);
+	        
+	        boolean deleteResult = recipeProductService.deleteRecipeProductsByRecipeId(recipeProducts[0].getRecipe_id());
+	        if (!deleteResult) {
+	            // 삭제에 실패한 경우 에러 반환
+	            return "error";
+	        }
 	        
 	        // 모든 제품을 처리하기 위해 루프 사용
 	        for (RecipeProductDTO product : recipeProducts) {
@@ -432,5 +482,5 @@ public class AdminController {
 			ProductDTO product =  productService.getProductById(product_id);
 			return product;
 		}
-		
+
 }

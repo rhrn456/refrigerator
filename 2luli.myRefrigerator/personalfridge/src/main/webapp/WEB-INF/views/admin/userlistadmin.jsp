@@ -74,7 +74,7 @@
 	         display: none;
 	         position: fixed;
 	         top: 50%;
-	         left: 56%;
+	         left: 50%;
 	         transform: translate(-50%, -50%);
 	         background-color: rgba(255, 255, 255, 1); 
 	         padding: 10px;

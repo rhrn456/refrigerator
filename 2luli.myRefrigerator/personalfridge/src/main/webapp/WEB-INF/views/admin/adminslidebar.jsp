@@ -90,10 +90,8 @@
                         <a class="collapse-item" href="/RecipeListAdmin">레시피</a>
                         <a class="collapse-item" href="/productAllList">일반 상품</a>
                         <a class="collapse-item" href="/SpecialProductAllList">특가 상품</a>
-                        <h6 class="collapse-header">게시판:</h6>
-                        <a class="collapse-item" href="">공지 목록</a>
-                        <a class="collapse-item" href="">공유 목록</a>
-                        <a class="collapse-item" href="">나만의 레시피 목록</a>
+                        <h6 class="collapse-header">리뷰:</h6>
+                        <a class="collapse-item" href="/ReviewRecipeAdmin">레시피 리뷰 관리</a>
                     </div>
                 </div>
             </li>

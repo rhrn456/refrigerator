@@ -90,7 +90,7 @@
 	         display: none;
 	         position: fixed;
 	         top: 50%;
-	         left: 56%;
+	         left: 50%;
 	         transform: translate(-50%, -50%);
 	         background-color: rgba(255, 255, 255, 1); 
 	         padding: 10px;
@@ -121,12 +121,6 @@
        <%@ include file="adminslidebar.jsp" %>
         <!-- Slidebar End -->
         
-        	<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
-		<c:set var="pageSize" value="12" />
-		<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
-		
-			
-
 		<div class="col-lg-11">
        <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 490px; ">
            <c:forEach var="product" items="${productlist}">
@@ -598,7 +592,7 @@
         function drawCategories() {
             var categoryHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">     
-                    <h4>카테고리</h4>
+                    <h4>일반 상품 카테고리</h4>
                     <div class="list-unstyled allproduct-categorie">
                         <div class="d-flex justify-content-center product-topcategory"style="margin: 0 -15px;">
                             <a href="/productAllList" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
@@ -623,7 +617,7 @@
         function initializeSearchField() {
             var inputGroupHTML = `
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" style="margin-left:250px; max-width:300px;" placeholder="상품 검색" id="searchInput1">
+                    <input type="text" class="form-control" style="margin-left:250px; max-width:300px;" placeholder="일반 상품 검색" id="searchInput1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
                     </div>

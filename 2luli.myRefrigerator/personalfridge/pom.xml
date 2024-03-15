@@ -25,6 +25,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			 <version>2.6.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -91,6 +92,19 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+<!--		시큐리티 디펜던시 추가
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		    <version>3.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+			<version>6.0.2</version>
+		</dependency>
+		시큐리티 디펜던시  END-->
+		
 	</dependencies>
 
 	<build>

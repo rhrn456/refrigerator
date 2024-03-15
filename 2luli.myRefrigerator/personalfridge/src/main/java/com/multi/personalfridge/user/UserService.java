@@ -23,8 +23,8 @@ public class UserService {
     }
 	
 	//로그인
-	public UserDTO login(String userId, String password) {
-        return userMapper.login(userId, password);
+	public UserDTO login(String user_id, String password) {
+        return userMapper.login(user_id, password);
     }
 	
 	// 회원가입
@@ -93,6 +93,12 @@ public class UserService {
 		parameters.put("pageSize", pageSize);
 		parameters.put("offset", offset);
 		return userMapper.getAllUserByKewordPage(parameters);
+	}
+
+	public UserDTO getUserByEmailAndName(String user_name, String mail) {
+		
+		return userMapper.getUserByEmailAndName(user_name, mail);
+		 
 	}
 
 

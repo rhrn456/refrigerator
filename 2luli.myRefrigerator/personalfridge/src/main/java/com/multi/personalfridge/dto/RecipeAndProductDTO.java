@@ -13,12 +13,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ReviewDTO {
-    private Integer review_id;
-    private String review_content;
-    private String user_id;
-    private int recipe_id;
-    private Timestamp create_review_date;
-    private String recipe_name;
-    private String recipe_category;
+public class RecipeAndProductDTO {
+    private Integer recipe_product_id;
+    private Integer recipe_id;
+    private Integer product_id;
+    private Integer product_quantity;
+    private String product_name;
 }

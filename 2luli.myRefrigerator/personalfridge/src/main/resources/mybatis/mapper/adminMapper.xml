@@ -34,9 +34,6 @@
 		AND (
             user_id LIKE CONCAT('%', #{keyword}, '%')
             OR user_name LIKE CONCAT('%', #{keyword}, '%')
-            OR mail LIKE CONCAT('%', #{keyword}, '%')
-            OR adress LIKE CONCAT('%', #{keyword}, '%')
-            OR phone LIKE CONCAT('%', #{keyword}, '%')
         )
     </select>
     
@@ -48,9 +45,6 @@
         AND (
             user_id LIKE CONCAT('%', #{keyword}, '%')
             OR user_name LIKE CONCAT('%', #{keyword}, '%')
-            OR mail LIKE CONCAT('%', #{keyword}, '%')
-            OR adress LIKE CONCAT('%', #{keyword}, '%')
-            OR phone LIKE CONCAT('%', #{keyword}, '%')
         )
     </if>
         LIMIT #{pageSize} OFFSET #{offset}
