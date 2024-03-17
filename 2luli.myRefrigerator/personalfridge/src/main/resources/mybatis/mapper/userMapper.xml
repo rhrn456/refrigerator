@@ -109,6 +109,7 @@
 	    SET job_num = 1
 	    WHERE user_id = #{user_id} 
 	</update>
+	
 
 
 

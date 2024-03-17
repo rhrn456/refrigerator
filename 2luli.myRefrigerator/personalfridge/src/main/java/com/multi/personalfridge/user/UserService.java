@@ -114,7 +114,7 @@ public class UserService {
 		return userMapper.getUserByEmailAndName(user_name, mail);
 		 
 	}
-
+	
 
 
 	

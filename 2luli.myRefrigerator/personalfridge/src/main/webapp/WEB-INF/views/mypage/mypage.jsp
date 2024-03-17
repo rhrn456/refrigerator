@@ -30,5 +30,12 @@
     <button type="submit">수정</button>
 </form>
 
+<!-- 기타 사용자 정보 표시 -->
+
+<!-- 환불/교환 요청 버튼 -->
+<div>
+    <button onclick="location.href='${pageContext.request.contextPath}/refundPage'">환불/교환 요청</button>
+</div>
+
 </body>
 </html>
