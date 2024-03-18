@@ -42,7 +42,6 @@ public class CommonController {
 	    for (int i = 0; i <= maxIndex; i++) {
 	        selectedProducts.add(products.get(i));
 	    }
-
 	    model.addAttribute("products", selectedProducts);
 	    model.addAttribute("recipe", recipe);
 	    return "index";
@@ -52,7 +51,7 @@ public class CommonController {
 	@GetMapping("/contact")
 	public String contact() {
 
-		return "redirect:/login/getGoogleAuthUrl";
+		return "recipe/recipeinformation";
 	}
 	
 
@@ -63,13 +62,12 @@ public class CommonController {
 		return "cart";
 	}
 	
-	//리스트페이지
+	//레시피 리스트 페이지
 	@GetMapping("/recipeshop")
 	public String RecipeShop(@RequestParam(defaultValue ="1") int page,Model model) {
 		int pageSize = 9;
 		List<RecipeDTO> recipes = recipeService.getAllrecipe();
 		List<RecipeDTO> recipelist = recipeService.getAllRecipePage(page, pageSize);
-		System.out.println(recipelist);
 		int totalRecipe = recipes.size();
 		int totalPages = (int) Math.ceil((double) totalRecipe / pageSize); 
 		if(totalPages >5) {
