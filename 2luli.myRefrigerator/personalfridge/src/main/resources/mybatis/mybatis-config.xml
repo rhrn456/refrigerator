@@ -15,12 +15,7 @@
 	<typeAlias type="com.multi.personalfridge.dto.BoardDTO" alias="Board"/>
 	<typeAlias type="com.multi.personalfridge.dto.BoardCategoryDTO" alias="Category"/>
 	<typeAlias type="com.multi.personalfridge.dto.EmailSendDTO" alias="EmailSend"/>
-<<<<<<< HEAD
-	<typeAlias type="com.multi.personalfridge.dto.UserLikeDTO" alias="Like"/>
-	
-=======
 	<typeAlias type="com.multi.personalfridge.dto.UserLikeDTO" alias="UserLike"/>
->>>>>>> origin/feature/mypage
 </typeAliases>
 
 </configuration>
