@@ -64,12 +64,6 @@ public class CommonController {
 	}
 	
 
-	//레시비 목록
-	@GetMapping("/recipeshop")
-	public String recipeshop() {
-		
-		return "recipeshop";
-	}
 	
 	//일반 상품 목록
 	@GetMapping("/productshop")

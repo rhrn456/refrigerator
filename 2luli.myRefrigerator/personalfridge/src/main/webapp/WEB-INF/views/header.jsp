@@ -27,9 +27,15 @@
                         <div class="navbar-nav mx-auto">
                             <a href="/" class="nav-item nav-link active" >홈</a>
                              <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">레시피</a>
+                          		<div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    <a href="/recipe" class="dropdown-item">(음식)레시피</a>
+                                    <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
+                                </div>
+                                 </div>
+                             <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">쇼핑</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="/recipeshop" class="dropdown-item">(음식)레시피</a>
                                     <a href="/productshop" class="dropdown-item">식재료</a>
                                     <a href="/specialproductshop" class="dropdown-item">특가 상품</a>
                                 </div>
@@ -39,7 +45,6 @@
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                     <a href="/board?CategoryNo=1" class="dropdown-item">공지사항</a>
                                     <a href="/board?CategoryNo=2" class="dropdown-item">공유 게시판</a>
-                                    <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
                                     <!-- <script>
                                     	history.replaceState({}, null, location.pathname);
                                     </script> -->
