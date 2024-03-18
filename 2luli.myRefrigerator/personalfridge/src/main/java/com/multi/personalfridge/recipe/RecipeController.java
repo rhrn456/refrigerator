@@ -67,26 +67,7 @@ public class RecipeController {
 		return mv;
 	}
 	
-	//레시피샵목록확인
-	@RequestMapping("/recipeshop")
-	public void recipeshop() {
-		//WEB-INF/views/recipe/recipeshop.jsp
-	}
-	
-	@GetMapping("/recipeshop")
-	public String getRecipe(Model model) {
-		List<RecipeDTO> recipe = recipeService.getAllrecipe();
-		model.addAttribute("recipe", recipe);
-		return "recipe/recipeshop";
-	}
-	
-	
-	//레시피 상세페이지
-//	@RequestMapping("/recipedetail")
-//	public void recipedetail() {
-//		//WEB-INF/views/recipe/recipedetail.jsp
-//	}
-	
+
 	@GetMapping("/recipedetail")
 	public String getRecipeById(int recipe_id, Model model) {
 		System.out.println(recipe_id);
@@ -95,29 +76,7 @@ public class RecipeController {
 		return "recipe/recipedetail";
 	}
 
-//	//리스트페이지
-//	@GetMapping("/recipeshop")
-//	public String RecipeListAdmin(@RequestParam(defaultValue ="1") int page,Model model) {
-//		int pageSize = 8;
-//		List<RecipeDTO> recipelist = recipeService.getAllRecipePage(page, pageSize);
-//		System.out.println(recipelist);
-//		System.out.println(recipelist.size());
-//		int totalRecipe = recipelist.size();
-//		int totalPages = (int) Math.ceil((double) totalRecipe / pageSize); 
-//		if(totalPages >5) {
-//			totalPages = 5;
-//		}
-//	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
-//										.total(totalRecipe)
-//										.pageAmount(totalPages)
-//										.currentPage(page)
-//										.amount(pageSize)
-//										.build();
-//		model.addAttribute("recipelist",recipelist);
-//		model.addAttribute("pageInfo", pageRequestDTO);
-//		return "recipe/recipeshop";
-//	}
-//	
+	
 	//레시피 전체/카테고리 페이징
 	@GetMapping("/getRecipeByCategory")
 	@ResponseBody

@@ -69,12 +69,16 @@ public class AdminController {
 
         // 카테고리 초기화(레시피 카테고리 분포도)
         categoryCounts.put("밥", 0);
-        categoryCounts.put("국/찌개", 0);
+        categoryCounts.put("국&찌개", 0);
         categoryCounts.put("반찬", 0);
+        categoryCounts.put("후식", 0);
+        categoryCounts.put("일품", 0);
         //좋와요 카테고리 분포도
         likeCounts.put("밥", 0);
-        likeCounts.put("국/찌개", 0);
+        likeCounts.put("국&찌개", 0);
         likeCounts.put("반찬", 0);
+        likeCounts.put("후식", 0);
+        likeCounts.put("일품", 0);
         
         // 레시피 리스트를 카테고리별 카운트 증가
         for (RecipeDTO recipe : recipeList) {
@@ -94,18 +98,27 @@ public class AdminController {
         
         // model로 넘겨줄 레시피 카테고리 분포 데이터 저장
         int rice = categoryCounts.get("밥");
-        int soup = categoryCounts.get("국/찌개");
+        int soup = categoryCounts.get("국&찌개");
         int food = categoryCounts.get("반찬");
+        int desert = categoryCounts.get("후식");
+        int first = categoryCounts.get("일품");
         //좋와요 레시피 카테고리 데이터 저장
         int likeRice = likeCounts.get("밥");
-        int likeSoup = likeCounts.get("국/찌개");
+        int likeSoup = likeCounts.get("국&찌개");
         int likeFood = likeCounts.get("반찬");
+        int likeDesert = likeCounts.get("후식");
+        int likefirst = likeCounts.get("일품");
+        
         model.addAttribute("rice",rice);
         model.addAttribute("soup",soup);
         model.addAttribute("food",food);
+        model.addAttribute("desert",desert);
+        model.addAttribute("first",first);
         model.addAttribute("likeRice",likeRice);
         model.addAttribute("likeSoup",likeSoup);
         model.addAttribute("likeFood",likeFood);
+        model.addAttribute("likeDesert",likeDesert);
+        model.addAttribute("likefirst",likefirst);
         
 		return "admin/adminpage";
 	}

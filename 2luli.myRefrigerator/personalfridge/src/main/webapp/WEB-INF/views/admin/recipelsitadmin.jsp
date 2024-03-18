@@ -131,11 +131,17 @@
 					    <c:when test="${recipe.recipe_category == '밥'}">
 					        <div class="regular-product" style="background-color: green;">${recipe.recipe_category}</div>
 					    </c:when>
-					    <c:when test="${recipe.recipe_category == '국/찌개'}">
+					    <c:when test="${recipe.recipe_category == '국&찌개'}">
 					        <div class="regular-product" style="background-color: orange;">${recipe.recipe_category}</div>
 					    </c:when>
 					    <c:when test="${recipe.recipe_category == '반찬'}">
 					        <div class="regular-product" style="background-color: skyblue;">${recipe.recipe_category}</div>
+					    </c:when>
+					    <c:when test="${recipe.recipe_category == '후식'}">
+					        <div class="regular-product" style="background-color: #D09AFF;">${recipe.recipe_category}</div>
+					    </c:when>
+					    <c:when test="${recipe.recipe_category == '일품'}">
+					        <div class="regular-product" style="background-color: #fc6d6d;">${recipe.recipe_category}</div>
 					    </c:when>
 					    <c:otherwise>
 					        <div class="regular-product">${recipe.recipe_category}</div>
@@ -228,8 +234,10 @@
 					    <label for="recipe_category">카테고리</label>
 					    <select id="recipe_category_select" class="form-control mb-3" name="recipe_category" style="text-align: center;">
 					        <option value="밥">밥</option>
-					        <option value="국/찌개">국/찌개</option>
+					        <option value="국&찌개">국&찌개</option>
 					        <option value="반찬">반찬</option>
+					        <option value="후식">후식</option>
+					        <option value="일품">일품</option>
 					    </select>
 					</div>
                     <div class="form-group">
@@ -496,11 +504,17 @@
 		        case '밥':
 		            backgroundColor = 'green';
 		            break;
-		        case '국/찌개':
+		        case '국&찌개':
 		            backgroundColor = 'orange';
 		            break;
 		        case '반찬':
 		            backgroundColor = 'skyblue';
+		            break;
+		        case '후식':
+		            backgroundColor = '#D09AFF';
+		            break;
+		        case '일품':
+		            backgroundColor = '#fc6d6d';
 		            break;
 		        default:
 		            backgroundColor = ''; // Default background color
@@ -616,9 +630,13 @@
                             <div class="d-flex justify-content-center Recipe-category">
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>밥</a>
                             <span>|</span>
-                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>국/찌개</a>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>국&찌개</a>
                             <span>|</span>
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>반찬</a>
+                            <span>|</span>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>후식</a>
+                            <span>|</span>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>일품</a>
                         </div>
                       </div>
                     </div>	

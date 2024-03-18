@@ -63,7 +63,28 @@ public class CommonController {
 		return "cart";
 	}
 	
-
+	//리스트페이지
+	@GetMapping("/recipeshop")
+	public String RecipeShop(@RequestParam(defaultValue ="1") int page,Model model) {
+		int pageSize = 9;
+		List<RecipeDTO> recipes = recipeService.getAllrecipe();
+		List<RecipeDTO> recipelist = recipeService.getAllRecipePage(page, pageSize);
+		System.out.println(recipelist);
+		int totalRecipe = recipes.size();
+		int totalPages = (int) Math.ceil((double) totalRecipe / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalRecipe)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
+		model.addAttribute("recipelist",recipelist);
+		 model.addAttribute("pageInfo", pageRequestDTO);
+		return "recipeshop";
+	}
 	
 	//일반 상품 목록
 	@GetMapping("/productshop")

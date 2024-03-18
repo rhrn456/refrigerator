@@ -98,8 +98,10 @@
 			                    <select id="recipe_category" class="form-control mb-3" style="width: 180px;">
 			                        <option value="" selected disabled hidden>레시피 카테고리</option>
 			                        <option value="밥">밥</option>
-			                        <option value="국/찌개">국/찌개</option>
+			                        <option value="국&찌개">국&찌개</option>
 			                        <option value="반찬">반찬</option>
+			                        <option value="후식">후식</option>
+			                        <option value="일품">일품</option>
 			                    </select>
 			                    <div class="arrow-icon">&#9660;</div>
 			                </div>

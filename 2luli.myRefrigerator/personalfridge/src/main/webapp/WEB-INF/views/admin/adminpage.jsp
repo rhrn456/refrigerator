@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Fruitables - Vegetable Website Template</title>
+        <title>관리자 페이지</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -50,8 +50,10 @@
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
           ['밥', ${likeRice}],
-          ['국/찌개', ${likeSoup} ],
-          ['반찬', ${likeFood}]
+          ['국&찌개', ${likeSoup} ],
+          ['반찬', ${likeFood}],
+          ['후식', ${likeDesert}],
+          ['일품', ${likefirst}]
         ]);
 
 
@@ -69,8 +71,10 @@
         var data = google.visualization.arrayToDataTable([
         	 ['Task', 'Hours per Day'],
              ['밥', ${rice}],
-             ['국/찌개', ${soup} ],
-             ['반찬', ${food}]
+             ['국&찌개', ${soup} ],
+             ['반찬', ${food}],
+             ['후식', ${desert}],
+             ['일품', ${first}]
         ]);
 
 
