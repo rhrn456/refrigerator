@@ -42,19 +42,8 @@
 	<%@ include file="../header.jsp"%>
 	<!-- Navbar End -->
 	
-	<!-- Single Page Header start -->
-	<div class="container-fluid page-header py-5">
-		<h1 class="text-center text-white display-6">공지사항</h1>
-		<ol class="breadcrumb justify-content-center mb-0">
-			<li class="breadcrumb-item active text-white">공지사항</li>
-			<li class="breadcrumb-item"><a href="/board?CategoryNo=2">공유 게시판</a></li>
-			<li class="breadcrumb-item"><a href="/board?CategoryNo=3">나만의 레시피</a></li>
-		</ol>
-	</div>
-	<!-- Single Page Header End -->
-
 	<!-- Fruits Shop Start-->
-	<div class="container-fluid fruite py-5">
+	<div class="container-fluid fruite py-5" style="margin-top: 180px;">
 		<div class="container py-5">
 			<div class="row g-4">
 				<div class="col-lg-12">
@@ -67,7 +56,7 @@
 										<ul class="list-unstyled fruite-categorie">
 											<li>
 												<div class="d-flex justify-content-between fruite-name">
-													<a href="#"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
+													<a href="/board?CategoryNo=1"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
 												</div>
 											</li>
 											<li>
@@ -83,7 +72,6 @@
 										</ul>
 									</div>
 								</div>
-								
 							</div>
 						</div>
 						<div class="col-lg-9">
@@ -94,25 +82,26 @@
 							                <h6 class="m-0 font-weight-bold text-primary">게시글 등록</h6>
 							            </div>
 							            <!-- Card Body -->
-							            <div class="card-body">
-							                <input type="text" id="title" placeholder="제목" class="form-control mb-3" required>
-							                <textarea id="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
-							                <div class="dropdown">
-							                    <select id="b_category_no" class="form-control mb-3" style="width: 180px;">
-							                        <option value="" selected disabled hidden>게시판 종류</option>
-							                        <option value="notice">공지사항</option>
-							                        <option value="shareBoard">공유 게시판</option>
-							                        <option value="myRecipe">나만의 레시피</option>
-							                    </select>
-							                </div>
-							                <!-- 확인 버튼 -->
-							                <button id="confirmButton" class="btn btn-primary">등록</button>
-							            </div>
+							            <form action="/insertBoard" method="POST">
+								            <div class="card-body">
+								                <input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" required>
+								                <textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
+								                <div class="dropdown">
+								                    <select id="board_category" name="CategoryNo" class="form-control mb-3"">
+								                        <option value="" selected disabled hidden>게시판 분류</option>
+								                        <option value="1">공지사항</option>
+								                        <option value="2">공유 게시판</option>
+								                        <option value="3">나만의 레시피</option>
+								                    </select>
+								                </div>
+								                <!-- 확인 버튼 -->
+								                <button type="submit" id="confirmButton" class="btn btn-primary" style="float:right; margin-bottom: 1rem">등록</button>
+								            </div>
+							            </form>
 							        </div>
 							    </div>
 							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>
@@ -136,43 +125,41 @@
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js">
+	<script src="js/main.js"></script>
 	
-	function selectCategory(category) {
-	    document.getElementById("b_category_no").value = category;
+	<script>
+	
+	function selectCategory(CategoryNo) {
+	    document.getElementById("board_category").value = CategoryNo;
 	    toggleDropdown();
 	  }
 	
 	  // Close the dropdown if the user clicks outside of it
 	  window.onclick = function(event) {
-	    if (!event.target.matches('.arrow-icon')) {
 	      var dropdowns = document.getElementsByClassName("dropdown-content");
-	      var i;
-	      for (i = 0; i < dropdowns.length; i++) {
+	      for (var i = 0; i < dropdowns.length; i++) {
 	        var openDropdown = dropdowns[i];
 	        if (openDropdown.classList.contains('show')) {
 	          openDropdown.classList.remove('show');
 	        }
 	      }
-	    }
 	  }
 	  
 	  document.getElementById('confirmButton').addEventListener('click', function() {
-	      var recipe_name = document.getElementById('recipe_name').value;
-	      var recipe_content = document.getElementById('recipe_content').value;
-	      var ingredient = document.getElementById('ingredient').value;
-	      var recipe_category = document.getElementById('recipe_category').value;
-	      var recipe_img = document.getElementById('recipe_img').value;
-	      var nutrition_facts = document.getElementById('nutrition_facts').value;
+	      var title = document.getElementById('title').value;
+	      var content = document.getElementById('content').value;
+	      var board_category = document.getElementById('board_category').value;
 		
-	      if (recipe_name.trim() === '' || recipe_content.trim() === '' || ingredient.trim() === '' || recipe_category.trim() === '' || recipe_img.trim() === '' || nutrition_facts.trim() === '') {
-	          alert('빈칸에 입력해주세요');
+	      if (title.trim() === '' || content.trim() === '') {
+	          alert('빈칸을 입력해주세요');
 	          return;
+	      } else if(board_category.trim() === '') {
+	    	  alert('게시판을 선택해주세요')
+	    	  return;
 	      }
-
-	      // Redirect to /insertRecipe with data
-	      window.location.href = '/RecipePlus?recipe_name=' + encodeURIComponent(recipe_name) + '&recipe_content=' + encodeURIComponent(recipe_content) + '&ingredient=' + encodeURIComponent(ingredient) + '&recipe_category=' + encodeURIComponent(recipe_category) + '&recipe_img=' + encodeURIComponent(recipe_img) + '&nutrition_facts=' + encodeURIComponent(nutrition_facts);
 	  });
+	  
 	</script>
+	
 </body>
 </html>

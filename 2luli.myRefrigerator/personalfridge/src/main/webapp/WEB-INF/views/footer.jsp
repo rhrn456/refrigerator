@@ -63,12 +63,11 @@
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
-                            <h4 class="text-light mb-3">Contact</h4>
+                            <h4 class="text-light mb-3">Who we are</h4>
                             <p>Team : 2luli</p>
                             <p>Members : 강수현, 김유림, 송기영,<br>양혁진, 조서현</p>
+                            <p>멀티잇 백엔드 개발(Java) 19회차</p>
                             <p>Multi Campus Final Project</p>
-                            <p>결제 수단</p>
-                            <img src="img/payment.png" class="img-fluid" alt="">
                         </div>
                     </div>
                 </div>

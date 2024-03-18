@@ -92,6 +92,19 @@
 .btn-custom:hover {
     background-color: #224abe;
 }
+
+#board-modify-btn {
+	width:10%;
+	margin: 1rem 0.5rem;
+}
+
+#board-delete-btn {
+	width:10%;
+	margin: 1rem 0.5rem;
+	background-color: red;
+	border-color: red;
+}
+
 /*** Topbar Start ***/
 .fixed-top {
     transition: 0.5s;

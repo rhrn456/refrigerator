@@ -40,9 +40,9 @@
                                     <a href="/board?CategoryNo=1" class="dropdown-item">공지사항</a>
                                     <a href="/board?CategoryNo=2" class="dropdown-item">공유 게시판</a>
                                     <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
-                                    <script type="text/javascript">
+                                    <!-- <script>
                                     	history.replaceState({}, null, location.pathname);
-                                    </script>
+                                    </script> -->
                                 </div>
                             </div>
                             <a href="/contact" class="nav-item nav-link">고객센터</a>

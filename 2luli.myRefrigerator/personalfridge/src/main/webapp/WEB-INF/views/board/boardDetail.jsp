@@ -100,6 +100,10 @@
 										</tr>
 									</tbody>
 								</table>
+								<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/modifyBoard'">수정</button>
+								<!-- 수정 비동기로 insert와 같은 폼 카테고리 = readonly -->
+								<button id="board-delete-btn" class="btn btn-primary" onclick="">삭제</button>
+								<!-- 삭제 이벤트 리스너 작성 -->
 							</div>
 						</div>
 						
@@ -126,8 +130,8 @@
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js">
-		
-	</script>
+	<script src="js/main.js"></script>
+	
+	
 </body>
 </html>
