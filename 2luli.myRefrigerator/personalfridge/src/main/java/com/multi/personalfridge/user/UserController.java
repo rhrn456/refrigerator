@@ -1,6 +1,6 @@
 package com.multi.personalfridge.user;
 
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,18 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.common.RandomStringGenerator;
 import com.multi.personalfridge.dto.UserDTO;
-import com.multi.personalfridge.refrigerator.RefrigeratorService;
+import com.multi.personalfridge.dto.UserLikeDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -50,12 +47,11 @@ public class UserController {
 	public String goPage(HttpServletRequest request) {
 		 String userId = (String) request.getSession().getAttribute("userId");
 	     Integer userAdmin = (Integer) request.getSession().getAttribute("userAdmin");
-	     		
 	            if (userAdmin != null && (userAdmin == 1 || userAdmin == 2)) {
 	                return "redirect:/admin";
 	                
 	            } else if (userId != null) {
-		            return "redirect:/";
+		            return "redirect:/mypage?user_id=" + userId;
 		            
 		        } else {
 	                return "redirect:/loginPage";
@@ -162,46 +158,61 @@ public class UserController {
     	return "error"; 
     }
     
-    
-    
-    //마이페이지 접속
-    @GetMapping("/mypagein")
-    public String MyPageIn(Model model) {
-        String userId = "testuser"; // 유저테스트 정보 주입
-         UserDTO user = userService.getUserById(userId);
-         System.out.println(user);
-         model.addAttribute("user",user);
-        return "mypage/mypage";
-    }
- // 마이페이지 조회
+  //마이페이지 접속 및 조회
     @GetMapping("/mypage")
-    public ModelAndView myPage(@RequestParam("userId") String userId) {
-        userId = "usertest"; // 유저테스트 정보 주입
-        ModelAndView mav = new ModelAndView("mypage/mypage");
-        UserDTO user = userService.getUserById(userId);
-        mav.addObject("user", user);
+    public ModelAndView getUserInfo(@RequestParam String user_id) {
+    	System.out.println(user_id);
+    	ModelAndView mav = new ModelAndView("mypage/mypage");
+    	UserDTO mypage = userService.getUserInfo(user_id);
+        mav.addObject("mypage", mypage);
+//        System.out.println("UserController" + mypage);
         return mav;
     }
-    
-    // 마이페이지 정보 업데이트
-    @PostMapping("/mypage/update")
-    public String updateMyPage(@ModelAttribute UserDTO user) {
-        userService.updateUser(user);
-        return "redirect:/mypage?userId=" + user.getUser_id();
-    }
-
-    // 마이페이지 계정 삭제
-//    @PostMapping("/mypage/delete")
-//    public String deleteAccount(@RequestParam("userId") String userId) {
-//        userService.deleteUser(userId, password);
-//        return "redirect:/login";
+     
+//    // 마이페이지 정보 업데이트
+//    @PostMapping("/mypage/update")
+//    public String updateMyPage(@ModelAttribute UserDTO user) {
+//        userService.updateUser(user);
+//        return "redirect:/mypage?userId=" + user.getUser_id();
 //    }
-    
+
+////     마이페이지 계정 삭제
+//    @PostMapping("/mypage/delete")
+//    public String deleteAccount(@RequestParam("user_id") String userId, HttpSession session, RedirectAttributes redirectAttributes) {
+//        // 세션에서 사용자 ID 가져오기 (로그인한 사용자와 일치하는지 확인)
+//        String loggedInUserId = (String) session.getAttribute("userId");
+//        if (loggedInUserId == null || !loggedInUserId.equals(userId)) {
+//            return "redirect:/loginPage"; // 로그인 페이지로 리디렉션
+//        }
+//        
+//        // 회원 탈퇴 처리
+//        int deleteResult = userService.deleteUser(userId);
+//        if (deleteResult > 0) {
+//            // 탈퇴 성공, 세션 무효화
+//            session.invalidate();
+//            redirectAttributes.addFlashAttribute("message", "회원 탈퇴가 성공적으로 처리되었습니다.");
+//            return "redirect:/loginPage";
+//        } else {
+//            // 탈퇴 실패 처리
+//            redirectAttributes.addFlashAttribute("error", "회원 탈퇴 처리 중 오류가 발생했습니다.");
+//            return "redirect:/mypage?user_id=" + userId;
+//        }
+//    }
     
     // 환불 및 교환 시 연락처/이메일 페이지 이동
     @GetMapping("/refundPage")
     public String refundPage() {
         return "mypage/refund"; // 환불/교환 페이지로 이동
+    }
+    
+    // 마이페이지 찜 목록
+    @GetMapping("/mypage/userlike")
+    public ModelAndView getUserLike(@RequestParam String user_id) {
+    	ModelAndView mav = new ModelAndView("mypage/userlike");
+    	List<UserLikeDTO> likeList = userService.getUserLike(user_id);
+        mav.addObject("likeList", likeList);      
+//        System.out.println(likeList.size());
+        return mav;
     }
     
 

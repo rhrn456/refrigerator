@@ -119,8 +119,21 @@
 	    WHERE user_id = #{user_id} 
 	</update>
 	
-
-
+	<!-- 찜목록 조회 -->
+	<select id="getUserLike" parameterType="String" resultType="UserLike">
+		select l.like_id, l.user_id, l.recipe_id, l.like_date, r.recipe_name from userlike l
+		inner join recipe r
+		on l.recipe_id = r.recipe_id
+		where user_id=#{user_id}
+	</select>
+	
+	<!-- 마이페이지 유저 조회 -->
+	<select id="getUserInfo" parameterType="String" resultType="User">
+		select user_id, password, user_name, mail, adress, phone from user
+		where user_id = #{user_id}
+	</select>
+	
+	
 
 
 </mapper>

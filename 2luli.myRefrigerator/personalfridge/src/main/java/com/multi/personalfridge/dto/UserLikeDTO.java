@@ -21,5 +21,4 @@ public class UserLikeDTO {
 	private int recipe_id;
 	private Timestamp like_date;
 	private String recipe_name;
-	
 }
