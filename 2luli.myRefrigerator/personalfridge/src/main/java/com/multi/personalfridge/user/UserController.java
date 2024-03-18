@@ -164,13 +164,13 @@ public class UserController {
          UserDTO user = userService.getUserById(userId);
          System.out.println(user);
          model.addAttribute("user",user);
-        return "mypage";
+        return "mypage/mypage";
     }
  // 마이페이지 조회
     @GetMapping("/mypage")
     public ModelAndView myPage(@RequestParam("userId") String userId) {
         userId = "usertest"; // 유저테스트 정보 주입
-        ModelAndView mav = new ModelAndView("mypage");
+        ModelAndView mav = new ModelAndView("mypage/mypage");
         UserDTO user = userService.getUserById(userId);
         mav.addObject("user", user);
         return mav;
@@ -189,5 +189,16 @@ public class UserController {
 //        userService.deleteUser(userId, password);
 //        return "redirect:/login";
 //    }
+    
+    
+    // 환불 및 교환 시 연락처/이메일 페이지 이동
+    @GetMapping("/refundPage")
+    public String refundPage() {
+        return "mypage/refund"; // 환불/교환 페이지로 이동
+    }
+    
+
+    
+    
 }
 

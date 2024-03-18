@@ -35,6 +35,9 @@ public interface UserMapper {
 	List<UserDTO> getAlluserByKeyword(Map parameters);
 	
 	List<UserDTO> getAllUserByKewordPage(Map parameters);
+	
+	// 마이페이지
+	
 
 
 	
