@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.multi.personalfridge.dto.UserLikeDTO;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeAndProductDTO;
@@ -59,7 +60,53 @@ public class AdminController {
 	
 	//관리자 페이지
 	@GetMapping("/admin")
-	public String goAdmin() {
+	public String goAdmin(Model model) {
+		List<RecipeDTO> recipeList = recipeService.getAllrecipe();
+		List<String> likeList = adminService.getAllLike();
+	       // 카테고리별 카운트를 저장할 Map 생성
+        Map<String, Integer> categoryCounts = new HashMap<>();
+        Map<String, Integer> likeCounts = new HashMap<>();
+
+        // 카테고리 초기화(레시피 카테고리 분포도)
+        categoryCounts.put("밥", 0);
+        categoryCounts.put("국/찌개", 0);
+        categoryCounts.put("반찬", 0);
+        //좋와요 카테고리 분포도
+        likeCounts.put("밥", 0);
+        likeCounts.put("국/찌개", 0);
+        likeCounts.put("반찬", 0);
+        
+        // 레시피 리스트를 카테고리별 카운트 증가
+        for (RecipeDTO recipe : recipeList) {
+            String category = recipe.getRecipe_category();
+            if (category != null && categoryCounts.containsKey(category)) {
+                int count = categoryCounts.get(category);
+                categoryCounts.put(category, count + 1);
+            }
+        }
+        //좋와요 레시피 카테고리별 카운트 증가
+        for (String Likecategory : likeList) {
+            if (likeCounts.containsKey(Likecategory)) {
+                int count = likeCounts.get(Likecategory);
+                likeCounts.put(Likecategory, count + 1);
+            }
+        }
+        
+        // model로 넘겨줄 레시피 카테고리 분포 데이터 저장
+        int rice = categoryCounts.get("밥");
+        int soup = categoryCounts.get("국/찌개");
+        int food = categoryCounts.get("반찬");
+        //좋와요 레시피 카테고리 데이터 저장
+        int likeRice = likeCounts.get("밥");
+        int likeSoup = likeCounts.get("국/찌개");
+        int likeFood = likeCounts.get("반찬");
+        model.addAttribute("rice",rice);
+        model.addAttribute("soup",soup);
+        model.addAttribute("food",food);
+        model.addAttribute("likeRice",likeRice);
+        model.addAttribute("likeSoup",likeSoup);
+        model.addAttribute("likeFood",likeFood);
+        
 		return "admin/adminpage";
 	}
 	

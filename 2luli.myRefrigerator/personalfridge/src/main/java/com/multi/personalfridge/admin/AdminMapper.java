@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.multi.personalfridge.dto.UserLikeDTO;
 import com.multi.personalfridge.dto.UserDTO;
 
 @Mapper
@@ -21,5 +22,7 @@ public interface AdminMapper {
 	public List<UserDTO> getAllManagerByKeywordPage(Map parameters);
 
 	public List<UserDTO> getAllManagerByKeyword(Map parameters);
+
+	public List<String> getAllLike();
 
 }

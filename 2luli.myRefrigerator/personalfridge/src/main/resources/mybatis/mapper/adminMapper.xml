@@ -49,4 +49,10 @@
     </if>
         LIMIT #{pageSize} OFFSET #{offset}
     </select>
+    
+    <select id="getAllLike" resultType="string">
+       SELECT r.recipe_category
+		FROM userlike l
+		LEFT JOIN recipe r ON r.recipe_id = l.recipe_id
+    </select>
 </mapper>

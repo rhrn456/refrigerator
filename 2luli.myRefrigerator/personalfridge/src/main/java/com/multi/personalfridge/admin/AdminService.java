@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.multi.personalfridge.dto.UserLikeDTO;
 import com.multi.personalfridge.dto.UserDTO;
 
 @Service
@@ -56,6 +57,11 @@ public class AdminService {
 		Map<String, String> parameters = new HashMap<>();
 		parameters.put("keyword", keyword);
 		return adminmapper.getAllManagerByKeyword(parameters);
+	}
+
+	public List<String> getAllLike() {
+		
+		return adminmapper.getAllLike();
 	}
 
 }

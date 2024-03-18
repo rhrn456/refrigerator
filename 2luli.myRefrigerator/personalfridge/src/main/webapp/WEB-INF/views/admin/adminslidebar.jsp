@@ -98,13 +98,6 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="/chartboard">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span style="color:white; font-weight: bold;">게시판 차트</span></a>
-            </li>
-
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
