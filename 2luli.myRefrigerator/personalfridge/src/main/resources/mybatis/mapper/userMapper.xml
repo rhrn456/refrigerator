@@ -36,6 +36,15 @@
 	        phone = #{phone}
 	    WHERE user_id = #{user_id} 
 	</update>
+	
+    <!-- 소셜 회원 정보 추가 수정 -->
+	<update id="InsertUserInfoBySocial" parameterType="User">
+	    UPDATE user
+	    SET 
+	        adress = #{adress},
+	        phone = #{phone}
+	    WHERE user_id = #{user_id} 
+	</update>
 
 	<!-- 회원 삭제 -->
 	<delete id="deleteUser" parameterType="String">

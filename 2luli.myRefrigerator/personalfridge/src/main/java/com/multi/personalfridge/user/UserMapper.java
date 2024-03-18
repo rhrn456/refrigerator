@@ -39,6 +39,8 @@ public interface UserMapper {
 	// 마이페이지
 	
 
+	int InsertUserInfoBySocial(UserDTO user);
+
 
 	
 }

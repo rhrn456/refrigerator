@@ -19,6 +19,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+      <link rel="icon" type="image/x-icon" href="img/house-AI-Logo.png" />
 <style>
 body {
     background: linear-gradient(to bottom, #f5ffea, #6fde6f);

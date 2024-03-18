@@ -24,71 +24,79 @@
 	<link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 	<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 	
-	<!-- Customized Bootstrap Stylesheet -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	
-	<!-- Template Stylesheet -->
-	<link href="css/style.css" rel="stylesheet">
-</head>
-
-<body>
-	<!-- Spinner Start -->
-	<div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-		<div class="spinner-grow text-primary" role="status"></div>
-	</div>
-	<!-- Spinner End -->
-
-	<!-- Navbar start -->
-	<%@ include file="../header.jsp"%>
-	<!-- Navbar End -->
-	
-	<!-- Single Page Header start -->
-	<div class="container-fluid page-header py-5">
-		<h1 class="text-center text-white display-6">공유 게시판</h1>
-		<ol class="breadcrumb justify-content-center mb-0">
-			<li class="breadcrumb-item"><a href="/board?CategoryNo=1">공지사항</a></li>
-			<li class="breadcrumb-item active text-white">공유 게시판</li>
-			<li class="breadcrumb-item"><a href="/board?CategoryNo=3">나만의 레시피</a></li>
-		</ol>
-	</div>
-	<!-- Single Page Header End -->
 
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite py-5">
 		<div class="container py-5">
-			<div class="row g-4">
-				<div class="col-lg-12">
-					<div class="row g-4">
-						<div class="col-lg-3">
-							<div class="row g-4">
-								<div class="col-lg-12">
-									<div class="mb-3">
-										<h4>카테고리</h4>
-										<ul class="list-unstyled fruite-categorie">
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="/board?CategoryNo=1"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
-												</div>
-											</li>
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="#"><i class="fas fa-apple-alt me-2"></i>공유 게시판</a>
-												</div>
-											</li>
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="/board?CategoryNo=3"><i class="fas fa-apple-alt me-2"></i>나만의 레시피</a>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-lg-9">
-							<div class="row g-4 justify-content-center">
-								<table>
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        
+        <!-- Navbar start -->
+       <%@ include file="../header.jsp" %>
+        <!-- Navbar End -->
+    </head>
+
+    <body>
+        <!-- Spinner Start -->
+        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+		
+		
+		
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">공유 게시판</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/board?CategoryNo=1">공지사항</a></li>
+                <li class="breadcrumb-item active text-white">공유 게시판</li>
+                <li class="breadcrumb-item"><a href="/board?CategoryNo=3">나만의 레시피</a></li>
+            </ol>
+        </div>
+        <!-- Single Page Header End -->
+		
+        <!-- Fruits Shop Start-->
+        <div class="container-fluid fruite py-5">
+            <div class="container py-5">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="row g-4">
+                            <div class="col-lg-3">
+                                <div class="row g-4">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <h4>카테고리</h4>
+                                            <ul class="list-unstyled fruite-categorie">
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name">
+                                                        <a href="/board?CategoryNo=1"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name">
+                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>공유 게시판</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name">
+                                                        <a href="/board?CategoryNo=3"><i class="fas fa-apple-alt me-2"></i>나만의 레시피</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <c:set var="pageSize" value="9" />
+							<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
+                            <div class="col-lg-9">
+                                <div class="row g-4 justify-content-center">
+                                	<table>
 									<thead>
 										<tr>
 											<th>글 번호</th>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,13 @@ import com.multi.personalfridge.dto.UserDTO;
 @Service
 public class UserService {
 	private final UserMapper userMapper;
-
+	private final BCryptPasswordEncoder passwordEncoder;
+	
     @Autowired
-    public UserService(UserMapper userMapper) {
+    public UserService(UserMapper userMapper,
+    					BCryptPasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 	
 	//로그인
@@ -28,9 +32,11 @@ public class UserService {
     }
 	
 	// 회원가입
-	public boolean insertUser(UserDTO dto) {
+	public boolean insertUser(UserDTO user) {
+		String hashedPassword = passwordEncoder.encode(user.getPassword());
+    	user.setPassword(hashedPassword);
 		try {
-			userMapper.insertUser(dto);
+			userMapper.insertUser(user);
 		return true; 
 	
 		}catch (Exception e) {
@@ -114,7 +120,18 @@ public class UserService {
 		return userMapper.getUserByEmailAndName(user_name, mail);
 		 
 	}
-	
+
+	public boolean InsertUserInfoBySocial(UserDTO user) {
+		try {
+			userMapper.InsertUserInfoBySocial(user);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+
+
 
 
 	

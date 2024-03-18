@@ -5,6 +5,7 @@
 
 <typeAliases>
 	<typeAlias type="com.multi.personalfridge.dto.UserDTO" alias="User"/>
+	<typeAlias type="com.multi.personalfridge.dto.SocialUserDTO" alias="SocialUser"/>
 	<typeAlias type="com.multi.personalfridge.dto.ProductDTO" alias="Product"/>
 	<typeAlias type="com.multi.personalfridge.dto.RecipeDTO" alias="Recipe"/>
 	<typeAlias type="com.multi.personalfridge.dto.RecipeProductDTO" alias="RecipeProduct"/>

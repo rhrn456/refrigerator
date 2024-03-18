@@ -52,7 +52,7 @@ public class CommonController {
 	@GetMapping("/contact")
 	public String contact() {
 
-		return "contact";
+		return "redirect:/login/getGoogleAuthUrl";
 	}
 	
 
