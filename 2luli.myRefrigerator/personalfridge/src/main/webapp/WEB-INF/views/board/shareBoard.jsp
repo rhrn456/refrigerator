@@ -24,23 +24,18 @@
 	<link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 	<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 	
+	<!-- Customized Bootstrap Stylesheet -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-	<!-- Fruits Shop Start-->
-	<div class="container-fluid fruite py-5">
-		<div class="container py-5">
+	<!-- Template Stylesheet -->
+	<link href="css/style.css" rel="stylesheet">
+       
+	<!-- Navbar start -->
+	<%@ include file="../header.jsp"%>
+	<!-- Navbar End -->
+</head>
 
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-        
-        <!-- Navbar start -->
-       <%@ include file="../header.jsp" %>
-        <!-- Navbar End -->
-    </head>
-
-    <body>
+<body>
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
@@ -96,7 +91,7 @@
 							<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-center">
-                                	<table>
+                                <table>
 									<thead>
 										<tr>
 											<th>글 번호</th>

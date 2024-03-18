@@ -41,8 +41,6 @@
 		<div class="spinner-grow text-primary" role="status"></div>
 	</div>
 	<!-- Spinner End -->
-
-	
 	
 	<!-- Single Page Header start -->
 	<div class="container-fluid page-header py-5">
