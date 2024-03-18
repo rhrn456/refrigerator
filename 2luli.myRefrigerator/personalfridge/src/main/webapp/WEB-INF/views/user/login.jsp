@@ -18,7 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+      <link rel="icon" type="image/x-icon" href="img/house-AI-Logo.png" />
 </head>
 <style>
 body {
@@ -74,12 +74,12 @@ margin-top:100px;
 									        로그인
 									    </button>
 									    <hr>
-									    <a href="index.html" class="btn btn-google btn-user btn-block">
+									   <a href="socalLogin" class="btn btn-google btn-user btn-block">
 									        <i class="fab fa-google fa-fw"></i> Login with Google
 									    </a>
-									    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-									        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-									    </a>
+									     <a href="test" class="btn btn-kakao btn-user btn-block" style="background-color:#ffef5e; font-weight: bold;">
+										    <i class="fab fa-kakao"></i> 카카오톡 로그인
+										</a>
 									</form>
                                     <hr>
                                     <div class="text-center">
@@ -105,6 +105,11 @@ margin-top:100px;
 	document.getElementById("roginImage").addEventListener("click", function() {
 	    window.location.href = "/"; // 클릭 시 "/" 경로로 이동
 	});
+	
+	
+
+	 
+	
 	</script>
 </body>
 </html>

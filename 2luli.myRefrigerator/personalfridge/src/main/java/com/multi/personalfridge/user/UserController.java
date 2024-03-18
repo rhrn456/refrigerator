@@ -1,5 +1,7 @@
 package com.multi.personalfridge.user;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -76,6 +78,7 @@ public class UserController {
    	if (user != null && passwordEncoder.matches(password, user.getPassword()) ) {
 	    	session.setAttribute("userId", user.getUser_id());
 	        session.setAttribute("userAdmin", user.getJob_num());
+	        session.setMaxInactiveInterval(300);
 	        //관리자/매니저라면 관리자 페이지로 사용자는 메인으로
    	if(user.getJob_num() == 1 || user.getJob_num() == 2){
    		return "redirect:/admin";  
@@ -104,8 +107,6 @@ public class UserController {
   //회원가입
     @PostMapping("/signup")
     public String insertUser(UserDTO user, HttpSession session) {
-    	String hashedPassword = passwordEncoder.encode(user.getPassword());
-    	user.setPassword(hashedPassword);
         boolean result = userService.insertUser(user);
         if(result) {
         	return "redirect:/loginPage";
@@ -113,7 +114,12 @@ public class UserController {
         
         return "redirect:/signupPage";
     }
+    @GetMapping("/test")
+    public String test() {
+    	return "user/socialplusinfo";
+    }
     
+   
     //아이디 찾기 페이지
     @GetMapping("/findIdPage")
     public String findIdPage() {
@@ -140,14 +146,13 @@ public class UserController {
     	
     	//랜덤 비밀번호 생성 후 메일로 보내기
     	String str = randomPassword.generateRandomString();
-    	emailService.sendSimpleMessage(mail, "임시 비밀번호", str.toString());
+    	emailService.sendSimpleMessage(mail, "우리집 AI 냉장고 임시 비밀번호 발송해드렸습니다.", str.toString());
     	
     	//생성된 랜덤 비밀번호로 사용자 비밀번호 면경 변경
     	user.setPassword(str);
     	String hashedPassword = passwordEncoder.encode(user.getPassword());
     	user.setPassword(hashedPassword);
     	boolean result = userService.updateUser(user);
-    	System.out.println(result);
     	if(result) {
     		return "redirect:/loginPage";
     	}

@@ -45,7 +45,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">데이터 관리:</h6>
+                        <h6 class="collapse-header">데이터 관리:</h6>  
                         <a class="collapse-item" href="/insertRecipe">레시피 추가</a>
                         <a class="collapse-item" href="/insertProduct">일반/특가상품 추가</a>
                     </div>
@@ -53,6 +53,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
+            <c:if test="${sessionScope.userAdmin == 2}">
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -68,6 +69,7 @@
                     </div>
                 </div>
             </li>
+            </c:if>
 
             <!-- Divider -->
             <hr class="sidebar-divider">

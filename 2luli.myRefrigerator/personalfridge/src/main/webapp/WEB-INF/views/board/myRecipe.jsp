@@ -28,6 +28,10 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        
+        <!-- Navbar start -->
+       <%@ include file="../header.jsp" %>
+        <!-- Navbar End -->
     </head>
 
     <body>
@@ -37,9 +41,7 @@
         </div>
         <!-- Spinner End -->
 		
-		<!-- Navbar start -->
-       <%@ include file="../header.jsp" %>
-        <!-- Navbar End -->
+		
 		
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">

@@ -36,6 +36,8 @@ public interface UserMapper {
 	
 	List<UserDTO> getAllUserByKewordPage(Map parameters);
 
+	int InsertUserInfoBySocial(UserDTO user);
+
 
 	
 }
