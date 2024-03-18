@@ -197,19 +197,19 @@ function shareProduct(refrigeratorProductId){
     <button type="button" id="submitForm">추가</button>
   </form> 
   
-  <form id="editForm">
-	  <input type="hidden" id="editProductId" name="editProductId">
-	  
-	  <label for="editProductName">이름:</label>
-	  <input type="text" id="editProductName" name="editProductName"><br><br>
-	  
-	  <label for="editProductQuantity">재고:</label>
-	  <input type="text" id="editProductQuantity" name="editProductQuantity"><br><br>
-	  
-	  <label for="editLimitDate">소비 기한:</label>
-	  <input type="date" id="editLimitDate" name="editLimitDate"><br><br>
-	  
-	  <button type="button" id="updateForm">수정 완료</button>
+	<form id="editForm">
+		<input type="hidden" id="editProductId" name="editProductId">
+		
+		<label for="editProductName">이름:</label>
+		<input type="text" id="editProductName" name="editProductName"><br><br>
+		
+		<label for="editProductQuantity">재고:</label>
+		<input type="text" id="editProductQuantity" name="editProductQuantity"><br><br>
+		
+		<label for="editLimitDate">소비 기한:</label>
+		<input type="date" id="editLimitDate" name="editLimitDate"><br><br>
+		
+		<button type="button" id="updateForm">수정 완료</button>
 	</form> 
 </body>
 </html>

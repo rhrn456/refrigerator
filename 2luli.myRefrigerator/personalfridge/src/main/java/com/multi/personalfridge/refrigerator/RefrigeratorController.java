@@ -57,7 +57,7 @@ public class RefrigeratorController {
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
 		System.out.println("현재 냉장고의 제품 갯수 : " + refrigeratorProductList.size());/*테스트용 제거 할 것*/	
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);		
-		mv.setViewName("refrigeratorTest");
+		mv.setViewName("refrigeratorTest2");
 		
 		return mv;
 	}

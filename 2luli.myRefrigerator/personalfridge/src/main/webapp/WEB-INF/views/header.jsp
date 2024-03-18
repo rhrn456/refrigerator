@@ -60,7 +60,7 @@
 						        </button>
 						    </form>
 						    <a href="/refrigerator" class="position-relative me-4 my-auto">
-						        <i class="fa fa-address-book" style="font-size:30px;color:red"></i>
+						        <i class="bi bi-door-closed-fill" style="font-size:30px;color:#81c408"></i>
 						    </a>
 						    <a href="/cart" class="position-relative me-4 my-auto">
 						        <i class="fa fa-shopping-bag fa-2x"></i>
