@@ -432,12 +432,8 @@
 	         
          //recipeContent
          $('#recipeContent').on('click', 'a', function(e) {
-        	 //$(this).data('value')
         	 let recipeId = $(this).data('value');
-        	 location.href = "recipedetail?recipe_id=" + recipeId;
-        	 ///recipedetail?recipe_id=1
-        	//<form method="post">
-        	 //ajax method="post"
+        	 location.href = "recipe/recipedetail?recipe_id=" + recipeId;
         	
          });
 	         

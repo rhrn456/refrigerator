@@ -34,8 +34,8 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     	<link href="css/sb-admin-2.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-     <!-- Navbar start -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+     	<!-- Navbar start -->
        <%@ include file="../header.jsp" %>
         <!-- Navbar End -->
         <style>  

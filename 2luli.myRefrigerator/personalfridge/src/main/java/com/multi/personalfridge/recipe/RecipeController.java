@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
+import com.multi.personalfridge.dto.RecipeAndProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
 import com.multi.personalfridge.product.ProductService;
@@ -69,10 +70,13 @@ public class RecipeController {
 	
 
 	@GetMapping("/recipedetail")
-	public String getRecipeById(int recipe_id, Model model) {
+	public String getRecipeById(@RequestParam int recipe_id, Model model) {
+		System.out.println("실행");
 		System.out.println(recipe_id);
 		RecipeDTO recipe = recipeService.getRecipeById(recipe_id);
+		List<RecipeAndProductDTO> recipeProductList = recipeProductService.getRecipeProductListByRecipeId(recipe_id);
 		model.addAttribute("recipe", recipe);
+		model.addAttribute("recipeProductList",recipeProductList);
 		return "recipe/recipedetail";
 	}
 
@@ -81,7 +85,6 @@ public class RecipeController {
 	@GetMapping("/getRecipeByCategory")
 	@ResponseBody
 	public Map<String, Object> getRecipeByCategory(@RequestParam String category, @RequestParam int page, @RequestParam int pageSize) {
-	    System.out.println(category+" " + page + " " + pageSize);
 		Map<String, Object> parameters = new HashMap<>();
 	    List<RecipeDTO> recipeList = recipeService.getRecipesByCategory(category);
 	    List<RecipeDTO> recipes = recipeService.getRecipesByCategoryAndPage(category, page, pageSize);
