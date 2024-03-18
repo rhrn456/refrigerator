@@ -104,8 +104,6 @@ public class UserController {
   //회원가입
     @PostMapping("/signup")
     public String insertUser(UserDTO user, HttpSession session) {
-    	String hashedPassword = passwordEncoder.encode(user.getPassword());
-    	user.setPassword(hashedPassword);
         boolean result = userService.insertUser(user);        
         if(result) {
         	return "redirect:/loginPage";

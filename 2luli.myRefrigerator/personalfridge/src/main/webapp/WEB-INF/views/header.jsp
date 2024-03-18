@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <link rel="icon" type="image/x-icon" href="img/house-AI-Logo.png" />
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/house-AI-Logo.png" />
     <style>
 
     </style>
@@ -19,7 +19,7 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="/" class="navbar-brand"><img src="img/house-AI-BI.png" style="width:200px;" ></a>
+                    <a href="/" class="navbar-brand"><img src="${pageContext.request.contextPath}/img/house-AI-BI.png" style="width:200px;" ></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>

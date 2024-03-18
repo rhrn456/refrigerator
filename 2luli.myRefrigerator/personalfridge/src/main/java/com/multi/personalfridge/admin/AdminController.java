@@ -166,51 +166,7 @@ public class AdminController {
 		return "admin/recipelsitadmin";
 	}
 	
-	//레시피 검색/페이징
-		@GetMapping("/searchRecipe")
-		@ResponseBody
-		public Map<String, Object> getRecipeBySearch(@RequestParam String category, @RequestParam String keyword, @RequestParam(defaultValue ="1") int page, @RequestParam int pageSize) {
-		    Map<String, Object> parameters = new HashMap<>();
-		    List<RecipeDTO> recipes = recipeService.getRecipesBykeywordAndPage(category, keyword, page, pageSize);
-		    List<RecipeDTO> recipeList = recipeService.getRecipesBykeyword(category, keyword);
-		    int totalRecipes = recipeList.size();
-		    int totalPages = (int) Math.ceil((double) totalRecipes / pageSize); 
-			if(totalPages >5) {
-				totalPages = 5;
-			}
-		    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
-											.total(totalRecipes)
-											.pageAmount(totalPages)
-											.currentPage(page)
-											.amount(pageSize)
-											.build();  
-		    parameters.put("recipes", recipes);
-		    parameters.put("pageInfo", pageRequestDTO);
-		    return parameters;
-		}
-		
-		//레시피 전체/카테고리 페이징
-		@GetMapping("/getRecipeByCategory")
-		@ResponseBody
-		public Map<String, Object> getRecipeByCategory(@RequestParam String category, @RequestParam int page, @RequestParam int pageSize) {
-		    Map<String, Object> parameters = new HashMap<>();
-		    List<RecipeDTO> recipeList = recipeService.getRecipesByCategory(category);
-		    List<RecipeDTO> recipes = recipeService.getRecipesByCategoryAndPage(category, page, pageSize);
-		    int totalRecipes = recipeList.size();  
-		    int totalPages = (int) Math.ceil((double) totalRecipes / pageSize); 
-			if(totalPages >5) {
-				totalPages = 5;
-			}
-		    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
-											.total(totalRecipes)
-											.pageAmount(totalPages)
-											.currentPage(page)
-											.amount(pageSize)
-											.build();
-		    parameters.put("recipes", recipes);
-		    parameters.put("pageInfo", pageRequestDTO);
-		    return parameters;
-		}
+	
 		
 	//레시피 삭제
 	@GetMapping("/recipedeleteadmin/{recipe_id}")

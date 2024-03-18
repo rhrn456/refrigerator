@@ -30,7 +30,7 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
       	<!-- Navbar start -->
-       <%@ include file="header.jsp" %>
+       <%@ include file="../header.jsp" %>
         <!-- Navbar End -->
     </head>
 
@@ -233,7 +233,7 @@
 
 
 	<!-- footer start -->
-	<%@ include file="footer.jsp"%>
+	<%@ include file="../footer.jsp"%>
 	<!-- footer End -->
 
 
@@ -300,7 +300,7 @@
 				var pageSize = 9; // 페이지당 아이템 수
 				$.ajax({
 					type : "GET",
-					url : "getRecipeByCategory",
+					url : "/getRecipeByCategory",
 					data : {
 						category : category,
 						page : page,
@@ -433,7 +433,7 @@
          //recipeContent
          $('#recipeContent').on('click', 'a', function(e) {
         	 let recipeId = $(this).data('value');
-        	 location.href = "recipe/recipedetail?recipe_id=" + recipeId;
+        	 location.href = "/recipedetail?recipe_id=" + recipeId;
         	
          });
 	         
