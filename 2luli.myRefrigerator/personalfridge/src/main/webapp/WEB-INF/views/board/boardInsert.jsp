@@ -41,7 +41,6 @@
 		<div class="spinner-grow text-primary" role="status"></div>
 	</div>
 	<!-- Spinner End -->
-
 	
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite py-5" style="margin-top: 180px;">
@@ -131,35 +130,35 @@
 	<script>
 	
 	function selectCategory(CategoryNo) {
-	    document.getElementById("board_category").value = CategoryNo;
-	    toggleDropdown();
-	  }
+		document.getElementById("board_category").value = CategoryNo;
+		toggleDropdown();
+	}
 	
-	  // Close the dropdown if the user clicks outside of it
-	  window.onclick = function(event) {
-	      var dropdowns = document.getElementsByClassName("dropdown-content");
-	      for (var i = 0; i < dropdowns.length; i++) {
-	        var openDropdown = dropdowns[i];
-	        if (openDropdown.classList.contains('show')) {
-	          openDropdown.classList.remove('show');
-	        }
-	      }
-	  }
-	  
-	  document.getElementById('confirmButton').addEventListener('click', function() {
-	      var title = document.getElementById('title').value;
-	      var content = document.getElementById('content').value;
-	      var board_category = document.getElementById('board_category').value;
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+		var dropdowns = document.getElementsByClassName("dropdown-content");
+		for (var i = 0; i < dropdowns.length; i++) {
+			var openDropdown = dropdowns[i];
+			if (openDropdown.classList.contains('show')) {
+				openDropdown.classList.remove('show');
+			}
+		}
+	}
+	
+	document.getElementById('confirmButton').addEventListener('click', function() {
+		var title = document.getElementById('title').value;
+		var content = document.getElementById('content').value;
+		var board_category = document.getElementById('board_category').value;
 		
-	      if (title.trim() === '' || content.trim() === '') {
-	          alert('빈칸을 입력해주세요');
-	          return;
-	      } else if(board_category.trim() === '') {
-	    	  alert('게시판을 선택해주세요')
-	    	  return;
-	      }
-	  });
-	  
+		if (title.trim() === '' || content.trim() === '') {
+			alert('빈칸을 입력해주세요');
+			return;
+		} else if(board_category.trim() === '') {
+			alert('게시판을 선택해주세요')
+			return;
+		}
+	});
+	
 	</script>
 	
 </body>

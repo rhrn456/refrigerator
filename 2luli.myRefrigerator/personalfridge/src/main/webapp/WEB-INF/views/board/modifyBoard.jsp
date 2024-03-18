@@ -41,6 +41,7 @@
 		<div class="spinner-grow text-primary" role="status"></div>
 	</div>
 	<!-- Spinner End -->
+
 	
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite py-5" style="margin-top: 180px;">
@@ -74,38 +75,27 @@
 								</div>
 							</div>
 						</div>
-						
 						<div class="col-lg-9">
-							<div class="row g-4 justify-content-center">
-						    	<table>
-									<tbody>
-										<tr>
-											<th>글 번호</th>
-											<td>${board.board_no}</td>
-											<th>조회수</th>
-											<td>${board.hit}</td>
-										</tr>
-										<tr>
-											<th>작성자</th>
-											<td>${board.user_id}</td>
-											<th>작성날짜</th>
-											<td><fmt:formatDate value="${board.board_create_date}" pattern="yyyy-MM-dd" /></td>
-										</tr>
-										<tr>
-											<th>제목</th>
-											<td colspan="3">${board.title}</td>
-										</tr>
-										<tr>
-											<td colspan="4" class="view_text">${board.content}</td>
-										</tr>
-									</tbody>
-								</table>
-								<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/updateBoard?boardNo=${board.board_no}'">수정</button>
-								<button id="board-delete-btn" class="btn btn-primary" onclick="">삭제</button>
-								<!-- 삭제 이벤트 리스너 작성 -->
+							<div class="row">
+							    <div class="col-xl-8 col-lg-7" style="width: 80%">
+							        <div class="card shadow mb-4">
+							            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+							                <h6 class="m-0 font-weight-bold text-primary">게시글 등록</h6>
+							            </div>
+							            <!-- Card Body -->
+							            <form action="/updateBoard" method="POST">
+								            <div class="card-body">
+								                <input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" required>
+								                <textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
+								                <input type="text" id="CategoryNo" name="CategoryNo" placeholder="${bCategory.b_category_name}" class="form-control mb-3" readonly>
+								                <!-- 확인 버튼 -->
+								                <button type="submit" id="confirmButton" class="btn btn-primary" style="float:right; margin-bottom: 1rem">수정</button>
+								            </div>
+							            </form>
+							        </div>
+							    </div>
 							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>
@@ -132,7 +122,21 @@
 	<script src="js/main.js"></script>
 	
 	<script>
+	
+	document.getElementById('confirmButton').addEventListener('click', function() {
+		var title = document.getElementById('title').value;
+		var content = document.getElementById('content').value;
+		var board_category = document.getElementById('board_category').value;
 		
+		if (title.trim() === '' || content.trim() === '') {
+			alert('빈칸을 입력해주세요');
+			return;
+		} else if(board_category.trim() === '') {
+			alert('게시판을 선택해주세요')
+			return;
+		}
+	});
+	
 	</script>
 	
 </body>

@@ -159,7 +159,7 @@ public class BoardController {
 		
 		board = service.deleteBoardByBoardNo(boardNo);
 		
-		return "board/" + board.getB_category_no();
+		return "redirect:/board?CategoryNo=" + board.getB_category_no();
 	}
 	
 }
