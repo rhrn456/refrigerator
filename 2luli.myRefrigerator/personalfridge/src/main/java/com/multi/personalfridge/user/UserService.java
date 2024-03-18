@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.UserDTO;
+import com.multi.personalfridge.dto.UserLikeDTO;
 
 
 @Service
@@ -52,7 +53,7 @@ public class UserService {
 
 	// 회원정보 수정
 	public boolean updateUser(UserDTO userDTO) {
-		System.out.println(userDTO);
+		System.out.println("UserService, updateUser UserDTO:" + userDTO);
 		try {
 			userMapper.updateUser(userDTO);
 		return true; 
@@ -131,15 +132,18 @@ public class UserService {
 		}
 	}
 
+	
+	// 찜목록 조회
+	public List<UserLikeDTO> getUserLike(String user_id) {
+		return userMapper.getUserLike(user_id);
+	}
+	
+	// 마이페이지 유저 정보 조회
+	public UserDTO getUserInfo(String user_id) {
+		System.out.println("UserService , getUserInfo() user_id :" + user_id);
+		return userMapper.getUserInfo(user_id);
+		
+	}
 
-
-
-	
-	
-	
-	
-	
-	
-	
 	
 }

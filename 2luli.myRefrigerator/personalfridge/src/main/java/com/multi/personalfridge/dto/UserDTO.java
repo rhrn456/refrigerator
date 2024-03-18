@@ -19,7 +19,7 @@ public class UserDTO {
 	private String user_name;
 	private String mail;
 	private String adress;
-	private Integer phone;
+	private String phone;
 	private int job_num;
 	private Timestamp create_user_date;
 	private Timestamp delete_user_date;
