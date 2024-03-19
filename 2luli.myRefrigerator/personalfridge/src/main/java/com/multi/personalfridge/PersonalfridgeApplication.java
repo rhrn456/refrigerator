@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @MapperScan({"com.multi.personalfridge.user", 
 			 "com.multi.personalfridge.socailuser", 
 			 "com.multi.personalfridge.admin", 
+			 "com.multi.personalfridge.cart", 
 			 "com.multi.personalfridge.product", 
 			 "com.multi.personalfridge.recipe",
 			 "com.multi.personalfridge.review",

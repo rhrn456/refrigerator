@@ -10,22 +10,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.multi.personalfridge.cart.CartService;
+import com.multi.personalfridge.dto.CartDTO;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.product.ProductService;
 import com.multi.personalfridge.recipe.RecipeService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class CommonController {
 
 	private final ProductService productService;
 	private final RecipeService recipeService;
+	private final CartService cartService;
 
 	@Autowired
-	public CommonController(ProductService productService, RecipeService recipeService) {
+	public CommonController(ProductService productService, RecipeService recipeService, CartService cartService) {
 	    this.productService = productService;
 	    this.recipeService = recipeService;
+	    this.cartService = cartService;
 	}
 	
 	//메인 화면 데이터(레시피, 특가 상품)
@@ -56,9 +63,16 @@ public class CommonController {
 	
 
 	// 장바구니
-	@GetMapping("/cart")
-	public String cart() {
-
+	@GetMapping("/mycart")
+	public String cart(HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+		 String userId = (String) session.getAttribute("userId");
+		 if (userId == null || userId.isEmpty()) {
+		        // userId가 없으면 에러 반환
+		        return "error";
+		    }
+		 List<CartDTO> cartList = cartService.getCartProducts(userId);
+		 System.out.println(cartList);
 		return "cart";
 	}
 	
@@ -81,7 +95,7 @@ public class CommonController {
 										.build();
 		model.addAttribute("recipelist",recipelist);
 		 model.addAttribute("pageInfo", pageRequestDTO);
-		return "recipeshop";
+		return "recipe/recipeshop";
 	}
 	
 	//일반 상품 목록

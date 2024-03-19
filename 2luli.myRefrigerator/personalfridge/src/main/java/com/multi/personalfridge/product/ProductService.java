@@ -95,7 +95,6 @@ public class ProductService {
 	public List<ProductDTO> getSpecialProductsBykeywordAndPage( String category, String keyword, int page, int pageSize) {
 		int offset = (page - 1) * pageSize;
 	    Map<String, Object> parameters = new HashMap<>();
-	    System.out.println("카테고리" + category);
 	    parameters.put("category", category);
 	    parameters.put("keyword", keyword);
 	    parameters.put("pageSize", pageSize);

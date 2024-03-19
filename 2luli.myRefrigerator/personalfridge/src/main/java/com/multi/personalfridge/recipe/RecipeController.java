@@ -41,18 +41,6 @@ public class RecipeController {
 	
 	
 
-	
-	//insertRecipe
-	//recipe/insertRecipe
-//	@GetMapping("/insertRecipe")
-//	public void insertRecipe(RecipeDTO recipeDTO) {
-//		boolean insertrecipe = recipeService.insertRecipe(recipeDTO);
-//		if(insertrecipe) {
-//			
-//		}
-//	}
-	
-
 	//레시피목록 
 	@GetMapping("/recipe")
 	public ModelAndView getRecipeList(ModelAndView mv) {
@@ -65,13 +53,15 @@ public class RecipeController {
 	
 
 	@GetMapping("/recipedetail")
-	public String getRecipeById(@RequestParam int recipe_id, Model model) {
-		System.out.println("실행");
-		System.out.println(recipe_id);
+	public String getRecipeById(@RequestParam int recipe_id, Model model) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();;
 		RecipeDTO recipe = recipeService.getRecipeById(recipe_id);
-		List<RecipeAndProductDTO> recipeProductList = recipeProductService.getRecipeProductListByRecipeId(recipe_id);
+		List<ProductDTO> productList = productService.getFullProduct();
+		List<RecipeAndProductDTO> recipeproductList = recipeProductService.getRecipeProductListByRecipeId(recipe_id);
+		String recipeproductListJson = objectMapper.writeValueAsString(recipeproductList);
 		model.addAttribute("recipe", recipe);
-		model.addAttribute("recipeProductList",recipeProductList);
+		model.addAttribute("productList", productList);
+		model.addAttribute("recipeproductListJson", recipeproductListJson);
 
 		return "recipe/recipedetail";
 	}
@@ -127,10 +117,5 @@ public class RecipeController {
 	//화면이동
 
 
-	
-//	---------레시피 추가---------------------
-
-
-	
 
 }

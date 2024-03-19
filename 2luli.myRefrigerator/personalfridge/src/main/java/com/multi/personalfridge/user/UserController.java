@@ -69,8 +69,12 @@ public class UserController {
    @PostMapping("/Login")
    public String login(@RequestParam String user_id, @RequestParam String password, HttpSession session, RedirectAttributes redirectAttributes) {
 	   
+	   //삭제된 회원인지 확인
    	UserDTO user = userService.login(user_id);
-
+   	if(user.isDelete_plug() == true) {
+   		return "redirect:/";
+   	}
+   	
    	//비크립트로 비밀번호 검증
    	if (user != null && passwordEncoder.matches(password, user.getPassword()) ) {
 	    	session.setAttribute("userId", user.getUser_id());

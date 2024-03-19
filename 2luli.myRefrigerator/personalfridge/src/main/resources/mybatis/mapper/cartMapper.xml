@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.multi.personalfridge.cart.CartMapper">
+
+
+	<select id ="getCartProducts" resultType="Cart">
+	select *
+	from cart
+	WHERE user_id = #{user_id}
+	</select>
+	
+ 	<!-- 카트 상품 등록 -->
+    <insert id="insertCart" parameterType="Cart">
+    INSERT INTO cart (user_id, product_id, product_quantity)
+    VALUES (#{user_id}, #{product_id}, #{product_quantity})
+	</insert>
+</mapper>

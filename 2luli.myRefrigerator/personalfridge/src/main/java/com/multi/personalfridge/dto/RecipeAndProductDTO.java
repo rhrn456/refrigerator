@@ -20,4 +20,5 @@ public class RecipeAndProductDTO {
     private Integer product_quantity;
     private String product_name;
     private String product_img;
+    private String product_price;
 }

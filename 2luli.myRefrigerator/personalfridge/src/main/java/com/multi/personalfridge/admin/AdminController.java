@@ -359,7 +359,7 @@ public class AdminController {
 	//레시피 등록
 		@GetMapping("/RecipePlus")
 		public String insertRecipe(@ModelAttribute RecipeDTO recipe, Model model) throws JsonProcessingException {
-			ObjectMapper objectMapper = new ObjectMapper();;
+			ObjectMapper objectMapper = new ObjectMapper();
 			List<ProductDTO> productList = productService.getFullProduct();
 			RecipeDTO onerecipe;
 			List<RecipeAndProductDTO> recipeproductList = null;
