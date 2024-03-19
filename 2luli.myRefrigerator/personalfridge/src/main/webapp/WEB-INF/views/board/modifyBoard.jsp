@@ -85,9 +85,9 @@
 							            <!-- Card Body -->
 							            <form action="/updateBoard" method="POST">
 								            <div class="card-body">
-								                <input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" required>
-								                <textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
-								                <input type="text" id="CategoryNo" name="CategoryNo" placeholder="${bCategory.b_category_name}" class="form-control mb-3" readonly>
+								                <input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" value="${board.title}" required>
+								                <textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>${board.content}</textarea>
+								                <input type="text" id="Category" name="Category" placeholder="${Category}" class="form-control mb-3" readonly>
 								                <!-- 확인 버튼 -->
 								                <button type="submit" id="confirmButton" class="btn btn-primary" style="float:right; margin-bottom: 1rem">수정</button>
 								            </div>
@@ -126,13 +126,9 @@
 	document.getElementById('confirmButton').addEventListener('click', function() {
 		var title = document.getElementById('title').value;
 		var content = document.getElementById('content').value;
-		var board_category = document.getElementById('board_category').value;
 		
 		if (title.trim() === '' || content.trim() === '') {
 			alert('빈칸을 입력해주세요');
-			return;
-		} else if(board_category.trim() === '') {
-			alert('게시판을 선택해주세요')
 			return;
 		}
 	});

@@ -48,6 +48,12 @@ public class BoardService {
 		return mapper.deleteBoardByBoardNo(boardNo);
 	}
 	
+	// 게시판 카테고리 이름 가져오기
+	public String getCategoryName(int CategoryNo) {
+		return mapper.getCategoryName(CategoryNo);
+	}
+	
+	
 	// 게시판 카테고리 모두 가져오기
 	public List<BoardDTO> getBoardByCategory(int CategoryNo) {
 		Map<String, Object> parameters = new HashMap<>();

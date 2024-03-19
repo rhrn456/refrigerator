@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.multi.personalfridge.dto.BoardCategoryDTO;
 import com.multi.personalfridge.dto.BoardDTO;
 import com.multi.personalfridge.dto.PageRequestDTO;
 
@@ -107,7 +108,6 @@ public class BoardController {
 								@RequestParam("content") String content,
 								@RequestParam("CategoryNo") int CategoryNo,
 								HttpServletRequest request) {
-		String Category = "";
 		BoardDTO newBoard = new BoardDTO();
 		
 		HttpSession session = request.getSession();
@@ -129,17 +129,22 @@ public class BoardController {
 	// Update
 	@GetMapping("/updateBoard")
 	public String updateForm() {
-		return "/modifyBoard";
+		return "board/modifyBoard";
 	}
 	
 	@PutMapping("/modifyBoard")
-	public String modifyBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard) {
+	public String modifyBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard, Model model) {
 		boolean result = false;
-		BoardDTO board = null;
 		
-		board = service.getBoardByBoardNo(boardNo);
+		BoardDTO board = service.getBoardByBoardNo(boardNo);
+		String Category = service.getCategoryName(board.getB_category_no());
+		
+		System.out.println(boardNo);
+		System.out.println(board);
+		System.out.println(Category);
 		
 		if(board.getBoard_no() == newBoard.getBoard_no()) {
+			model.addAttribute("Category", Category);
 			board.setTitle(newBoard.getTitle());
 			board.setContent(newBoard.getContent());
 			result = service.updateBoard(newBoard);
@@ -161,5 +166,6 @@ public class BoardController {
 		
 		return "redirect:/board?CategoryNo=" + board.getB_category_no();
 	}
+	
 	
 }

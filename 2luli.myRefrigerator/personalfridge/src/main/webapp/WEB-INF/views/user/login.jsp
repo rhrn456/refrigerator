@@ -100,7 +100,7 @@ margin-top:100px;
         </div>
 
     </div>
-
+	
 	<script>
 	document.getElementById("roginImage").addEventListener("click", function() {
 	    window.location.href = "/"; // 클릭 시 "/" 경로로 이동
