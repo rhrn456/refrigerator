@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -191,6 +192,12 @@ public class UserController {
             return "redirect:/mypage";
         }
     }
+    // 마이페이지 계정 삭제 비밀번호
+//    @ResponseBody
+//    public int  deleteUserPassword(@RequestParam String user_id, String password) {
+//    	return deleteUser(null, null);
+//    }
+//    	
 
     // 마이페이지에서 정보수정 페이지로
     

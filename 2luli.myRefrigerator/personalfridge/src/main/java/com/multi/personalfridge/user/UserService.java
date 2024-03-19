@@ -49,11 +49,17 @@ public class UserService {
 	// 회원탈퇴
 	public int deleteUser(String userId) {
 		return userMapper.deleteUser(userId);
+		
+	}
+	
+	// 회원탈퇴 비밀번호
+	public int deleteUserPassword(String user_id, String password) {
+		return userMapper.deleteUserPassword(user_id, password);
 	}
 
 	// 회원정보 수정
 	public boolean updateUser(UserDTO userDTO) {
-		System.out.println("UserService, updateUser UserDTO:" + userDTO);
+//		System.out.println("UserService, updateUser UserDTO:" + userDTO);
 		try {
 			userMapper.updateUser(userDTO);
 		return true; 

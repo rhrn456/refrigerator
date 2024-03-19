@@ -53,6 +53,12 @@
 	    WHERE user_id = #{user_id}
 	</delete>
 	
+	<!--  회원 삭제 비밀번호 조회 -->
+	<select id="deleteUserPassword" parameterType="map" resultType="_int">
+		select count(user_id)
+		from user
+		where user_id = #{user_id} and password = #{password}; 
+	</select>
 
 	
 	<!-- 회원 상세정보 조회 -->
