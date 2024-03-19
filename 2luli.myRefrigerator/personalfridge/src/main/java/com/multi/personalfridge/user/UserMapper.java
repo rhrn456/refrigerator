@@ -21,7 +21,8 @@ public interface UserMapper {
 
 	int updateUser(UserDTO user);
 
-	int deleteUser(String user_id, String password);
+	// 마이페이지 회원탈퇴
+	int deleteUser(String user_id);
 
 	UserDTO getUserById(String user_id);
 

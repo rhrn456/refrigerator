@@ -50,7 +50,7 @@
 	<delete id="deleteUser" parameterType="String">
 	    UPDATE user
 	    SET delete_plug = true ,delete_user_date = now(),delete_content= #{delete_content} 
-	    WHERE user_id = #{user_id} AND password = #{password}
+	    WHERE user_id = #{user_id}
 	</delete>
 	
 
