@@ -23,6 +23,9 @@ public interface UserMapper {
 
 	// 마이페이지 회원탈퇴
 	int deleteUser(String user_id);
+	
+	// 마페이지 회원탈퇴 비밀번호
+	int deleteUserPassword(String user_id, String password);
 
 	UserDTO getUserById(String user_id);
 
