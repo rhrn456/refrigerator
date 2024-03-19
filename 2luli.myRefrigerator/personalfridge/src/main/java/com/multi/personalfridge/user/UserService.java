@@ -47,8 +47,8 @@ public class UserService {
 	}
 	
 	// 회원탈퇴
-	public int deleteUser(String userId, String password) {
-		return userMapper.deleteUser(userId, password);
+	public int deleteUser(String userId) {
+		return userMapper.deleteUser(userId);
 	}
 
 	// 회원정보 수정

@@ -38,10 +38,10 @@
 </div>
 
 <!-- 회원탈퇴 -->
-<form action="/mypage/delete" method="post" onsubmit="return confirm('정말로 회원 탈퇴를 하시겠습니까?');">
-    <input type="hidden" name="user_id" value="${mypage.user_id}" />
-    <button type="submit">회원 탈퇴</button>
+<form action="/mypage/deleteUser" method="post" onsubmit="return confirm('정말로 계정을 탈퇴하시겠습니까?');">
+    <input type="submit" value="회원 탈퇴"/>
 </form>
+
 
 
 </body>

@@ -163,7 +163,7 @@ public class UserController {
   //마이페이지 접속 및 조회
     @GetMapping("/mypage")
     public ModelAndView getUserInfo(@RequestParam String user_id) {
-    	System.out.println(user_id);
+//    	System.out.println(user_id);
     	ModelAndView mav = new ModelAndView("mypage/mypage");
     	UserDTO mypage = userService.getUserInfo(user_id);
         mav.addObject("mypage", mypage);
@@ -171,35 +171,27 @@ public class UserController {
         return mav;
     }
      
-//    // 마이페이지 정보 업데이트
-//    @PostMapping("/mypage/update")
-//    public String updateMyPage(@ModelAttribute UserDTO user) {
-//        userService.updateUser(user);
-//        return "redirect:/mypage?userId=" + user.getUser_id();
-//    }
 
-////     마이페이지 계정 삭제
-//    @PostMapping("/mypage/delete")
-//    public String deleteAccount(@RequestParam("user_id") String userId, HttpSession session, RedirectAttributes redirectAttributes) {
-//        // 세션에서 사용자 ID 가져오기 (로그인한 사용자와 일치하는지 확인)
-//        String loggedInUserId = (String) session.getAttribute("userId");
-//        if (loggedInUserId == null || !loggedInUserId.equals(userId)) {
-//            return "redirect:/loginPage"; // 로그인 페이지로 리디렉션
-//        }
-//        
-//        // 회원 탈퇴 처리
-//        int deleteResult = userService.deleteUser(userId);
-//        if (deleteResult > 0) {
-//            // 탈퇴 성공, 세션 무효화
-//            session.invalidate();
-//            redirectAttributes.addFlashAttribute("message", "회원 탈퇴가 성공적으로 처리되었습니다.");
-//            return "redirect:/loginPage";
-//        } else {
-//            // 탈퇴 실패 처리
-//            redirectAttributes.addFlashAttribute("error", "회원 탈퇴 처리 중 오류가 발생했습니다.");
-//            return "redirect:/mypage?user_id=" + userId;
-//        }
-//    }
+    // 마이페이지 계정 삭제
+    @PostMapping("/mypage/deleteUser")
+    public String deleteUser(HttpSession session, RedirectAttributes redirectAttributes) {
+        String userId = (String) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/loginPage";
+        }
+
+        int deleteResult = userService.deleteUser(userId);
+        if (deleteResult > 0) {
+            session.invalidate(); // 세션 무효화 (로그아웃 처리)
+            redirectAttributes.addFlashAttribute("message", "계정이 성공적으로 탈퇴되었습니다.");
+            return "redirect:/";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "계정 탈퇴에 실패했습니다.");
+            return "redirect:/mypage";
+        }
+    }
+
+    // 마이페이지에서 정보수정 페이지로
     
     // 환불 및 교환 시 연락처/이메일 페이지 이동
     @GetMapping("/refundPage")
