@@ -21,4 +21,5 @@ public class RecipeAndProductDTO {
     private String product_name;
     private String product_img;
     private String product_price;
+    private int special_product;
 }
