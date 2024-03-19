@@ -42,6 +42,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
         this.randomPassword = randomPassword;
     }
+    
     //이동 페이지
 	@GetMapping("/goPage")
 	public String goPage(HttpServletRequest request) {

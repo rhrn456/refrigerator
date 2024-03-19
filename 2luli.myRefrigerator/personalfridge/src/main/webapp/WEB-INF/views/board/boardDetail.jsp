@@ -101,8 +101,7 @@
 									</tbody>
 								</table>
 								<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/updateBoard?boardNo=${board.board_no}'">수정</button>
-								<button id="board-delete-btn" class="btn btn-primary" onclick="">삭제</button>
-								<!-- 삭제 이벤트 리스너 작성 -->
+								<a id="board-delete-btn" class="btn btn-primary">삭제</a>
 							</div>
 						</div>
 						
@@ -132,7 +131,13 @@
 	<script src="js/main.js"></script>
 	
 	<script>
-		
+	
+	document.getElementById('board-delete-btn').addEventListener('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = /deleteBoard?boardNo=${board.board_no};
+        };
+    });
+	
 	</script>
 	
 </body>
