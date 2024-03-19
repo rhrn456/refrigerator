@@ -19,7 +19,7 @@ public interface BoardMapper {
 
 	public int updateBoard(BoardDTO newBoard);
 
-	public BoardDTO deleteBoardByBoardNo(int boardNo);
+	public int deleteBoardByBoardNo(int boardNo);
 
 	public List<BoardDTO> getBoardByCategory(Map parameters);
 

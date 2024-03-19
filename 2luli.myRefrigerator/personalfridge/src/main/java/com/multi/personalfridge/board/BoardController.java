@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,7 +97,7 @@ public class BoardController {
 		
 		return "board/boardDetail";
 	}
-
+	
 	// Create
 	@GetMapping("/boardInsert")
 	public String insertForm() {
@@ -128,30 +129,39 @@ public class BoardController {
 	
 	// Update
 	@GetMapping("/updateBoard")
-	public String updateForm() {
-		return "board/modifyBoard";
-	}
-	
-	@PutMapping("/modifyBoard")
-	public String modifyBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard, Model model) {
-		boolean result = false;
+	public String updateForm(@RequestParam("boardNo") int boardNo, Model model) {
 		
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
 		String Category = service.getCategoryName(board.getB_category_no());
 		
-		System.out.println(boardNo);
-		System.out.println(board);
-		System.out.println(Category);
+		if(Category.equals("notice")) {
+			Category = "공지사항";
+		} else if(Category.equals("shareBoard")) {
+			Category = "공유 게시판";
+		} else if(Category.equals("myRecipe")) {
+			Category = "나만의 레시피";
+		}
 		
-		if(board.getBoard_no() == newBoard.getBoard_no()) {
-			model.addAttribute("Category", Category);
+		model.addAttribute("board", board);
+		model.addAttribute("Category", Category);
+		
+		return "board/modifyBoard";
+	}
+	
+	@PostMapping("/modifyBoard")
+	public String modifyBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard) {
+		boolean result = false;
+		
+		BoardDTO board = service.getBoardByBoardNo(boardNo);
+		
+		if(board.getBoard_no() == boardNo) {
 			board.setTitle(newBoard.getTitle());
 			board.setContent(newBoard.getContent());
-			result = service.updateBoard(newBoard);
+			result = service.updateBoard(board);
 		}
 		
 		if(result) {
-			return "/boardDetail/" + boardNo;
+			return "redirect:/view?boardNo=" + boardNo;
 		} else {
 			return "../404";
 		}
@@ -159,13 +169,19 @@ public class BoardController {
 	}
 	
 	// Delete
-	@DeleteMapping("/deleteBoard")
-	public String deleteBoardByBoardNo(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO board) {
+	@GetMapping("/deleteBoard")
+	public String deleteBoardByBoardNo(@RequestParam("boardNo") int boardNo) {
+		BoardDTO board = service.getBoardByBoardNo(boardNo);
+		int CategoryNo = board.getB_category_no();
 		
-		board = service.deleteBoardByBoardNo(boardNo);
+		boolean result = service.deleteBoardByBoardNo(boardNo);
 		
-		return "redirect:/board?CategoryNo=" + board.getB_category_no();
+		if(result) {
+			return "redirect:/board?CategoryNo=" + CategoryNo;
+		} else {
+			return "../404";
+		}
+		
 	}
-	
 	
 }

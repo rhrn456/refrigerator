@@ -33,6 +33,30 @@
 	<!-- Navbar start -->
 	<%@ include file="../header.jsp"%>
 	<!-- Navbar End -->
+	<style>
+	.modal-container {
+		         display: none;
+		         position: fixed;
+		         top: 50%;
+		         left: 50%;
+		         transform: translate(-50%, -50%);
+		         background-color: rgba(255, 255, 255, 1); 
+		         padding: 20px;
+		         border: 2px solid black;
+		         border-radius: 5px;
+		         z-index: 9999;
+		         color: black; 
+		         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+		}
+		
+		.modal-content {
+		          text-align: center;
+		}
+		
+		.modal-button {
+		          margin-top: 20px;
+		}
+	</style>
 </head>
 
 <body>
@@ -101,7 +125,7 @@
 									</tbody>
 								</table>
 								<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/updateBoard?boardNo=${board.board_no}'">수정</button>
-								<a id="board-delete-btn" class="btn btn-primary">삭제</a>
+								<button id="board-delete-btn" class="btn btn-primary" data-value="${board.board_no}">삭제</button>
 							</div>
 						</div>
 						
@@ -112,13 +136,21 @@
 	</div>
 	<!-- Fruits Shop End-->
 	
+	<div id="modalContainer" class="modal-container">
+		<div class="modal-content">
+			<p>게시글을 삭제하시겠습니까?</p>
+			<button id="confirmDeleteButton" class="modal-button">확인</button>
+			<button id="cancelDeleteButton" class="modal-button">취소</button>
+		</div>
+	</div>
+	
 	<!-- footer start -->
 	<%@ include file="../footer.jsp"%>
 	<!-- footer End -->
 	
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-
+	
 	<!-- JavaScript Libraries -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -126,17 +158,29 @@
 	<script src="lib/waypoints/waypoints.min.js"></script>
 	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
+	
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	
 	<script>
+	var boardNo;
+	var deleteButton = document.getElementById("board-delete-btn");
+    var modalContainer = document.getElementById("modalContainer");
+    var confirmButton = document.getElementById("confirmDeleteButton");
+    var cancelButton = document.getElementById("cancelDeleteButton");
+
+    deleteButton.onclick = function() {
+    	boardNo = $(this).data('value');
+        modalContainer.style.display = "block";
+    }
 	
-	document.getElementById('board-delete-btn').addEventListener('click', function() {
-        if(confirm("정말로 삭제하시겠습니까?")) {
-            location.href = /deleteBoard?boardNo=${board.board_no};
-        };
-    });
+    cancelButton.onclick = function() {
+        modalContainer.style.display = "none";
+    }
+	
+	confirmButton.onclick = function() {
+		location.href = '/deleteBoard?boardNo=' + boardNo;
+    } 
 	
 	</script>
 	

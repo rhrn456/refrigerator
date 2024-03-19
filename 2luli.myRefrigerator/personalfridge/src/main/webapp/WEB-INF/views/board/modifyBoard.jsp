@@ -80,14 +80,15 @@
 							    <div class="col-xl-8 col-lg-7" style="width: 80%">
 							        <div class="card shadow mb-4">
 							            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-							                <h6 class="m-0 font-weight-bold text-primary">게시글 등록</h6>
+							                <h6 class="m-0 font-weight-bold text-primary">게시글 수정</h6>
 							            </div>
 							            <!-- Card Body -->
-							            <form action="/updateBoard" method="POST">
+							            <form action="/modifyBoard" method="POST">
 								            <div class="card-body">
-								                <input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" value="${board.title}" required>
-								                <textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>${board.content}</textarea>
-								                <input type="text" id="Category" name="Category" placeholder="${Category}" class="form-control mb-3" readonly>
+								            	<input type="hidden" id="boardNo" name="boardNo" value="${board.board_no}">
+								                <input type="text" id="title" name="title" class="form-control mb-3" value="${board.title}" required>
+								                <textarea id="content" name="content" class="form-control mb-3" rows="8" required>${board.content}</textarea>
+								                <input type="text" id="Category" name="Category" value="${Category}" class="form-control mb-3" readonly>
 								                <!-- 확인 버튼 -->
 								                <button type="submit" id="confirmButton" class="btn btn-primary" style="float:right; margin-bottom: 1rem">수정</button>
 								            </div>
@@ -124,6 +125,7 @@
 	<script>
 	
 	document.getElementById('confirmButton').addEventListener('click', function() {
+		var boardNo = document.getElementById('boardNo').value;
 		var title = document.getElementById('title').value;
 		var content = document.getElementById('content').value;
 		

@@ -40,19 +40,22 @@ public class BoardService {
 		if(res != 0) {
 			return true;
 		}
-		
 		return false;
 	}
 
-	public BoardDTO deleteBoardByBoardNo(int boardNo) {
-		return mapper.deleteBoardByBoardNo(boardNo);
+	public boolean deleteBoardByBoardNo(int boardNo) {
+		int res = mapper.deleteBoardByBoardNo(boardNo);
+		
+		if(res != 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	// 게시판 카테고리 이름 가져오기
 	public String getCategoryName(int CategoryNo) {
 		return mapper.getCategoryName(CategoryNo);
 	}
-	
 	
 	// 게시판 카테고리 모두 가져오기
 	public List<BoardDTO> getBoardByCategory(int CategoryNo) {
