@@ -181,7 +181,7 @@
             <c:forEach var="ProductDTO" items="${products}">
                 <div class="border border-primary rounded position-relative vesitable-item">
                     <div class="vesitable-img">
-                        <img src="${ProductDTO.product_img}" class="img-fluid w-100 rounded-top" alt="">
+                        <img src="${ProductDTO.product_img}"  class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">
                     </div>
                     <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px; background-color:#ffb524 !important;">${ProductDTO.product_category}</div>
                     <div class="p-4 rounded-bottom">

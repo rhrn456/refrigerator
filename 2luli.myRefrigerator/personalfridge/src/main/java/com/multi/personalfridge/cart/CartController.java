@@ -1,8 +1,11 @@
 package com.multi.personalfridge.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,7 +28,6 @@ public class CartController {
 	    // 세션에서 userId 가져오기
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
-System.out.println(cartProductsJson);
 	    // userId가 null이거나 비어 있는지 확인
 	    if (userId == null || userId.isEmpty()) {
 	        // userId가 없으면 에러 반환
@@ -56,4 +58,24 @@ System.out.println(cartProductsJson);
 	    }
 	}
 	
-}
+	
+	
+	@PostMapping("/ItemToCart")
+	public ResponseEntity<String> ItemToCart(@RequestParam int product_id, @RequestParam int product_quantity, HttpServletRequest request) {
+		CartDTO cart = new CartDTO();
+		 HttpSession session = request.getSession();
+		 String userId = (String) session.getAttribute("userId");
+		 cart.setUser_id(userId);
+		 cart.setProduct_id(product_id);
+		 cart.setProduct_quantity(product_quantity);
+		System.out.println(cart);
+		
+		boolean result = cartService.insertCart(cart);
+		System.out.println(result);
+		if (result) {
+	        return ResponseEntity.ok("장바구니에 추가되었씁니다.");
+	    }
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("장바구니 추가 실패");
+	
+	  }
+	}

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.multi.personalfridge.cart.CartService;
 import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.common.RandomStringGenerator;
 import com.multi.personalfridge.dto.UserDTO;
@@ -32,16 +33,19 @@ public class UserController {
     private final EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final RandomStringGenerator randomPassword;
+    private final CartService cartService;
 
     @Autowired
     public UserController(UserService userService,
     					EmailService emailService,
     					BCryptPasswordEncoder passwordEncoder,
-    					RandomStringGenerator randomPassword) {
+    					RandomStringGenerator randomPassword,
+    					CartService cartService) {
         this.userService = userService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.randomPassword = randomPassword;
+        this.cartService = cartService;
     }
     
     //이동 페이지
@@ -73,6 +77,8 @@ public class UserController {
 	   
 	   //삭제된 회원인지 확인
    	UserDTO user = userService.login(user_id);
+   	int cartCount = cartService.getCartCount(user_id);
+   	System.out.println(cartCount);
    	if(user.isDelete_plug() == true) {
    		return "redirect:/";
    	}
@@ -81,6 +87,7 @@ public class UserController {
    	if (user != null && passwordEncoder.matches(password, user.getPassword()) ) {
 	    	session.setAttribute("userId", user.getUser_id());
 	        session.setAttribute("userAdmin", user.getJob_num());
+	        session.setAttribute("cartCount", cartCount);
 	        session.setMaxInactiveInterval(300);
 	        //관리자/매니저라면 관리자 페이지로 사용자는 메인으로
    	if(user.getJob_num() == 1 || user.getJob_num() == 2){
@@ -117,10 +124,7 @@ public class UserController {
         
         return "redirect:/signupPage";
     }
-    @GetMapping("/test")
-    public String test() {
-    	return "user/socialplusinfo";
-    }
+ 
     
    
     //아이디 찾기 페이지

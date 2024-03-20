@@ -506,6 +506,7 @@
 			// 카테고리 링크 클릭 시
 	         $('.col-lg-11').on('click', '.allproduct-categorie a', function(e) {
 		        e.preventDefault();
+		        console.log("실행");
 		        category = $(this).data('value');
 		        keyword = "";
 		        // AJAX 요청 보내기
@@ -664,7 +665,6 @@
 			    // 페이징 버튼 업데이트
 			    createPaginationButtons(response.pageInfo);
 	            drawCategories();
-				initializeSearchField();
 			    bindSearchEvents();
 			}
 
@@ -758,7 +758,7 @@
 	                        </div>
 	                    </div>
 	                </div>`;
-	            $('.col-lg-11').before(categoryHTML);  // 카테고리를 컨테이너에 추가
+	            $('.col-lg-11').prepend(categoryHTML);  // 카테고리를 컨테이너에 추가
 	        }
 			 
 			// 저장된 레시피 제품들의 배열
@@ -1060,13 +1060,14 @@
 			    
 
 			    
-			    $(document).on('click', '#confirmButton3', function() {
-			        var selectedProductName = $(this).siblings('.product-name').text(); // 선택된 제품명
-			        var selectedProductId = $(this).siblings('.product-id').text();
-			        var selectedProductImg = $(this).siblings('.product-img').text(); // 선택된 제품 이미지 URL
-			        var selectedProductPrice = $(this).siblings('.product-price').text(); // 선택된 제품 가격 정보
-			        var specialProductValue = $(this).siblings('.special-product').text(); 
-			        var selectedProductSpecial  = selectedProductSpecial === 'false' ? 0 : 1;
+			    $(document).on('click', '.plus-btn', function() {
+			        var selectedProductName = $(this).closest('.card-info').find('.product-name').text(); // 선택된 제품명
+			        var selectedProductId = $(this).closest('.card-info').find('.product-id').text();
+			        var selectedProductImg = $(this).closest('.card-info').find('.product-img').text(); // 선택된 제품 이미지 URL
+			        var selectedProductPrice = $(this).closest('.card-info').find('.product-price').text(); // 선택된 제품 가격 정보
+			        var specialProductText = $(this).closest('.card-info').find('.special_product').text(); // 특별 상품 텍스트 가져오기
+			        var selectedProductSpecial = (specialProductText === '특가') ? 1 : 0; // 특별 상품 여부를 1 또는 0으로 설정
+
 			        addProduct(selectedProductName, selectedProductId, selectedProductImg, selectedProductPrice, selectedProductSpecial);
 			        clearRecipeItemsList();
 			        renderRecipeItems();

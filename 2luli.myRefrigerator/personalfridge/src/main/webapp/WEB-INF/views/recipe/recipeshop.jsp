@@ -88,7 +88,7 @@
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite py-5">
 		<div class="container py-5">
-			<h1 class="mb-4">RECIPE</h1>
+			<h1 class="mb-4">Recipe</h1>
 			<div class="row g-4">
 				<div class="col-lg-12">
 					<div class="row g-4">
@@ -105,7 +105,7 @@
 							<div class="row g-4">
 								<div class="col-lg-12">
 									<div class="mb-3">
-										<h4>Categories</h4>
+										<h4>카테고리</h4>
 										<ul class="list-unstyled fruite-categorie">
 											<li>
 												<div class="d-flex justify-content-between fruite-name">
@@ -146,7 +146,7 @@
 								    <div class="col-md-6 col-lg-6 col-xl-4">
 								        <div class="rounded position-relative fruite-item">
 								            <div class="fruite-img">
-								                <img src="${RecipeDTO.recipe_img}" class="img-fluid w-100 rounded-top" alt="">
+								                <img src="${RecipeDTO.recipe_img}" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">
 								            </div>
 								            <div class="position-absolute top-0 start-0 px-3 py-1 rounded"
 								                 style="background-color: 
@@ -175,7 +175,7 @@
 								                ${RecipeDTO.recipe_category}
 								            </div>
 								            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-								                <h4 class="text-center">${RecipeDTO.recipe_name}</h4> <!-- 이름 가운데 정렬 추가 -->
+								                <h6 class="text-center">${RecipeDTO.recipe_name}</h6> <!-- 이름 가운데 정렬 추가 -->
 							                    <div class="d-flex justify-content-center"> <!-- 가운데 정렬 추가 -->
 							                        <a href="#" data-value="${RecipeDTO.recipe_id}"
 							                           class="btn border border-secondary rounded-pill px-3 text-primary" style="margin-top:10px;">
@@ -329,11 +329,11 @@
 			        var recipeHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
 			        '<div class="rounded position-relative fruite-item">' +
 			        '<div class="fruite-img">' +
-			        '<img src="' + recipe.recipe_img + '" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">' +
+			        '<img src="' + recipe.recipe_img + '" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">' +
 			        '</div>' +
 			        recipeCategoryHTML + // 카테고리 HTML 추가
 			        '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
-			        '<h4 class="text-center">' + recipe.recipe_name + '</h4>' +
+			        '<h6 class="text-center">' + recipe.recipe_name + '</h6>' +
 			        '<div class="d-flex justify-content-center">' +
 			        '<a href="#" data-value="' + recipe.recipe_id + '"' + // recipe_id 추가
 			        ' class="btn border border-secondary rounded-pill px-3 text-primary" style="margin-top:10px;">' +

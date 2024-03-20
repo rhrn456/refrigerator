@@ -40,7 +40,11 @@ public class RecipeController {
 	}
 	
 	
-
+	@GetMapping("/test")
+	public void test() {
+		//WEB-INF/views/test.jsp
+	}
+	
 	//레시피목록 
 	@GetMapping("/recipe")
 	public ModelAndView getRecipeList(ModelAndView mv) {
@@ -51,6 +55,12 @@ public class RecipeController {
 		return mv;
 	}
 	
+	@RequestMapping("/insertRecipe")
+	public void insertRecipe(RecipeDTO recipeDTO) {
+		System.out.println(recipeDTO);
+		boolean insertrecipe = recipeService.insertRecipe(recipeDTO);
+		//WEB-INF/views/recipe/insertInit.jsp
+	}
 
 	@GetMapping("/recipedetail")
 	public String getRecipeById(@RequestParam int recipe_id, Model model) throws JsonProcessingException {

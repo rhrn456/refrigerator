@@ -14,4 +14,11 @@
     INSERT INTO cart (user_id, product_id, product_quantity)
     VALUES (#{user_id}, #{product_id}, #{product_quantity})
 	</insert>
+	
+
+	<select id ="getCartCount" parameterType="String">
+	SELECT COUNT(*) AS count
+	FROM cart
+	WHERE user_id = #{user_id}
+	</select>
 </mapper>
