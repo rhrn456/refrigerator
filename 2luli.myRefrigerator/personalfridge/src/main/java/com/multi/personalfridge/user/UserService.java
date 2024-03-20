@@ -53,8 +53,11 @@ public class UserService {
 	}
 	
 	// 회원탈퇴 비밀번호
-	public int deleteUserPassword(String user_id, String password) {
-		return userMapper.deleteUserPassword(user_id, password);
+	public int selectPassword(String user_id, String password) {
+//		System.out.println("UserService, selectpassword" + userMapper.selectPassword(user_id, password));
+		String hashedPassword = passwordEncoder.encode(password);
+		System.out.println("hashedPassword : " + hashedPassword);
+		return userMapper.selectPassword(user_id, hashedPassword);
 	}
 
 	// 회원정보 수정
@@ -146,9 +149,13 @@ public class UserService {
 	
 	// 마이페이지 유저 정보 조회
 	public UserDTO getUserInfo(String user_id) {
-		System.out.println("UserService , getUserInfo() user_id :" + user_id);
+//		System.out.println("UserService , getUserInfo() user_id :" + user_id);
 		return userMapper.getUserInfo(user_id);
 		
+	}
+
+	public boolean verifyPassword(String userId, String password) {	
+		return false;
 	}
 
 	

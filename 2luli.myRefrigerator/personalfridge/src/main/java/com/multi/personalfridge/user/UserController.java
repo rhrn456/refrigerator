@@ -165,41 +165,64 @@ public class UserController {
   //마이페이지 접속 및 조회
     @GetMapping("/mypage")
     public ModelAndView getUserInfo(@RequestParam String user_id) {
-//    	System.out.println(user_id);
     	ModelAndView mav = new ModelAndView("mypage/mypage");
     	UserDTO mypage = userService.getUserInfo(user_id);
         mav.addObject("mypage", mypage);
 //        System.out.println("UserController" + mypage);
         return mav;
     }
-     
-
-    // 마이페이지 계정 삭제
-    @PostMapping("/mypage/deleteUser")
-    public String deleteUser(HttpSession session, RedirectAttributes redirectAttributes) {
+    
+ // 마이페이지에서 정보수정 페이지로
+    @GetMapping("/mypage/edit")
+    public ModelAndView editUserInfo(HttpSession session) {
+        ModelAndView mav = new ModelAndView("mypage/useredit");
         String userId = (String) session.getAttribute("userId");
-        if (userId == null) {
-            return "redirect:/loginPage";
-        }
-
-        int deleteResult = userService.deleteUser(userId);
-        if (deleteResult > 0) {
-            session.invalidate(); // 세션 무효화 (로그아웃 처리)
-            redirectAttributes.addFlashAttribute("message", "계정이 성공적으로 탈퇴되었습니다.");
-            return "redirect:/";
+        if (userId != null) {
+            UserDTO user = userService.getUserById(userId); // 세션에서 사용자 ID를 가져와 해당 사용자 정보 조회
+            mav.addObject("user", user); // 조회한 사용자 정보를 모델에 추가
         } else {
-            redirectAttributes.addFlashAttribute("error", "계정 탈퇴에 실패했습니다.");
-            return "redirect:/mypage";
+            mav.setViewName("redirect:/loginPage"); // 로그인하지 않은 사용자의 경우 로그인 페이지로 리다이렉션
+        }
+        return mav;
+    }
+    
+    // 마이페이지 계정 삭제
+    @PostMapping("/mypage/selectPassword")
+    @ResponseBody
+    public int selectPassword(@RequestParam String user_id, String password, HttpSession session, RedirectAttributes redirectAttributes) {
+//    	System.out.println("UserController, selectpassword");
+    	int result = 0;
+    	UserDTO user = userService.login(user_id);
+    	if(passwordEncoder.matches(password, user.getPassword())) {
+    		
+    		//public int deleteUser(String userId) {
+    		result = userService.deleteUser(user_id);
+    	}
+    	
+    	System.out.println("UserController, result : " + result);
+    	return result;
+    	//System.out.println("UserController, selectpassword" + selectPasswordResult);
+    	
+    }
+    	
+
+    
+    
+    // 마이페이지 정보수정
+    @PostMapping("/mypage/updateUser")
+    public String updateUser(@ModelAttribute UserDTO user, HttpSession session, RedirectAttributes redirectAttributes) {
+        // 사용자 정보 업데이트 로직 실행
+        boolean updateResult = userService.updateUser(user);
+        
+        if (updateResult) {
+            redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
+            return "redirect:/mypage?user_id=" + user.getUser_id();
+        } else {
+            redirectAttributes.addFlashAttribute("error", "회원 정보 업데이트에 실패했습니다.");
+            return "redirect:/mypage/edit?user_id=" + user.getUser_id(); // 정보 수정 페이지로 리다이렉션
         }
     }
-    // 마이페이지 계정 삭제 비밀번호
-//    @ResponseBody
-//    public int  deleteUserPassword(@RequestParam String user_id, String password) {
-//    	return deleteUser(null, null);
-//    }
-//    	
-
-    // 마이페이지에서 정보수정 페이지로
+    
     
     // 환불 및 교환 시 연락처/이메일 페이지 이동
     @GetMapping("/refundPage")

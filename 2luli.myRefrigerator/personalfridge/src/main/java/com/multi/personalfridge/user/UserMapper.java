@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.UserDTO;
@@ -18,14 +19,15 @@ public interface UserMapper {
 	UserDTO login(String user_id);
 	
 	UserDTO getUserByEmailAndName(String user_name, String mail);
-
+	
+	//마이페이지 수정
 	int updateUser(UserDTO user);
 
 	// 마이페이지 회원탈퇴
 	int deleteUser(String user_id);
 	
-	// 마페이지 회원탈퇴 비밀번호
-	int deleteUserPassword(String user_id, String password);
+	// 마이페이지 비밀번호조회
+	int selectPassword(String user_id, String password);
 
 	UserDTO getUserById(String user_id);
 
