@@ -124,13 +124,13 @@ public class AdminController {
 	}
 	
 	//레시피 등록 페이지
-	@GetMapping("/insertRecipe")
+	@GetMapping("/insertRecipeAdmin")
 	public String insertRecipe() {
 		return "admin/insertrecipe";
 	}
 	
-	//레시피 등록 페이지
-	@GetMapping("/insertProduct")
+	//상품 등록 페이지
+	@GetMapping("/insertProductAdmin")
 	public String insertProduct() {
 		return "admin/isnertproduct";
 	}

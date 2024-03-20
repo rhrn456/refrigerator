@@ -13,4 +13,6 @@ public interface CartMapper {
 
 	List<CartDTO> getCartProducts(String user_id);
 
+	int getCartCount(String user_id);
+
 }

@@ -72,7 +72,6 @@ public class CommonController {
 		        return "error";
 		    }
 		 List<CartDTO> cartList = cartService.getCartProducts(userId);
-		 System.out.println(cartList);
 		return "cart";
 	}
 	

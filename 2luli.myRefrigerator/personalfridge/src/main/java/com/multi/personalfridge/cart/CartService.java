@@ -27,4 +27,11 @@ public class CartService {
 		// TODO Auto-generated method stub
 		return cartMapper.getCartProducts(user_id);
 	}
+
+	public int getCartCount(String user_id) {
+		// TODO Auto-generated method stub
+		return cartMapper.getCartCount(user_id);
+	}
+
+
 }
