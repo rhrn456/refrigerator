@@ -25,7 +25,7 @@ public class CartController {
 	    // 세션에서 userId 가져오기
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
-
+System.out.println(cartProductsJson);
 	    // userId가 null이거나 비어 있는지 확인
 	    if (userId == null || userId.isEmpty()) {
 	        // userId가 없으면 에러 반환

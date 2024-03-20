@@ -75,13 +75,17 @@
 		  height:730px;
 		}
 		
-		.close {
-		  color: #aaaaaa;
-		  float: right;
-		  font-size: 28px;
-		  font-weight: bold;
-		}
 		
+		.close {
+		    color: #aaaaaa;
+		    position: absolute;
+		    top: 5px;
+		    right: 15px;
+		    max-width: 30px;
+		    font-size: 28px;
+		    font-weight: bold;
+
+		}
 		.close:hover,
 		.close:focus {
 		  color: #000;
@@ -118,6 +122,20 @@
 		    background-color: #888;
 		    border-radius: 4px;
 		  }
+		  #toggleReceiptButton {
+	        position: fixed;
+	       /*  top: 340px; // 최고의 위치
+	        right: 50px; */
+	        bottom:10px;
+	        right:10px;
+	        z-index: 9999; /* 다른 요소 위에 표시 */
+	        background-color: #007bff;
+	        color: #fff;
+	        border: none;
+	        border-radius: 5px;
+	        padding: 15px 30px;
+	        cursor: pointer;
+	    }
 </style>
 </head>
 
@@ -165,9 +183,7 @@
 							<p class="mb-4"><a style="font-weight: bold;">요리 재료 :</a> ${recipe.ingredient}</p>
 						</div>
 							<ul id="productList" class="row mt-3" style="margin-right:2px;"></ul>
-							<a href="#"
-								class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary "><i
-								class="fa fa-shopping-bag me-2 text-primary" ></i> 장바구니 담기</a>
+							
 						<div class="col-lg-12">
 							<nav>
 								<div class="nav nav-tabs mb-3">
@@ -354,28 +370,31 @@
 						</form>
 					</div>
 				</div>
-				     <div class="col-lg-4 col-xl-3">
-					    <div class="scroll-container" style="overflow-y: auto; max-height: 600px;">
-					        <div class="row g-4 fruite scroll-follow" id="scrollContainer" style="width:500px;">
-					            <div class="col-lg-12">
-					                <div class="mb-4">
-					                    <h4>제품 금액</h4>
-					                    <ul id="recipeItemsList" class="list-unstyled fruite-categorie"></ul>
-					                </div>
-					            </div>
-					        </div>
-					    </div>
-					</div>
+				     <div class="col-lg-4 col-xl-3 receipt-container" id="receiptContainer" style="display: none;">
+						    <div class="scroll-container" style="overflow-y: auto; max-height: 600px;">
+						        <div class="row g-4 fruite scroll-follow" id="scrollContainer" style="width:500px;">
+						            <div class="col-lg-12" style="margin-top:5px">
+						                <div class="mb-4">
+						                    <h4>제품 목록</h4>
+						                    <ul id="recipeItemsList" class="list-unstyled fruite-categorie"></ul>
+						                <div class="text-end"> <!-- text-end 클래스 추가 -->
+                        <a href="#" id="sendtoCart" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" style="margin-bottom:-30px !important; margin-top:-10px;"><i class="fa fa-shopping-bag me-2 text-primary"></i> 장바구니 담기</a>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
                    </div>
                 </div>
                             
 			</div>
+					 <button id="toggleReceiptButton">구매하러 가기</button>
 			<!-- Single Product End -->
 
 
 		    <!-- 레시피 재료 검색창 -->
-				<div id="myModal" class="modal">
-				  <div class="modal-content">
+				<div id="myModal" class="modal" id="receiptContainer">
+				  <div class="modal-content"style="position: relative;">
 				    <span class="close">&times;</span>
 				    	<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
 						<c:set var="pageSize" value="12" />
@@ -402,17 +421,7 @@
 
 
 
-			<!-- Back to Top -->
-			<a href="#"
-				class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
-				class="fa fa-arrow-up"></i></a>
-
-
-			<!-- Back to Top -->
-			<a href="#"
-				class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
-				class="fa fa-arrow-up"></i></a>
-
+	
 
 			<!-- JavaScript Libraries -->
 			<script
@@ -432,25 +441,33 @@
 			var keyword = "";
 			var page = 1;
 			var type = 0;
+            drawCategories();
 			initializeSearchField();
 			bindSearchEvents();
-            drawCategories();
             
-         // 스크롤 컨테이너 요소 가져오기
-            var scrollContainer = document.querySelector('.scroll-follow');
+            
 
-            // 스크롤 이벤트 처리
-            scrollContainer.addEventListener('scroll', function(event) {
-                // 현재 스크롤 위치 확인
-                var scrollTop = this.scrollTop;
+            // 왼쪽 아래 버튼 요소를 가져옴
+            const toggleReceiptButton = document.getElementById('toggleReceiptButton');
+            // 영수증 컨테이너 요소를 가져옴
+            const receiptContainer = document.getElementById('receiptContainer');
 
-                // 특정 위치에 도달하면 클래스 토글
-                if (scrollTop >= 100) {
-                    this.classList.add('fixed');
+            // 버튼 클릭 시 이벤트 처리
+            toggleReceiptButton.addEventListener('click', function() {
+                // 영수증 컨테이너 요소의 display 속성을 토글하여 표시/숨김 상태 변경
+                if (receiptContainer.style.display === 'none') {
+                    receiptContainer.style.display = 'block'; // 표시
+                    renderRecipeItems();
                 } else {
-                    this.classList.remove('fixed');
+                    receiptContainer.style.display = 'none'; // 숨김
+                    clearRecipeItemsList();
                 }
             });
+         
+         function clearRecipeItemsList() {
+        	    var recipeItemsList = document.getElementById('recipeItemsList');
+        	    recipeItemsList.innerHTML = ''; // 영수증 목록 비우기
+        	}
    
          
 			// 모달 닫기 버튼에 클릭 이벤트 연결
@@ -533,7 +550,7 @@
 
 			//일반상품 카테고리
 			 function getProductsByCategory(category, page) {
-		            var pageSize = 10; // 페이지당 아이템 수
+		            var pageSize = 6; // 페이지당 아이템 수
 		            $.ajax({
 		                type: "GET",
 		                url: "/getProductsByCategory",
@@ -554,7 +571,7 @@
 		        }
 			// 검색한 단어로 일반상품 불러오기
 			function getProductsByKeyword(category, keyword, page) {
-			    var pageSize = 10;
+			    var pageSize = 6;
 			    
 			    // AJAX 요청 보내기
 			    $.ajax({
@@ -579,7 +596,7 @@
 			
 			// 카테고리별 특가상품 불러오기
 	        function getSpecialProductsByCategory(category, page) {
-	            var pageSize = 10; // 페이지당 아이템 수
+	            var pageSize = 6; // 페이지당 아이템 수
 	            $.ajax({
 	                type: "GET",
 	                url: "/getSpecialProductsByCategory",
@@ -598,7 +615,7 @@
 	        }
 			 //특가 상품
 			function getSpecialProductsByKeyword(category, keyword, page) {
-			    var pageSize = 10;
+			    var pageSize = 6;
 			    // AJAX 요청 보내기
 			    $.ajax({
 			        type: "GET",
@@ -626,16 +643,20 @@
 			    // 받아온 데이터를 페이지에 맞게 출력
 			    $.each(response.products, function(index, product) {
 			        // 상품 정보를 HTML로 생성하는 코드
-			        var productHTML = '<div class="card" style="margin-left:-5px">' +
-			            '<div class="card-info">' +
+			        var productHTML = '<div class="card" style="margin-left:1px; padding:0;">' +
+			        '<div class="card-info">' +
 			            '<div class="product-id" style="display: none;">' + product.product_id + '</div>' +
 			            '<div class="product-name" style="display: none;">' + product.product_name + '</div>' +
 			            '<div class="product-img" style="display: none;">' + product.product_img + '</div>' +
 			            '<div class="product-price" style="display: none;">' + product.product_price + '</div>' +
-			            '<div class="special_product" style="display: none;">' + product.special_product + '</div>' +
-			            '<a style="margin-top:4px;">' + product.product_name + '</a>' +
-			            '<a style="margin-top:4px;">' + product.product_price + '원' + '</a>' +
+			            '<div class="main-top" style="margin-left:10px;">' +
+			            '<a style="display: block; margin-top:7px; color:#4d4c4c; font-weight:bold;">' + product.product_name + '</a>' + 
+                        '<a style="display: block; font-size:15px;">' + product.product_price + '원' + '</a>' + 
+			            '</div>' +
+			            '<div class="main-top">' +
+			            '<div class="special_product" style="font-size:13px; color:white; background-color: ' + (product.special_product ? 'orange' : 'green') + '; text-align: center;">' + (product.special_product ? '특가' : '일반') + '</div>' +
 			            '<button id="confirmButton3" class="btn plus-btn" style="font-size:15px;">추가</button>' + // 추가 버튼 추가
+			            '</div>' +
 			            '</div>' +
 			            '</div>';
 			        productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
@@ -643,7 +664,8 @@
 			    // 페이징 버튼 업데이트
 			    createPaginationButtons(response.pageInfo);
 	            drawCategories();
-			    // bindSearchEvents();
+				initializeSearchField();
+			    bindSearchEvents();
 			}
 
 			// 페이지 버튼 생성 함수
@@ -682,19 +704,20 @@
 
 			// 검생창 생성 함수
 			function initializeSearchField() {
-			    var inputGroupHTML = `
-			        <div class="input-group mb-3" style="margin-left:-3px;">
-		            <select class="custom-select" id="searchType">
-		                <option value=0>일반</option>
-		                <option value=1>특가</option>
-		            </select>
-		            <input type="text" class="form-control"  placeholder="상품 검색" id="searchInput1">
-		            <div class="input-group-append">
-		                <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
-		            </div>
-		        </div>`;
-			    // 새로운 입력 필드 추가
-			    $('.col-lg-11').prepend(inputGroupHTML);
+				 $('.col-lg-11 .input-group').remove();
+				 var inputGroupHTML = `
+				        <div class="input-group mb-3 search-field" style="margin-left:-3px;">
+				            <select class="custom-select" id="searchType">
+				                <option value=0>일반</option>
+				                <option value=1>특가</option>
+				            </select>
+				            <input type="text" class="form-control"  placeholder="상품 검색" id="searchInput1">
+				            <div class="input-group-append">
+				                <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
+				            </div>
+				        </div>`;
+				    // 새로운 입력 필드 추가
+				    $('.col-lg-11').prepend(inputGroupHTML);
 
 			}
 			
@@ -706,34 +729,36 @@
 			 
 			 // 카테고리를 그리는 함수
 	        function drawCategories() {
+	            $('.allproduct-categorie').remove();
+
 	            var categoryHTML = `
-	            	 <div style="text-align: center; margin-top:-5px;">     
-	                <div class="list-unstyled allproduct-categorie">
-	                    <div class="d-flex justify-content-center product-topcategory" style="margin: 0 -15px;">
-	                        <div class="row">
-	                            <div class="col-sm-12">
-	                            <a href="#" data-value="" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>전체</a>
-	                            <span>|</span>
-	                                <a href="#" data-value="가공 식품"><i class="fas fa-apple-alt me-2" ></i>가공 식품</a>
-	                                <span>|</sapn>
-	                                <a href="#" data-value="야채"><i class="fas fa-apple-alt me-2"></i>야채</a>
+	                <div style="text-align: center; margin-top:5px; margin-bottom:10px;" class="allproduct-categorie">     
+	                    <div class="list-unstyled">
+	                        <div class="d-flex justify-content-center product-topcategory" style="margin: 0 -15px;">
+	                            <div class="row">
+	                                <div class="col-sm-12">
+	                                    <a href="#" data-value=""><i class="fas fa-apple-alt me-2"></i>전체</a>
+	                                    <span>|</span>
+	                                    <a href="#" data-value="가공 식품"><i class="fas fa-apple-alt me-2"></i>가공 식품</a>
+	                                    <span>|</span>
+	                                    <a href="#" data-value="야채"><i class="fas fa-apple-alt me-2"></i>야채</a>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="d-flex justify-content-center product-topcategory" style="margin: 0 -15px;">
+	                            <div class="row">
+	                                <div class="col-sm-12">
+	                                    <a href="#" data-value="과일"><i class="fas fa-apple-alt me-2"></i>과일</a>
+	                                    <span>|</span>
+	                                    <a href="#" data-value="육류/생선"><i class="fas fa-apple-alt me-2"></i>육류/생선</a>
+	                                    <span>|</span>
+	                                    <a href="#" data-value="향신료"><i class="fas fa-apple-alt me-2"></i>향신료</a>
+	                                </div>
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="d-flex justify-content-center product-topcategory" style="margin: 0 -15px;">
-	                        <div class="row">
-	                            <div class="col-sm-12">
-	                                <a href="#" data-value="과일"><i class="fas fa-apple-alt me-2"></i>과일</a>
-	                                <span>|</sapn>
-	                                <a href="#" data-value="육류/생선"><i class="fas fa-apple-alt me-2"></i>육류/생선</a>
-	                                <span>|</sapn>
-	                                <a href="#" data-value="향신료"><i class="fas fa-apple-alt me-2"></i>향신료</a>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>`;
-	            $('.col-lg-11 .row').prepend(categoryHTML); // 카테고리를 컨테이너에 추가
+	                </div>`;
+	            $('.col-lg-11').before(categoryHTML);  // 카테고리를 컨테이너에 추가
 	        }
 			 
 			// 저장된 레시피 제품들의 배열
@@ -758,8 +783,11 @@
 			                product_price : RecipeAndProductDTO.product_price,
 			                special_product : RecipeAndProductDTO.special_product
 			            };
+			            
+			            
 			            recipeItems.push(recipeItem);
 			            renderProductList();
+			            
 			        });
 			    }
 
@@ -790,7 +818,7 @@
 				        product_price: product_price,
 				        special_product : special_product
 				    };
-				    
+
 				    recipeItems.push(recipeItem);
 				    recipeProducts.push(recipeProduct);
 				    renderProductList();
@@ -828,7 +856,72 @@
 
 			    }
 
+			 // 제품 목록을 출력하는 함수
+			    function renderRecipeItems() {
+			        var recipeItemsList = document.getElementById('recipeItemsList');
+			        recipeItemsList.innerHTML = ''; // 기존 목록 초기화
+
+			        // recipeItems 배열을 순회하면서 각 제품의 정보를 출력
+			        recipeItems.forEach(function(item) {
+			            // 각 제품을 나타내는 요소 생성
+			            var listItem = document.createElement('li');
+			            listItem.style.marginBottom = '4px';
+			            listItem.style.fontSize = '20px';
+
+			            // 제품 이름 출력
+			            var nameElement = document.createElement('span');
+			            nameElement.textContent = item.product_name;
+			            listItem.appendChild(nameElement);
+
+			            // 제품 수량 출력
+			            var quantityElement = document.createElement('span');
+			            quantityElement.textContent = ' ' + 'X' + ' ' + item.product_quantity  + '개';
+			            listItem.appendChild(quantityElement);
+
+			            // 제품 가격 출력
+			            var priceElement = document.createElement('span');
+			            priceElement.textContent = (item.product_price * item.product_quantity) + '원';
+			            priceElement.style.float = 'right'; // 오른쪽으로 부유(floating)
+			            listItem.appendChild(priceElement);
+
+			            // 리스트에 각 제품 요소 추가
+			            recipeItemsList.appendChild(listItem);
+			        });
+			        // 총 가격 출력
+			        var totalPriceElement = document.createElement('hr');
+			        totalPriceElement.style.marginTop = '130px'; // 위쪽 여백 추가
+			        recipeItemsList.appendChild(totalPriceElement);
+
+			        var totalTextElement = document.createElement('span');
+			        totalTextElement.textContent = '전체 금액: ';
+
+			        var totalPriceValueElement = document.createElement('span');
+			        var totalPrice = calculateTotalPrice(); // 총 가격 계산 함수 호출
+			        totalPriceValueElement.textContent = totalPrice + '원';
+			        totalPriceValueElement.style.float = 'right'; // 오른쪽으로 부유(floating)
+					
+			        totalTextElement.style.fontSize = '20px'; // 폰트 크기 설정
+			        totalPriceValueElement.style.fontSize = '20px'; // 폰트 크기 설정
+			        recipeItemsList.appendChild(totalTextElement);
+			        recipeItemsList.appendChild(totalPriceValueElement);
+			    }
+
+			    // 총 가격 계산 함수
+			    function calculateTotalPrice() {
+			        var totalPrice = 0;
+			        recipeItems.forEach(function(item) {
+			            totalPrice += item.product_price * item.product_quantity;
+			        });
+			        return totalPrice;
+			    }
+			    
+
+			    // renderRecipeItems 함수 호출하여 제품 목록 출력
+			    renderRecipeItems();
+			    
+			    
 			    function renderProductList() {
+			    
 			        var productList = document.getElementById('productList');
 			        productList.innerHTML = '';
 			        
@@ -838,6 +931,7 @@
 			            productListItem.style.height = '300px'; // 너비 설정
 			            productListItem.style.textAlign = 'left'; // 텍스트 가운데 정렬
 			            productListItem.style.margin = '15px';
+			            productListItem.style.position = 'relative';
 
 			        
 			            var product_name = product.product_name; // 상품 이름
@@ -845,12 +939,30 @@
 			            var product_img = product.product_img; // 상품 이미지
 			        
 			            // 이미지 요소 생성 및 설정 (맨 위에 위치)
+			            
+			            var removeButton = document.createElement('div');
+			            removeButton.style.position = 'absolute'; // 절대 위치 설정
+			            removeButton.style.top = '1px'; // 위쪽 여백 설정
+			            removeButton.style.right = '1px'; // 오른쪽 여백을 부모 요소의 오른쪽 끝에 위치하도록 설정
+			            removeButton.style.marginRight = '-12px'; // 오른쪽 여백을 부모 요소의 오른쪽 끝에 위치하도록 설정
+			            removeButton.style.color = 'white'; // 글자색 설정
+			            removeButton.style.cursor = 'pointer'; // 커서 모양 변경
+			            removeButton.textContent = 'X'; // 텍스트 설정
+			            removeButton.style.padding = '3px'; // 패딩 설정
+			            removeButton.style.backgroundColor = 'black'; // 패딩 설정
+
+
+			            removeButton.onclick = function() {
+			                removeProduct(index);
+			            };
+			            productListItem.insertBefore(removeButton, productListItem.firstChild);
+			            
 			            var imgElement = document.createElement('img');
 			            imgElement.setAttribute('src', product_img); // 이미지 URL 설정
 			            imgElement.setAttribute('alt', product_name); // 대체 텍스트 설정
 			            imgElement.setAttribute('width', '200px'); // 이미지 너비 설정
 			            imgElement.setAttribute('height', '200px'); // 이미지 높이 설정
-			            productListItem.insertBefore(imgElement, productListItem.firstChild);
+			            productListItem.appendChild(imgElement);
 			        
 			            var productType = product.special_product;
 			            var productTypeText = ''; // 제품 유형에 따른 텍스트 변수
@@ -874,18 +986,7 @@
 			                productTypeElement.style.backgroundColor = 'green'; // productType이 0이면 주황색 배경
 						}
 			            productListItem.appendChild(productTypeElement);
-			            
-/* 			            var removeButton = document.createElement('button');
-			            removeButton.textContent = 'X';
-			            removeButton.style.fontSize = '15px';
-			            removeButton.classList.add('btn', 'btn-sm', 'btn-danger', 'btn-remove'); // X 버튼 클래스 추가
-			            removeButton.style.position = 'left'; // 절대 위치 설정
-			            removeButton.style.top = '5px'; // 위쪽 여백 설정
-			            removeButton.style.left = '5px'; // 왼쪽 여백 설정
-			            removeButton.onclick = function() {
-			                removeProduct(index);
-			            };
-			            productListItem.appendChild(removeButton); */
+
 			        
 			            // 텍스트 요소 생성 및 설정 (상품 이름)
 			            var nameTextElement = document.createElement('div');
@@ -923,8 +1024,12 @@
 			                if (!isNaN(newQuantity) && newQuantity >= 0) { // 유효한 숫자인지 확인
 			                    // recipeProducts 배열의 해당 인덱스에 있는 product_quantity 업데이트
 			                    recipeProducts[index].product_quantity = newQuantity;
+			                    // recipeItems 배열의 해당 인덱스에 있는 product_quantity 업데이트
+			                    recipeItems[index].product_quantity = newQuantity;
 			                    // 가격 텍스트 업데이트
 			                    priceTextElement.innerHTML = (newQuantity * product.product_price) + '<span style="font-size: 13px; color: #333;">원</span>';
+			                    clearRecipeItemsList();
+			                    renderRecipeItems();
 			                }
 			            });
 			            quantityContainer.appendChild(quantityInput); // 부모 요소에 추가
@@ -944,13 +1049,15 @@
 			        addButton.style.width = '100px'; // 버튼의 너비를 조정하여 짧게 만듭니다.
 			        addButton.style.height = '100px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
 			        addButton.style.marginTop = '80px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
-			        addButton.style.marginLeft = '75px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
+			        addButton.style.marginLeft = '65px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
 	
 			        addButton.onclick = function() {
 			        	 openModal();
 			        };
 			        productList.appendChild(addButton);
 			    }
+
+			    
 
 			    
 			    $(document).on('click', '#confirmButton3', function() {
@@ -961,21 +1068,15 @@
 			        var specialProductValue = $(this).siblings('.special-product').text(); 
 			        var selectedProductSpecial  = selectedProductSpecial === 'false' ? 0 : 1;
 			        addProduct(selectedProductName, selectedProductId, selectedProductImg, selectedProductPrice, selectedProductSpecial);
+			        clearRecipeItemsList();
+			        renderRecipeItems();
 			        closeModal();
 			    });
 
-			    function selectItem(selectedProductName, selectedProductId, selectedProductImg) {
-			        // 선택된 제품명과 ID를 선택된 재료 입력 필드에 설정
-			        $('#selectedIngredient').val(selectedProductName);
-			        $('#selectedIngredient').attr('data-product-id', selectedProductId);
-			      
-
-			        // 모달 닫기
-			        
-			    }
-			    // 버튼 클릭 이벤트
-			    document.querySelector('.btn.text-primary').addEventListener('click', sendProducts);
-			
+			 // 장바구니로 아이템 보내기
+			    document.getElementById('sendtoCart').addEventListener('click', function() {
+				    sendProducts();
+				});
 			</script>
 </body>
 			<!-- footer start -->
