@@ -29,7 +29,7 @@
                              <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">레시피</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="/recipeshop" class="dropdown-item">(음식)레시피</a>
+                                    <a href="/recipeshop" class="dropdown-item">음식 레시피</a>
                                     <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
                                 </div>
                                  </div>
@@ -62,7 +62,7 @@
 						    <a href="/refrigerator" class="position-relative me-4 my-auto">
 						        <i class="bi bi-door-closed-fill" style="font-size:30px;color:#81c408"></i>
 						    </a>
-						    <a href="/cart" class="position-relative me-4 my-auto">
+						    <a href="/mycart" class="position-relative me-4 my-auto">
 						        <i class="fa fa-shopping-bag fa-2x"></i>
 						        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
 						    </a>
