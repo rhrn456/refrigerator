@@ -78,7 +78,6 @@ public class UserController {
 	   //삭제된 회원인지 확인
    	UserDTO user = userService.login(user_id);
    	int cartCount = cartService.getCartCount(user_id);
-   	System.out.println(cartCount);
    	if(user.isDelete_plug() == true) {
    		return "redirect:/";
    	}

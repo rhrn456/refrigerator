@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.multi.personalfridge.dto.CartDTO;
+import com.multi.personalfridge.dto.CartProductDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
 
 @Service
@@ -23,13 +24,13 @@ public class CartService {
 		return false;
 	}
 
-	public List<CartDTO> getCartProducts(String user_id) {
-		// TODO Auto-generated method stub
+	public List<CartProductDTO> getCartProducts(String user_id) {
+	
 		return cartMapper.getCartProducts(user_id);
 	}
 
 	public int getCartCount(String user_id) {
-		// TODO Auto-generated method stub
+		
 		return cartMapper.getCartCount(user_id);
 	}
 

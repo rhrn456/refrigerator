@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.multi.personalfridge.cart.CartService;
 import com.multi.personalfridge.common.RandomStringGenerator;
 import com.multi.personalfridge.dto.SocialUserDTO;
 import com.multi.personalfridge.dto.UserDTO;
@@ -35,6 +36,8 @@ public class SnsController {
 	SocialUserService socialService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	CartService cartService;
 	
 	@Value("${google.client.id}")
     private String googleClientId;
@@ -111,8 +114,10 @@ public class SnsController {
     		 mv.setViewName("/loginPage");
     		return "/loginPage";
     	}
+    	int cartCount = cartService.getCartCount(user.getUser_id());
     	session.setAttribute("userId", user.getUser_id());
         session.setAttribute("userAdmin", user.getJob_num());
+        session.setAttribute("cartCount", cartCount);
         mv.setViewName("redirect:/");
         return "redirect:/";
     }

@@ -2,23 +2,26 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.cart.CartMapper">
 
-
-	<select id ="getCartProducts" resultType="Cart">
-	select *
-	from cart
-	WHERE user_id = #{user_id}
+	<!-- 카트 정보 불러오기 -->
+	<select id="getCartProducts" resultType="CartProduct">
+	    SELECT c.cart_id, c.product_id, c.product_quantity,
+	           p.product_name, p.product_price, p.product_img, p.special_product
+	    FROM cart c
+	    INNER JOIN product p ON c.product_id = p.product_id
+	    WHERE c.user_id = #{user_id}
 	</select>
+	
 	
  	<!-- 카트 상품 등록 -->
     <insert id="insertCart" parameterType="Cart">
-    INSERT INTO cart (user_id, product_id, product_quantity)
-    VALUES (#{user_id}, #{product_id}, #{product_quantity})
+	    INSERT INTO cart (user_id, product_id, product_quantity)
+	    VALUES (#{user_id}, #{product_id}, #{product_quantity})
 	</insert>
 	
-
+	<!-- 카트목록 카운팅 사용 -->
 	<select id ="getCartCount" parameterType="String">
-	SELECT COUNT(*) AS count
-	FROM cart
-	WHERE user_id = #{user_id}
+		SELECT COUNT(*) AS count
+		FROM cart
+		WHERE user_id = #{user_id}
 	</select>
 </mapper>

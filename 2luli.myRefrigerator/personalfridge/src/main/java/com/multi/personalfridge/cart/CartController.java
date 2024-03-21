@@ -1,5 +1,8 @@
 package com.multi.personalfridge.cart;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,21 +64,24 @@ public class CartController {
 	
 	
 	@PostMapping("/ItemToCart")
-	public ResponseEntity<String> ItemToCart(@RequestParam int product_id, @RequestParam int product_quantity, HttpServletRequest request) {
+	public ResponseEntity<Map<String, Object>> ItemToCart(@RequestParam int product_id, @RequestParam int product_quantity, HttpServletRequest request) {
 		CartDTO cart = new CartDTO();
 		 HttpSession session = request.getSession();
 		 String userId = (String) session.getAttribute("userId");
+		 int cartCount = cartService.getCartCount(userId);
+		 session.setAttribute("cartCount", cartCount);
 		 cart.setUser_id(userId);
 		 cart.setProduct_id(product_id);
 		 cart.setProduct_quantity(product_quantity);
-		System.out.println(cart);
-		
 		boolean result = cartService.insertCart(cart);
-		System.out.println(result);
-		if (result) {
-	        return ResponseEntity.ok("장바구니에 추가되었씁니다.");
-	    }
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("장바구니 추가 실패");
-	
-	  }
+		 Map<String, Object> response = new HashMap<>();
+		    if (result) {
+		        response.put("message", "장바구니에 추가되었습니다.");
+		        response.put("cartCount", cartCount); // 세션의 cartCount 값 전달
+		        return ResponseEntity.ok(response);
+		    } else {
+		        response.put("message", "장바구니 추가 실패");
+		        return ResponseEntity.badRequest().body(response);
+		    }
+	}
 	}
