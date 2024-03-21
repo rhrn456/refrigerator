@@ -18,10 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.dto.ProductDTO;
+import com.multi.personalfridge.dto.RecipeProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
+import com.multi.personalfridge.dto.RecipeProductDTO;
 import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.product.ProductService;
+import com.multi.personalfridge.recipe.RecipeProductService;
 import com.multi.personalfridge.recipe.RecipeService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,9 +39,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class RefrigeratorController {
 	
 	@Autowired
-	RefrigeratorService refrigeratorService;	
+	private RefrigeratorService refrigeratorService;	
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private RecipeProductService recipeProductService;
+	@Autowired
+	private RecipeService recipeService;
 	
 	//나의 냉장고 들어왔을때 메인페이지
 	@GetMapping("/refrigerator")                     //세션 유저변수명
@@ -61,22 +68,64 @@ public class RefrigeratorController {
 		System.out.println("현재 냉장고의 제품 갯수 : " + refrigeratorProductList.size());/*테스트용 추후 삭제*/
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);	
 		
-		//냉장고 속 제품과 맞는 레시피들
-		ArrayList<ProductDTO> recipeList = new ArrayList<ProductDTO>();
-		ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
+		//냉장고 속 제품과 맞는 재료들 불러옴
+		ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
+		ArrayList<Integer> idList = new ArrayList<Integer>();
 		for (int i = 0; i < refrigeratorProductList.size(); i++) {
-			recipeList.addAll(productService.getProductsBykeyword("", refrigeratorProductList.get(i).getProduct_name()));			
+			productList.addAll(productService.getProductsBykeyword("", refrigeratorProductList.get(i).getProduct_name()));			
 		}
 		
-		for (int i = 0; i < recipeList.size(); i++) {
-			
+		//중복제거
+		for (int i = productList.size() - 1; i >= 0 ; i--) {
+			for (Integer integer : idList) {
+				if (productList.get(i).getProduct_id().equals(integer)) {
+					productList.remove(i);
+					if (i > 0) {
+						i--;
+					}
+				}
+			}
+			idList.add(productList.get(i).getProduct_id());			
 		}
+		idList.clear();
 		
-		
-		for (ProductDTO productDTO : recipeList) {
+		// 확인용 추후 제거
+		for (ProductDTO productDTO : productList) {
 			System.out.println(productDTO);
 		}
-				
+		
+		//불러온 재료가 들어간 레시피의 id를 불러옴
+		ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
+		for (ProductDTO product : productList) {
+			recipeIdList.addAll(recipeProductService.getRecipeIdByProductId(product.getProduct_id()));//프로덕트아이디로 레피시프로덕트에서 레시피아이디 중복제거하고 가져올 서비스 메서드 매퍼 만들어줘야함
+			System.out.println(product.getProduct_id());
+		}
+		System.out.println(recipeIdList);
+	
+		//중복제거
+		for (int i = recipeIdList.size() - 1; i >= 0 ; i--) {
+			for (Integer integer : idList) {
+				if (recipeIdList.get(i).equals(integer)) {
+					recipeIdList.remove(i);
+					if (i > 0) {
+						i--;
+					}
+				}
+			}
+			idList.add(recipeIdList.get(i));			
+		}
+		
+		//확인용 추후 제거
+		for (Integer recipeId : recipeIdList) {
+			System.out.println(recipeId);
+		}
+		
+		ArrayList<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
+		for (Integer recipeId : recipeIdList) {
+			recipeList.add(recipeService.getRecipeById(recipeId));
+		}
+		
+		mv.addObject("recipeList", recipeList);
 		
 		mv.setViewName("refrigeratorTest2");
 		
