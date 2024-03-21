@@ -1,5 +1,7 @@
 package com.multi.personalfridge.review;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.ReviewDTO;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -91,4 +96,55 @@ public class ReviewController {
 				System.out.println(review);
 				return review;
 			}
+			
+			//레시피 리뷰 작성
+			@PostMapping("/review/add")
+			public String insertReview(String review_content, String recipe_id,HttpSession session) throws UnsupportedEncodingException {
+				 String userId = (String) session.getAttribute("userId");			
+				    // 로그인 여부 확인
+				    if (userId == null) {
+				        // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
+				        return "redirect:/login";
+				    }
+				    
+				ReviewDTO review = new ReviewDTO();
+				int recipeId = Integer.parseInt(recipe_id);
+				review.setRecipe_id(recipeId);
+				review.setReview_content(review_content);
+				review.setUser_id(userId);
+				System.out.println(review);
+				boolean result = reviewService.insertReview(review);
+				if (result) {
+					return "redirect:/recipedetail?recipe_id=" + URLEncoder.encode(String.valueOf(review.getRecipe_id()), "UTF-8");
+				} else {
+					return "redirect:/register?error=true";
+				}
+
+			}
+			
+			//레시피 리뷰 수정
+			@PostMapping("/update")
+			@ResponseBody
+			public String updateReview(@RequestBody ReviewDTO review) throws UnsupportedEncodingException {
+				System.out.println(review);
+				boolean result = reviewService.updateReview(review);
+				if (result) {
+					return "redirect:/recipedetail?recipe_id=" + URLEncoder.encode(String.valueOf(review.getRecipe_id()), "UTF-8");
+				} else {
+					return "redirect:/register?error=true";
+				}
+			}
+			
+			//리뷰 삭제
+			@GetMapping("/delete/{review_id}")
+			public String deleteReview(@PathVariable int review_id,
+										@RequestParam int recipe_id) throws UnsupportedEncodingException {
+				boolean result = reviewService.deleteReview(review_id);
+				if (result) {
+					return "redirect:/recipedetail?recipe_id=" + URLEncoder.encode(String.valueOf(recipe_id), "UTF-8");
+				} else {
+					return "redirect:/register?error=true";
+				}
+			}
+			
 }

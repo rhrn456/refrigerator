@@ -63,5 +63,40 @@ public class ReviewService {
 		return reviewMapper.getReviewById(review_id);
 	}
 
+	public List<ReviewDTO> getReviewByRecipeId(int recipe_id) {
+		// TODO Auto-generated method stub
+		return reviewMapper.getReviewByRecipeId(recipe_id);
+	}
+
+	public boolean insertReview(ReviewDTO review) {
+		try {
+			reviewMapper.insertReview(review);
+			return true; 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+
+	public boolean updateReview(ReviewDTO review) {
+		try {
+			reviewMapper.updateReview(review);
+			return true; 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+
+	public boolean deleteReview(int review_id) {
+		try {
+			  reviewMapper.deleteReview(review_id);
+			return true; 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false; 
+		}
+	}
+
 
 }

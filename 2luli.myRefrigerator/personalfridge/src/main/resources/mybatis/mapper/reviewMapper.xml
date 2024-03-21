@@ -5,90 +5,90 @@
 
 	<!-- 모든 리뷰/ 카테고리 가져오기 -->
 	<select id ="getAllReviewList" parameterType="map" resultType="Review">
-    SELECT 
-        r.review_id, 
-        r.review_content, 
-        r.user_id, 
-        r.recipe_id, 
-        r.create_review_date, 
-        rc.recipe_name,
-        rc.recipe_category
-    FROM 
-        review r
-    JOIN 
-        recipe rc ON r.recipe_id = rc.recipe_id
-    <where>
-        <if test="category != ''">
-           rc.recipe_category = #{category}
-        </if>
-    </where>
+	    SELECT 
+	        r.review_id, 
+	        r.review_content, 
+	        r.user_id, 
+	        r.recipe_id, 
+	        r.create_review_date, 
+	        rc.recipe_name,
+	        rc.recipe_category
+	    FROM 
+	        review r
+	    JOIN 
+	        recipe rc ON r.recipe_id = rc.recipe_id
+	    <where>
+	        <if test="category != ''">
+	           rc.recipe_category = #{category}
+	        </if>
+	    </where>
 	</select>
 	
 	<!-- 모든 리뷰/ 카테고리 페이징 -->
 	<select id ="ReviewAndPage"  parameterType="map"  resultType="Review">
-	SELECT 
-	    r.review_id, 
-	    r.review_content, 
-	    r.user_id, 
-	    r.recipe_id, 
-	    r.create_review_date, 
-	    rc.recipe_name,
-	    rc.recipe_category
-	FROM 
-	    review r
-	JOIN 
-	    recipe rc ON r.recipe_id = rc.recipe_id
-	<where>
-        <if test="category != ''">
-          rc.recipe_category = #{category}
-        </if>
-    </where>
-	LIMIT #{pageSize} OFFSET #{offset}
+		SELECT 
+		    r.review_id, 
+		    r.review_content, 
+		    r.user_id, 
+		    r.recipe_id, 
+		    r.create_review_date, 
+		    rc.recipe_name,
+		    rc.recipe_category
+		FROM 
+		    review r
+		JOIN 
+		    recipe rc ON r.recipe_id = rc.recipe_id
+		<where>
+	        <if test="category != ''">
+	          rc.recipe_category = #{category}
+	        </if>
+	    </where>
+		LIMIT #{pageSize} OFFSET #{offset}
 	</select> 
 	
 	<!-- 모든 카테고리/검색 가져오기 -->
 	<select id ="getReviewBykeyword" parameterType="map" resultType="Review">
-	SELECT 
-	    r.review_id, 
-	    r.review_content, 
-	    r.user_id, 
-	    r.recipe_id, 
-	    r.create_review_date, 
-	    rc.recipe_name,
-	    rc.recipe_category
-	FROM 
-	    review r
-	JOIN 
-	    recipe rc ON r.recipe_id = rc.recipe_id
-	<where>
-	     rc.recipe_name LIKE CONCAT('%', #{keyword}, '%')
-        <if test="category != ''">
-            AND rc.recipe_category = #{category}
-        </if>
-    </where>
+		SELECT 
+		    r.review_id, 
+		    r.review_content, 
+		    r.user_id, 
+		    r.recipe_id, 
+		    r.create_review_date, 
+		    rc.recipe_name,
+		    rc.recipe_category
+		FROM 
+		    review r
+		JOIN 
+		    recipe rc ON r.recipe_id = rc.recipe_id
+		<where>
+		     rc.recipe_name LIKE CONCAT('%', #{keyword}, '%')
+	        <if test="category != ''">
+	            AND rc.recipe_category = #{category}
+	        </if>
+	    </where>
 	</select>
 	
 	<!-- 카테고리/ 검색 페이징 -->
 	<select id ="getReviewBykeywordAndPage"  parameterType="map"  resultType="Review">
-	SELECT 
-	    r.review_id, 
-	    r.review_content, 
-	    r.user_id, 
-	    r.recipe_id, 
-	    r.create_review_date, 
-	    rc.recipe_name,
-	    rc.recipe_category
-	FROM 
-	    review r
-	JOIN 
-	    recipe rc ON r.recipe_id = rc.recipe_id
-	<where>
-	     rc.recipe_name LIKE CONCAT('%', #{keyword}, '%')
-        <if test="category != ''">
-            AND rc.recipe_category = #{category}
-        </if>
-    </where>
-	LIMIT #{pageSize} OFFSET #{offset}
+		SELECT 
+		    r.review_id, 
+		    r.review_content, 
+		    r.user_id, 
+		    r.recipe_id, 
+		    r.create_review_date, 
+		    rc.recipe_name,
+		    rc.recipe_category
+		FROM 
+		    review r
+		JOIN 
+		    recipe rc ON r.recipe_id = rc.recipe_id
+		<where>
+		     rc.recipe_name LIKE CONCAT('%', #{keyword}, '%')
+	        <if test="category != ''">
+	            AND rc.recipe_category = #{category}
+	        </if>
+	    </where>
+		LIMIT #{pageSize} OFFSET #{offset}
 	</select> 	
 	
 	<!-- 리뷰 삭제 -->
@@ -100,21 +100,50 @@
     
     	<!-- 리뷰 id조회 가져오기 -->
 	<select id ="getReviewById" parameterType="int" resultType="Review">
-	SELECT 
-	    r.review_id, 
-	    r.review_content, 
-	    r.user_id, 
-	    r.recipe_id, 
-	    r.create_review_date, 
-	    rc.recipe_name,
-	    rc.recipe_category
-	FROM 
-	    review r
-	JOIN 
-	    recipe rc ON r.recipe_id = rc.recipe_id
-	<where>
-		r.review_id = #{review_id}
-	</where>
+		SELECT 
+		    r.review_id, 
+		    r.review_content, 
+		    r.user_id, 
+		    r.recipe_id, 
+		    r.create_review_date, 
+		    rc.recipe_name,
+		    rc.recipe_category
+		FROM 
+		    review r
+		JOIN 
+		    recipe rc ON r.recipe_id = rc.recipe_id
+		<where>
+			r.review_id = #{review_id}
+		</where>
 	</select>
+	
+	<!-- 레시피 id로 리뷰가져오기 -->
+	<select id="getReviewByRecipeId" parameterType="int" resultType="Review">
+		SELECT *
+		FROM review
+		WHERE recipe_id = #{recipe_id}
+	</select>
+	
+	<!-- 리뷰 저장 -->
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO review (review_content, user_id, recipe_id)
+		VALUES (#{review_content}, #{user_id}, #{recipe_id})
+	</insert>
+	
+	<!-- 리뷰 수정 -->
+	<update id="updateReview" parameterType="Review">
+	    UPDATE review SET 
+	        review_content = #{review_content}, 
+	        user_id = #{user_id}, 
+	        recipe_id = #{recipe_id} 
+	    WHERE review_id = #{review_id}
+	</update>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview" parameterType="int">
+	  	DELETE 
+	  	FROM review 
+	  	WHERE review_id = #{review_id}
+    </delete>
 	
 </mapper>

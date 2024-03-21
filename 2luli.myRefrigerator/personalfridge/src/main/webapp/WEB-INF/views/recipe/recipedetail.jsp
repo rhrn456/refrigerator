@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
@@ -75,6 +75,21 @@
 		  height:730px;
 		}
 		
+		.modal-container {
+         display: none;
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background-color: rgba(255, 255, 255, 1); 
+         padding: 20px;
+         border: 2px solid black;
+         border-radius: 5px;
+         z-index: 9999;
+         color: black; 
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+		}
+		
 		
 		.close {
 		    color: #aaaaaa;
@@ -136,6 +151,99 @@
 	        padding: 15px 30px;
 	        cursor: pointer;
 	    }
+	    .review-section {
+			width:600px;
+			}
+	     
+	    .review {
+	    	width:600px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
+
+        .review p {
+            margin: 0;
+        }
+
+        .review small {
+            color: #666;
+        }
+
+        .modal-dialog {
+            width:300px;
+            height:300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .review-section h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #333;
+            border-top: 2px solid #ccc;
+            padding-top: 10px;
+        }
+
+		.modal-contentupdate{
+			width:500px;
+			height:200px;
+		}
+        #RecipeCommentForm textarea {
+            width: 400px;
+        }
+
+        .review-controls {
+            display: flex;
+            text-align: right;
+        }
+
+        .review-controls button {
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+
+		
+		/* 모달 닫기 버튼 스타일 */
+		.close {
+		  color: #aaa;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+		
+		.close:hover,
+		.close:focus {
+		  color: black;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+		.modal-container {
+         display: none;
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background-color: rgba(255, 255, 255, 1); 
+         padding: 20px;
+         border: 2px solid black;
+         border-radius: 5px;
+         z-index: 9999;
+         color: black; 
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+		}
+		
+		.modal-content {
+		text-align: center;
+
+		}
+		
+		.modal-button {
+		          margin-top: 20px;
+		}
 </style>
 </head>
 
@@ -169,6 +277,7 @@
 					<div class="row g-4">
 						<div class="col-lg-6">
 							<!-- 수정 -->
+							<h4 class="fw-bold mb-3">${recipe.recipe_name}</h4>
 							<div class="border rounded" style="height:300px;">
 								<a href="#"> <img src="${recipe.recipe_img}" style="width:100%; height:100%;"
 									class="img-fluid rounded" alt="Image">
@@ -176,200 +285,54 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-						
-							<h4 class="fw-bold mb-3">${recipe.recipe_name}</h4>
-							<p class="mb-3"><a style="font-weight: bold;">카테고리 :</a> ${recipe.recipe_category}</p>
-							<p class="mb-4"><a style="font-weight: bold;">요리 방법 :</a> ${recipe.recipe_content}</p>
+						<h4 class="fw-bold mb-3">요리 방법</h4>
+							<p class="mb-4">${recipe.recipe_content}</p>
 							<p class="mb-4"><a style="font-weight: bold;">요리 재료 :</a> ${recipe.ingredient}</p>
 						</div>
 							<ul id="productList" class="row mt-3" style="margin-right:2px;"></ul>
-							
-						<div class="col-lg-12">
-							<nav>
-								<div class="nav nav-tabs mb-3">
-									<button class="nav-link active border-white border-bottom-0"
-										type="button" role="tab" id="nav-about-tab"
-										data-bs-toggle="tab" data-bs-target="#nav-about"
-										aria-controls="nav-about" aria-selected="true">재료/조리과정</button>
-
-									<button class="nav-link border-white border-bottom-0"
-										type="button" role="tab" id="nav-mission-tab"
-										data-bs-toggle="tab" data-bs-target="#nav-mission1"
-										aria-controls="nav-mission1" aria-selected="false">조리과정</button>
-
-									<button class="nav-link border-white border-bottom-0"
-										type="button" role="tab" id="nav-mission-tab"
-										data-bs-toggle="tab" data-bs-target="#nav-mission2"
-										aria-controls="nav-mission2" aria-selected="false">Reviews</button>
-								</div>
-							</nav>
-							<div class="tab-content mb-5">
-							<!-- 재료/영양성분 -->
-								<div class="tab-pane active" id="nav-about" role="tabpanel"
-									aria-labelledby="nav-about-tab">
-									<p>재료</p>
-									<p>재료</p>
-									<!-- 영양정보 -->
-									<div class="px-2">
-										<div class="row g-4">
-											<div class="col-6">
-												<div
-													class="row bg-light align-items-center text-center justify-content-center py-2">
-													<div class="col-6">
-														<p class="mb-0">Weight</p>
-													</div>
-													<div class="col-6">
-														<p class="mb-0">1 kg</p>
-													</div>
-												</div>
-												<div
-													class="row text-center align-items-center justify-content-center py-2">
-													<div class="col-6">
-														<p class="mb-0">Country of Origin</p>
-													</div>
-													<div class="col-6">
-														<p class="mb-0">Agro Farm</p>
-													</div>
-												</div>
-												<div
-													class="row bg-light text-center align-items-center justify-content-center py-2">
-													<div class="col-6">
-														<p class="mb-0">Quality</p>
-													</div>
-													<div class="col-6">
-														<p class="mb-0">Organic</p>
-													</div>
-												</div>
-												<div
-													class="row text-center align-items-center justify-content-center py-2">
-													<div class="col-6">
-														<p class="mb-0">Сheck</p>
-													</div>
-													<div class="col-6">
-														<p class="mb-0">Healthy</p>
-													</div>
-												</div>
-												<div
-													class="row bg-light text-center align-items-center justify-content-center py-2">
-													<div class="col-6">
-														<p class="mb-0">Min Weight</p>
-													</div>
-													<div class="col-6">
-														<p class="mb-0">250 Kg</p>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<!-- 조리과정 -->
-								<div class="tab-pane" id="nav-mission1" role="tabpanel"
-									aria-labelledby="nav-mission-tab">
-									<div class="d-flex">
-										<img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
-											style="width: 100px; height: 100px;" alt="">
-										<div class="">
-											<p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-											<div class="d-flex justify-content-between">
-												<h5>Jason Smith</h5>
-												<div class="d-flex mb-3">
-													<i class="fa fa-star text-secondary"></i> <i
-														class="fa fa-star text-secondary"></i> <i
-														class="fa fa-star text-secondary"></i> <i
-														class="fa fa-star text-secondary"></i> <i
-														class="fa fa-star"></i>
-												</div>
-											</div>
-											<p>리뷰내용</p>
-										</div>
-									</div>
-									<div class="d-flex">
-										<img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
-											style="width: 100px; height: 100px;" alt="">
-										<div class="">
-											<p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-											<div class="d-flex justify-content-between">
-												<h5>Sam Peters</h5>
-												<div class="d-flex mb-3">
-													<i class="fa fa-star text-secondary"></i> <i
-														class="fa fa-star text-secondary"></i> <i
-														class="fa fa-star text-secondary"></i> <i
-														class="fa fa-star"></i> <i class="fa fa-star"></i>
-												</div>
-											</div>
-											<p class="text-dark">리뷰내용</p>
-										</div>
-									</div>
-								</div>
-
-
-								<!-- 리뷰 -->
-								<div class="tab-pane" id="nav-mission2" role="tabpanel"
-									aria-labelledby="nav-mission-tab">
-									<div class="d-flex">
-										<div class="">
-											<p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-											<div class="d-flex justify-content-between">
-												<h5>Jason Smith</h5>
-											</div>
-											<p>리뷰내용</p>
-										</div>
-									</div>
-									<div class="d-flex">
-										<div class="">
-											<p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-											<div class="d-flex justify-content-between">
-												<h5>Sam Peters</h5>
-											</div>
-											<p class="text-dark">리뷰내용</p>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane" id="nav-vision" role="tabpanel">
-									<p class="text-dark">Tempor erat elitr rebum at clita. Diam
-										dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos
-										labore. 3</p>
-									<p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu
-										diam amet diam et eos labore. Clita erat ipsum et lorem et sit</p>
-								</div>
-							</div>
 						</div>
-						<form action="#">
-							<h4 class="mb-5 fw-bold">Leave a Reply</h4>
-							<div class="row g-4">
-								<div class="col-lg-6">
-									<div class="border-bottom rounded">
-										<input type="text" class="form-control border-0 me-4"
-											placeholder="Yur Name *">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="border-bottom rounded">
-										<input type="email" class="form-control border-0"
-											placeholder="Your Email *">
-									</div>
-								</div>
-								<div class="col-lg-12">
-									<div class="border-bottom rounded my-4">
-										<textarea name="" id="" class="form-control border-0"
-											cols="30" rows="8" placeholder="Your Review *"
-											spellcheck="false"></textarea>
-									</div>
-								</div>
-								<div class="col-lg-12">
-									<div class="d-flex justify-content-between py-3 mb-5">
-										<div class="d-flex align-items-center">
-										</div>
-										<a href="#"
-											class="btn border border-secondary text-primary rounded-pill px-4 py-3">
-											Post Comment</a>
-									</div>
-								</div>
-							</div>
-						</form>
 					</div>
 				</div>
+				
+				
+				    <!-- 댓글 섹션 -->
+			        <h2>레시피의 평가를 남겨주세요!</h2>
+			        <hr style="width:600px; border-top: 2px solid black;">
+			    <div class="review-section">
+			        <c:forEach items="${reviewList}" var="review">
+			            <div class="review">
+			                <p>${review.review_content}</p>
+			                <small>작성자: ${review.user_id}, 작성일: <fmt:formatDate value="${review.create_review_date}" pattern="yyyy-MM-dd | HH:mm"/></small>
+			               <c:if test="${review.user_id eq sessionScope.userId or sessionScope.userAdmin eq 2}">
+			                    <!-- 댓글 수정 및 삭제 버튼 -->
+			                    <div class="review-controls">
+			                       <button id="updateButton" class="btn btn-primary btn-sm" data-review-id="${review.review_id}" data-review-content="${review.review_content}" data-recipe-id="${recipe.recipe_id}" data-user-id="${review.user_id}">수정</button>
+			                       <button onclick="location.href='${pageContext.request.contextPath}/delete/${review.review_id}?recipe_id=${recipe.recipe_id}'" class="btn btn-danger btn-sm">삭제</button>
+			                    </div>
+			                </c:if>
+			            </div>
+			        </c:forEach>
+			
+			        <!-- 댓글 작성 폼 -->
+			        <form action="${pageContext.request.contextPath}/review/add" method="post" class="mt-3 mb-3" id="RecipeCommentForm"  style="display: flex; justify-content: center; align-items: center;">
+			            <input name="review_content" class="form-control" style="height: 50px; margin-right: 10px;" placeholder="댓글을 입력하세요" required>
+			            <input type="hidden" name="recipe_id" value="${recipe.recipe_id}">
+			            <button type="submit" class="btn btn-primary" style="width:170px; height:48px;">댓글 작성</button>
+			        </form>
+			        
+			        <!-- 댓글 수정 모달 -->
+			         <div id="modalContainer" class="modal-container">
+					    <div class="modal-contentupdate">
+					        <h4>리뷰 수정</h4>
+					        <textarea id="updatereview" class="form-control" style="height: 100px;" placeholder="수정할 댓글을 입력하세요" required></textarea>
+					        <button id="confirmUpdateButton" class="modal-button">확인</button>
+					        <button id="cancelUpdateButton" class="modal-button">취소</button>
+					    </div>
+					</div>
+
+				
+				
+				<!-- 영수증 -->
 				     <div class="col-lg-4 col-xl-3 receipt-container" id="receiptContainer" style="display: none;">
 						    <div class="scroll-container" style="overflow-y: auto; max-height: 600px;">
 						        <div class="row g-4 fruite scroll-follow" id="scrollContainer" style="width:500px;">
@@ -445,8 +408,87 @@
 			initializeSearchField();
 			bindSearchEvents();
             
-            
+			//리뷰 시간 출력
+			function formatDate(dateString) {
+			    var date = new Date(dateString);
+			    var year = date.getFullYear();
+			    var month = (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1);
+			    var day = (date.getDate() < 10 ? '0' : '') + date.getDate();
+			    var hours = (date.getHours() < 10 ? '0' : '') + date.getHours();
+			    var minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 
+			    return year + '-' + month + '-' + day + ' ' + hours + '시' + minutes + '분';
+			}
+
+			//리뷰 수정
+			var updateButtons = document.querySelectorAll("#updateButton");
+			var cancelButton = document.getElementById("cancelUpdateButton");
+			var confirmButton = document.getElementById("confirmUpdateButton");
+			var modalContainer = document.querySelector("#modalContainer");
+			
+			updateButtons.forEach(function(button) {
+			    button.onclick = function() {
+			        // 모달 창 열기
+			        modalContainer.style.display = "block";
+			
+			        // 해당 버튼에 연결된 데이터 가져오기
+			        var reviewId = button.getAttribute('data-review-id');
+			        var userId = button.getAttribute('data-user-id');
+			        var recipeId = button.getAttribute('data-recipe-id');
+			        var reviewContent = button.getAttribute('data-review-content'); // 리뷰 내용 가져오기
+				
+			        // 리뷰 수정 폼에 데이터 설정
+			        modalContainer.setAttribute('data-review-id', reviewId);
+			        modalContainer.setAttribute('data-user-id', userId);
+			        modalContainer.setAttribute('data-recipe-id', recipeId);
+			
+			        // 리뷰 내용을 수정 모달의 텍스트 영역에 설정
+			        var updateReviewTextArea = modalContainer.querySelector('#updatereview');
+			        updateReviewTextArea.value = reviewContent;
+			        console.log(modalContainer);
+			    }
+			});
+			
+			cancelButton.onclick = function() {
+			    // 모달 창 닫기
+			    modalContainer.style.display = "none";
+			};
+			
+			confirmButton.onclick = function() {
+				console.log("클릭");
+				var reviewId = modalContainer.getAttribute('data-review-id');
+				var content = modalContainer.querySelector('#updatereview').value.trim(); 
+				var userId = modalContainer.getAttribute('data-user-id');
+				var recipeId = modalContainer.getAttribute('data-recipe-id');
+				
+			    var review = {
+			        review_id: reviewId,
+			        review_content: content,
+			        user_id: userId,
+			        recipe_id: recipeId
+			    };
+			console.log(review);
+			    var xhr = new XMLHttpRequest();
+			    xhr.open('POST', '/update', true);
+			    xhr.setRequestHeader('Content-Type', 'application/json');
+			    xhr.onreadystatechange = function() {
+			        if (xhr.readyState === XMLHttpRequest.DONE) {
+			            if (xhr.status === 200) {
+			                console.log('리뷰 업데이트 성공');                
+			                modalContainer.style.display = "none";
+			                window.location.reload();
+			                // 여기에 필요한 처리 추가
+			            } else {
+			                console.error('리뷰 업데이트 실패');
+			                // 여기에 필요한 처리 추가
+			            }
+			        }
+			    };
+			    xhr.send(JSON.stringify(review));
+			};
+			
+            
+			// 영수증 관련 함수
             // 왼쪽 아래 버튼 요소를 가져옴
             const toggleReceiptButton = document.getElementById('toggleReceiptButton');
             // 영수증 컨테이너 요소를 가져옴
@@ -762,7 +804,7 @@
 	        }
 			 
 			// 저장된 레시피 제품들의 배열
-			  var recipeProducts = [];
+			  	var recipeProducts = [];
 			    var recipeItems = [];
 			    var recipeproducAlltList = ${recipeproductListJson}; // JSON 형식의 문자열로 전달된 recipeproductList
 			    if (recipeproducAlltList && recipeproducAlltList.length > 0) {
@@ -791,16 +833,16 @@
 			        });
 			    }
 
-
+			    //debugger;
 			     // 데이터 변수에 저장
-			   function addProduct(selectedProductName, selectedProductId, selectedProductImg, selectedProductPrice, selectedProductSpecial) {
+			   function addProduct(selectedProductName, selectedProductId, selectedProductImg, selectedProductPrice, selectedProductSpecial) {	    	
 				    var product_id = selectedProductId;
 				    var product_name = selectedProductName;
 				    var product_quantity = 1;
 				    var product_img = selectedProductImg;
 				    var product_price = selectedProductPrice;
 				    var special_product = selectedProductSpecial;
-				    console.log("추가:"+ special_product);
+	
 				
 				    // 전송할 데이터
 				    var recipeProduct = {

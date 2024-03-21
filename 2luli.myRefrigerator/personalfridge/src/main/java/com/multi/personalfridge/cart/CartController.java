@@ -68,12 +68,13 @@ public class CartController {
 		CartDTO cart = new CartDTO();
 		 HttpSession session = request.getSession();
 		 String userId = (String) session.getAttribute("userId");
-		 int cartCount = cartService.getCartCount(userId);
-		 session.setAttribute("cartCount", cartCount);
 		 cart.setUser_id(userId);
 		 cart.setProduct_id(product_id);
 		 cart.setProduct_quantity(product_quantity);
-		boolean result = cartService.insertCart(cart);
+		 boolean result = cartService.insertCart(cart);
+		 
+		 int cartCount = cartService.getCartCount(userId);
+		 session.setAttribute("cartCount", cartCount);
 		 Map<String, Object> response = new HashMap<>();
 		    if (result) {
 		        response.put("message", "장바구니에 추가되었습니다.");
@@ -83,5 +84,33 @@ public class CartController {
 		        response.put("message", "장바구니 추가 실패");
 		        return ResponseEntity.badRequest().body(response);
 		    }
+		}
+	
+	@GetMapping("/buyproduct")
+	public String buyProduct(@RequestParam("cartProducts") String cartProductsJson, HttpServletRequest request) {
+	    // 세션에서 userId 가져오기
+	    HttpSession session = request.getSession();
+	    String userId = (String) session.getAttribute("userId");
+	    try {
+	        ObjectMapper objectMapper = new ObjectMapper(); 
+	        
+	        // JSON 문자열을 CartDTO 배열로 변환
+	        CartDTO[] cartProducts = objectMapper.readValue(cartProductsJson, CartDTO[].class);
+	        
+	        for (CartDTO product : cartProducts) {
+	            // 변경된 데이터를 cartService에 전달
+	            product.setUser_id(userId); // userId 설정
+	            cartService.removeCartItem(product.getProduct_id(),product.getUser_id());
+	            boolean result = cartService.buyProduct(product);
+	            if (!result) {
+	                return "error";
+	            }
+	        }
+	        return "redirect:/";
+	    } catch (JsonProcessingException e) {
+	        // JSON 파싱에 실패한 경우에 대한 예외 처리
+	        e.printStackTrace();
+	        return "error";
+	    }
 	}
 	}

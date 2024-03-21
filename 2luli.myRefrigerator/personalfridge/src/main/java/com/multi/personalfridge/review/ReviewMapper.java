@@ -19,4 +19,12 @@ public interface ReviewMapper {
 	int reviewDeletById(int review_id);
 
 	ReviewDTO getReviewById(int review_id);
+
+	List<ReviewDTO> getReviewByRecipeId(int recipe_id);
+
+	int insertReview(ReviewDTO review);
+
+	int updateReview(ReviewDTO review);
+
+	int deleteReview(int review_id);
 }

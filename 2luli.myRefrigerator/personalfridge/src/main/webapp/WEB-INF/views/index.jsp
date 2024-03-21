@@ -130,7 +130,7 @@
 	                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
 	                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
 	                                                <h4>${RecipeDTO.recipe_name}</h4>
-	                                                <p>${RecipeDTO.recipe_content}</p>
+	                                                <p style="height:20px;">${RecipeDTO.recipe_content}</p>
 	                                                <div class="d-flex justify-content-between flex-lg-wrap" style="margin-left:40px;">
 	                                                     <a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
 									                       class="btn border border-secondary rounded-pill px-3 text-primary gorecipe" style="margin-top:10px;">
@@ -243,9 +243,8 @@
 	var modal = new bootstrap.Modal(document.getElementById('quantityModal'));
 	
 	$(document).on('click', '.buyproduct', function() {
-	    var productId = $(this).closest('.fruite-item').find('.product-id').text().trim();
-	    var productName = $(this).closest('.fruite-item').find('.product-name').text().trim();
-	    
+	    var productId = $(this).closest('.vesitable-item').find('.product-id').text().trim();
+	    var productName = $(this).closest('.vesitable-item').find('.product-name').text().trim();
 	    
 	    // 모달에 선택된 제품의 ID와 이름을 설정하여 모달을 열기
 	    $('#quantityModal #productId').val(productId);

@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.multi.personalfridge.cart.CartService;
 import com.multi.personalfridge.dto.CartDTO;
 import com.multi.personalfridge.dto.CartProductDTO;
@@ -69,14 +71,14 @@ public class CommonController {
 
 	// 장바구니
 	@GetMapping("/mycart")
-	public String cart(HttpServletRequest request, Model model) {
+	public String cart(HttpServletRequest request, Model model) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
 	    if (userId == null || userId.isEmpty()) {
 	        return "error";
 	    }
 	    List<CartProductDTO> cartList = cartService.getCartProducts(userId);
-
 	    Map<String, CartProductDTO> mergedCartMap = new HashMap<>();
 	    for (CartProductDTO cart : cartList) {
 	        String key = cart.getProduct_id() + "-" + cart.getSpecial_product(); // 제품 ID와 특별 제품 여부를 조합하여 고유한 키 생성
@@ -88,8 +90,8 @@ public class CommonController {
 	        }
 	    }
 	    List<CartProductDTO> mergedCartList = new ArrayList<>(mergedCartMap.values());
-	    System.out.println(mergedCartList);
-	    model.addAttribute("mergedCartList", mergedCartList);
+	    String cartListJson = objectMapper.writeValueAsString(mergedCartList);
+	    model.addAttribute("cartListJson", cartListJson);
 
 	    return "cart";
 	}

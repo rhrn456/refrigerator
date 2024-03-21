@@ -75,6 +75,7 @@
             </ol>
         </div>
         <!-- Single Page Header End -->
+<button id="sendProductsButton" onclick="sendProducts()">제품 보내기</button>
 
 					<div class="col-lg-11">
        <div class="row justify-content-center" style="margin-top: 200px; width: 40%; margin-left: 620px; ">
@@ -110,7 +111,6 @@
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
         
->>>>>>> feature/admin
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -121,7 +121,72 @@
 	
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    
+	<script>
+	var cartItemList = [];
+    var viewCartList = [];
+    var cartItemAlltList = ${cartListJson}; // JSON 형식의 문자열로 전달된 recipeproductList
+    if (cartItemAlltList && cartItemAlltList.length > 0) {
+        // recipeproductList의 각 요소를 순회하면서 recipeProducts 배열에 저장
+        cartItemAlltList.forEach(function(CartProductDTO) {
+            // recipeProduct를 JavaScript 객체로 변환하여 recipeProducts 배열에 추가
+            var cartItem = {
+            	cart_id: CartProductDTO.cart_id,
+                product_id: CartProductDTO.product_id,
+                product_quantity: CartProductDTO.product_quantity
+            };
+            cartItemList.push(cartItem);
+           console.log(cartItem);
+            // recipeItem을 생성하여 recipeItems 배열에 추가
+            var viewCart = {
+                product_name: CartProductDTO.product_name,
+                product_quantity: CartProductDTO.product_quantity,
+                product_img: CartProductDTO.product_img,
+                product_price : CartProductDTO.product_price,
+                special_product : CartProductDTO.special_product
+            };
+            
+            
+            viewCartList.push(viewCart);
+            //renderProductList();
+            
+        });
+    }
+
+    //debugger;
+
+    // 레시피 재료 삭제
+    function removeProduct(index) {
+    	cartItemList.splice(index, 1); // 전송할 데이터 삭제
+    	viewCart.splice(index, 1); // 출력용 재료 삭제
+       // renderProductList();
+    }
+
+    function sendProducts() {
+        if (cartItemList.length === 0) {
+            alert('빈칸에 입력해주세요');
+            return;
+        }
+
+        var isEmpty = false;
+        cartItemList.forEach(function(product) {
+            if (!product.product_quantity || !product.product_id) {
+                // 빈 값이 하나라도 있으면 isEmpty를 true로 설정
+                isEmpty = true;
+                return; // 반복문 종료
+            }
+        });
+
+        if (isEmpty) {
+            alert('빈칸에 입력해주세요');
+            return;
+        }
+
+        var productListString = JSON.stringify(cartItemList); 
+        window.location.href = '/buyproduct?cartProducts=' + encodeURIComponent(productListString);
+
+    }
+	
+	</script>    
 </body>
 
 

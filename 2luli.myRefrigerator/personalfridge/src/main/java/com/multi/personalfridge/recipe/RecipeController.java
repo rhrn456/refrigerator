@@ -21,7 +21,9 @@ import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeAndProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
+import com.multi.personalfridge.dto.ReviewDTO;
 import com.multi.personalfridge.product.ProductService;
+import com.multi.personalfridge.review.ReviewService;
 
 @Controller
 public class RecipeController {
@@ -29,14 +31,17 @@ public class RecipeController {
 	private final RecipeService recipeService;
 	private final ProductService productService;
 	private final RecipeProductService recipeProductService;
+	private final ReviewService reviewService;
 	
 	@Autowired
 	public RecipeController(RecipeService recipeService,
 			ProductService productService,
-			RecipeProductService recipeProductService) {
+			RecipeProductService recipeProductService,
+			ReviewService reviewService) {
 		this.recipeService = recipeService;
 		this.productService = productService;
 		this.recipeProductService = recipeProductService;
+		this.reviewService = reviewService;
 	}
 	
 	
@@ -64,13 +69,15 @@ public class RecipeController {
 
 	@GetMapping("/recipedetail")
 	public String getRecipeById(@RequestParam int recipe_id, Model model) throws JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();;
+		ObjectMapper objectMapper = new ObjectMapper();
 		RecipeDTO recipe = recipeService.getRecipeById(recipe_id);
 		List<ProductDTO> productList = productService.getFullProduct();
+		List<ReviewDTO> reviewList = reviewService.getReviewByRecipeId(recipe_id);
 		List<RecipeAndProductDTO> recipeproductList = recipeProductService.getRecipeProductListByRecipeId(recipe_id);
 		String recipeproductListJson = objectMapper.writeValueAsString(recipeproductList);
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("productList", productList);
+		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("recipeproductListJson", recipeproductListJson);
 
 		return "recipe/recipedetail";
