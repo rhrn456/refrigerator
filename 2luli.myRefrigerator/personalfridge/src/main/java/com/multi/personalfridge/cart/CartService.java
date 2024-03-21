@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.multi.personalfridge.dto.CartDTO;
 import com.multi.personalfridge.dto.CartProductDTO;
+import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
 
 @Service
@@ -31,11 +32,16 @@ public class CartService {
 		return cartMapper.getCartProducts(user_id);
 	}
 
-	public int getCartCount(String userId) {
+	public int getCartCountNormal(String userId) {
 		
-		return cartMapper.getCartCount(userId);
+		return cartMapper.getCartCountNormal(userId);
 	}
 
+	public int getCartCountSpecial(String userId) {
+		
+		return cartMapper.getCartCountSpecial(userId);
+	}
+	
 	public boolean buyProduct(CartDTO product) {
 		boolean result = cartMapper.buyProduct(product);
 		if(result) {
@@ -51,6 +57,7 @@ public class CartService {
 		cartMapper.removeCartItem(params);
 		
 	}
+
 
 
 }

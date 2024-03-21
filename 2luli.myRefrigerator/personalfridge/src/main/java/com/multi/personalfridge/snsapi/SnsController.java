@@ -114,7 +114,9 @@ public class SnsController {
     		 mv.setViewName("/loginPage");
     		return "/loginPage";
     	}
-    	int cartCount = cartService.getCartCount(user.getUser_id());
+    	int cartCountNormal = cartService.getCartCountNormal(user_id);
+	   	int cartCountSpecial = cartService.getCartCountSpecial(user_id);
+	   	int cartCount = cartCountNormal + cartCountSpecial;
     	session.setAttribute("userId", user.getUser_id());
         session.setAttribute("userAdmin", user.getJob_num());
         session.setAttribute("cartCount", cartCount);

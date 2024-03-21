@@ -242,7 +242,7 @@
 		          <!-- 수량 입력 필드 -->
 		          <div class="col-12 mb-3">
 		            <label for="quantityInput" class="form-label">수량</label>
-		            <input type="number" class="form-control" id="quantityInput" name="quantityInput" placeholder="수량을 입력하세요" min="1" required>
+		            <input type="number" oninput='handleOnInput(this, 1)' class="form-control" id="quantityInput" name="quantityInput" placeholder="수량을 입력하세요(10 미만 적어주세요.)" min="1" required>
 		          </div>
 		          <!-- 추가 버튼 -->
 		          <div class="col-12">
@@ -276,6 +276,15 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 		<script>
+		//장바구니 수량 제한
+		function handleOnInput(el, maxlength) {
+			  if(el.value.length > maxlength)  {
+			    el.value 
+			      = el.value.substr(0, maxlength);
+			  }
+			}
+		
+		
 		//장바구니 담기 
 		var modal = new bootstrap.Modal(document.getElementById('quantityModal'));
 		

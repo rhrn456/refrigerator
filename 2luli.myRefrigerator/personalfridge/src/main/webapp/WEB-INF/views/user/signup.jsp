@@ -56,7 +56,7 @@ body {
                            <form class="user" action="/signup" method="post">
 								 	<div class="form-group row">
 								        <div class="col-sm-6 mb-3 mb-sm-0">
-								            <input type="text" class="form-control form-control-user" id="user_id" name="user_id" placeholder="아이디" required>
+								            <input type="text" class="form-control form-control-user" maxlength= "10" id="user_id" name="user_id" placeholder="아이디(10자이내)" required>
 								        </div>
 								        <div class="col-sm-6">
 								            <input type="text" class="form-control form-control-user" id="user_name" name="user_name" placeholder="이름" required>
@@ -77,16 +77,16 @@ body {
 								        </div>
 								    </div>
 								    <div class="form-group">
-								        <input type="phone" class="form-control form-control-user" id="phone" name="phone" placeholder="번호를 적을땐 - 를빼고 적어주세요" required>
+								        <input type="phone" class="form-control form-control-user" id="phone" name="phone" placeholder="번호를 적을땐 - 를빼고 적어주세요(11자리)" required>
 								    </div>
 								    <button type="submit" class="btn btn-primary btn-user btn-block">
 								        회원 가입 하기
 								    </button>
 								</form>
                                 <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
+                                <a href="socalLogin" class="btn btn-google btn-user btn-block">
+							        <i class="fab fa-google fa-fw"></i> Login with Google
+							    </a>
                                 <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                                 </a>

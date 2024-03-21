@@ -12,7 +12,7 @@ $(function() { //jquery - js의 라이브러리
 	$('#b1').click(function() { //이벤트가 발생하면 자동호출되는 익명함수(콜백함수)
 		$.ajax({
 			//http://openapi.foodsafetykorea.go.kr/api/keyId/serviceId/dataType/startIdx/endIdx
-			url : "http://openapi.foodsafetykorea.go.kr/api/67d21b2aa52f435480ad/COOKRCP01/json/111/121",
+			url : "http://openapi.foodsafetykorea.go.kr/api/67d21b2aa52f435480ad/COOKRCP01/json/701/800",
 
 			success: function(json) {
 				

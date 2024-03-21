@@ -301,21 +301,26 @@
 			    <div class="review-section">
 			        <c:forEach items="${reviewList}" var="review">
 			            <div class="review">
-			                <p>${review.review_content}</p>
-			                <small>작성자: ${review.user_id}, 작성일: <fmt:formatDate value="${review.create_review_date}" pattern="yyyy-MM-dd | HH:mm"/></small>
-			               <c:if test="${review.user_id eq sessionScope.userId or sessionScope.userAdmin eq 2}">
+			            <div style="display: flex; justify-content: space-between;">
+			               <a style="margin-top:10px !important; font-size:20px; weight:bold;">${review.review_content}  </a>
+			                <c:if test="${review.user_id eq sessionScope.userId or sessionScope.userAdmin eq 2}">
 			                    <!-- 댓글 수정 및 삭제 버튼 -->
-			                    <div class="review-controls">
+			                    <div class="review-controls" style="margin-bottom:6px;">
 			                       <button id="updateButton" class="btn btn-primary btn-sm" data-review-id="${review.review_id}" data-review-content="${review.review_content}" data-recipe-id="${recipe.recipe_id}" data-user-id="${review.user_id}">수정</button>
 			                       <button onclick="location.href='${pageContext.request.contextPath}/delete/${review.review_id}?recipe_id=${recipe.recipe_id}'" class="btn btn-danger btn-sm">삭제</button>
 			                    </div>
 			                </c:if>
+			              </div>
+			               <p style="display: flex; justify-content: space-between; font-size:13px;" > 작성자: ${review.user_id}
+							    <span style="float: right;">작성일: <fmt:formatDate value="${review.create_review_date}" pattern="yyyy-MM-dd | HH:mm"/></span>
+							</p>
+			              
 			            </div>
 			        </c:forEach>
 			
 			        <!-- 댓글 작성 폼 -->
 			        <form action="${pageContext.request.contextPath}/review/add" method="post" class="mt-3 mb-3" id="RecipeCommentForm"  style="display: flex; justify-content: center; align-items: center;">
-			            <input name="review_content" class="form-control" style="height: 50px; margin-right: 10px;" placeholder="댓글을 입력하세요" required>
+			            <input name="review_content" class="form-control" maxlength= "20" type="text" style="height: 50px; margin-right: 10px;" placeholder="댓글을 입력하세요(20자)" required>
 			            <input type="hidden" name="recipe_id" value="${recipe.recipe_id}">
 			            <button type="submit" class="btn btn-primary" style="width:170px; height:48px;">댓글 작성</button>
 			        </form>
@@ -324,7 +329,7 @@
 			         <div id="modalContainer" class="modal-container">
 					    <div class="modal-contentupdate">
 					        <h4>리뷰 수정</h4>
-					        <textarea id="updatereview" class="form-control" style="height: 100px;" placeholder="수정할 댓글을 입력하세요" required></textarea>
+					        <textarea id="updatereview" class="form-control"  maxlength= "20" type="text" style="height: 100px;" placeholder="수정할 댓글을 입력하세요(20자)" required></textarea>
 					        <button id="confirmUpdateButton" class="modal-button">확인</button>
 					        <button id="cancelUpdateButton" class="modal-button">취소</button>
 					    </div>
@@ -1056,6 +1061,7 @@
 			            quantityInput.setAttribute('type', 'number'); // 입력 필드 타입을 숫자로 설정
 			            quantityInput.setAttribute('value', product_quantity); // 기본 값 설정
 			            quantityInput.setAttribute('min', '0'); // 최소 값 설정
+			            quantityInput.setAttribute('max', '9'); // 최대 값 설정 (한 자리 숫자)
 			            quantityInput.setAttribute('step', '1'); // 증가/감소 단위 설정
 			            quantityInput.style.width = '50px'; // 입력 필드 너비 설정
 			            quantityInput.style.textAlign = 'center'; // 텍스트 가운데 정렬
@@ -1063,7 +1069,7 @@
 			            quantityInput.style.borderRadius = '5px'; // 둥근 모서리 설정
 			            quantityInput.addEventListener('input', function() {
 			                var newQuantity = parseInt(this.value); // 입력된 수량 값 가져오기
-			                if (!isNaN(newQuantity) && newQuantity >= 0) { // 유효한 숫자인지 확인
+			                if (!isNaN(newQuantity) && newQuantity >= 0 && this.value.length === 1) { // 유효한 숫자인지 확인
 			                    // recipeProducts 배열의 해당 인덱스에 있는 product_quantity 업데이트
 			                    recipeProducts[index].product_quantity = newQuantity;
 			                    // recipeItems 배열의 해당 인덱스에 있는 product_quantity 업데이트

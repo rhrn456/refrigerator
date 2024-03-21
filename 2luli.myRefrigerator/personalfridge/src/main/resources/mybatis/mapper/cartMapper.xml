@@ -17,8 +17,31 @@
 	    VALUES (#{user_id}, #{product_id}, #{product_quantity})
 	</insert>
 	
+
+	
 	<!-- 카트목록 카운팅 사용 -->
-	<select id="getCartCount" parameterType="String" resultType="Integer">
+	<select id="getCartCountNormal" parameterType="String" resultType="int">
+	 SELECT COUNT(*) AS count
+		FROM (
+		    SELECT DISTINCT c.product_id
+		    FROM cart c
+		    INNER JOIN product p ON c.product_id = p.product_id
+		    WHERE c.user_id = #{user_id} AND c.product_buycheck = 0 AND p.special_product = 0
+		) AS cart_product;
+	</select>
+	
+	<select id="getCartCountSpecial" parameterType="String" resultType="int">
+	 SELECT COUNT(*) AS count
+		FROM (
+		    SELECT DISTINCT c.product_id
+		    FROM cart c
+		    INNER JOIN product p ON c.product_id = p.product_id
+		    WHERE c.user_id = #{user_id} AND c.product_buycheck = 0 AND p.special_product = 1
+		) AS cart_product;
+	</select>
+	
+	
+	<!-- <select id="getCartCount" parameterType="String" resultType="Integer">
 	   SELECT COUNT(*) AS count
 		FROM (
 		    SELECT DISTINCT c.product_id
@@ -27,7 +50,7 @@
 		    WHERE c.user_id = #{user_id} 
 		        AND  p.product_name = p.product_name  AND p.special_product=p.special_product
 		) AS cart_product;
-	</select>
+	</select> -->
 
 	<!-- 카트 목록 삭제 -->
 	<delete id="removeCartItem" parameterType="map">
