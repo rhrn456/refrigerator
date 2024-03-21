@@ -15,6 +15,11 @@
 		    WHERE rp.recipe_id = #{recipe_id}
 		</select>
 		
+		<select id="getRecipeIdByProductId" parameterType="int" resultType="int">
+			SELECT DISTINCT recipe_id
+			FROM recipe_product
+			WHERE product_id = #{product_id};
+		</select>
 		
 		<delete id="deleteRecipeProductsByRecipeId" parameterType="int">
 	    	delete

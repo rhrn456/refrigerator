@@ -47,5 +47,9 @@ public class RecipeProductService {
 		 return false; 
 		}
 	}
+	
+	public List<Integer> getRecipeIdByProductId(int product_id) {
+		return recipeProductMapper.getRecipeIdByProductId(product_id);
+	}
 }
 

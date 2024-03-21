@@ -18,5 +18,7 @@ public interface RecipeProductMapper {
 	List<RecipeAndProductDTO> getRecipeProductListByRecipeId(int recipe_id);
 
 	int deleteRecipeProductsByRecipeId(int recipe_id);
+
+	List<Integer> getRecipeIdByProductId(int product_id);
 	
 }
