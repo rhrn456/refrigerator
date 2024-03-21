@@ -46,8 +46,9 @@ public class RecipeController {
 	
 	
 	@GetMapping("/test")
-	public void test() {
-		//WEB-INF/views/test.jsp
+	public String test() {
+
+		return "/recipe/test";
 	}
 	
 	//레시피목록 
