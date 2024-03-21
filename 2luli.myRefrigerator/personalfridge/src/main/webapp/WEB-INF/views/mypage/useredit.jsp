@@ -4,7 +4,7 @@
 <html>
 <head>
         <meta charset="utf-8">
-        <title>마이페이지</title>
+        <title>정보 수정</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -163,16 +163,17 @@
 						
 							
 							<div class="col-lg-9">
-								<div class="box" style="text-align: center;" >
-									<h2>회원 정보</h2>
-
-									<!-- 사용자 정보 표시 -->
-									<p>ID: ${mypage.user_id}</p>
-									<p>닉네임: ${mypage.user_name}</p>
-									<p>이메일: ${mypage.mail}</p>
-									<p>주소: ${mypage.adress}</p>
-									<p>핸드폰 번호: ${mypage.phone}</p>
-								</div>
+								<h2>사용자 정보 수정</h2>
+								<form action="<c:url value='/mypage/updateUser'/>" method="post">
+								    <input type="hidden" name="user_id" value="${mypage.user_id}"/>
+								    이름: <input type="text" name="user_name" value="${mypage.user_name}"/><br/>
+								    비밀번호: <input type="password" name="password" value="${mypage.password}"/><br/>
+								    비밀번호 확인: <input type="password" name="password" value="${mypage.password}"/><br/>
+								    이메일: <input type="email" name="mail" value="${mypage.mail}"/><br/>
+								    주소: <input type="text" name="adress" value="${mypage.adress}"/><br/>
+								    전화번호: <input type="number" name="phone" value="${mypage.phone}"/><br/>
+								    <input type="submit" value="수정"/>
+								</form>
 
 							    <div class="row g-4 justify-content-center">
 							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
