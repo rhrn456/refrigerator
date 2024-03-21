@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,13 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.multi.personalfridge.common.EmailService;
+import com.multi.personalfridge.dto.ProductDTO;
+import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 import com.multi.personalfridge.dto.UserDTO;
+import com.multi.personalfridge.product.ProductService;
+import com.multi.personalfridge.recipe.RecipeService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,16 +38,13 @@ public class RefrigeratorController {
 	@Autowired
 	RefrigeratorService refrigeratorService;	
 	@Autowired
-	private EmailService emailService;
+	private ProductService productService;
 	
 	//나의 냉장고 들어왔을때 메인페이지
 	@GetMapping("/refrigerator")                     //세션 유저변수명
 	public ModelAndView getMethodName(@SessionAttribute("userId") String user_id) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("현재접속중인 id : " + user_id);/*테스트용 추후 삭제*/
-		
-//		UserDTO user = new UserDTO();/*테스트용 제거 할 것*/
-//		user.setUser_id("qwe");/*테스트용 제거 할 것*/		
 		
 		//유저 아이디와 맞는 냉장고아이디를 불러옴 (최초 접속시에는 생성)
 		Integer refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);
@@ -55,8 +58,26 @@ public class RefrigeratorController {
 		
 		//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
-		System.out.println("현재 냉장고의 제품 갯수 : " + refrigeratorProductList.size());/*테스트용 제거 할 것*/	
-		mv.addObject("refrigeratorProductList", refrigeratorProductList);		
+		System.out.println("현재 냉장고의 제품 갯수 : " + refrigeratorProductList.size());/*테스트용 추후 삭제*/
+		mv.addObject("refrigeratorProductList", refrigeratorProductList);	
+		
+		//냉장고 속 제품과 맞는 레시피들
+		ArrayList<ProductDTO> recipeList = new ArrayList<ProductDTO>();
+		ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
+		for (int i = 0; i < refrigeratorProductList.size(); i++) {
+			recipeList.addAll(productService.getProductsBykeyword("", refrigeratorProductList.get(i).getProduct_name()));			
+		}
+		
+		for (int i = 0; i < recipeList.size(); i++) {
+			
+		}
+		
+		
+		for (ProductDTO productDTO : recipeList) {
+			System.out.println(productDTO);
+		}
+				
+		
 		mv.setViewName("refrigeratorTest2");
 		
 		return mv;
@@ -109,4 +130,4 @@ public class RefrigeratorController {
 	
 	
 }
-// 레시피추천(재료별로검색할수있게해서 인기있는레시피 2~3가지 추천), 재료구매시 자동추가 (재료아이디정보를 받아와서 넣어줄것임), 정렬, my냉장고 연결
+// 레시피추천(재료별로검색할수있게해서 인기있는레시피 2~3가지 추천)// 맞는거 없으면 그냥 인기순, 재료구매시 자동추가 (재료아이디정보를 받아와서 넣어줄것임), 정렬, my냉장고 연결
