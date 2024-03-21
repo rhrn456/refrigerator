@@ -25,7 +25,6 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 	
-	
 	@GetMapping("/insertCart")
 	public String insertCart(@RequestParam("cartProducts") String cartProductsJson, HttpServletRequest request) {
 	    // 세션에서 userId 가져오기
@@ -60,8 +59,6 @@ public class CartController {
 	        return "error";
 	    }
 	}
-	
-	
 	
 	@PostMapping("/ItemToCart")
 	public ResponseEntity<Map<String, Object>> ItemToCart(@RequestParam int product_id, @RequestParam int product_quantity, HttpServletRequest request) {
@@ -113,4 +110,6 @@ public class CartController {
 	        return "error";
 	    }
 	}
-	}
+
+}
+

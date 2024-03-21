@@ -44,7 +44,9 @@
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Who we are</h4>
                             <p>Team : 2luli</p>
-                            <p>Members : 강수현, 김유림, 송기영,<br>양혁진, 조서현, 이예진</p>
+                            <p>Members<br>
+                               팀장 : 강수현<br>
+                               팀원 : 송기영, 양혁진, 조서현</p>
                             <p>멀티잇 백엔드 개발(Java) 19회차</p>
                             <p>Multi Campus Final Project</p>
                         </div>
@@ -54,7 +56,7 @@
         </div>
         <!-- Footer End -->
         
-                <!-- Copyright Start -->
+		<!-- Copyright Start -->
         <div class="container-fluid copyright bg-dark py-4">
             <div class="container">
                 <div class="row">

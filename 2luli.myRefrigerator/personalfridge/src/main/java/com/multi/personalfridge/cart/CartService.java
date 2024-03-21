@@ -25,15 +25,15 @@ public class CartService {
 		}
 		return false;
 	}
-
+	
 	public List<CartProductDTO> getCartProducts(String user_id) {
 	
 		return cartMapper.getCartProducts(user_id);
 	}
 
-	public int getCartCount(String user_id) {
+	public int getCartCount(String userId) {
 		
-		return cartMapper.getCartCount(user_id);
+		return cartMapper.getCartCount(userId);
 	}
 
 	public boolean buyProduct(CartDTO product) {

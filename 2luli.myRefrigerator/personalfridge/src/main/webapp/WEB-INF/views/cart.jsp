@@ -34,16 +34,20 @@
     
 </head>
 
-    <body>
+<body>
 
-        <!-- Spinner Start -->
-        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
-        </div>
-        <!-- Spinner End -->
+	<!-- Spinner Start -->
+	<div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+		<div class="spinner-grow text-primary" role="status"></div>
+	</div>
+	<!-- Spinner End -->
 
 
-
+	<!-- Single Page Header start -->
+	<div class="container-fluid page-header py-5">
+		<h1 class="text-center text-white display-6">장바구니</h1>
+	</div>
+	<!-- Single Page Header End -->
 
         <!-- Modal Search Start -->
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,52 +69,52 @@
         <!-- Modal Search End -->
 
 
-        <!-- Single Page Header start -->
-        <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Cart</h1>
-            <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active text-white">Cart</li>
-            </ol>
-        </div>
+ 
         <!-- Single Page Header End -->
 <button id="sendProductsButton" onclick="sendProducts()">제품 보내기</button>
 
-					<div class="col-lg-11">
-       <div class="row justify-content-center" style="margin-top: 200px; width: 40%; margin-left: 620px; ">
-           <c:forEach var="cart" items="${mergedCartList}">
-                <div class="card">
-                   <div class="card-head"> <!-- 삭제 버튼을 포함할 요소 -->
-                        <div class="cardbtn">
-			       		</div>
-			        </div>
-       				<div class="card-info">
-                    <div class="cart_id" style="display: none;">${cart.cart_id}</div>
-       				<div class="product_id" style="display: none;">${cart.product_id}</div>
-       				<div class="product_quantity" style="display: none;">${cart.product_quantity}</div>
-                       <img src="${cart.product_img}" style="width: 50px;">
-                        <a>이름 : ${cart.product_name}</a>
-                        <a>수량 : ${cart.product_quantity}개</a>
-                        <a style=margin-left:10px;>가격 : ${cart.product_price}원</a>
-                        </div>
-                </div>
-            </c:forEach>
-            </div>
-            </div>
-        <!-- Cart Page End -->
-
-
-         <!-- footer start -->
-       <%@ include file="footer.jsp" %>
-        <!-- footer End -->
-
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
-
-        
+	<div class="col-lg-11">
+		<div class="row justify-content-center" style="margin-top: 200px; width: 40%; margin-left: 620px; ">
+			<div class="cart_id" style="display: none;">${cart.cart_id}</div>
+			<div class="product_id" style="display: none;">${cart.product_id}</div>
+			<div class="product_quantity" style="display: none;">${cart.product_quantity}</div>
+			<table>
+				<thead>
+					<tr>
+						<th style="text-align:center;">상품이미지</th>
+						<th style="text-align:center;">상품명</th>
+						<th style="text-align:center;">수 량</th>
+						<th style="text-align:center;">가 격</th>
+						<th></th>
+					</tr>
+				</thead>
+				<c:forEach var="cart" items="${mergedCartList}">
+					<tbody>
+						<tr style="text-align:center;">
+							<td><img src="${cart.product_img}" style="width: 65px;"></td>
+							<td>${cart.product_name}</td>
+						    <td>
+						        <button type ="button" onclick="">-</button>
+						        <input type="text" name="pop_out" value="${cart.product_quantity} 개" readonly="readonly" style="text-align:center;"/>
+						        <button type="button" onclick="">+</button>
+						    </td>
+							<td>${cart.product_price}원</td>
+							<td><button type="button" onclick="">X</button></td>
+						</tr>
+					</tbody>
+	            </c:forEach>
+			</table>
+		</div>
+	</div>
+	<!-- Cart Page End -->
+	
+	<!-- footer start -->
+	<%@ include file="footer.jsp" %>
+	<!-- footer End -->
+	
+	<!-- Back to Top -->
+	<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+	
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -188,6 +192,5 @@
 	
 	</script>    
 </body>
-
 
 </html>

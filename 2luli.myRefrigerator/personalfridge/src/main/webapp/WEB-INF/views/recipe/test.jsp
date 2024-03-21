@@ -11,7 +11,8 @@
 $(function() { //jquery - js의 라이브러리 
 	$('#b1').click(function() { //이벤트가 발생하면 자동호출되는 익명함수(콜백함수)
 		$.ajax({
-			url : "http://openapi.foodsafetykorea.go.kr/api/67d21b2aa52f435480ad/COOKRCP01/json/1/50",
+			//http://openapi.foodsafetykorea.go.kr/api/keyId/serviceId/dataType/startIdx/endIdx
+			url : "http://openapi.foodsafetykorea.go.kr/api/67d21b2aa52f435480ad/COOKRCP01/json/111/121",
 			success: function(json) {
 				
 				//RCP_NM : 메뉴명 //recipe_name
@@ -43,7 +44,7 @@ $(function() { //jquery - js의 라이브러리
 				console.log(nutrition_facts);
 				console.log(ingredient);
 				console.log(recipe_content); */
-				
+
 				let data = json.COOKRCP01.row;
 				
 				for(let i = 0; i< data.length; i++){
