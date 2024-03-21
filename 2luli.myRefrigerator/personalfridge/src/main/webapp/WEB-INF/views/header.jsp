@@ -29,7 +29,7 @@
                              <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">레시피</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="/recipeshop" class="dropdown-item">(음식)레시피</a>
+                                    <a href="/recipeshop" class="dropdown-item">음식 레시피</a>
                                     <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
                                 </div>
                                  </div>

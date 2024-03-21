@@ -50,7 +50,6 @@
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="/board?CategoryNo=1">공지사항</a></li>
                 <li class="breadcrumb-item active text-white">공유 게시판</li>
-                <li class="breadcrumb-item"><a href="/board?CategoryNo=3">나만의 레시피</a></li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -75,11 +74,6 @@
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name">
                                                         <a href="#"><i class="fas fa-apple-alt me-2"></i>공유 게시판</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="/board?CategoryNo=3"><i class="fas fa-apple-alt me-2"></i>나만의 레시피</a>
                                                     </div>
                                                 </li>
                                             </ul>

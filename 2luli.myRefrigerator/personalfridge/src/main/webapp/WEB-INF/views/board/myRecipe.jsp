@@ -46,8 +46,7 @@
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">나만의 레시피</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="/board?CategoryNo=1">공지사항</a></li>
-                <li class="breadcrumb-item"><a href="/board?CategoryNo=2">공유 게시판</a></li>
+                <li class="breadcrumb-item"><a href="/recipeshop">음식 레시피</a></li>
                 <li class="breadcrumb-item active text-white">나만의 레시피</li>
             </ol>
         </div>
@@ -60,31 +59,41 @@
                     <div class="col-lg-12">
                         <div class="row g-4">
                             <div class="col-lg-3">
-                                <div class="row g-4">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>카테고리</h4>
-                                            <ul class="list-unstyled fruite-categorie">
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="/board?CategoryNo=1"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="/board?CategoryNo=2"><i class="fas fa-apple-alt me-2"></i>공유 게시판</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>나만의 레시피</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+								<div class="row g-4">
+									<div class="col-lg-12">
+										<div class="mb-3">
+											<h4>카테고리</h4>
+											<ul class="list-unstyled fruite-categorie">
+												<li>
+													<div class="d-flex justify-content-between fruite-name">
+														<a href="#"><i class="fas fa-apple-alt me-2"></i>밥</a>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex justify-content-between fruite-name">
+														<a href="#"><i class="fas fa-apple-alt me-2"></i>반찬</a>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex justify-content-between fruite-name">
+														<a href="#"><i class="fas fa-apple-alt me-2"></i>국&찌개</a>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex justify-content-between fruite-name">
+														<a href="#"><i class="fas fa-apple-alt me-2"></i>후식</a>
+													</div>
+												</li>
+												<li>
+													<div class="d-flex justify-content-between fruite-name">
+														<a href="#"><i class="fas fa-apple-alt me-2"></i>일품</a>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
                             <c:set var="pageSize" value="9" />
 							<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
                             <div class="col-lg-9">

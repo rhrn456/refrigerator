@@ -73,14 +73,11 @@
 
 	<!-- Single Page Header start -->
 	<div class="container-fluid page-header py-5">
-		<h1 class="text-center text-white display-6">Recipe Shop</h1>
-		<ol class="breadcrumb justify-content-center mb-0">
-			<li class="breadcrumb-item active text-white">Recipe Shop</li>
-			<li class="breadcrumb-item"><a href="/productshop">Product
-					Shop</a></li>
-			<li class="breadcrumb-item"><a href="/specialproductshop">Special
-					Product Shop</a></li>
-		</ol>
+		<h1 class="text-center text-white display-6">음식 레시피</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item active text-white">음식 레시피</li>
+            <li class="breadcrumb-item"><a href="/board?CategoryNo=3">나만의 레시피</a></li>
+        </ol>
 	</div>
 	<!-- Single Page Header End -->
 

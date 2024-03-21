@@ -69,10 +69,10 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Product Shop</h1>
+            <h1 class="text-center text-white display-6">식재료</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item active text-white">Product Shop</li>
-                <li class="breadcrumb-item"><a href="/specialproductshop">Special Product Shop</a></li>
+                <li class="breadcrumb-item active text-white">식재료</li>
+                <li class="breadcrumb-item"><a href="/specialproductshop">특가 상품</a></li>
             </ol>
         </div>
         <!-- Single Page Header End -->
