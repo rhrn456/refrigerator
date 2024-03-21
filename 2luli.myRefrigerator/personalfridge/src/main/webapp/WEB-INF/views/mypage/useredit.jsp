@@ -4,7 +4,7 @@
 <html>
 <head>
         <meta charset="utf-8">
-        <title>정보 수정</title>
+        <title>마이페이지</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -110,7 +110,7 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
 									                <div class="d-flex justify-content-between allproduct">
-									                    <a href="/mypage/edit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
+									                    <a href="/userEdit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
 									                </div>
 									            </li>
 									            <li>
@@ -159,21 +159,32 @@
                                     </div>
                                 </div>
                             </div>
-														<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
-						
-							
+
 							<div class="col-lg-9">
-								<h2>사용자 정보 수정</h2>
-								<form action="<c:url value='/mypage/updateUser'/>" method="post">
-								    <input type="hidden" name="user_id" value="${mypage.user_id}"/>
-								    이름: <input type="text" name="user_name" value="${mypage.user_name}"/><br/>
-								    비밀번호: <input type="password" name="password" value="${mypage.password}"/><br/>
-								    비밀번호 확인: <input type="password" name="password" value="${mypage.password}"/><br/>
-								    이메일: <input type="email" name="mail" value="${mypage.mail}"/><br/>
-								    주소: <input type="text" name="adress" value="${mypage.adress}"/><br/>
-								    전화번호: <input type="number" name="phone" value="${mypage.phone}"/><br/>
-								    <input type="submit" value="수정"/>
-								</form>
+								
+							<form action="/user/updateInfo" id="usereditBox" method="post" style="text-align: center;">
+							    <h2>회원 정보 수정</h2>
+							    <div>
+							        <label for="name">이름:</label>
+							        <input type="text" id="name" name="name" required placeholder="이름">
+							    </div>
+							    <div>
+							        <label for="email">이메일:</label>
+							        <input type="email" id="email" name="email" required placeholder="이메일">
+							    </div>
+							    <div>
+							        <label for="address">주소:</label>
+							        <input type="text" id="address" name="address" required placeholder="주소">
+							    </div>
+							    <div>
+							        <label for="phone">핸드폰번호:</label>
+							        <input type="text" id="phone" name="phone" required placeholder="숫자로만 입력하세요">
+							    </div>
+							    <div>
+							        <button type="submit">비밀번호 변경</button>
+							        <button type="submit">정보 수정</button>
+							    </div>
+							</form>
 
 							    <div class="row g-4 justify-content-center">
 							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
@@ -239,7 +250,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+
         
         <div id="modalContainer" class="modal-container">
         <div class="modal-content">

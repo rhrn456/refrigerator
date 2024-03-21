@@ -54,6 +54,56 @@
 		.modal-button {
 		          margin-top: 20px;
 		}
+		.userTextForm {
+		  border-bottom: 2px solid #adadad;
+		  margin: 30px;
+		  padding: 10px 10px;
+		}
+		.id {
+		  width: 100%;
+		  border:none;
+		  outline:none;
+		  color: #636e72;
+		  font-size:16px;
+		  height:25px;
+		  background: none;
+		}
+		.name {
+		  width: 100%;
+		  border:none;
+		  outline:none;
+		  color: #636e72;
+		  font-size:16px;
+		  height:25px;
+		  background: none;
+		}
+		.email {
+		  width: 100%;
+		  border:none;
+		  outline:none;
+		  color: #636e72;
+		  font-size:16px;
+		  height:25px;
+		  background: none;
+		}
+		.adress {
+		  width: 100%;
+		  border:none;
+		  outline:none;
+		  color: #636e72;
+		  font-size:16px;
+		  height:25px;
+		  background: none;
+		}
+		.phone {
+		  width: 100%;
+		  border:none;
+		  outline:none;
+		  color: #636e72;
+		  font-size:16px;
+		  height:25px;
+		  background: none;
+		}
         </style>
     </head>
     
@@ -110,7 +160,7 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
 									                <div class="d-flex justify-content-between allproduct">
-									                    <a href="/mypage/edit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
+									                    <a href="/userEdit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
 									                </div>
 									            </li>
 									            <li>
@@ -161,17 +211,25 @@
                             </div>
 														<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
 						
-							
+							<!-- 사용자 정보 표시 -->
 							<div class="col-lg-9">
 								<div class="box" style="text-align: center;" >
 									<h2>회원 정보</h2>
-
-									<!-- 사용자 정보 표시 -->
-									<p>ID: ${mypage.user_id}</p>
-									<p>이름: ${mypage.user_name}</p>
-									<p>이메일: ${mypage.mail}</p>
-									<p>주소: ${mypage.adress}</p>
-									<p>핸드폰 번호: ${mypage.phone}</p>
+									<div class="userTextForm">
+										<p class="id">ID: ${mypage.user_id}</p>
+									</div>
+									<div class="userTextForm">
+									<p class="name">이름: ${mypage.user_name}</p>
+									</div>
+									<div class="userTextForm">
+									<p class="email">이메일: ${mypage.mail}</p>
+									</div>
+									<div class="userTextForm">
+									<p class="adress">주소: ${mypage.adress}</p>
+									</div>
+									<div class="userTextForm">
+									<p class="phone">핸드폰 번호: ${mypage.phone}</p>
+									</div>
 								</div>
 
 							    <div class="row g-4 justify-content-center">
@@ -238,7 +296,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         
         <div id="modalContainer" class="modal-container">
         <div class="modal-content">

@@ -78,6 +78,7 @@ public class UserController {
 	   //삭제된 회원인지 확인
    	UserDTO user = userService.login(user_id);
    	int cartCount = cartService.getCartCount(user_id);
+   	System.out.println(cartCount);
    	if(user.isDelete_plug() == true) {
    		return "redirect:/";
    	}
@@ -197,39 +198,42 @@ public class UserController {
     	
 
  // 마이페이지에서 정보수정 페이지로
-    @GetMapping("/mypage/updateUserPage")
-	public String updateUserPage(HttpServletRequest request) {
-		 String userId = (String) request.getSession().getAttribute("userId");
-	            if (userId != null) {
-	            	
-	            	return "/mypage/useredit?user_id=" + userId;   
+    @GetMapping("/userEdit")
+	public ModelAndView updateUserPage1S(HttpServletRequest request) {
+    	String user_id = (String) request.getSession().getAttribute("userId");
+    	//select user userId service -> mapper -> mapper.xml 
+		//model -> ("/userEdit") -> view  name userEdit.jsp
+		//Model, view -> ModelAndView
+		//model.addObject("modelName", modelValue);
+		//model.setViewName("/mypage/useredit1")
+		 
+		//${modelName.memberName}
+    	ModelAndView mav = new ModelAndView("/mypage/useredit");
+    	UserDTO userInfo = userService.getUserInfo(user_id);
+        mav.addObject("useredit", userInfo);
+		if (user_id != null) {
+					return mav;
 	            } else {
-	                return "/loginPage";
-		        }
-	       }
+	            	mav.setViewName("user/login");
+	                return mav;
+	            }
+		}
     
     
     // 마이페이지 정보수정
     @PostMapping("/mypage/updateUser")
-    public String updateUser(@ModelAttribute UserDTO user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String updateUser(@ModelAttribute UserDTO user, HttpSession session, RedirectAttributes redirectAttributes) {
         // 사용자 정보 업데이트 로직 실행
-    	String userId = (String) request.getSession().getAttribute("userId");
-    	boolean updateResult = userService.updateUser(user);
+        boolean updateResult = userService.updateUser(user);
         
         if (updateResult) {
-        	if (userId != null) {
-            	
-            	return "/mypage/useredit?user_id=" + userId;   
-            } else {
-                return "/loginPage";
-	        }
-        } 
-        else {
+            redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
+            return "redirect:/mypage?user_id=" + user.getUser_id();
+        } else {
             redirectAttributes.addFlashAttribute("error", "회원 정보 업데이트에 실패했습니다.");
             return "redirect:/mypage/edit?user_id=" + user.getUser_id(); // 정보 수정 페이지로 리다이렉션
         }
     }
-    
     
     // 환불 및 교환 시 연락처/이메일 페이지 이동
     @GetMapping("/refundPage")
