@@ -73,14 +73,7 @@
 
 	<!-- Single Page Header start -->
 	<div class="container-fluid page-header py-5">
-		<h1 class="text-center text-white display-6">Recipe Shop</h1>
-		<ol class="breadcrumb justify-content-center mb-0">
-			<li class="breadcrumb-item active text-white">Recipe Shop</li>
-			<li class="breadcrumb-item"><a href="/productshop">Product
-					Shop</a></li>
-			<li class="breadcrumb-item"><a href="/specialproductshop">Special
-					Product Shop</a></li>
-		</ol>
+		<h1 class="text-center text-white display-6">이루리 요리책</h1>
 	</div>
 	<!-- Single Page Header End -->
 
@@ -88,7 +81,7 @@
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite py-5">
 		<div class="container py-5">
-			<h1 class="mb-4">Recipe</h1>
+			<h1 class="mb-4">이루리 요리책</h1>
 			<div class="row g-4">
 				<div class="col-lg-12">
 					<div class="row g-4">

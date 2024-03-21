@@ -70,10 +70,10 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">Special Product Shop</h1>
+            <h1 class="text-center text-white display-6">알뜰 쇼핑</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="/productshop">Product</a></li>
-                <li class="breadcrumb-item active text-white">Special Product Shop</li>
+                <li class="breadcrumb-item"><a href="/productshop">냉장고 식량 창고</a></li>
+                <li class="breadcrumb-item active text-white">알뜰 쇼핑</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -82,7 +82,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Special Product Shop</h1>
+                <h1 class="mb-4">알뜰 쇼핑</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -306,7 +306,8 @@
 		        	 modal.hide();
 		        	 $('#quantityModal #productId').val(''); 
 		             $('#quantityInput').val('');
-		             alert('장바구니에 추가되었습니다.');
+		             alert(response.message);
+		             $('#cartCountIndicator').text(response.cartCount);
 		        },
 		        error: function(xhr, status, error) {
 		            // 오류 발생 시 수행할 작업

@@ -394,7 +394,9 @@
 }
 
 .vesitable .owl-nav .owl-prev {
-    position: absolute;
+	float:right;
+    margin-right: -80px;
+    margin-top: -250px;
     top: -8px;
     right: 0;
     color: var(--bs-primary);
@@ -411,7 +413,9 @@
 }
 
 .vesitable .owl-nav .owl-next {
-    position: absolute;
+	float:left;
+    margin-left: -80px;
+    margin-top: -250px;
     top: -8px;
     right: 88px;
     color: var(--bs-primary);

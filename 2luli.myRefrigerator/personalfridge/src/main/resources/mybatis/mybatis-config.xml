@@ -17,6 +17,7 @@
 	<typeAlias type="com.multi.personalfridge.dto.EmailSendDTO" alias="EmailSend"/>
 	<typeAlias type="com.multi.personalfridge.dto.UserLikeDTO" alias="UserLike"/>
 	<typeAlias type="com.multi.personalfridge.dto.CartDTO" alias="Cart"/>
+	<typeAlias type="com.multi.personalfridge.dto.CartProductDTO" alias="CartProduct"/>
 </typeAliases>
 
 </configuration>

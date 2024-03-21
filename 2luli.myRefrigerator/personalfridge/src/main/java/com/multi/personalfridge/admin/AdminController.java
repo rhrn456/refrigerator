@@ -136,12 +136,6 @@ public class AdminController {
 	}
 	
 	
-	//차트 보드
-	@GetMapping("/chartboard")
-	public String chartboard() {
-		return "admin/plusrecipeproducts";
-	}
-	
 	
 	//레시피 관련 START------------------------------------------------------------------------
 	//레시피 리스트 페이지
@@ -202,8 +196,6 @@ public class AdminController {
 		String category ="";
 		List<ReviewDTO> reviews = reviewService.ReviewAndPage(category,page, pageSize);//전체 리뷰 페이징
 		List<ReviewDTO> reviewList = reviewService.getAllReviewList(category);// 전체 리뷰 가져오기
-		System.out.println(reviews);
-		System.out.println(reviewList);
 		int totalReviews = reviewList.size();//총 페이지수 구하기
 		int totalPages = (int) Math.ceil((double) totalReviews / pageSize); 
 		if(totalPages >5) {
@@ -465,7 +457,6 @@ public class AdminController {
 											.currentPage(page)
 											.amount(pageSize)
 											.build();
-		    System.out.println(pageRequestDTO); 
 			model.addAttribute("productlist",productlist);
 			 model.addAttribute("pageInfo", pageRequestDTO);
 			 return "admin/specialproductslistadmin";

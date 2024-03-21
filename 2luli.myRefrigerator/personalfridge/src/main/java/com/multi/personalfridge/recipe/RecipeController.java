@@ -124,8 +124,29 @@ public class RecipeController {
 		}
 
 	
-	//화면이동
-
+		//메인에서 검색하기
+		@GetMapping("/mainSearch")
+		public String mainSearch(@RequestParam String keyword, @RequestParam(defaultValue ="1") int page, Model model) {
+			int pageSize = 9;
+			String category = "";
+		    List<RecipeDTO> recipes = recipeService.getRecipesBykeywordAndPage(category, keyword, page, pageSize);
+		    List<RecipeDTO> recipeList = recipeService.getRecipesBykeyword(category, keyword);
+		    int totalRecipes = recipeList.size();
+		    int totalPages = (int) Math.ceil((double) totalRecipes / pageSize); 
+			if(totalPages >5) {
+				totalPages = 5;
+			}
+		    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+											.total(totalRecipes)
+											.pageAmount(totalPages)
+											.currentPage(page)
+											.amount(pageSize)
+											.build();  
+		    model.addAttribute("recipelist", recipes);
+		    model.addAttribute("pageInfo", pageRequestDTO);
+		    return "recipe/recipeshop";
+		}
+		
 
 
 }
