@@ -11,7 +11,6 @@
 	    WHERE c.user_id = #{user_id}
 	</select>
 	
-	
  	<!-- 카트 상품 등록 -->
     <insert id="insertCart" parameterType="Cart">
 	    INSERT INTO cart (user_id, product_id, product_quantity)
@@ -20,7 +19,7 @@
 	
 	<!-- 카트목록 카운팅 사용 -->
 	<select id ="getCartCount" parameterType="String">
-		SELECT COUNT(*) AS count
+		SELECT COUNT(product_id) AS count
 		FROM cart
 		WHERE user_id = #{user_id}
 	</select>

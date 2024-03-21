@@ -25,7 +25,6 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 	
-	
 	@GetMapping("/insertCart")
 	public String insertCart(@RequestParam("cartProducts") String cartProductsJson, HttpServletRequest request) {
 	    // 세션에서 userId 가져오기
@@ -61,27 +60,25 @@ public class CartController {
 	    }
 	}
 	
-	
-	
 	@PostMapping("/ItemToCart")
 	public ResponseEntity<Map<String, Object>> ItemToCart(@RequestParam int product_id, @RequestParam int product_quantity, HttpServletRequest request) {
 		CartDTO cart = new CartDTO();
-		 HttpSession session = request.getSession();
-		 String userId = (String) session.getAttribute("userId");
-		 int cartCount = cartService.getCartCount(userId);
-		 session.setAttribute("cartCount", cartCount);
-		 cart.setUser_id(userId);
-		 cart.setProduct_id(product_id);
-		 cart.setProduct_quantity(product_quantity);
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		cart.setUser_id(userId);
+		cart.setProduct_id(product_id);
+		cart.setProduct_quantity(product_quantity);
 		boolean result = cartService.insertCart(cart);
-		 Map<String, Object> response = new HashMap<>();
-		    if (result) {
-		        response.put("message", "장바구니에 추가되었습니다.");
-		        response.put("cartCount", cartCount); // 세션의 cartCount 값 전달
-		        return ResponseEntity.ok(response);
-		    } else {
-		        response.put("message", "장바구니 추가 실패");
-		        return ResponseEntity.badRequest().body(response);
-		    }
+		int cartCount = cartService.getCartCount(userId);
+		session.setAttribute("cartCount", cartCount);
+		Map<String, Object> response = new HashMap<>();
+		if (result) {
+			response.put("message", "장바구니에 추가되었습니다.");
+			response.put("cartCount", cartCount); // 세션의 cartCount 값 전달
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("message", "장바구니 추가 실패");
+			return ResponseEntity.badRequest().body(response);
+		}
 	}
-	}
+}

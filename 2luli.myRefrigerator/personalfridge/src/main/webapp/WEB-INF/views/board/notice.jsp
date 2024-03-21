@@ -81,7 +81,7 @@
 						</div>
 						
 						<div class="col-lg-9">
-							<div class="row g-4 justify-content-center">
+							<div class="row g-4 justify-content-center" style="--bs-gutter-y:none;">
 								<table>
 									<thead>
 										<tr>

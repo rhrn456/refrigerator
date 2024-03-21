@@ -76,7 +76,6 @@ public class CommonController {
 	        return "error";
 	    }
 	    List<CartProductDTO> cartList = cartService.getCartProducts(userId);
-
 	    Map<String, CartProductDTO> mergedCartMap = new HashMap<>();
 	    for (CartProductDTO cart : cartList) {
 	        String key = cart.getProduct_id() + "-" + cart.getSpecial_product(); // 제품 ID와 특별 제품 여부를 조합하여 고유한 키 생성
