@@ -168,7 +168,7 @@
 
 									<!-- 사용자 정보 표시 -->
 									<p>ID: ${mypage.user_id}</p>
-									<p>닉네임: ${mypage.user_name}</p>
+									<p>이름: ${mypage.user_name}</p>
 									<p>이메일: ${mypage.mail}</p>
 									<p>주소: ${mypage.adress}</p>
 									<p>핸드폰 번호: ${mypage.phone}</p>

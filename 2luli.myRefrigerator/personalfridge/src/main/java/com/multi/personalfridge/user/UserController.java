@@ -175,20 +175,7 @@ public class UserController {
         return mav;
     }
     
- // 마이페이지에서 정보수정 페이지로
-    @GetMapping("/mypage/edit")
-    public ModelAndView editUserInfo(HttpSession session) {
-        ModelAndView mav = new ModelAndView("mypage/useredit");
-        String userId = (String) session.getAttribute("userId");
-        if (userId != null) {
-            UserDTO user = userService.getUserById(userId); // 세션에서 사용자 ID를 가져와 해당 사용자 정보 조회
-            mav.addObject("user", user); // 조회한 사용자 정보를 모델에 추가
-        } else {
-            mav.setViewName("redirect:/loginPage"); // 로그인하지 않은 사용자의 경우 로그인 페이지로 리다이렉션
-        }
-        return mav;
-    }
-    
+ 
     // 마이페이지 계정 삭제
     @PostMapping("/mypage/selectPassword")
     @ResponseBody
@@ -209,18 +196,35 @@ public class UserController {
     }
     	
 
+ // 마이페이지에서 정보수정 페이지로
+    @GetMapping("/mypage/updateUserPage")
+	public String updateUserPage(HttpServletRequest request) {
+		 String userId = (String) request.getSession().getAttribute("userId");
+	            if (userId != null) {
+	            	
+	            	return "/mypage/useredit?user_id=" + userId;   
+	            } else {
+	                return "/loginPage";
+		        }
+	       }
     
     
     // 마이페이지 정보수정
     @PostMapping("/mypage/updateUser")
-    public String updateUser(@ModelAttribute UserDTO user, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String updateUser(@ModelAttribute UserDTO user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
         // 사용자 정보 업데이트 로직 실행
-        boolean updateResult = userService.updateUser(user);
+    	String userId = (String) request.getSession().getAttribute("userId");
+    	boolean updateResult = userService.updateUser(user);
         
         if (updateResult) {
-            redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-            return "redirect:/mypage?user_id=" + user.getUser_id();
-        } else {
+        	if (userId != null) {
+            	
+            	return "/mypage/useredit?user_id=" + userId;   
+            } else {
+                return "/loginPage";
+	        }
+        } 
+        else {
             redirectAttributes.addFlashAttribute("error", "회원 정보 업데이트에 실패했습니다.");
             return "redirect:/mypage/edit?user_id=" + user.getUser_id(); // 정보 수정 페이지로 리다이렉션
         }
