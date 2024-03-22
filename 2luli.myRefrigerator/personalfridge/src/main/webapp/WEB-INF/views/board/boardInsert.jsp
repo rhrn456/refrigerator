@@ -83,17 +83,73 @@
 							            </div>
 							            <!-- Card Body -->
 							            <form action="/insertBoard" method="POST">
-								            <div class="card-body">
-								                <input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" required>
-								                <textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
-								                <div class="dropdown">
-								                    <select id="board_category" name="CategoryNo" class="form-control mb-3"">
-								                        <option value="" selected disabled hidden>게시판 분류</option>
-								                        <option value="1">공지사항</option>
-								                        <option value="2">공유 게시판</option>
-								                        <option value="3">나만의 레시피</option>
-								                    </select>
-								                </div>
+								            <div class="card-body">								                
+								                <c:if test="${empty refrigeratorProdcut}">
+								                	<input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" required>
+								             		<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
+							                		<div class="dropdown">
+									                    <select id="board_category" name="CategoryNo" class="form-control mb-3"">
+									                        <option value="" selected disabled hidden>게시판 분류</option>
+									                        <option value="1">공지사항</option>
+									                        <option value="2">공유 게시판</option>
+									                        <option value="3">나만의 레시피</option>
+									                    </select>
+									                </div>
+								                </c:if>								                	
+								                <c:if test="${not empty refrigeratorProdcut}">
+								                	<input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" value="${refrigeratorProdcut.product_name} 공유하고 싶어요!" required>
+								                	<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>개수 : ${refrigeratorProdcut.product_quantity}
+소비기한 : ${refrigeratorProdcut.limit_date}</textarea>
+									                <div class="dropdown">
+									                    <select id="board_category" name="CategoryNo" class="form-control mb-3"">
+									                        <option value="2">공유 게시판</option>
+									                    </select>
+									                </div>
+								                </c:if>
+								                
+								                <div id="map" style="width:100%;height:400px;"></div>
+								                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=70cfc06e9436eefff5f27287fb6bfd38"></script>
+							                	<script>
+								                    navigator.geolocation.getCurrentPosition((position) => {
+								                        // 사용자가 위치 공유를 허용했을 때의 처리
+								                        initMap(position.coords.latitude, position.coords.longitude);
+								                    }, (error) => {
+								                        // 에러 발생 시 (위치 공유를 거부한 경우 포함) 기본 위치 사용
+								                        console.error(error);
+								                        // 서울 시청의 위도와 경도로 기본값 설정
+								                        var defaultLat = 37.566535;
+								                        var defaultLng = 126.9779692;
+								                        initMap(defaultLat, defaultLng);
+								                    });
+	
+								                    // 지도와 마커를 초기화하는 함수
+								                    function initMap(lat, lng) {
+								                        var container = document.getElementById('map');
+								                        var options = {
+								                            center: new kakao.maps.LatLng(lat, lng),
+								                            level: 3
+								                        };
+								                        
+								                        var map = new kakao.maps.Map(container, options);
+								                        
+								                        var markerPosition  = new kakao.maps.LatLng(lat, lng); // 마커가 표시될 위치
+								                        var marker = new kakao.maps.Marker({ // 마커 생성
+								                            position: markerPosition
+								                        });
+	
+								                        marker.setMap(map);
+								                        
+								                        var overlay = new kakao.maps.CustomOverlay({
+								                            content: '<div style="padding:5px;background-color:white;border:1px solid black;border-radius:5px;">이 근처에서 거래하고 싶어요!</div>',
+								                            position: markerPosition,
+								                            yAnchor: 2.5 // 텍스트가 마커 위에 오도록 y축 위치 조정
+								                        });
+
+								                        overlay.setMap(map);
+								                    }
+												</script>
+								                
+												<br>
 								                <!-- 확인 버튼 -->
 								                <button type="submit" id="confirmButton" class="btn btn-primary" style="float:right; margin-bottom: 1rem">등록</button>
 								            </div>

@@ -14,6 +14,12 @@
 		order by limit_date		
 	</select>
 	
+	<select id="getRefrigeratorProductByRefrigeratorProductId" parameterType="_int"  resultType="RefrigeratorProdcut">
+		select *
+		from refrigerator_product
+		where refrigerator_product_id = #{refrigeratorProductId}
+	</select>
+	
 	<insert id="insertRefrigeratorProdcut" parameterType="RefrigeratorProdcut">
 		insert into refrigerator_product(product_name, product_quantity, refrigerator_id, append_date, limit_date)
 		values (#{product_name}, #{product_quantity}, #{refrigerator_id}, now(), #{limit_date})

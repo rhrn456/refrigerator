@@ -21,4 +21,6 @@ public interface RefrigeratorMapper {
 
 	int insertRefrigerator(String user_id);
 
+	RefrigeratorProdcutDTO getRefrigeratorProductByRefrigeratorProductId(int refrigeratorProductId);
+
 }

@@ -269,7 +269,7 @@ thead th {
 											</button>
 											<button
 												class="btn btn-md rounded-circle bg-light border mt-4"
-												onclick="shareProduct(${product.refrigerator_product_id})">
+												onclick="window.location.href='/shareProduct?refrigeratorProductId=${product.refrigerator_product_id}'">
 												<i class="bi bi-people-fill"></i>
 											</button>
 											<button

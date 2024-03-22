@@ -158,9 +158,13 @@ public class RefrigeratorController {
 	}
 	
 	//재료 공유 refrigeratorProductId를 받아와서 게시판 폼에 관련정보를 받아와 쏴줄 예정
-	@PostMapping("/shareProduct")
-	public void shareProduct(@RequestParam("refrigeratorProductId") int refrigeratorProductId) {
-		System.out.println(refrigeratorProductId);/*테스트용 추후삭제*/
+	@GetMapping("/shareProduct")
+	public ModelAndView shareProduct(@RequestParam("refrigeratorProductId") int refrigeratorProductId) {
+		ModelAndView mv = new ModelAndView();
+		RefrigeratorProdcutDTO refrigeratorProdcut = refrigeratorService.getRefrigeratorProductByRefrigeratorProductId(refrigeratorProductId);
+		mv.addObject("refrigeratorProdcut",refrigeratorProdcut);
+		mv.setViewName("/board/boardInsert");
+		return mv;
 	}
 	
 	//재료 수정

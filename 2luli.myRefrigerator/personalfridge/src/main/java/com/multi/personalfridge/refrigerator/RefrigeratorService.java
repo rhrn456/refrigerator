@@ -40,6 +40,11 @@ public class RefrigeratorService {
 		int result = refrigeratorMapper.updateRefrigeratorProduct(refrigeratorProdcut);
 		return result == 0 ? false : true;
 	}
+
+	public RefrigeratorProdcutDTO getRefrigeratorProductByRefrigeratorProductId(int refrigeratorProductId) {
+		// TODO Auto-generated method stub
+		return refrigeratorMapper.getRefrigeratorProductByRefrigeratorProductId(refrigeratorProductId);
+	}
 	
 	
 }
