@@ -14,6 +14,7 @@ $(function() { //jquery - js의 라이브러리
 			//http://openapi.foodsafetykorea.go.kr/api/keyId/serviceId/dataType/startIdx/endIdx
 			url : "http://openapi.foodsafetykorea.go.kr/api/67d21b2aa52f435480ad/COOKRCP01/json/141/151",
 
+
 			success: function(json) {
 				
 				//RCP_NM : 메뉴명 //recipe_name

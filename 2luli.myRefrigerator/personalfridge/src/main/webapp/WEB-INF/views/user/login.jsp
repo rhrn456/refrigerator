@@ -62,7 +62,7 @@ margin-top:100px;
                                     </div>
 									<form class="user" method="POST" action="/Login">
 									    <div class="form-group">
-									        <input type="text" class="form-control form-control-user"
+									        <input type="text" maxlength= "10" class="form-control form-control-user"
 									            id="user_id" name="user_id" aria-describedby="emailHelp"
 									            placeholder="Enter Account" required>
 									    </div>
@@ -77,9 +77,9 @@ margin-top:100px;
 									   <a href="socalLogin" class="btn btn-google btn-user btn-block">
 									        <i class="fab fa-google fa-fw"></i> Login with Google
 									    </a>
-									     <a href="test" class="btn btn-kakao btn-user btn-block" style="background-color:#ffef5e; font-weight: bold;">
-										    <i class="fab fa-kakao"></i> 카카오톡 로그인
-										</a>
+									    <a href="index.html" class="btn btn-facebook btn-user btn-block">
+		                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+		                                </a>
 									</form>
                                     <hr>
                                     <div class="text-center">

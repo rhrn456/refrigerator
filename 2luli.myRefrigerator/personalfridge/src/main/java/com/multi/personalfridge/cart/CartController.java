@@ -70,7 +70,9 @@ public class CartController {
 		 cart.setProduct_quantity(product_quantity);
 		 boolean result = cartService.insertCart(cart);
 		 
-		 int cartCount = cartService.getCartCount(userId);
+		 int cartCountNormal = cartService.getCartCountNormal(userId);
+		 int cartCountSpecial = cartService.getCartCountSpecial(userId);
+		 int cartCount = cartCountNormal + cartCountSpecial;
 		 session.setAttribute("cartCount", cartCount);
 		 Map<String, Object> response = new HashMap<>();
 		    if (result) {
@@ -103,7 +105,11 @@ public class CartController {
 	                return "error";
 	            }
 	        }
-	        return "redirect:/";
+	       	 int cartCountNormal = cartService.getCartCountNormal(userId);
+			 int cartCountSpecial = cartService.getCartCountSpecial(userId);
+			 int cartCount = cartCountNormal + cartCountSpecial;
+			 session.setAttribute("cartCount", cartCount);
+	        return "redirect:/checkshipload";
 	    } catch (JsonProcessingException e) {
 	        // JSON 파싱에 실패한 경우에 대한 예외 처리
 	        e.printStackTrace();

@@ -177,7 +177,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>배송조회</a>
+                                                        <a href="/checkshipload"><i class="fas fa-apple-alt me-2"></i>배송조회</a>
                                                      
                                                     </div>
                                                 </li>

@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 			 "com.multi.personalfridge.review",
 			 "com.multi.personalfridge.refrigerator",
 			 "com.multi.personalfridge.board",
+			 "com.multi.personalfridge.ship",
 			 "com.multi.personalfridge.common"})
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class PersonalfridgeApplication {

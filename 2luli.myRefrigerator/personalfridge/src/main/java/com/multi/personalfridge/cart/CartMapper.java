@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.multi.personalfridge.dto.CartDTO;
 import com.multi.personalfridge.dto.CartProductDTO;
+import com.multi.personalfridge.dto.ProductDTO;
 
 @Mapper
 public interface CartMapper {
@@ -15,10 +16,12 @@ public interface CartMapper {
 
 	List<CartProductDTO> getCartProducts(String user_id);
 
-	int getCartCount(String user_id);
+	int getCartCountNormal(String user_id);
 
 	boolean buyProduct(CartDTO product);
 
 	void removeCartItem(Map params);
+
+	int getCartCountSpecial(String userId);
 
 }

@@ -57,7 +57,7 @@
 	select *
 	from product
 	where special_product = 0 
-	AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
 	<if test='category != ""'>
          AND product_category = #{category}
      </if>
@@ -69,7 +69,7 @@
 	SELECT *
 	FROM product
 	WHERE special_product = 0 
-	AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
 	<if test='category != ""'>
          AND product_category = #{category}
      </if>
@@ -119,7 +119,7 @@
 	select *
 	from product
 	where special_product = 1 
-	AND product_name LIKE CONCAT('%', #{keyword}, '%')
+	AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
 	 <if test='category != ""'>
       AND  product_category = #{category} 
      </if>
@@ -131,7 +131,7 @@
 	SELECT *
     FROM product
     WHERE special_product = 1 
-    AND product_name LIKE CONCAT('%', #{keyword}, '%')
+    AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
      <if test='category != ""'>
          AND product_category = #{category}
      </if>
