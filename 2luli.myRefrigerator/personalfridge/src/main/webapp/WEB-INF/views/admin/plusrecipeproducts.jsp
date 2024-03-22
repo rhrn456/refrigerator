@@ -144,7 +144,7 @@
         				<div style="display: flex; flex-direction: row; margin-bottom:12px;">
 						    <button id="openModalButton" class="btn btn-primary">상품 선택</button>
 						    <input type="text" id="selectedIngredient" class="form-control" style="margin-left:5px;width: 180px;" placeholder="레시피 재료" readonly>
-						</div>
+						</div><p>${onerecipe.ingredient}</p>
                     <input type="text" id="product_quantity" placeholder="수량" class="form-control mb-3">
                     <!-- 확인 버튼 -->
                     <button id="confirmButton" class="btn btn-primary">등록</button>

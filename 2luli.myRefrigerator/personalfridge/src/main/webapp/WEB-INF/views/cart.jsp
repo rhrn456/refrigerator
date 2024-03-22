@@ -32,8 +32,68 @@
 	<%@ include file="header.jsp" %>
     <!-- Navbar End -->
     
-</head>
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
 
+/* 모달 콘텐츠 스타일 */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px; /* 모달 최대 너비 설정 */
+  border-radius: 10px;
+}
+
+/* 모달 닫기 버튼 스타일 */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 모달 입력 요소 간 마진 설정 */
+.modal-inputs {
+  margin-bottom: 10px;
+}
+
+/* 확인 버튼 스타일 */
+.btn-primary {
+  width: 100%;
+}
+
+/* 주소 입력 요소 정렬 */
+#locationDropdown,
+#addressInput {
+  width: calc(100% - 10px);
+  margin-bottom: 10px;
+}
+
+/* 주소 입력 모달 타이틀 정렬 */
+h2 {
+  margin-top: 0;
+}
+</style>
+</head>
 <body>
 
 	<!-- Spinner Start -->
@@ -71,7 +131,11 @@
 
  
         <!-- Single Page Header End -->
-<button id="sendProductsButton" onclick="sendProducts()">제품 보내기</button>
+
+
+
+
+
 
 	<div class="col-lg-11">
 		<div class="row justify-content-center" style="margin-top: 200px; width: 40%; margin-left: 620px; ">
@@ -108,12 +172,40 @@
 	</div>
 	<!-- Cart Page End -->
 	
+	
+	
+	
+	
+	<button id="sendProductsButton" onclick="openModal()">제품 보내기</button>
+
+<div id="deliveryModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+     <h2 style="text-align: center;">배송 정보 입력</h2>
+     <div class="modal-inputs">
+    <select id="locationDropdown">
+      <option value="부산">부산</option>
+      <option value="서울">서울</option>
+      <option value="경기">경기</option>
+      <option value="강원도">강원도</option>
+      <option value="전라북도">전라북도</option>
+      <option value="전라남도">전라남도</option>
+      <option value="경상북도">경상북도</option>
+      <option value="경상남도">경상남도</option>
+      <option value="충청남도">충청남도</option>
+      <option value="충청북도">충청북도</option>
+    </select>
+    <input type="text" style="width:450px;"id="addressInput" placeholder="주소를 입력하세요">
+    </div>
+    <button class="btn btn-primary" onclick="confirmAddress()">확인</button>
+  </div>
+</div>
+
+
 	<!-- footer start -->
 	<%@ include file="footer.jsp" %>
 	<!-- footer End -->
 	
-	<!-- Back to Top -->
-	<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 	
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -126,6 +218,70 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 	<script>
+	//택배 주소 창열기
+	 function openModal() {
+		    var modal = document.getElementById("deliveryModal");
+		    modal.style.display = "block";
+		  }
+
+		  // 모달 닫기
+		  function closeModal() {
+		    var modal = document.getElementById("deliveryModal");
+		    modal.style.display = "none";
+		  }
+
+		  function confirmAddress() {
+			    var locationDropdown = document.getElementById('locationDropdown');
+			    var selectedLocation = locationDropdown.value;
+			    var addressInput = document.getElementById('addressInput');
+			    var enteredAddress = addressInput.value;
+
+			    // 선택된 위치와 입력된 주소 확인
+			    console.log('선택된 위치:', selectedLocation);
+			    console.log('입력된 주소:', enteredAddress);
+
+			    $.ajax({
+			        type: "POST",
+			        url: "/delevery",
+			        contentType: "application/json",
+			        data: JSON.stringify({
+			            arrive: selectedLocation,
+			            sub_adress: enteredAddress
+			        }),
+			        success: function(response) {
+			            console.log('배송 정보 전송 성공');
+			            sendProducts();
+			            closeModal();
+			        },
+			        error: function(xhr, status, error) {
+			            console.error('배송 정보 전송 실패');
+			            console.error(error);
+			        }
+			    });
+			}
+		  
+		  
+		  function closeModal() {
+			    var modal = document.getElementById('deliveryModal');
+			    modal.style.display = 'none';
+			}
+			  // 사용자가 모달 외부를 클릭하면 모달이 닫히도록 설정
+			  window.onclick = function(event) {
+			    var modal = document.getElementById("deliveryModal");
+			    if (event.target == modal) {
+			      modal.style.display = "none";
+			    }
+			  }//택배 끝
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 	var cartItemList = [];
     var viewCartList = [];
     var cartItemAlltList = ${cartListJson}; // JSON 형식의 문자열로 전달된 recipeproductList

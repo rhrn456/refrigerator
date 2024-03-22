@@ -1,0 +1,17 @@
+구매 -> 도착지(지역명) 입력 ->  송장 번호 생성(랜덤 번호) -> 확인 -> shipe 데이터 저장 -> 
+ship_id cart에 저장 -> 스케줄러 2분마다 now_location 업데이트 -> adress 도착까지 지나간 위치 go_on 1
+설정후 새로 생서유 go-on 0 설정 ->now_location == adress 일때 종료
+도착 표시
+
+
+table 명 ship
+ship_id : int AI,NN,PK
+user_id : String FK
+ship_code : String 
+arrive : String
+sub_dress : String
+now_location : String
+go_on : int
+
+
+cart 테이블 ship_id 를 FK

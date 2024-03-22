@@ -109,7 +109,7 @@ public class CartController {
 			 int cartCountSpecial = cartService.getCartCountSpecial(userId);
 			 int cartCount = cartCountNormal + cartCountSpecial;
 			 session.setAttribute("cartCount", cartCount);
-	        return "redirect:/";
+	        return "redirect:/checkshipload";
 	    } catch (JsonProcessingException e) {
 	        // JSON 파싱에 실패한 경우에 대한 예외 처리
 	        e.printStackTrace();

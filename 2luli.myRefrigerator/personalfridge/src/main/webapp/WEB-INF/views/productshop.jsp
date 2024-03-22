@@ -318,6 +318,7 @@
 		             $('#quantityInput').val('');
 		             alert(response.message);
 		             $('#cartCountIndicator').text(response.cartCount);
+		             console.log("다시그려");
 		        },
 		        error: function(xhr, status, error) {
 		            // 오류 발생 시 수행할 작업
