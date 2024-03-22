@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,6 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -109,34 +109,25 @@ h2 {
 	</div>
 	<!-- Single Page Header End -->
 
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal Search End -->
 
-
- 
-        <!-- Single Page Header End -->
-
-
-
-
-
-
+    </div>
+    <!-- Modal Search End -->
 	<div class="col-lg-11">
 		<div class="row justify-content-center" style="margin-top: 200px; width: 40%; margin-left: 620px; ">
 			<div class="cart_id" style="display: none;">${cart.cart_id}</div>
@@ -152,54 +143,53 @@ h2 {
 						<th></th>
 					</tr>
 				</thead>
-				<c:forEach var="cart" items="${mergedCartList}">
-					<tbody>
-						<tr style="text-align:center;">
-							<td><img src="${cart.product_img}" style="width: 65px;"></td>
-							<td>${cart.product_name}</td>
-						    <td>
-						        <button type ="button" onclick="">-</button>
-						        <input type="text" name="pop_out" value="${cart.product_quantity} 개" readonly="readonly" style="text-align:center;"/>
-						        <button type="button" onclick="">+</button>
-						    </td>
-							<td>${cart.product_price}원</td>
-							<td><button type="button" onclick="">X</button></td>
-						</tr>
-					</tbody>
-	            </c:forEach>
 			</table>
+				<ul id="productList" class="row mt-3" style="margin-right:2px;"></ul>
+					<%-- <c:forEach var="cart" items="${mergedCartList}">
+						 <tbody>
+							<tr style="text-align:center;">
+								<td><img src="${cart.product_img}" style="width: 65px;"></td>
+								<td>${cart.product_name}</td>
+							    <td>
+							        <button type ="button" onclick="">-</button>
+							        <input type="text" name="pop_out" value="${cart.product_quantity} 개" readonly="readonly" style="text-align:center;"/>
+							        <button type="button" onclick="">+</button>
+							    </td>
+								<td>${cart.product_price}원</td>
+								<td><button type="button" onclick="">X</button></td>
+							</tr>
+						</tbody> 
+					</c:forEach> --%>
 		</div>
 	</div>
 	<!-- Cart Page End -->
 	
 	
 	
-	
-	
 	<button id="sendProductsButton" onclick="openModal()">제품 보내기</button>
 
-<div id="deliveryModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-     <h2 style="text-align: center;">배송 정보 입력</h2>
-     <div class="modal-inputs">
-    <select id="locationDropdown">
-      <option value="부산">부산</option>
-      <option value="서울">서울</option>
-      <option value="경기">경기</option>
-      <option value="강원도">강원도</option>
-      <option value="전라북도">전라북도</option>
-      <option value="전라남도">전라남도</option>
-      <option value="경상북도">경상북도</option>
-      <option value="경상남도">경상남도</option>
-      <option value="충청남도">충청남도</option>
-      <option value="충청북도">충청북도</option>
-    </select>
-    <input type="text" style="width:450px;"id="addressInput" placeholder="주소를 입력하세요">
+    <div id="deliveryModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 style="text-align: center;">배송 정보 입력</h2>
+        <div class="modal-inputs">
+        <select id="locationDropdown">
+        <option value="부산">부산</option>
+        <option value="서울">서울</option>
+        <option value="경기">경기</option>
+        <option value="강원도">강원도</option>
+        <option value="전라북도">전라북도</option>
+        <option value="전라남도">전라남도</option>
+        <option value="경상북도">경상북도</option>
+        <option value="경상남도">경상남도</option>
+        <option value="충청남도">충청남도</option>
+        <option value="충청북도">충청북도</option>
+        </select>
+        <input type="text" style="width:450px;"id="addressInput" placeholder="주소를 입력하세요">
+        </div>
+        <button class="btn btn-primary" onclick="confirmAddress()">확인</button>
     </div>
-    <button class="btn btn-primary" onclick="confirmAddress()">확인</button>
-  </div>
-</div>
+    </div>
 
 
 	<!-- footer start -->
@@ -276,12 +266,7 @@ h2 {
 		  
 		  
 		  
-		  
-		  
-		  
-		  
-		  
-		  
+
 	var cartItemList = [];
     var viewCartList = [];
     var cartItemAlltList = ${cartListJson}; // JSON 형식의 문자열로 전달된 recipeproductList
@@ -295,7 +280,7 @@ h2 {
                 product_quantity: CartProductDTO.product_quantity
             };
             cartItemList.push(cartItem);
-           console.log(cartItem);
+            
             // recipeItem을 생성하여 recipeItems 배열에 추가
             var viewCart = {
                 product_name: CartProductDTO.product_name,
@@ -304,16 +289,12 @@ h2 {
                 product_price : CartProductDTO.product_price,
                 special_product : CartProductDTO.special_product
             };
-            
-            
             viewCartList.push(viewCart);
             //renderProductList();
             
         });
     }
-
-    //debugger;
-
+	
     // 레시피 재료 삭제
     function removeProduct(index) {
     	cartItemList.splice(index, 1); // 전송할 데이터 삭제
@@ -346,7 +327,125 @@ h2 {
 
     }
 	
-	</script>    
+    function addProduct(selectedProductName, selectedProductId, selectedProductImg, selectedProductPrice, selectedProductSpecial) {	    	
+	    var product_id = selectedProductId;
+	    var product_name = selectedProductName;
+	    var product_quantity = 1;
+	    var product_img = selectedProductImg;
+	    var product_price = selectedProductPrice;
+	    var special_product = selectedProductSpecial;
+	    
+	    // 전송할 데이터
+	    var recipeProduct = {
+	        product_id: product_id,
+	        product_quantity: product_quantity
+	    };
+	    
+	    // 출력용
+	    var recipeItem = {
+	        product_name: product_name,
+	        product_quantity: product_quantity,
+	        product_img: product_img,
+	        product_price: product_price,
+	        special_product : special_product
+	    };
+	    
+	    recipeItems.push(recipeItem);
+	    recipeProducts.push(recipeProduct);
+	    renderProductList();
+	}
+    
+	// 받아온 상품 정보를 업데이트하는 함수
+	function updateProducts(response) {
+	    var productsContainer = $('.col-lg-11 .row');
+	    productsContainer.empty(); // 기존 상품 목록 비우기
+	   	console.log("여기 열렸어");
+	   	console.log(response);
+	    // 받아온 데이터를 페이지에 맞게 출력
+	    $.each(response.viewCart, function(index, viewCart) {
+	        // 상품 정보를 HTML로 생성하는 코드
+	        var productHTML = '<div class="card" style="margin-left:1px; padding:0;">' +
+				'<div class="card-info">' +
+	            '<div class="product-img" style="display: none;">' + viewCart.product_img + '</div>' +
+	            '<div class="product-name" style="display: none;">' + viewCart.product_name + '</div>' +
+	            '<div class="product_quantity" style="display: none;">' + viewCart.product_quantity + '</div>' +
+	            '<div class="product-price" style="display: none;">' + viewCart.product_price + '</div>' +
+	            '<div class="main-top" style="margin-left:10px;">' +
+	            '<a style="display: block; margin-top:7px; color:#4d4c4c; font-weight:bold;">' + viewCart.product_name + '</a>' + 
+                '<a style="display: block; font-size:15px;">' + viewCart.product_price + '원' + '</a>' + 
+	            '</div>' +
+	            '<div class="main-top">' +
+	           /*  '<div class="special_product" style="font-size:13px; color:white; background-color: ' + (viewCart.special_product ? 'orange' : 'green') + '; text-align: center;">' + (viewCart.special_product ? '특가' : '일반') + '</div>' + */
+	            '<button id="confirmButton3" class="btn plus-btn" style="font-size:15px;">추가</button>' + // 추가 버튼 추가
+	            '</div>' +
+	            '</div>' +
+	            '</div>';
+	            console.log(productHTML);
+	        productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+	    });
+	}
+	
+	// 제품 목록을 출력하는 함수
+    function renderRecipeItems() {
+        var recipeItemsList = document.getElementById('recipeItemsList');
+        recipeItemsList.innerHTML = ''; // 기존 목록 초기화
+
+        // recipeItems 배열을 순회하면서 각 제품의 정보를 출력
+        recipeItems.forEach(function(item) {
+			// 각 제품을 나타내는 요소 생성
+            var listItem = document.createElement('li');
+            listItem.style.marginBottom = '4px';
+            listItem.style.fontSize = '20px';
+
+            // 제품 이름 출력
+            var nameElement = document.createElement('span');
+            nameElement.textContent = item.product_name;
+            listItem.appendChild(nameElement);
+
+            // 제품 수량 출력
+            var quantityElement = document.createElement('span');
+            quantityElement.textContent = ' ' + 'X' + ' ' + item.product_quantity  + '개';
+            listItem.appendChild(quantityElement);
+
+            // 제품 가격 출력
+            var priceElement = document.createElement('span');
+            priceElement.textContent = (item.product_price * item.product_quantity) + '원';
+            priceElement.style.float = 'right'; // 오른쪽으로 부유(floating)
+            listItem.appendChild(priceElement);
+
+            // 리스트에 각 제품 요소 추가
+            recipeItemsList.appendChild(listItem);
+        });
+        
+        // 총 가격 출력
+        var totalPriceElement = document.createElement('hr');
+        totalPriceElement.style.marginTop = '130px'; // 위쪽 여백 추가
+        recipeItemsList.appendChild(totalPriceElement);
+
+        var totalTextElement = document.createElement('span');
+        totalTextElement.textContent = '전체 금액: ';
+
+        var totalPriceValueElement = document.createElement('span');
+        var totalPrice = calculateTotalPrice(); // 총 가격 계산 함수 호출
+        totalPriceValueElement.textContent = totalPrice + '원';
+        totalPriceValueElement.style.float = 'right'; // 오른쪽으로 부유(floating)
+		
+        totalTextElement.style.fontSize = '20px'; // 폰트 크기 설정
+        totalPriceValueElement.style.fontSize = '20px'; // 폰트 크기 설정
+        recipeItemsList.appendChild(totalTextElement);
+        recipeItemsList.appendChild(totalPriceValueElement);
+    }
+
+    // 총 가격 계산 함수
+    function calculateTotalPrice() {
+        var totalPrice = 0;
+        recipeItems.forEach(function(item) {
+            totalPrice += item.product_price * item.product_quantity;
+        });
+        return totalPrice;
+    }
+	
+</script>    
 </body>
 
 </html>
