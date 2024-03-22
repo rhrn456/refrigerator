@@ -101,7 +101,6 @@
                                 	<table>
 									<thead>
 										<tr>
-											<th>글 번호</th>
 											<th>제목</th>
 											<th>I D</th>
 											<th>작성날짜</th>
@@ -111,7 +110,6 @@
 									<c:forEach items="${boards}" var="board">
 											<tbody>
 												<tr>
-													<td>${board.board_no}</td>
 													<td><a href="/view?boardNo=${board.board_no}">${board.title}</a></td>
 													<td>${board.user_id}</td>
 													<td><fmt:formatDate value="${board.board_create_date}" pattern="yyyy-MM-dd" /></td>
