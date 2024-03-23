@@ -108,8 +108,13 @@ public class BoardController {
 	public String insertBoard(@RequestParam("title") String title,
 								@RequestParam("content") String content,
 								@RequestParam("CategoryNo") int CategoryNo,
+								@RequestParam("latitude") double latitude,
+								@RequestParam("longitude") double longitude,
 								HttpServletRequest request) {
 		BoardDTO newBoard = new BoardDTO();
+		
+		System.out.println(latitude);
+		System.out.println(longitude);
 		
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");

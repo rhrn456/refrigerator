@@ -51,7 +51,6 @@ public class RefrigeratorController {
 	@GetMapping("/refrigerator")                     //세션 유저변수명
 	public ModelAndView getMethodName(@SessionAttribute("userId") String user_id) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println("현재접속중인 id : " + user_id);/*테스트용 추후 삭제*/
 		
 		//유저 아이디와 맞는 냉장고아이디를 불러옴 (최초 접속시에는 생성)
 		Integer refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);
@@ -60,12 +59,10 @@ public class RefrigeratorController {
 			refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);			
 		}
 		
-		System.out.println("현재 접속중인 냉장고 id : " + refrigeratorId);/*테스트용 추후 삭제*/
 		mv.addObject("refrigeratorId", refrigeratorId); 
 		
 		//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
-		System.out.println("현재 냉장고의 제품 갯수 : " + refrigeratorProductList.size());/*테스트용 추후 삭제*/
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);	
 		
 		//냉장고 속 제품과 맞는 재료들 불러옴
@@ -89,18 +86,11 @@ public class RefrigeratorController {
 		}
 		idList.clear();
 		
-		// 확인용 추후 제거
-		for (ProductDTO productDTO : productList) {
-			System.out.println(productDTO);
-		}
-		
 		//불러온 재료가 들어간 레시피의 id를 불러옴
 		ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
 		for (ProductDTO product : productList) {
 			recipeIdList.addAll(recipeProductService.getRecipeIdByProductId(product.getProduct_id()));//프로덕트아이디로 레피시프로덕트에서 레시피아이디 중복제거하고 가져올 서비스 메서드 매퍼 만들어줘야함
-			System.out.println(product.getProduct_id());
 		}
-		System.out.println(recipeIdList);
 	
 		//중복제거
 		for (int i = recipeIdList.size() - 1; i >= 0 ; i--) {
@@ -113,11 +103,6 @@ public class RefrigeratorController {
 				}
 			}
 			idList.add(recipeIdList.get(i));			
-		}
-		
-		//확인용 추후 제거
-		for (Integer recipeId : recipeIdList) {
-			System.out.println(recipeId);
 		}
 		
 		ArrayList<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();

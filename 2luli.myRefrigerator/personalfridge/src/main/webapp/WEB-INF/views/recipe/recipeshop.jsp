@@ -32,6 +32,16 @@
       	<!-- Navbar start -->
        <%@ include file="../header.jsp" %>
         <!-- Navbar End -->
+        
+        <style>
+		    .fruite-categorie li {
+		        margin-bottom: 10px; /* 목록 항목 간의 간격을 늘립니다. */
+		    }
+		
+		    .fruite-categorie a {
+		        font-size: 18px; /* 링크(글자)의 크기를 키웁니다. */
+		    }
+		</style>
     </head>
 
 <body>
@@ -98,7 +108,8 @@
 							<div class="row g-4">
 								<div class="col-lg-12">
 									<div class="mb-3">
-										<h4>카테고리</h4>
+										<h3>카테고리</h3>
+										<br>
 										<ul class="list-unstyled fruite-categorie">
 											<li>
 												<div class="d-flex justify-content-between fruite-name">
