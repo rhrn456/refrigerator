@@ -81,6 +81,10 @@
   width: 100%;
 }
 
+.mb-4 {
+	list-style-type: none;
+}
+
 /* 주소 입력 요소 정렬 */
 #locationDropdown,
 #addressInput {
@@ -92,6 +96,13 @@
 h2 {
   margin-top: 0;
 }
+
+#sendProductsButton {
+	float:right;
+	width: 100px;
+	border-radius: 15px;
+}
+
 </style>
 </head>
 <body>
@@ -107,13 +118,16 @@ h2 {
 		<h1 class="text-center text-white display-6">장바구니</h1>
 	</div>
 	<!-- Single Page Header End -->
-
-	<ul id="cartproductList" class="row mt-3" style="margin-right:2px;"></ul>
 	
-
+	<!-- Cart Page start -->
+	<div class="col-lg-11">
+		<div class="row justify-content-center" style="margin-top: 150px; margin-left: 200px; ">
+				<ul id="cartproductList" class="row mt-3" style="margin-right:2px;"></ul>
+		</div>
+		<button id="sendProductsButton" onclick="openModal()">제품 보내기</button>
+	</div>
+	<!-- Cart Page End -->
 	
-	<button id="sendProductsButton" onclick="openModal()">제품 보내기</button>
-
     <div id="deliveryModal" class="modal">
 	    <div class="modal-content">
 	        <span class="close" onclick="closeModal()">&times;</span>
@@ -245,6 +259,7 @@ h2 {
 
             var productImage = document.createElement('img');
             productImage.src = product.product_img;
+            productImage.style.width = '100px';
             productImage.alt = product.product_name;
             productListItem.appendChild(productImage);
 
@@ -261,8 +276,9 @@ h2 {
             productListItem.appendChild(productPrice);
 
             var addToCartButton = document.createElement('button');
-            addToCartButton.textContent = 'Add to Cart';
+            addToCartButton.textContent = 'X';
             addToCartButton.classList.add('btn', 'btn-primary');
+            addToCartButton.style.width = 'auto';
             productListItem.appendChild(addToCartButton);
 
             productList.appendChild(productListItem);
