@@ -166,23 +166,23 @@
 							    <h2>회원 정보 수정</h2>
 							    <div>
 							        <label for="name">이름:</label>
-							        <input type="text" id="name" name="name" required placeholder="이름">
+							        <input type="text" id="name" name="user_name" required value="${useredit.user_name}">
 							    </div>
 							    <div>
 							        <label for="email">이메일:</label>
-							        <input type="email" id="email" name="email" required placeholder="이메일">
+							        <input type="email" id="email" name="mail" required value="${useredit.mail}">
 							    </div>
 							    <div>
 							        <label for="address">주소:</label>
-							        <input type="text" id="address" name="address" required placeholder="주소">
+							        <input type="text" id="address" name="adress" required value="${useredit.adress}">
 							    </div>
 							    <div>
 							        <label for="phone">핸드폰번호:</label>
-							        <input type="text" id="phone" name="phone" required placeholder="숫자로만 입력하세요">
+							        <input type="text" id="phone" name="phone" required value="${useredit.phone}">
 							    </div>
 							    <div>
-							        <button type="submit">비밀번호 변경</button>
-							        <button type="submit">정보 수정</button>
+							        <button type="button">비밀번호 변경</button>
+							        <button type="submit" formaction="/updateUser">정보 수정</button>
 							    </div>
 							</form>
 
@@ -338,12 +338,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-		<script>
-		$(document).ready(function() {
-			var category ="";
-		    var keyword = "";
-		    var page = 1;
-		</script>
+		
     </body>
      <!-- footer start -->
        <%@ include file="../footer.jsp" %>
