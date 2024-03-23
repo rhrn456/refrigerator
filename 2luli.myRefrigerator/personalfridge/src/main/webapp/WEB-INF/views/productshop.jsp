@@ -111,7 +111,6 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <h3>카테고리</h3>
-                                            <br>
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
 									                <div class="d-flex justify-content-between allproduct">
