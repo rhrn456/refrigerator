@@ -6,7 +6,7 @@
             <div class="row g-4">
                 <div class="col-lg-3">
                     <a href="#">
-                        <h2 class="text-primary mb-0">나의 작은 냉장고</h2>
+                        <h2 class="text-white mb-0">나의 작은 냉장고</h2>
                         <p class="text-secondary mb-0">레시피 추천</p>
                     </a>
                 </div>
@@ -49,10 +49,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-<!-- 푸터 끝 -->
-
 <!-- 저작권 시작 -->
 <div class="container-fluid bg-dark text-white-50 py-4">
     <div class="container">
@@ -66,5 +62,9 @@
         </div>
     </div>
 </div>
+    </div>
+
+<!-- 푸터 끝 -->
+
 </footer>
         <!-- Copyright End -->

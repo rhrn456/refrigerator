@@ -611,6 +611,7 @@
 		
 		        confirmButton.onclick = function() {
 		            var recipeId = confirmButton.dataset.recipeId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
+		            console.log("레시피 아이디:" + recipeId);
 		            window.location.href = '/recipedeleteadmin/' + recipeId; // 해당 product_id를 사용하여 삭제 URL로 이동
 		        }
 		    });

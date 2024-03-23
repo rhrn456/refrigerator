@@ -108,60 +108,9 @@ h2 {
 	</div>
 	<!-- Single Page Header End -->
 
-    <!-- Modal Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center">
-                    <div class="input-group w-75 mx-auto d-flex">
-                        <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal Search End -->
-	<div class="col-lg-11">
-		<div class="row justify-content-center" style="margin-top: 200px; width: 40%; margin-left: 620px; ">
-			<div class="cart_id" style="display: none;">${cart.cart_id}</div>
-			<div class="product_id" style="display: none;">${cart.product_id}</div>
-			<div class="product_quantity" style="display: none;">${cart.product_quantity}</div>
-			<table>
-				<thead>
-					<tr>
-						<th style="text-align:center;">상품이미지</th>
-						<th style="text-align:center;">상품명</th>
-						<th style="text-align:center;">수 량</th>
-						<th style="text-align:center;">가 격</th>
-						<th></th>
-					</tr>
-				</thead>
-			</table>
-				<ul id="productList" class="row mt-3" style="margin-right:2px;"></ul>
-					<%-- <c:forEach var="cart" items="${mergedCartList}">
-						 <tbody>
-							<tr style="text-align:center;">
-								<td><img src="${cart.product_img}" style="width: 65px;"></td>
-								<td>${cart.product_name}</td>
-							    <td>
-							        <button type ="button" onclick="">-</button>
-							        <input type="text" name="pop_out" value="${cart.product_quantity} 개" readonly="readonly" style="text-align:center;"/>
-							        <button type="button" onclick="">+</button>
-							    </td>
-								<td>${cart.product_price}원</td>
-								<td><button type="button" onclick="">X</button></td>
-							</tr>
-						</tbody> 
-					</c:forEach> --%>
-		</div>
-	</div>
-	<!-- Cart Page End -->
+	<ul id="cartproductList" class="row mt-3" style="margin-right:2px;"></ul>
+	
+
 	
 	<button id="sendProductsButton" onclick="openModal()">제품 보내기</button>
 
@@ -187,7 +136,6 @@ h2 {
 	        <button class="btn btn-primary" onclick="confirmAddress()">확인</button>
 	    </div>
     </div>
-	
 	<!-- footer start -->
 	<%@ include file="footer.jsp" %>
 	<!-- footer End -->
@@ -281,11 +229,49 @@ h2 {
                 special_product : CartProductDTO.special_product
             };
             viewCartList.push(viewCart);
+            renderProductList();
             //renderProductList();
             
         });
     }
 	
+    function renderProductList() {
+        var productList = document.getElementById('cartproductList');
+        productList.innerHTML = ''; // 이전 상품들을 모두 삭제
+
+        viewCartList.forEach(function(product) {
+            var productListItem = document.createElement('li');
+            productListItem.classList.add('col-lg-3', 'col-md-6', 'mb-4');
+
+            var productImage = document.createElement('img');
+            productImage.src = product.product_img;
+            productImage.alt = product.product_name;
+            productListItem.appendChild(productImage);
+
+            var productName = document.createElement('h3');
+            productName.textContent = product.product_name;
+            productListItem.appendChild(productName);
+
+            var productQuantity = document.createElement('p');
+            productQuantity.textContent = 'Quantity: ' + product.product_quantity;
+            productListItem.appendChild(productQuantity);
+
+            var productPrice = document.createElement('p');
+            productPrice.textContent = 'Price: ' + product.product_price + '원';
+            productListItem.appendChild(productPrice);
+
+            var addToCartButton = document.createElement('button');
+            addToCartButton.textContent = 'Add to Cart';
+            addToCartButton.classList.add('btn', 'btn-primary');
+            productListItem.appendChild(addToCartButton);
+
+            productList.appendChild(productListItem);
+        });
+    }
+
+
+
+    
     // 레시피 재료 삭제
     function removeProduct(index) {
     	cartItemList.splice(index, 1); // 전송할 데이터 삭제

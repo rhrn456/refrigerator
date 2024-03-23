@@ -165,9 +165,10 @@ public class AdminController {
 	//레시피 삭제
 	@GetMapping("/recipedeleteadmin/{recipe_id}")
 	public String RecipeDeleteAdmin(@PathVariable int recipe_id) {
+		System.out.println(recipe_id);
 		boolean result = recipeService.recipeDeletById(recipe_id);
 		if(result) {
-			return "redirect:/SpecialProductAllList";
+			return "redirect:/RecipeListAdmin";
 		}else {
 		return "error";
 		}
@@ -397,7 +398,7 @@ public class AdminController {
 	            }
 	        }
 	        // 모든 제품이 성공적으로 처리된 경우에만 성공 반환
-	        return "redirect:/admin";
+	        return "redirect:/RecipeListAdmin";
 	    } catch (JsonProcessingException e) {
 	        // JSON 파싱에 실패한 경우에 대한 예외 처리
 	        e.printStackTrace();
