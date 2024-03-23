@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
   <!-- Footer Start -->
-       <footer class="container-fluid bg-dark text-white-50 pt-5 mt-5">
+<footer class="container-fluid text-white-50 pt-5 mt-5" style="background-color: #939393;">
     <div class="container py-5">
         <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5);">
             <div class="row g-4">
                 <div class="col-lg-3">
                     <a href="#">
-                        <h2 class="text-white mb-0">나의 작은 냉장고</h2>
-                        <p class="text-secondary mb-0">레시피 추천</p>
+                        <a href="#" class="navbar-brand"><img src="${pageContext.request.contextPath}/img/house-AI-BI.png" style="width:200px;" ></a>
                     </a>
                 </div>
             </div>
@@ -43,7 +42,7 @@
                     <p>팀: 2luli</p>
                     <p>멤버<br>
                         팀장: 강수현<br>
-                        팀원: 송기영, 양혁진, 조서현</p>
+                        팀원: 김유림, 송기영, 양혁진, 조서현</p>
                     <p>멀티캠퍼스 백엔드 개발(Java) 19회차</p>
                     <p>멀티캠퍼스 파이널 프로젝트</p>
                 </div>
