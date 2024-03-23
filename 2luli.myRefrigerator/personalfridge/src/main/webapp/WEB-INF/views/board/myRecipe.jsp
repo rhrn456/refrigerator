@@ -108,7 +108,7 @@
                             <c:set var="pageSize" value="9" />
 							<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
                             <div class="col-lg-9">
-                                <div class="row g-4 justify-content-center">
+                                <div class="row g-4r">
                                 	<table>
 									<thead>
 										<tr>

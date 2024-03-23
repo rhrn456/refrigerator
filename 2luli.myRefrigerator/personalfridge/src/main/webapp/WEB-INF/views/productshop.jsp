@@ -155,7 +155,7 @@
 						
 							
 							<div class="col-lg-9">
-							    <div class="row g-4 justify-content-center">
+							    <div class="row g-4">
 							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
 							        <c:forEach var="product" items="${products}" >
 							                <div class="col-md-6 col-lg-6 col-xl-4">

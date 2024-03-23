@@ -108,8 +108,8 @@ public class BoardController {
 	public String insertBoard(@RequestParam("title") String title,
 								@RequestParam("content") String content,
 								@RequestParam("CategoryNo") int CategoryNo,
-								@RequestParam("latitude") double latitude,
-								@RequestParam("longitude") double longitude,
+								@RequestParam(value = "latitude", required=false) Double latitude,
+								@RequestParam(value = "longitude", required=false) Double longitude,
 								HttpServletRequest request) {
 		BoardDTO newBoard = new BoardDTO();
 		
