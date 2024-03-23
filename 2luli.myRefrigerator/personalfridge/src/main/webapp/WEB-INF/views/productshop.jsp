@@ -173,7 +173,7 @@
 							                                <div class="product-id" style="display: none;"> ${product.product_id}</div>
 							                                  <div class="product-name" style="display: none;"> ${product.product_name}</div>
 							                               <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary" style="margin-top:10px;" data-bs-toggle="modal" data-bs-toggle="modal"  data-bs-target="#quantityModal">
-															    <i class="fa fa-shopping-bag me-2 text-primary"></i>장바구니 담기</a>
+															    <i class="fa fa-shopping-bag me-2 text-primary"></i>담기</a>
 													  </div>
 							                        </div>
 							                    </div>
