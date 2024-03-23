@@ -31,6 +31,16 @@
         <!-- Navbar start -->
        <%@ include file="header.jsp" %>
         <!-- Navbar End -->
+			
+		<style>
+		    .recipe-name {
+		        overflow: hidden;
+		        white-space: nowrap;
+		        text-overflow: ellipsis;
+		        width: 100%; /* 또는 다른 고정값 */
+		        display: block; /* 필요에 따라 */
+		    }
+		</style>
 
     </head>
 
@@ -129,7 +139,7 @@
 	                                            </div>
 	                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
 	                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-	                                                <h4>${RecipeDTO.recipe_name}</h4>
+	                                                <h4 class="recipe-name" title="${RecipeDTO.recipe_name}">${RecipeDTO.recipe_name}</h4>
 	                                                <p style="height:20px;">${RecipeDTO.recipe_content}</p>
 	                                                <div class="d-flex justify-content-between flex-lg-wrap" style="margin-left:40px;">
 	                                                     <a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"

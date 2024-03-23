@@ -144,7 +144,7 @@
 							</div>
 						</div>
 						<div class="col-lg-9">
-							<div id="recipeContent" class="row g-4 justify-content-center">
+							<div id="recipeContent" class="row g-4">
 								<!-- 반복 -->
 								<c:forEach items="${recipelist}" var="RecipeDTO">
 								    <div class="col-md-6 col-lg-6 col-xl-4">
