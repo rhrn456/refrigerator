@@ -48,21 +48,21 @@
                         <div class="navbar-nav mx-auto">
                              <div class="nav-item dropdown">
 
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">간편한 요리책</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:50px; color:#3D3D3D; font-size: 17px;">간편한 요리책</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0" style="margin-left:50px !important;">
                                     <a href="/recipeshop" class="dropdown-item">이루리 요리책</a>
                                     <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
                                 </div>
                                  </div>
                              <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">물건 보러가기</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:50px; color:#3D3D3D; font-size: 17px;">물건 보러가기</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0" style="margin-left:50px !important;">
                                     <a href="/productshop" class="dropdown-item">냉장고 식량 창고</a>
                                     <a href="/specialproductshop" class="dropdown-item">알뜰 쇼핑</a>
                                 </div>
                                 </div>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">우리의 게시판</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:50px; color:#3D3D3D; font-size: 17px;">우리의 게시판</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0" style="margin-left:50px !important;">
                                     <a href="/board?CategoryNo=1" class="dropdown-item">공지사항</a>
                                     <a href="/board?CategoryNo=2" class="dropdown-item">공유 게시판</a>
@@ -71,7 +71,7 @@
                                     </script> -->
                                 </div>
                             </div>
-                            <a href="/contact" class="nav-item nav-link" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">고객센터</a>
+                            <a href="/contact" class="nav-item nav-link" style="margin-left:50px; color:#3D3D3D; font-size: 17px;">고객센터</a>
                         </div>
                        	<div class="d-flex m-3 me-0" >
 						    <a href="/refrigerator" class="position-relative me-4 my-auto" >
