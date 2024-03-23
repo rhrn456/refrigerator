@@ -286,8 +286,8 @@
 						</div>
 						<div class="col-lg-6">
 						<h4 class="fw-bold mb-3">요리 방법</h4>
-							<p class="mb-4">${recipe.recipe_content}</p>
-							<p class="mb-4"><a style="font-weight: bold;">요리 재료 :</a> ${recipe.ingredient}</p>
+							<p class="mb-4" style="width:600px;font-weight: bold; font-size:19px;">${recipe.recipe_content}</p>
+							<p class="mb-4" style="font-size:19px; font-weight: bold;"><a style="font-size:23px; color:#45595b;">요리 재료 :</a> ${recipe.ingredient}</p>
 						</div>
 						  <div class="row justify-content-center" style="margin-top:30px; margin-bottom:-15px;">
 						        <div class="col-lg-8 col-xl-9">
@@ -348,7 +348,7 @@
 				<!-- 영수증 -->
 				     <div class="col-lg-4 col-xl-3 receipt-container" id="receiptContainer" style="display: none;">
 						    <div class="scroll-container" style="overflow-y: auto; max-height: 600px;">
-						        <div class="row g-4 fruite scroll-follow" id="scrollContainer" style="width:500px;">
+						        <div class="row g-4 fruite scroll-follow" id="scrollContainer" style="width:400px;">
 						            <div class="col-lg-12" style="margin-top:5px">
 						                <div class="mb-4">
 						                    <h4>제품 목록</h4>
@@ -700,6 +700,7 @@
 			    // 받아온 데이터를 페이지에 맞게 출력
 			    $.each(response.products, function(index, product) {
 			        // 상품 정보를 HTML로 생성하는 코드
+			     var formattedPrice = product.product_price.toLocaleString('en-US');
 			        var productHTML = '<div class="card" style="margin-left:1px; padding:0;">' +
 			        '<div class="card-info">' +
 			            '<div class="product-id" style="display: none;">' + product.product_id + '</div>' +
@@ -708,7 +709,7 @@
 			            '<div class="product-price" style="display: none;">' + product.product_price + '</div>' +
 			            '<div class="main-top" style="margin-left:10px;">' +
 			            '<a style="display: block; margin-top:7px; color:#4d4c4c; font-weight:bold;">' + product.product_name + '</a>' + 
-                        '<a style="display: block; font-size:15px;">' + product.product_price + '원' + '</a>' + 
+                        '<a style="display: block; font-size:15px; float:left;">' + formattedPrice + '원' + '</a>' + 
 			            '</div>' +
 			            '<div class="main-top">' +
 			            '<div class="special_product" style="font-size:13px; color:white; background-color: ' + (product.special_product ? 'orange' : 'green') + '; text-align: center;">' + (product.special_product ? '특가' : '일반') + '</div>' +
@@ -935,8 +936,9 @@
 			            listItem.appendChild(quantityElement);
 
 			            // 제품 가격 출력
+			            var formattedPrice = (item.product_price * item.product_quantity).toLocaleString('en-US');
 			            var priceElement = document.createElement('span');
-			            priceElement.textContent = (item.product_price * item.product_quantity) + '원';
+			            priceElement.textContent = ' ' + formattedPrice + '원';
 			            priceElement.style.float = 'right'; // 오른쪽으로 부유(floating)
 			            listItem.appendChild(priceElement);
 
@@ -953,7 +955,8 @@
 
 			        var totalPriceValueElement = document.createElement('span');
 			        var totalPrice = calculateTotalPrice(); // 총 가격 계산 함수 호출
-			        totalPriceValueElement.textContent = totalPrice + '원';
+			        var formattedTotalPrice = totalPrice.toLocaleString('en-US');
+			        totalPriceValueElement.textContent = ' ' + formattedTotalPrice + '원';
 			        totalPriceValueElement.style.float = 'right'; // 오른쪽으로 부유(floating)
 					
 			        totalTextElement.style.fontSize = '20px'; // 폰트 크기 설정
@@ -999,12 +1002,12 @@
 			            removeButton.style.position = 'absolute'; // 절대 위치 설정
 			            removeButton.style.top = '1px'; // 위쪽 여백 설정
 			            removeButton.style.right = '1px'; // 오른쪽 여백을 부모 요소의 오른쪽 끝에 위치하도록 설정
-			            removeButton.style.marginRight = '-12px'; // 오른쪽 여백을 부모 요소의 오른쪽 끝에 위치하도록 설정
+			            removeButton.style.marginRight = '-13px'; // 오른쪽 여백을 부모 요소의 오른쪽 끝에 위치하도록 설정
 			            removeButton.style.color = 'white'; // 글자색 설정
 			            removeButton.style.cursor = 'pointer'; // 커서 모양 변경
 			            removeButton.textContent = 'X'; // 텍스트 설정
-			            removeButton.style.padding = '3px'; // 패딩 설정
-			            removeButton.style.backgroundColor = 'black'; // 패딩 설정
+			            removeButton.style.padding = '8px'; // 패딩 설정
+			            removeButton.style.backgroundColor = 'gray'; // 패딩 설정
 
 
 			            removeButton.onclick = function() {
@@ -1029,11 +1032,12 @@
 			            }
 			            var productTypeElement = document.createElement('div');
 			            productTypeElement.textContent = productTypeText;
+			            productTypeElement.style.position = 'absolute'; // 절대 위치 설정
 			            productTypeElement.style.color = 'white';
 			            productTypeElement.style.borderRadius = '0.2rem';
 			            productTypeElement.style.width = '40px';
 			            productTypeElement.style.textAlign = 'center';
-			            productTypeElement.style.marginTop = '10px';
+			            productTypeElement.style.marginTop = '-25px';
 			            productTypeElement.style.height = '25px';
 			            if (productType === 1) {
 			                productTypeElement.style.backgroundColor = 'orange'; // productType이 1이면 초록색 배경
@@ -1046,44 +1050,73 @@
 			            // 텍스트 요소 생성 및 설정 (상품 이름)
 			            var nameTextElement = document.createElement('div');
 			            nameTextElement.textContent = product_name;
-			            nameTextElement.style.fontSize = '13px'; // 폰트 크기 설정
+			            nameTextElement.style.fontSize = '20px'; // 폰트 크기 설정
+			            nameTextElement.style.marginTop = '5px'; // 폰트 크기 설정
 			            nameTextElement.style.fontColor = '#778899'; // 폰트 크기 설정
 
 			            productListItem.appendChild(nameTextElement);
 
-			         // 가격 텍스트 요소 생성 및 설정
-						var priceTextElement = document.createElement('span');
-						var priceValue = product.product_quantity * product.product_price; // 가격 계산
-						priceTextElement.innerHTML = priceValue + '<span style="font-size: 13px; color: #333;">원</span>'; // HTML 요소와 함께 텍스트 설정
-						priceTextElement.style.fontWeight = 'bold'; // 폰트 굵기 설정
-						priceTextElement.style.fontSize = '25px'; // 폰트 크기 설정
-						priceTextElement.style.marginTop = '100px'; // 상단 여백 설정
-						productListItem.appendChild(priceTextElement);
-			            
 			            
 			            var quantityContainer = document.createElement('div');
-			            quantityContainer.style.display = 'flex'; // Flexbox 레이아웃 설정
+			            quantityContainer.style.display = 'flex'; 
+			            quantityContainer.style.alignItems = 'center';
+			            quantityContainer.style.justifyContent = 'space-between';
+			            quantityContainer.style.height = '40px'; 
 			            productListItem.appendChild(quantityContainer);
+			            
+			        	 // 가격 텍스트 요소 생성 및 설정
+						var priceTextElement = document.createElement('span');
+			         
+						var priceValue = product.product_quantity * product.product_price; // 가격 계산
+						var formattedPrice = priceValue.toLocaleString('en-US'); 
+						priceTextElement.innerHTML = formattedPrice + '<span style="font-size: 13px; color: #333;">원</span>'; // HTML 요소와 함께 텍스트 설정
+						priceTextElement.style.fontWeight = 'bold'; // 폰트 굵기 설정
+						priceTextElement.style.fontSize = '25px'; // 폰트 크기 설정
+						quantityContainer.appendChild(priceTextElement);
+			            
+			            
 
+			            var hasConfirmed = false; 
 			            var quantityInput = document.createElement('input');
 			            quantityInput.setAttribute('type', 'number'); // 입력 필드 타입을 숫자로 설정
 			            quantityInput.setAttribute('value', product_quantity); // 기본 값 설정
 			            quantityInput.setAttribute('min', '0'); // 최소 값 설정
-			            quantityInput.setAttribute('max', '9'); // 최대 값 설정 (한 자리 숫자)
 			            quantityInput.setAttribute('step', '1'); // 증가/감소 단위 설정
 			            quantityInput.style.width = '50px'; // 입력 필드 너비 설정
+			            quantityInput.style.height = '30px'; // 입력 필드 너비 설정
 			            quantityInput.style.textAlign = 'center'; // 텍스트 가운데 정렬
 			            quantityInput.style.border = '1px solid #ccc'; // 테두리 추가
 			            quantityInput.style.borderRadius = '5px'; // 둥근 모서리 설정
 			            quantityInput.addEventListener('input', function() {
 			                var newQuantity = parseInt(this.value); // 입력된 수량 값 가져오기
-			                if (!isNaN(newQuantity) && newQuantity >= 0 && this.value.length === 1) { // 유효한 숫자인지 확인
+			                if (!isNaN(newQuantity) && newQuantity >= 0) { // 유효한 숫자인지 확인
+			                    if (!hasConfirmed && newQuantity >= 10) { // 사용자가 확인하지 않았고, 선택한 제품 수량이 10 이상인 경우
+			                        var confirmResponse = confirm("선택한 제품 수량이 10개 이상입니다. 계속하시겠습니까?");
+			                        if (confirmResponse) { // "네"를 선택한 경우
+			                            hasConfirmed = true; // 사용자가 확인했음을 표시
+			                        } else { // "아니오"를 선택한 경우
+			                            quantityInput.value = 9; // 수량을 9로 설정
+			                            // 가격 텍스트 업데이트
+			                            var newPriceValue = 9 * product.product_price;
+			                            var newFormattedPrice = newPriceValue.toLocaleString('en-US');
+			                            priceTextElement.innerHTML = newFormattedPrice + '<span style="font-size: 13px; color: #333;">원</span>';
+			                            // recipeProducts 배열의 해당 인덱스에 있는 product_quantity 업데이트
+			                            recipeProducts[index].product_quantity = 9;
+			                            // recipeItems 배열의 해당 인덱스에 있는 product_quantity 업데이트
+			                            recipeItems[index].product_quantity = 9;
+			                            clearRecipeItemsList();
+			                            renderRecipeItems();
+			                            return; // 함수 종료
+			                        }
+			                    }
+			                    // 가격 텍스트 업데이트
+			                    var newPriceValue = newQuantity * product.product_price;
+			                    var newFormattedPrice = newPriceValue.toLocaleString('en-US');
+			                    priceTextElement.innerHTML = newFormattedPrice + '<span style="font-size: 13px; color: #333;">원</span>';
 			                    // recipeProducts 배열의 해당 인덱스에 있는 product_quantity 업데이트
 			                    recipeProducts[index].product_quantity = newQuantity;
 			                    // recipeItems 배열의 해당 인덱스에 있는 product_quantity 업데이트
 			                    recipeItems[index].product_quantity = newQuantity;
-			                    // 가격 텍스트 업데이트
-			                    priceTextElement.innerHTML = (newQuantity * product.product_price) + '<span style="font-size: 13px; color: #333;">원</span>';
 			                    clearRecipeItemsList();
 			                    renderRecipeItems();
 			                }
@@ -1102,10 +1135,10 @@
 			        addButton.style.fontWeight = 'bold'; // 폰트 굵기를 설정합니다.
 			        addButton.style.fontSize = '50px'; // 폰트 크기 설정
 			        addButton.classList.add('btn', 'btn-sm', 'btn-primary', 'btn-add'); // 추가 버튼 클래스 추가 및 크기 설정
-			        addButton.style.width = '100px'; // 버튼의 너비를 조정하여 짧게 만듭니다.
-			        addButton.style.height = '100px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
-			        addButton.style.marginTop = '80px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
-			        addButton.style.marginLeft = '65px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
+			        addButton.style.width = '200px'; // 버튼의 너비를 조정하여 짧게 만듭니다.
+			        addButton.style.height = '200px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
+			        addButton.style.marginTop = '15px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
+			        addButton.style.marginLeft = '25px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
 	
 			        addButton.onclick = function() {
 			        	 openModal();
