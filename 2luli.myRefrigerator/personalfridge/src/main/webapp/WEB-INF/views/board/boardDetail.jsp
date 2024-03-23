@@ -56,6 +56,12 @@
 		.modal-button {
 		          margin-top: 20px;
 		}
+		
+		#board-modify-btn {
+			background-color: #CFCFCF;
+			border-color: #CFCFCF;
+		}
+		
 	</style>
 </head>
 
@@ -104,23 +110,19 @@
 						    	<table>
 									<tbody>
 										<tr>
-											<th>글 번호</th>
-											<td>${board.board_no}</td>
-											<th>조회수</th>
-											<td>${board.hit}</td>
-										</tr>
-										<tr>
 											<th>작성자</th>
 											<td>${board.user_id}</td>
 											<th>작성날짜</th>
 											<td><fmt:formatDate value="${board.board_create_date}" pattern="yyyy-MM-dd" /></td>
+											<th>조회수</th>
+											<td>${board.hit}</td>
 										</tr>
 										<tr>
 											<th>제목</th>
-											<td colspan="3">${board.title}</td>
+											<td colspan="6">${board.title}</td>
 										</tr>
 										<tr>
-											<td colspan="4" class="view_text">${board.content}</td>
+											<td colspan="6" class="view_text">${board.content}</td>
 										</tr>
 									</tbody>
 								</table>
