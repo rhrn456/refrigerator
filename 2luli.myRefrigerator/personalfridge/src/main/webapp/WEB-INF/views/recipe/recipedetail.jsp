@@ -289,20 +289,28 @@
 							<p class="mb-4">${recipe.recipe_content}</p>
 							<p class="mb-4"><a style="font-weight: bold;">요리 재료 :</a> ${recipe.ingredient}</p>
 						</div>
+						  <div class="row justify-content-center" style="margin-top:30px; margin-bottom:-15px;">
+						        <div class="col-lg-8 col-xl-9">
+						            <div class="alert alert-warning text-center" role="alert">
+						                쌀, 간장, 소금 등 기본 식재료는 재료창에 포함되어 있지 않습니다. 필요한 재료를 추가해주세요.
+						            </div>
+						        </div>
+						    </div>
 							<ul id="productList" class="row mt-3" style="margin-right:2px;"></ul>
 						</div>
 					</div>
 				</div>
 				
 				
+				
 				    <!-- 댓글 섹션 -->
 			        <h2>레시피의 평가를 남겨주세요!</h2>
-			        <hr style="width:600px; border-top: 2px solid black;">
-			    <div class="review-section">
+			        <hr style="width:900px; border-top: 2px solid black;">
+			    <div class="review-section" >
 			        <c:forEach items="${reviewList}" var="review">
-			            <div class="review">
-			            <div style="display: flex; justify-content: space-between;">
-			               <a style="margin-top:10px !important; font-size:20px; weight:bold;">${review.review_content}  </a>
+			            <div class="review" style="width:900px;">
+			            <div style="display: flex; justify-content: space-between; ">
+			               <a style="margin-top:10px !important; font-size:20px; weight:bold; " >${review.review_content}  </a>
 			                <c:if test="${review.user_id eq sessionScope.userId or sessionScope.userAdmin eq 2}">
 			                    <!-- 댓글 수정 및 삭제 버튼 -->
 			                    <div class="review-controls" style="margin-bottom:6px;">
@@ -319,12 +327,12 @@
 			        </c:forEach>
 			
 			        <!-- 댓글 작성 폼 -->
-			        <form action="${pageContext.request.contextPath}/review/add" method="post" class="mt-3 mb-3" id="RecipeCommentForm"  style="display: flex; justify-content: center; align-items: center;">
+			        <form action="${pageContext.request.contextPath}/review/add" method="post" class="mt-3 mb-3" id="RecipeCommentForm"  style="width:900px;display: flex; justify-content: center; align-items: center;">
 			            <input name="review_content" class="form-control" maxlength= "20" type="text" style="height: 50px; margin-right: 10px;" placeholder="댓글을 입력하세요(20자)" required>
 			            <input type="hidden" name="recipe_id" value="${recipe.recipe_id}">
 			            <button type="submit" class="btn btn-primary" style="width:170px; height:48px;">댓글 작성</button>
 			        </form>
-			        
+			        </div>
 			        <!-- 댓글 수정 모달 -->
 			         <div id="modalContainer" class="modal-container">
 					    <div class="modal-contentupdate">
@@ -387,8 +395,9 @@
 				</div>
 
 
-
-
+			<!-- footer start -->
+			<%@ include file="../footer.jsp"%>
+			<!-- footer End -->
 	
 
 			<!-- JavaScript Libraries -->
@@ -963,8 +972,7 @@
 			    }
 			    
 
-			    // renderRecipeItems 함수 호출하여 제품 목록 출력
-			    renderRecipeItems();
+
 			    
 			    
 			    function renderProductList() {
@@ -1128,7 +1136,4 @@
 				});
 			</script>
 </body>
-			<!-- footer start -->
-			<%@ include file="../footer.jsp"%>
-			<!-- footer End -->
 </html>

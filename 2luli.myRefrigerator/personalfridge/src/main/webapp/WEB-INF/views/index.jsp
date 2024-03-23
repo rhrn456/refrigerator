@@ -164,7 +164,7 @@
 				        </div>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
             <c:forEach var="ProductDTO" items="${products}">
-                <div class="border border-primary rounded position-relative vesitable-item">
+                <div class="border rounded position-relative vesitable-item">
                     <div class="vesitable-img">
                         <img src="${ProductDTO.product_img}"  class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">
                     </div>
