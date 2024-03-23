@@ -82,7 +82,7 @@
 							                <h6 class="m-0 font-weight-bold text-primary">게시글 등록</h6>
 							            </div>
 							            <!-- Card Body -->
-							            <form action="/insertBoard" method="POST">
+							            <form action="/insertBoard" method="POST" id="locationForm">
 								            <div class="card-body">								                
 								                <c:if test="${empty refrigeratorProdcut}">
 								                	<input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" required>
@@ -107,47 +107,95 @@
 									                </div>
 								                </c:if>
 								                
-								                <div id="map" style="width:100%;height:400px;"></div>
+								                <div id="map" style="width:100%;height:400px;display: none"></div>
+								                <p id="result"></p>
 								                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=70cfc06e9436eefff5f27287fb6bfd38"></script>
-							                	<script>
-								                    navigator.geolocation.getCurrentPosition((position) => {
-								                        // 사용자가 위치 공유를 허용했을 때의 처리
-								                        initMap(position.coords.latitude, position.coords.longitude);
-								                    }, (error) => {
-								                        // 에러 발생 시 (위치 공유를 거부한 경우 포함) 기본 위치 사용
-								                        console.error(error);
-								                        // 서울 시청의 위도와 경도로 기본값 설정
-								                        var defaultLat = 37.566535;
-								                        var defaultLng = 126.9779692;
-								                        initMap(defaultLat, defaultLng);
-								                    });
-	
-								                    // 지도와 마커를 초기화하는 함수
-								                    function initMap(lat, lng) {
-								                        var container = document.getElementById('map');
-								                        var options = {
-								                            center: new kakao.maps.LatLng(lat, lng),
-								                            level: 3
-								                        };
-								                        
-								                        var map = new kakao.maps.Map(container, options);
-								                        
-								                        var markerPosition  = new kakao.maps.LatLng(lat, lng); // 마커가 표시될 위치
-								                        var marker = new kakao.maps.Marker({ // 마커 생성
-								                            position: markerPosition
-								                        });
-	
-								                        marker.setMap(map);
-								                        
-								                        var overlay = new kakao.maps.CustomOverlay({
-								                            content: '<div style="padding:5px;background-color:white;border:1px solid black;border-radius:5px;">이 근처에서 거래하고 싶어요!</div>',
-								                            position: markerPosition,
-								                            yAnchor: 2.5 // 텍스트가 마커 위에 오도록 y축 위치 조정
-								                        });
+							                	<script>							                		
+							                    var map; // 전역 변수로 선언하여 지도 객체를 저장
 
-								                        overlay.setMap(map);
-								                    }
+							                    // 사용자의 위치 또는 기본 위치로 지도를 초기화하는 함수
+							                    function requestLocationAndInitMap() {
+							                        navigator.geolocation.getCurrentPosition((position) => {
+							                            // 사용자가 위치 공유를 허용했을 때의 처리
+							                            initMap(position.coords.latitude, position.coords.longitude);
+							                            document.getElementById('latitude').value = position.coords.latitude;
+							                            document.getElementById('longitude').value = position.coords.longitude;
+
+							                        }, (error) => {
+							                            // 에러 발생 시 (위치 공유를 거부한 경우 포함) 기본 위치 사용
+							                            console.error(error);
+							                            // 서울 시청의 위도와 경도로 기본값 설정
+							                            var defaultLat = 37.566535;
+							                            var defaultLng = 126.9779692;
+							                            initMap(defaultLat, defaultLng);
+							                            document.getElementById('latitude').value = defaultLat;
+							                            document.getElementById('longitude').value = defaultLng;
+
+							                        });
+							                    }
+
+							                    // 지도와 마커를 초기화하는 함수
+							                    function initMap(lat, lng) {
+							                        var container = document.getElementById('map');
+							                        var options = {
+							                            center: new kakao.maps.LatLng(lat, lng),
+							                            level: 3
+							                        };
+
+							                        map = new kakao.maps.Map(container, options); // 지도 생성
+	
+							                        kakao.maps.event.addListener(map, 'center_changed', function() {
+
+							                            // 지도의  레벨을 얻어옵니다
+							                            var level = map.getLevel();
+
+							                            // 지도의 중심좌표를 얻어옵니다 
+							                            var latlng = map.getCenter(); 
+
+							                            var message = '<p>지도 레벨은 ' + level + ' 이고</p>';
+							                            message += '<p>중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
+							                            
+								                        document.getElementById('latitude').value = latlng.getLat();  // 위도를 폼 필드에 설정
+								                        document.getElementById('longitude').value = latlng.getLng();  // 경도를 폼 필드에 설정
+
+							                            var resultDiv = document.getElementById('result');
+							                            resultDiv.innerHTML = message;
+
+							                        });	
+							                        
+							                        var marker = new kakao.maps.Marker();
+
+								                     // 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
+								                     kakao.maps.event.addListener(map, 'tilesloaded', displayMarker);
+	
+								                     function displayMarker() {
+								                         
+								                         // 마커의 위치를 지도중심으로 설정합니다 
+								                         marker.setPosition(map.getCenter()); 
+								                         marker.setMap(map); 	
+								                         // 아래 코드는 최초 한번만 타일로드 이벤트가 발생했을 때 어떤 처리를 하고 
+								                         // 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다 
+								                         // kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
+								                     }
+							                    }
+
+							                    document.getElementById('board_category').addEventListener('change', function() {
+							                        var selectedCategory = this.value;
+							                        // 공유 게시판을 선택했을 경우에만 지도를 표시
+							                        if(selectedCategory == '2') {
+							                            document.getElementById('map').style.display = 'block';
+							                            // map 변수가 정의되지 않았거나 null이라면 사용자 위치 또는 기본 위치로 지도 초기화
+							                            if (!map) {
+							                                requestLocationAndInitMap();
+							                            }
+							                        } else {
+							                            document.getElementById('map').style.display = 'none';
+							                        }
+							                    });
+							                    
 												</script>
+											    <input type="hidden" id="latitude" name="latitude">
+												<input type="hidden" id="longitude" name="longitude">
 								                
 												<br>
 								                <!-- 확인 버튼 -->

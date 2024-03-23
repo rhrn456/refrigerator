@@ -3,7 +3,26 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/house-AI-Logo.png" />
     <style>
-
+	    /* 네비게이션 아이템 간격 조정 */
+	    .navbar-nav .nav-item {
+	        margin: 0 20px; /* 좌우 여백을 20px로 설정 */
+	    }
+	
+	    /* 드롭다운 메뉴 위치 조정 */
+	    .navbar-nav .dropdown-menu {
+	        transform: translateX(50px); /* 오른쪽으로 50px 이동 */
+	    }
+	
+	    /* 드롭다운 메뉴 스타일 조정 */
+	    .navbar-nav .dropdown-menu {
+	        background-color: #6c757d; /* 배경 색상 조정 */
+	        border-radius: 0; /* 모서리 둥글기 제거 */
+	    }
+	    	
+	    /* 드롭다운 아이템 호버 스타일 조정 */
+	    .navbar-nav .dropdown-item:hover {
+	        background-color: #5a6268; /* 배경 색상 조정 */
+	    }
     </style>
         <div class="container-fluid fixed-top">
             <div class="container topbar bg-primary d-none d-lg-block">
@@ -27,24 +46,23 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse" style="margin-top:20px; font-weight:bold;">
                         <div class="navbar-nav mx-auto">
-                            <a href="/" class="nav-item nav-link active" style="margin-left: -10px; color:#3D3D3D;" >홈</a>
                              <div class="nav-item dropdown">
 
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:50px; color:#3D3D3D;">간편한 요리책</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">간편한 요리책</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0" style="margin-left:50px !important;">
                                     <a href="/recipeshop" class="dropdown-item">이루리 요리책</a>
                                     <a href="/board?CategoryNo=3" class="dropdown-item">나만의 레시피</a>
                                 </div>
                                  </div>
                              <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:50px; color:#3D3D3D;">물건 보러가기</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">물건 보러가기</a>
                           		<div class="dropdown-menu m-0 bg-secondary rounded-0" style="margin-left:50px !important;">
                                     <a href="/productshop" class="dropdown-item">냉장고 식량 창고</a>
                                     <a href="/specialproductshop" class="dropdown-item">알뜰 쇼핑</a>
                                 </div>
                                 </div>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:50px; color:#3D3D3D;">우리의 게시판</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">우리의 게시판</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0" style="margin-left:50px !important;">
                                     <a href="/board?CategoryNo=1" class="dropdown-item">공지사항</a>
                                     <a href="/board?CategoryNo=2" class="dropdown-item">공유 게시판</a>
@@ -53,7 +71,7 @@
                                     </script> -->
                                 </div>
                             </div>
-                            <a href="/contact" class="nav-item nav-link" style="margin-left:50px; color:#3D3D3D;">고객센터</a>
+                            <a href="/contact" class="nav-item nav-link" style="margin-left:60px; color:#3D3D3D; font-size: 17px;">고객센터</a>
                         </div>
                        	<div class="d-flex m-3 me-0" >
 						    <a href="/refrigerator" class="position-relative me-4 my-auto" >
