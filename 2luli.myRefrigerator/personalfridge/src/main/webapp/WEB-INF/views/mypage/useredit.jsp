@@ -110,7 +110,7 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
 									                <div class="d-flex justify-content-between allproduct">
-									                    <a href="/userEdit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
+									                    <a href="#"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
 									                </div>
 									            </li>
 									            <li>
@@ -181,8 +181,8 @@
 							        <input type="text" id="phone" name="phone" required value="${useredit.phone}">
 							    </div>
 							    <div>
-							        <button type="button">비밀번호 변경</button>
-							        <button type="submit" formaction="/updateUser">정보 수정</button>
+							        <button type="button" id=newPasswordButton>비밀번호 변경</button>
+							        <button type="submit" formaction="/mypage/updateUser">정보 수정</button>
 							    </div>
 							</form>
 
@@ -251,7 +251,7 @@
                 </div>
             </div>
 
-        
+        <!-- 삭제창 작동 -->
         <div id="modalContainer" class="modal-container">
         <div class="modal-content">
             <p>회원 탈퇴를 진행하시겠습니까?<br>비밀번호를 적어주세요</p>
@@ -265,7 +265,7 @@
         <!-- Fruits Shop End-->
 
 		<script type="text/javascript">
-	      //모달창이 작동하는 함수
+	      //삭제창이 작동하는 함수
 	 		var deleteButton = document.getElementById("deleteButton");
 	        var modalContainer = document.getElementById("modalContainer");
 	        var confirmButton = document.getElementById("confirmDeleteButton");
@@ -323,6 +323,141 @@
 	        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
 	        }
         </script>
+        
+        <!--비밀번호 변경전 확인 수정창-->
+        <div id="modalcheckpwContainer" class="modal-container">
+        <div class="modal-content">
+            <p>정보수정을 진행하시겠습니까?<br>비밀번호를 적어주세요</p>
+            <input type="password" class="form-comtrol form-control-user" id="checkpwpasswordInput" name="password" placeholder="비밀번호">
+            <button id="confirmcheckpwButton" class="modal-button">확인</button>
+            <button id="cancelcheckpwButton" class="modal-button">취소</button>
+        </div>
+        
+        
+    </div>
+
+		<script type="text/javascript">
+	      //비밀번호 변경전 확인 함수
+	 		var newPasswordButton = document.getElementById("newPasswordButton");
+	        var modalcheckpwContainer = document.getElementById("modalcheckpwContainer");
+	        var confirmcheckpwButton = document.getElementById("confirmcheckpwButton");
+	        var cancelcheckpwButton = document.getElementById("cancelcheckpwButton");
+	        
+	        
+	        newPasswordButton.onclick = function() {
+	        	modalcheckpwContainer.style.display = "block";
+	        }
+	
+	        cancelcheckpwButton.onclick = function() {
+	        	modalcheckpwContainer.style.display = "none";
+        	}
+	        
+	        confirmcheckpwButton.onclick = function() {
+	        	//1. inputbox password value 
+				//2. jsp session 값  sessionScope
+				// ${sessionScope.userid} = 
+			//1,2 
+	        	var password = $("#checkpwpasswordInput").val(); // 입력 필드에서 비밀번호 값 추출
+	        	var userId = "${sessionScope.userId}"
+	        	console.log(password);
+	        	console.log(userId);
+
+	            // 서버에 비밀번호 확인 요청
+	            $.ajax({
+	                type: 'post',
+	                url: "/selectPassword", // 요청을 처리할 서버의 URL
+	                data: {
+	                    user_id: userId, // 세션에서 사용자 ID 가져오기
+	                    password: password
+	                },
+	                success: function(response) {
+	                	//alert(response); 값호출
+	                    // 서버 응답 처리
+	                    
+	                    if (response == 1) {
+                        	alert("비밀번호 확인 성공.");
+                        	
+                        	modalupdatepwContainer.style.display = "block";
+                   		} else {
+                        	alert("비밀번호가 일치하지 않습니다.");
+                        	window.location.href = "/mypage?user_id=" + userId;
+                    	}
+	                    //-> controller selectPassword reutrn  
+							// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
+	                },
+	                error: function(xhr, status, error) {
+	                    // AJAX 요청 실패 시 처리
+	                    console.error("AJAX 요청 실패:", status, error); // AJAX 요청 실패 시 에러 로그
+	                    alert("오류가 발생했습니다. 나중에 다시 시도해주세요.");
+	                }
+	            }); 
+	        	
+	        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
+	        	}
+        
+		</script>
+        
+        <!--비밀번호 수정창-->
+	        <div id="modalupdatepwContainer" class="modal-container">
+		        <div class="modal-content">
+		            <p>정보수정을 진행하시겠습니까?<br>비밀번호를 적어주세요</p>
+		            <input type="password" class="form-comtrol form-control-user" id="newpassword" name="newpassword" placeholder="새로운 비밀번호">
+		            <input type="password" class="form-comtrol form-control-user" id="confirmNewPassword" name="confirmNewPassword" placeholder="비밀번호 확인">
+		            <button id="confirmupdatepwButton" class="modal-button">확인</button>
+		            <button id="cancelupdatepwButton" class="modal-button">취소</button>
+		        </div>
+	    	</div>
+
+		<script type="text/javascript">
+			//비밀번호 변경 작동하는 함수
+	        var modalupdatepwContainer = document.getElementById("modalupdatepwContainer");
+	        var confirmupdatepwButton = document.getElementById("confirmupdatepwButton");
+	        var cancelupdatepwButton = document.getElementById("cancelupdatepwButton");
+	        
+	
+	        cancelupdatepwButton.onclick = function() {
+	        	modalupdatepwContainer.style.display = "none";
+        	}
+	        
+	        confirmupdatepwButton.onclick = function() {
+	        	
+	        	var userId = "${sessionScope.userId}"
+	        	var newpassword = $("#newpassword").val();
+	        	var confirmNewPassword = $("#confirmNewPassword").val();
+	        	console.log(newpassword);
+	        	console.log(newpassword);
+	        	console.log(userId);
+	        	
+	        	if (newpassword !== confirmNewPassword) {
+                	alert("비밀번호 확인 성공.");
+                	return;
+	        	}
+	            // 비밀번호 변경함수
+	            $.ajax({
+	                type: 'post',
+	                url: "/updatePassword", // 요청을 처리할 서버의 URL
+	                data: {
+	                    user_id: userId, // 세션에서 사용자 ID 가져오기
+	                    newpassword: newpassword
+	                },
+	                success: function() {
+	                	
+	                	alert("비밀번호 변경 완료");
+	                	window.location.href = "/mypage?user_id=" + userId;
+                   		
+	                },
+	                error: function(request,status,error) {
+	                    // AJAX 요청 실패 시 처리
+	                    console.error("AJAX 요청 실패:", status, error); // AJAX 요청 실패 시 에러 로그
+	                    alert("오류가 발생했습니다. 나중에 다시 시도해주세요.");
+	                }
+	            	}); 
+	        	
+	        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
+	        	}
+        </script>
+			
+			
 			
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   

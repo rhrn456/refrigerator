@@ -72,6 +72,32 @@ public class UserService {
 		 return false; 
 		}
 	}
+	
+	// 비밀번호 수정
+	 public boolean updatePassword(String userId, String encodedNewPassword) {
+	        try {
+	            // 사용자 ID로 사용자 정보 조회
+	            UserDTO user = userMapper.getUserInfo(userId);
+	            
+	            // 조회된 사용자가 없는 경우
+	            if (user == null) {
+	                System.out.println("아이디를 못찼겠습니다");
+	                return false;
+	            }
+	            // 비밀번호 업데이트
+	            user.setPassword(encodedNewPassword);
+	            int updatedRows = userMapper.updateUser(user);
+	            // 업데이트된 행이 없는 경우
+	            if (updatedRows == 0) {
+	                System.out.println("Failed to update the password.");
+	                return false;
+	            }
+	            return true;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
 
 	public UserDTO getUserById(String userId) {
 		return userMapper.getUserById(userId);

@@ -28,6 +28,9 @@ public interface UserMapper {
 	
 	// 마이페이지 비밀번호조회
 	int selectPassword(String user_id, String password);
+	
+	//마이페이지 비밀번호 변경
+	int updatePassword(UserDTO user);
 
 	UserDTO getUserById(String user_id);
 

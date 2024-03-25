@@ -28,8 +28,6 @@
 	<update id="updateUser" parameterType="User">
 	    UPDATE user
 	    SET 
-	    	user_id = #{user_id},
-	    	password = #{password},
 	        user_name = #{user_name},
 	        mail = #{mail},
 	        adress = #{adress},
