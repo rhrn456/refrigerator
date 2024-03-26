@@ -33,39 +33,12 @@ public class ShipController {
 	ShipScheduler shipScheduler;
 	@Autowired
 	ShipService shipService;
-	
-	  @GetMapping("ship")
-	  public String shippage() {
-		  return "/shipping/shipinfo";
-	  }
-	 
-	  @PostMapping("/delevery")
-	  @ResponseBody
-	  public String delevery(@RequestBody ShipDTO ship, HttpServletRequest request) {
-		  HttpSession session = request.getSession();
-		  String userId = (String) session.getAttribute("userId");
-		  String str = random.generateRandomString();
-		  ship.setShip_code(str);
-		  ship.setNow_location("이루리");
-		  ship.setUser_id(userId);
-		  System.out.println(ship);
-		  boolean result = shipService.inserShipInfo(ship);
-		  System.out.println(shipService.getShipByShipCode(str));
-		  if(result) {
-			  System.out.println("성공");
-			  shipScheduler.startScheduler(ship.getShip_code());
-		 return "sucess";
-	  }else {
-			return "error";
-			}
-	  }
 	  
-	  @GetMapping("checkshipload")
+	  @GetMapping("/mypage/checkshipload")
 	  public String checkshipload(HttpServletRequest request, Model model) {
 	      HttpSession session = request.getSession();
 	      String userId = (String) session.getAttribute("userId");
 	      List<ShipDTO> shipList = shipService.getShipByUserId(userId);
-	      System.out.println(shipList);
 	      Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
 	       .collect(Collectors.groupingBy(ShipDTO::getShip_code));
 	      model.addAttribute("groupedShipList", groupedShipList); 

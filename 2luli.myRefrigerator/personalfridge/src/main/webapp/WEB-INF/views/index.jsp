@@ -77,7 +77,7 @@
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-md-12 col-lg-7">
-                        <h4 class="mb-3 text-secondary">배달음식 그만!</h4>
+                        <h4 class="mb-3 text-secondary" style="color:#27417b !important">배달음식 그만!</h4>
                         <h1 class="mb-5 display-3 text-primary">직접 요리하는<br>나만의 레시피</h1>
                         <div class="position-relative mx-auto">
                             <form id="searchForm" action="/mainSearch" method="GET">
@@ -137,7 +137,35 @@
 	                                            <div class="fruite-img">
 	                                                <img src="${RecipeDTO.recipe_img}" class="img-fluid w-100 rounded-top" alt="">
 	                                            </div>
-	                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
+	                                            <div class="position-absolute top-0 start-0 px-3 py-1 rounded"
+								                 style="background-color: 
+								                    <c:choose>
+								                        <c:when test="${RecipeDTO.recipe_category eq '밥'}">
+								                            green
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '국&찌개'}">
+								                            orange
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '반찬'}">
+								                            #0084d1
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '후식'}">
+								                            #bf02bc
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '일품'}">
+								                            #fc6d6d
+								                        </c:when>
+								                        <c:otherwise>
+								                            white <!-- Default background color -->
+								                        </c:otherwise>
+								                    </c:choose>;
+								                 font-size:17px;   
+								                 color: white;
+								                 font-weight: bold;
+								               	 top: 10px !important;
+								                 left: 10px !important;">
+								                ${RecipeDTO.recipe_category}
+								            </div>
 	                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
 	                                                <h4 class="recipe-name" title="${RecipeDTO.recipe_name}">${RecipeDTO.recipe_name}</h4>
 	                                                <p style="height:20px;">${RecipeDTO.recipe_content}</p>
@@ -178,13 +206,15 @@
                     <div class="vesitable-img">
                         <img src="${ProductDTO.product_img}"  class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">
                     </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px; background-color:#ffb524 !important;">${ProductDTO.product_category}</div>
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px; font-weight:bold; font-size:17px; background-color:#ffb524 !important;">${ProductDTO.product_category}</div>
                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                          <h6 style=" white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;">${ProductDTO.product_name}</h6>
                         <a>${ProductDTO.product_content}</a><br>
                          <a>유통기한 : 구매일로부터 ${ProductDTO.limit_date}일</a>
                          <div class="d-flex justify-content-between flex-lg-wrap">
-                             <p class="text-dark fs-5 fw-bold mb-0" style="margin-top:18px;">${ProductDTO.product_price}원</p>
+                             <p class="text-dark fs-5 fw-bold mb-0" style="margin-top:18px;">
+                              <span class="product-price">${ProductDTO.product_price}</span>원
+                             </p>
                              <div class="product-id" style="display: none;"> ${ProductDTO.product_id}</div>
                                <div class="product-name" style="display: none;"> ${ProductDTO.product_name}</div>
                             <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary buyproduct" style="margin-top:10px;" data-bs-toggle="modal" data-bs-toggle="modal"  data-bs-target="#quantityModal">
@@ -220,7 +250,11 @@
 		          </div>
 		          <!-- 추가 버튼 -->
 		          <div class="col-12">
-		            <button type="button" class="btn btn-primary" style="float:right; margin-top:-20px;" id="addToCartBtn">장바구니에 추가</button>
+		            <button type="button" class="btn" style="border:1px solid #dc2e5e; float:right; margin-top:-20px; color:#dc2e5e;" id="addToCartBtn">
+		            <i class="fa fa-shopping-bag me-2 text-primary">
+		            </i>
+		            담기
+		            </button>
 		          </div>
 		        </form>
 		      </div>
@@ -246,7 +280,36 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+	//제품 가격을 단위 (,) 표현하기
+	document.addEventListener('DOMContentLoaded', function() {
+        var priceElements = document.querySelectorAll('.product-price');
+        priceElements.forEach(function(element) {
+            element.textContent = Number(element.textContent).toLocaleString();
+        });
+    });
+	
+	//장바구니 수량 제한
+	var confirmedOverLimit = false; 
+    var quantityInput = document.getElementById('quantityInput');
 
+    quantityInput.addEventListener('input', function(event) {
+        var quantity = parseInt(event.target.value);
+        if (quantity >= 10 && !confirmedOverLimit) {
+            var confirmResult = confirm("선택한 제품 수량이 10개 이상입니다. 계속하시겠습니까?");
+            if (!confirmResult) {
+                event.target.value = '9'; 
+            } else {
+                confirmedOverLimit = true; 
+            }
+        }
+    });
+    //닫으면 수량 초기화
+    var quantityModal = document.getElementById('quantityModal');
+    quantityModal.addEventListener('hidden.bs.modal', function() {
+        quantityInput.value = '1'; 
+        confirmedOverLimit = false; 
+    });
+	
     
     //장바구니 담기 
 	var modal = new bootstrap.Modal(document.getElementById('quantityModal'));

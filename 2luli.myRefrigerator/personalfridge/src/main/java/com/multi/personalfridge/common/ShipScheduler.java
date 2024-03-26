@@ -26,30 +26,28 @@ public class ShipScheduler {
 	    }
 
 	    public void startScheduler(String ship_code) {
-	    	System.out.println(ship_code);
 	        timer.scheduleAtFixedRate(new TimerTask() {
 	            @Override
 	            public void run() {
 	                // 스케줄러가 실행될 때마다 주소 변경 처리
+	            	System.out.println("스케줄러찾자");
 	                processAddressChange(ship_code);
-	                System.out.println("여기는 OK");
 	            }
 	        }, 0, 60000); // 1분마다 실행
 	    }
 
 	    public void processAddressChange(String ship_code) {
 	        // 사용자별로 ShipDTO를 가져오고 주소 변경 처리
-	    	System.out.println(ship_code);
+	    	System.out.println("스케줄시작전 코드:" + ship_code);
 	        ShipDTO ship = shipService.getShipByShipCode(ship_code);
-	        System.out.println("여기까지는 옴:" + ship);
+	        System.out.println(ship);
 	        if (ship != null) {
 	            String address = ship.getArrive(); // 현재 주소 가져오기
 	            String now_location = ship.getNow_location();
-	            if (now_location != null && now_location.equals(address)) {
+	            if (now_location.equals(address)) {
 	                // 현재 위치와 목적지가 같으면 스케줄러를 멈추고 해당 ship_code를 가진 데이터를 삭제
-	            	System.out.println("끝");
+	            	shipService.PassShip(ship.getShip_id());
 	                timer.cancel();
-	                shipService.deleteShipByShipCode(ship_code);
 	        } else {
             // 주소 변경 로직
             switch (address) {
@@ -106,12 +104,13 @@ public class ShipScheduler {
 
     private void changeAddress(ShipDTO ship, String... addresses) {
         // 다음 도시로 주소 변경
-    	System.out.println("실행");
     	shipService.PassShip(ship.getShip_id());
+    	System.out.println("재생성 시작:" + ship);
         int currentIndex = Arrays.asList(addresses).indexOf(ship.getNow_location());
         int nextIndex = (currentIndex + 1) % addresses.length;
         String nextAddress = addresses[nextIndex];
         ship.setNow_location(nextAddress);
+        System.out.println("재생성 완료:" + ship);
 
         // 변경된 주소를 데이터베이스에 저장
         shipService.UpdateShip(ship);

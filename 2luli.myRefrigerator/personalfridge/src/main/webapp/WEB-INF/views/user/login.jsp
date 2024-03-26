@@ -25,7 +25,7 @@ body {
     background: linear-gradient(to bottom, #f5ffea, #6fde6f);
 }
 .container{
-margin-top:100px;
+margin-top:170px;
 
 }
 #roginImage {

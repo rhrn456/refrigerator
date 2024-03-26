@@ -160,7 +160,7 @@
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
 									                <div class="d-flex justify-content-between allproduct">
-									                    <a href="/userEdit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
+									                    <a href="/mypage/userEdit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
 									                </div>
 									            </li>
 									            <li>
@@ -177,7 +177,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="d-flex justify-content-between product-category">
-                                                        <a href="/checkshipload"><i class="fas fa-apple-alt me-2"></i>배송조회</a>
+                                                        <a href="/mypage/checkshipload"><i class="fas fa-apple-alt me-2"></i>배송조회</a>
                                                      
                                                     </div>
                                                 </li>
@@ -195,7 +195,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>환불/교환 문의</a>
+                                                        <a href="/mypage/refundPage"><i class="fas fa-apple-alt me-2"></i>환불/교환 문의</a>
                                                        
                                                     </div>
                                                 </li>

@@ -55,7 +55,7 @@ body {
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-password-image" id="roginImage"></div>
+                            <div class="col-lg-6 d-none d-lg-block " id="roginImage" style="background-image: url('https://cdn.pixabay.com/photo/2016/10/27/22/52/apples-1776744_640.jpg'); background-size: cover; background-position: center;"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">

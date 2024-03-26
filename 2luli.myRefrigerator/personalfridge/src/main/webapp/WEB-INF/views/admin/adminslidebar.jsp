@@ -11,7 +11,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" style="width: 250px !important;" id="accordionSidebar" >
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center"  href="/admin">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"  href="/admin/page">
                 <div class="sidebar-brand-icon rotate-n-15" >
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -23,7 +23,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="/admin">
+                <a class="nav-link" href="/admin/page">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>관리자 페이지</span></a>
             </li>
@@ -44,10 +44,10 @@
                     <span style="color:white; font-weight: bold;">데이터 등록</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">데이터 관리:</h6>  
-                        <a class="collapse-item" href="/insertRecipeAdmin">레시피 추가</a>
-                        <a class="collapse-item" href="/insertProductAdmin">일반/특가상품 추가</a>
+                    <div class="bg-white py-2 collapse-inner rounded" style="color:black; font-weight:bold; font-size:13px;">
+                        <h4 class="collapse-header" style="color:#5e5e5e; font-weight:bold; font-size:10px;">데이터 관리:</h4>  
+                        <a class="collapse-item" href="/admin/insertRecipeAdmin">레시피 추가</a>
+                        <a class="collapse-item" href="/admin/insertProductAdmin">일반/특가상품 추가</a>
                     </div>
                 </div>
             </li>
@@ -62,10 +62,10 @@
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">계정 관리:</h6>
-                        <a class="collapse-item" href="/userListadmin">사용자 관리</a>
-                        <a class="collapse-item" href="/managerListadmin">매니저 관리</a>
+                    <div class="bg-white py-2 collapse-inner rounded" style="color:black; font-weight:bold; font-size:13px;">
+                        <h4 class="collapse-header" style="color:#5e5e5e; font-weight:bold; font-size:10px;">계정 관리:</h4>
+                        <a class="collapse-item" href="/admin/userListadmin">사용자 관리</a>
+                        <a class="collapse-item" href="/admin/managerListadmin">매니저 관리</a>
                     </div>
                 </div>
             </li>
@@ -87,13 +87,16 @@
                     <span style="color:white; font-weight: bold;">데이터 목록</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">데이터 리스트:</h6>
-                        <a class="collapse-item" href="/RecipeListAdmin">레시피</a>
-                        <a class="collapse-item" href="/productAllList">일반 상품</a>
-                        <a class="collapse-item" href="/SpecialProductAllList">특가 상품</a>
-                        <h6 class="collapse-header">리뷰:</h6>
-                        <a class="collapse-item" href="/ReviewRecipeAdmin">레시피 리뷰 관리</a>
+                    <div class="bg-white py-2 collapse-inner rounded" style="color:black; font-weight:bold; font-size:13px;">
+                    <h4 class="collapse-header" style="color:#5e5e5e; font-weight:bold; font-size:10px;">데이터 리스트:</h4>
+                        <a class="collapse-item" href="/admin/RecipeListAdmin">레시피</a>
+                        <a class="collapse-item" href="/admin/productAllList">일반 상품</a>
+                        <a class="collapse-item" href="/admin/SpecialProductAllList">특가 상품</a>
+                        <h4 class="collapse-header" style="color:#5e5e5e; font-weight:bold; font-size:10px;">리뷰:</h4>
+                        <a class="collapse-item" href="/admin/ReviewRecipeAdmin">레시피 리뷰 관리</a>
+                        <h4 class="collapse-header" style="color:#5e5e5e; font-weight:bold; font-size:10px;">배송 관리:</h4>
+                        <a class="collapse-item" href="/admin/shipcontrollerAdmin">배송 정보</a>
+                        <a class="collapse-item" href="/admin/shipScheduleAdmin">배송 현황</a>
                     </div>
                 </div>
             </li>

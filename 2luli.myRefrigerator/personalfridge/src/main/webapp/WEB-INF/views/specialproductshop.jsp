@@ -42,6 +42,12 @@
 		    .fruite-categorie a {
 		        font-size: 18px; /* 링크(글자)의 크기를 키웁니다. */
 		    }
+		     .list-unstyled.fruite-categorie li a {
+			    color: #dc2e5e;
+			}
+			.list-unstyled.fruite-categorie li a:hover {
+			    color: #fc9a9a; /* hover 시 색상 변경 */
+			}
 		</style>	
         
     </head>
@@ -81,8 +87,8 @@
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">알뜰 쇼핑</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="/productshop">냉장고 식량 창고</a></li>
-                <li class="breadcrumb-item active text-white">알뜰 쇼핑</li>
+                <li class="breadcrumb-item" ><a href="/productshop" style="font-size:20px; font-weight:bold; color: #fc9a9a !important;">냉장고 식량 창고</a></li>
+                <li class="breadcrumb-item active text-white" style="font-size:20px; font-weight:bold;">알뜰 쇼핑</li>
             </ol>
         </div>
         <!-- Single Page Header End -->
@@ -103,18 +109,16 @@
 								    </div>
 								</div>
                             <div class="col-6"></div>
-       
-                        </div>
+                               </div>
                         <div class="row g-4">
                             <div class="col-lg-3">
                                 <div class="row g-4">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <h3>카테고리</h3>
-                                            <br>
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
-									                <div class="d-flex justify-content-between allproduct">
+									                <div class="d-flex justify-content-between allproduct" style="margin-top:15px;">
 									                    <a href="/specialproductshop"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
 									                </div>
 									            </li>
@@ -153,7 +157,7 @@
                                 </div>
                             </div>
 														<!-- 페이지당 아이템 수와 현재 페이지 설정 -->
-							<div class="col-lg-9">
+							<div class="col-lg-9" style="margin-top:-52px;">
 							    <div class="row g-4">
 							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
 							        <c:forEach var="product" items="${products}">		            
@@ -162,17 +166,19 @@
 							                        <div class="fruite-img">
 							                            <img src="${product.product_img}" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">
 							                        </div>
-							                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${product.product_category}</div>
+							                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; font-weight:bold; font-size:17px;">${product.product_category}</div>
 							                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
 							                            <h6 style=" white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;">${product.product_name}</h6>
 							                            <a>${product.product_content}</a><br>
 							                            <a>유통기한 : 구매일로부터 ${product.limit_date}일</a>
 							                            <div class="d-flex justify-content-between flex-lg-wrap">
-							                                <a class="text-dark fs-5 fw-bold mb-0" style="margin-top:18px;">${product.product_price}원</a>
+							                                <a class="text-dark fs-5 fw-bold mb-0" style="margin-top:18px;">
+							                               <span class="product-price">${product.product_price}</span>원
+							                                </a>
 							                                  <div class="product-id" style="display: none;"> ${product.product_id}</div>
 							                                  <div class="product-name" style="display: none;"> ${product.product_name}</div>
 							                               <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary" style="margin-top:10px;" data-bs-toggle="modal"  data-bs-target="#quantityModal">
-															    <i class="fa fa-shopping-bag me-2 text-primary"></i>장바구니 담기
+															    <i class="fa fa-shopping-bag me-2 text-primary"></i> 담기
 															</a>
 							                            </div>
 							                        </div>
@@ -243,11 +249,15 @@
 		          <!-- 수량 입력 필드 -->
 		          <div class="col-12 mb-3">
 		            <label for="quantityInput" class="form-label">수량</label>
-		            <input type="number" oninput='handleOnInput(this, 1)' class="form-control" id="quantityInput" name="quantityInput" placeholder="수량을 입력하세요(10 미만 적어주세요.)" min="1" required>
+		            <input type="number"  class="form-control" id="quantityInput" name="quantityInput" placeholder="수량을 입력하세요" min="1" required>
 		          </div>
 		          <!-- 추가 버튼 -->
 		          <div class="col-12">
-		            <button type="button" class="btn btn-primary" style="float:right; margin-top:-20px;" id="addToCartBtn">장바구니에 추가</button>
+		            <button type="button" class="btn" style="border:1px solid #dc2e5e; float:right; margin-top:-20px; color:#dc2e5e;" id="addToCartBtn">
+		            <i class="fa fa-shopping-bag me-2 text-primary">
+		            </i>
+		            담기
+		            </button>
 		          </div>
 		        </form>
 		      </div>
@@ -276,13 +286,35 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 		<script>
+		//제품 가격을 단위 (,) 표현하기
+		document.addEventListener('DOMContentLoaded', function() {
+	        var priceElements = document.querySelectorAll('.product-price');
+	        priceElements.forEach(function(element) {
+	            element.textContent = Number(element.textContent).toLocaleString();
+	        });
+	    });
+		
 		//장바구니 수량 제한
-		function handleOnInput(el, maxlength) {
-			  if(el.value.length > maxlength)  {
-			    el.value 
-			      = el.value.substr(0, maxlength);
-			  }
-			}
+		var confirmedOverLimit = false; 
+	    var quantityInput = document.getElementById('quantityInput');
+	
+	    quantityInput.addEventListener('input', function(event) {
+	        var quantity = parseInt(event.target.value);
+	        if (quantity >= 10 && !confirmedOverLimit) {
+	            var confirmResult = confirm("선택한 제품 수량이 10개 이상입니다. 계속하시겠습니까?");
+	            if (!confirmResult) {
+	                event.target.value = '9'; 
+	            } else {
+	                confirmedOverLimit = true; 
+	            }
+	        }
+	    });
+	    //닫으면 수량 초기화
+	    var quantityModal = document.getElementById('quantityModal');
+	    quantityModal.addEventListener('hidden.bs.modal', function() {
+	        quantityInput.value = '1'; 
+	        confirmedOverLimit = false; 
+	    });
 		//장바구니 모달
 		var modal = new bootstrap.Modal(document.getElementById('quantityModal'));
 		
@@ -457,19 +489,19 @@
 	            productsContainer.empty(); // 기존 상품 목록 비우기
 	            // 받아온 데이터를 페이지에 맞게 출력
 	            $.each(response.products, function(index, product) {
-	                // 상품 정보를 HTML로 생성하는 코드
+	                var formattedPrice = Number(product.product_price).toLocaleString() + "원";
 	                var productHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
 	                '<div class="rounded position-relative fruite-item">' +
 	                '<div class="fruite-img">' +
 	                '<img src="' + product.product_img + '" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">' +
 	                '</div>' +
-	                '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">' + product.product_category + '</div>' +
+	                '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; font-weight:bold; font-size:17px;">' + product.product_category + '</div>' +
 	                '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
 	                '<h6 style=" white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;">' + product.product_name + '</h6>' +
 	                '<a>' + product.product_content + '</a>' + '<br>' +
 	                '<a>' + "유통기한 : 구매일로부터 " + product.limit_date + "일" + '</a>' +
 	                '<div class="d-flex justify-content-between flex-lg-wrap">' +
-	                '<a class="text-dark fs-5 fw-bold mb-0" style="margin-top:18px;">' + product.product_price + "원" + '</a>' +
+	                '<a class="text-dark fs-5 fw-bold mb-0" style="margin-top:18px;">' + formattedPrice + '</a>' +
 	                '<div class="product-id" style="display: none;">' + product.product_id + '</div>'+
                     '<div class="product-name" style="display: none;">' + product.product_name + '</div>' +
                     '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"  style="margin-top:10px;" data-bs-toggle="modal"  data-bs-target="#quantityModal">' +

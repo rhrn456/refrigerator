@@ -68,7 +68,7 @@
 	    
 		
 		.regular-product {
-		    background-color: green; /* 일반 상품 배경색: 파란색 */
+		    background-color: #dc2e5e; /* 일반 상품 배경색: 파란색 */
 		    color: white; /* 글자 색상: 흰색 */
 		    padding: 5px 10px; /* 패딩 설정 */
 		    font-size: 14px; /* 글자 크기 설정 */
@@ -309,7 +309,7 @@
             // AJAX 요청 보내기
             $.ajax({
                 type: "GET",
-                url: "/findproduct",
+                url: "/admin/findproduct",
                 data: {
                     product_id: productId
                 },
@@ -362,7 +362,7 @@
             // AJAX 요청 보내기
             $.ajax({
                 type: 'POST',
-                url: '/ProductUpdateAdmin',
+                url: '/admin/ProductUpdateAdmin',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function(response) {
@@ -581,7 +581,7 @@
 		
 		        confirmButton.onclick = function() {
 		            var productId = confirmButton.dataset.productId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
-		            window.location.href = '/productdeleteadmin/' + productId; // 해당 product_id를 사용하여 삭제 URL로 이동
+		            window.location.href = '/admin/productdeleteadmin/' + productId; // 해당 product_id를 사용하여 삭제 URL로 이동
 		        }
 		    });
 		}

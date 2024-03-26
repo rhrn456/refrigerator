@@ -24,6 +24,11 @@
 body {
     background: linear-gradient(to bottom, #f5ffea, #6fde6f);
 }
+.container{
+	margin-top:200px;
+	
+}
+
 .bg-register-image {
     cursor: pointer; 
     transition: background-color 0.3s; 
@@ -47,7 +52,7 @@ body {
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image" id="registerImage"></div>
+                    <div class="col-lg-5 d-none d-lg-block" id="registerImage" style="background-image: url('https://cdn.pixabay.com/photo/2023/08/26/09/04/strawberry-8214486_640.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -82,7 +87,6 @@ body {
 								    <button type="submit" class="btn btn-primary btn-user btn-block">
 								        회원 가입 하기
 								    </button>
-								</form>
                                 <hr>
                                 <a href="socalLogin" class="btn btn-google btn-user btn-block">
 							        <i class="fab fa-google fa-fw"></i> Login with Google

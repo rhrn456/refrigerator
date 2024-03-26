@@ -25,7 +25,7 @@ body {
     background: linear-gradient(to bottom, #f5ffea, #6fde6f);
 }
 .container{
-	margin-top:150px;
+	margin-top:180px;
 
 }
 #roginImage {
@@ -53,7 +53,7 @@ body {
 	                <div class="card-body p-0">
 	                    <!-- Nested Row within Card Body -->
 	                    <div class="row">
-	                        <div class="col-lg-6 d-none d-lg-block bg-password-image" id="roginImage"></div>
+	                        <div class="col-lg-6 d-none d-lg-block" id="roginImage" style="background-image: url('https://cdn.pixabay.com/photo/2017/05/07/08/56/pancakes-2291908_640.jpg'); background-size: cover; background-position: center;"></div>
 	                        <div class="col-lg-6">
 	                            <div class="p-5">
 	                                <div class="text-center">

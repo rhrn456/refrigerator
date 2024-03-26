@@ -222,27 +222,30 @@
 		  cursor: pointer;
 		}
 		.modal-container {
-         display: none;
-         position: fixed;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%);
-         background-color: rgba(255, 255, 255, 1); 
-         padding: 20px;
-         border: 2px solid black;
-         border-radius: 5px;
-         z-index: 9999;
-         color: black; 
-         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+	         display: none;
+	         position: fixed;
+	         top: 50%;
+	         left: 50%;
+	         transform: translate(-50%, -50%);
+	         background-color: rgba(255, 255, 255, 1); 
+	         padding: 20px;
+	         border: 2px solid black;
+	         border-radius: 5px;
+	         z-index: 9999;
+	         color: black; 
+	         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
 		}
 		
 		.modal-content {
-		text-align: center;
+			text-align: center;
 
 		}
 		
 		.modal-button {
-		          margin-top: 20px;
+		    margin-top: 20px;
+		}
+		.btn-add:hover {
+		    background-color: #bdbdbd !important; 
 		}
 </style>
 </head>
@@ -286,8 +289,9 @@
 						</div>
 						<div class="col-lg-6">
 						<h4 class="fw-bold mb-3">요리 방법</h4>
-							<p class="mb-4" style="width:600px;font-weight: bold; font-size:19px;">${recipe.recipe_content}</p>
-							<p class="mb-4" style="font-size:19px; font-weight: bold;"><a style="font-size:23px; color:#45595b;">요리 재료 :</a> ${recipe.ingredient}</p>
+							<p class="mb-4" style="width:600px; font-weight: bold; font-size:19px;">${recipe.recipe_content}</p>
+							<h4 class="fw-bold mb-3">요리 재료</h4>
+							<p class="mb-4" style="width:600px; font-size:19px; font-weight: bold;"> ${recipe.ingredient}</p>
 						</div>
 						  <div class="row justify-content-center" style="margin-top:30px; margin-bottom:-15px;">
 						        <div class="col-lg-8 col-xl-9">
@@ -314,7 +318,7 @@
 			                <c:if test="${review.user_id eq sessionScope.userId or sessionScope.userAdmin eq 2}">
 			                    <!-- 댓글 수정 및 삭제 버튼 -->
 			                    <div class="review-controls" style="margin-bottom:6px;">
-			                       <button id="updateButton" class="btn btn-primary btn-sm" data-review-id="${review.review_id}" data-review-content="${review.review_content}" data-recipe-id="${recipe.recipe_id}" data-user-id="${review.user_id}">수정</button>
+			                       <button id="updateButton" style="background-color:#0d6efd; color:white;" class="btn btn-sm" data-review-id="${review.review_id}" data-review-content="${review.review_content}" data-recipe-id="${recipe.recipe_id}" data-user-id="${review.user_id}">수정</button>
 			                       <button onclick="location.href='${pageContext.request.contextPath}/delete/${review.review_id}?recipe_id=${recipe.recipe_id}'" class="btn btn-danger btn-sm">삭제</button>
 			                    </div>
 			                </c:if>
@@ -330,7 +334,7 @@
 			        <form action="${pageContext.request.contextPath}/review/add" method="post" class="mt-3 mb-3" id="RecipeCommentForm"  style="width:900px;display: flex; justify-content: center; align-items: center;">
 			            <input name="review_content" class="form-control" maxlength= "20" type="text" style="height: 50px; margin-right: 10px;" placeholder="댓글을 입력하세요(20자)" required>
 			            <input type="hidden" name="recipe_id" value="${recipe.recipe_id}">
-			            <button type="submit" class="btn btn-primary" style="width:170px; height:48px;">댓글 작성</button>
+			            <button type="submit" class="btn" style="border: 1px solid #ccc; color:white; background-color: #007bff; width:170px; height:48px;">댓글 작성</button>
 			        </form>
 			        </div>
 			        <!-- 댓글 수정 모달 -->
@@ -469,38 +473,38 @@
 			};
 			
 			confirmButton.onclick = function() {
-				console.log("클릭");
-				var reviewId = modalContainer.getAttribute('data-review-id');
-				var content = modalContainer.querySelector('#updatereview').value.trim(); 
-				var userId = modalContainer.getAttribute('data-user-id');
-				var recipeId = modalContainer.getAttribute('data-recipe-id');
-				
+			    console.log("클릭");
+			    var reviewId = modalContainer.getAttribute('data-review-id');
+			    var content = modalContainer.querySelector('#updatereview').value.trim();
+			    var userId = modalContainer.getAttribute('data-user-id');
+			    var recipeId = modalContainer.getAttribute('data-recipe-id');
+
 			    var review = {
 			        review_id: reviewId,
 			        review_content: content,
 			        user_id: userId,
 			        recipe_id: recipeId
 			    };
-			console.log(review);
-			    var xhr = new XMLHttpRequest();
-			    xhr.open('POST', '/update', true);
-			    xhr.setRequestHeader('Content-Type', 'application/json');
-			    xhr.onreadystatechange = function() {
-			        if (xhr.readyState === XMLHttpRequest.DONE) {
-			            if (xhr.status === 200) {
-			                console.log('리뷰 업데이트 성공');                
-			                modalContainer.style.display = "none";
-			                window.location.reload();
-			                // 여기에 필요한 처리 추가
-			            } else {
-			                console.error('리뷰 업데이트 실패');
-			                // 여기에 필요한 처리 추가
-			            }
+
+			    console.log(review);
+
+			    $.ajax({
+			        type: "POST",
+			        url: "/update",
+			        contentType: "application/json",
+			        data: JSON.stringify(review),
+			        success: function(response) {
+			            console.log('리뷰 업데이트 성공');
+			            modalContainer.style.display = "none";
+			            window.location.reload();
+			            // 여기에 필요한 처리 추가
+			        },
+			        error: function(xhr, status, error) {
+			            console.error('리뷰 업데이트 실패');
+			            // 여기에 필요한 처리 추가
 			        }
-			    };
-			    xhr.send(JSON.stringify(review));
+			    });
 			};
-			
             
 			// 영수증 관련 함수
             // 왼쪽 아래 버튼 요소를 가져옴
@@ -712,7 +716,7 @@
                         '<a style="display: block; font-size:15px; float:left;">' + formattedPrice + '원' + '</a>' + 
 			            '</div>' +
 			            '<div class="main-top">' +
-			            '<div class="special_product" style="font-size:13px; color:white; background-color: ' + (product.special_product ? 'orange' : 'green') + '; text-align: center;">' + (product.special_product ? '특가' : '일반') + '</div>' +
+			            '<div class="special_product" style="font-size:13px; color:white; background-color: ' + (product.special_product ? 'orange' : '#dc2e5e') + '; text-align: center;">' + (product.special_product ? '특가' : '일반') + '</div>' +
 			            '<button id="confirmButton3" class="btn plus-btn" style="font-size:15px;">추가</button>' + // 추가 버튼 추가
 			            '</div>' +
 			            '</div>' +
@@ -948,15 +952,19 @@
 			        // 총 가격 출력
 			        var totalPriceElement = document.createElement('hr');
 			        totalPriceElement.style.marginTop = '130px'; // 위쪽 여백 추가
+			        totalPriceElement.style.color = 'red';
 			        recipeItemsList.appendChild(totalPriceElement);
 
 			        var totalTextElement = document.createElement('span');
 			        totalTextElement.textContent = '전체 금액: ';
+			        totalTextElement.style.color = 'red';
 
 			        var totalPriceValueElement = document.createElement('span');
 			        var totalPrice = calculateTotalPrice(); // 총 가격 계산 함수 호출
 			        var formattedTotalPrice = totalPrice.toLocaleString('en-US');
 			        totalPriceValueElement.textContent = ' ' + formattedTotalPrice + '원';
+			        totalPriceValueElement.style.color = 'red';
+			        totalPriceValueElement.style.fontWeight = 'bold';
 			        totalPriceValueElement.style.float = 'right'; // 오른쪽으로 부유(floating)
 					
 			        totalTextElement.style.fontSize = '20px'; // 폰트 크기 설정
@@ -1000,13 +1008,17 @@
 			            
 			            var removeButton = document.createElement('div');
 			            removeButton.style.position = 'absolute'; // 절대 위치 설정
+			            removeButton.style.width = '30px'; // 절대 위치 설정
+			            removeButton.style.textAlign = 'center'; // 절대 위치 설정
+			            removeButton.style.fontWeight = 'bold'; // 절대 위치 설정
+			            removeButton.style.fontSize = '40px;'; // 절대 위치 설정
 			            removeButton.style.top = '1px'; // 위쪽 여백 설정
 			            removeButton.style.right = '1px'; // 오른쪽 여백을 부모 요소의 오른쪽 끝에 위치하도록 설정
 			            removeButton.style.marginRight = '-13px'; // 오른쪽 여백을 부모 요소의 오른쪽 끝에 위치하도록 설정
 			            removeButton.style.color = 'white'; // 글자색 설정
 			            removeButton.style.cursor = 'pointer'; // 커서 모양 변경
 			            removeButton.textContent = 'X'; // 텍스트 설정
-			            removeButton.style.padding = '8px'; // 패딩 설정
+			            removeButton.style.padding = '5px'; // 패딩 설정
 			            removeButton.style.backgroundColor = 'gray'; // 패딩 설정
 
 
@@ -1042,7 +1054,7 @@
 			            if (productType === 1) {
 			                productTypeElement.style.backgroundColor = 'orange'; // productType이 1이면 초록색 배경
 			            } else{
-			                productTypeElement.style.backgroundColor = 'green'; // productType이 0이면 주황색 배경
+			                productTypeElement.style.backgroundColor = '#dc2e5e'; // productType이 0이면 주황색 배경
 						}
 			            productListItem.appendChild(productTypeElement);
 
@@ -1133,12 +1145,17 @@
 			        var addButton = document.createElement('button');
 			        addButton.textContent = '+';
 			        addButton.style.fontWeight = 'bold'; // 폰트 굵기를 설정합니다.
-			        addButton.style.fontSize = '50px'; // 폰트 크기 설정
-			        addButton.classList.add('btn', 'btn-sm', 'btn-primary', 'btn-add'); // 추가 버튼 클래스 추가 및 크기 설정
+			        addButton.style.color = 'white'; // 폰트 색상을 설정합니다.
+			        addButton.style.backgroundColor = '#8f8d8d'; // 폰트 색상을 설정합니다. 
+			        addButton.style.textAlign = 'center'; // 텍스트를 가운데 정렬합니다.
+			        addButton.style.fontSize = '150px'; // 폰트 크기를 설정합니다.
+			        addButton.classList.add('btn', 'btn-sm', 'btn-add'); // 추가 버튼 클래스 추가 및 크기 설정
 			        addButton.style.width = '200px'; // 버튼의 너비를 조정하여 짧게 만듭니다.
 			        addButton.style.height = '200px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
-			        addButton.style.marginTop = '15px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
-			        addButton.style.marginLeft = '25px'; // 버튼의 높이를 조정하여 정사각형 모양으로 만듭니다.
+			        addButton.style.marginTop = '15px'; // 버튼의 상단 여백을 조정합니다.
+			        addButton.style.marginLeft = '25px'; // 버튼의 왼쪽 여백을 조정합니다.
+			        addButton.style.lineHeight = '150px';
+
 	
 			        addButton.onclick = function() {
 			        	 openModal();

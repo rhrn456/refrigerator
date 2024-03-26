@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
   <!-- Footer Start -->
-<footer class="container-fluid text-white-50 mt-5" style="background-color: #CFCFCF;">
+<footer class="container-fluid text-white-50 mt-5" style="background-color: #4d4d4d;">
     <div class="container py-5">
-        <div class="pb-4 mb-4" style="border-bottom: 1px solid #dc2e5e;">
+        <div class="pb-4 mb-4" style="border-bottom: 1px solid white;">
             <div class="row g-4">
                 <div class="col-lg-3">
                     <a href="#">
-                        <a href="#" class="navbar-brand"><img src="${pageContext.request.contextPath}/img/house-AI-BI.png" style="width:200px;" ></a>
+                        <a href="#" class="navbar-brand"><img src="${pageContext.request.contextPath}/img/footerimg.png" style="width:200px;" ></a>
                     </a>
                 </div>
             </div>
@@ -47,9 +47,7 @@
                     <p>멀티캠퍼스 파이널 프로젝트</p>
                 </div>
             </div>
-        </div>
-<!-- 저작권 시작 -->
-<div class="container-fluid text-white-50 py-4" style="background-color: #CFCFCF;">
+<div class="container-fluid text-white-50 py-4" >
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
@@ -62,6 +60,8 @@
     </div>
 </div>
     </div>
+        </div>
+<!-- 저작권 시작 -->
 
 <!-- 푸터 끝 -->
 

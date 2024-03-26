@@ -35,12 +35,18 @@
         
         <style>
 		    .fruite-categorie li {
-		        margin-bottom: 10px; /* 목록 항목 간의 간격을 늘립니다. */
+		        margin-bottom: 20px; /* 목록 항목 간의 간격을 늘립니다. */
 		    }
 		
 		    .fruite-categorie a {
 		        font-size: 18px; /* 링크(글자)의 크기를 키웁니다. */
 		    }
+		     .list-unstyled.fruite-categorie li a {
+			    color: #dc2e5e;
+			}
+			.list-unstyled.fruite-categorie li a:hover {
+			    color: #fc9a9a; /* hover 시 색상 변경 */
+			}
 		</style>
     </head>
 
@@ -91,7 +97,7 @@
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite py-5">
 		<div class="container py-5">
-			<h1 class="mb-4">이루리 요리책</h1>
+			<h1 class="mb-4" style="margin-top:25px;">이루리 요리책</h1>
 			<div class="row g-4">
 				<div class="col-lg-12">
 					<div class="row g-4">
@@ -112,27 +118,27 @@
 										<ul class="list-unstyled fruite-categorie">
 
 											<li>
-												<div class="d-flex justify-content-between fruite-name">
+												<div class="d-flex justify-content-between recipecategory" style="margin-top:15px;">
 													<a href="#"><i class="fas fa-apple-alt me-2"></i>밥</a>
 												</div>
 											</li>
 											<li>
-												<div class="d-flex justify-content-between fruite-name">
+												<div class="d-flex justify-content-between recipecategory">
 													<a href="#"><i class="fas fa-apple-alt me-2"></i>반찬</a>
 												</div>
 											</li>
 											<li>
-												<div class="d-flex justify-content-between fruite-name">
+												<div class="d-flex justify-content-between recipecategory">
 													<a href="#"><i class="fas fa-apple-alt me-2"></i>국&찌개</a>
 												</div>
 											</li>
 											<li>
-												<div class="d-flex justify-content-between fruite-name" >
+												<div class="d-flex justify-content-between recipecategory" >
 													<a href="#"><i class="fas fa-apple-alt me-2"></i>후식</a>
 												</div>
 											</li>
 											<li>
-												<div class="d-flex justify-content-between fruite-name">
+												<div class="d-flex justify-content-between recipecategory">
 													<a href="#"><i class="fas fa-apple-alt me-2"></i>일품</a>
 												</div>
 											</li>
@@ -143,7 +149,7 @@
 								
 							</div>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-9" style="margin-top:-52px;">
 							<div id="recipeContent" class="row g-4">
 								<!-- 반복 -->
 								<c:forEach items="${recipelist}" var="RecipeDTO">
@@ -152,6 +158,10 @@
 								            <div class="fruite-img">
 								                <img src="${RecipeDTO.recipe_img}" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">
 								            </div>
+								                   <button class="like-btn" style="position: absolute; bottom: 10px; right: 10px; background-color: pink; border: 2px solid pink; border-radius: 50%; padding: 5px;"
+									                        data-recipe-id="${RecipeDTO.recipe_id}">
+									                    <i class="fas fa-heart" style="color: ${userlike == 0 ? 'red' : 'white'};"></i>
+									                </button>
 								            <div class="position-absolute top-0 start-0 px-3 py-1 rounded"
 								                 style="background-color: 
 								                    <c:choose>
@@ -162,10 +172,10 @@
 								                            orange
 								                        </c:when>
 								                        <c:when test="${RecipeDTO.recipe_category eq '반찬'}">
-								                            skyblue
+								                            #0084d1
 								                        </c:when>
 								                        <c:when test="${RecipeDTO.recipe_category eq '후식'}">
-								                            #D09AFF
+								                            #bf02bc
 								                        </c:when>
 								                        <c:when test="${RecipeDTO.recipe_category eq '일품'}">
 								                            #fc6d6d
@@ -174,8 +184,11 @@
 								                            white <!-- Default background color -->
 								                        </c:otherwise>
 								                    </c:choose>;
-								                 color: white; /* Text color */
-								                 top: 10px; left: 10px;">
+								                 font-size:17px;   
+								                 color: white;
+								                 font-weight: bold;
+								               	 top: 10px !important;
+								                 left: 10px !important;">
 								                ${RecipeDTO.recipe_category}
 								            </div>
 								            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -241,13 +254,6 @@
 	<!-- footer End -->
 
 
-
-	<!-- Back to Top -->
-	<a href="#"
-		class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
-		class="fa fa-arrow-up"></i></a>
-
-
 	<!-- JavaScript Libraries -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -266,15 +272,69 @@
 		    var category ="";
 	        var keyword = "";
 	        var page = 1;
+	        setupLikeButtonClickEvent();
+	        //시작과 함께 좋와요 확인
+	        $(document).ready(function() {
+	            $('.like-btn').each(function() {
+	                var $this = $(this); 
+	                var recipeId = $this.data('recipe-id');
+	                // 서버에 데이터 요청 및 처리
+	                $.ajax({
+	                    type: 'GET',
+	                    url: '/searchUserLike',
+	                    data: { recipe_id: recipeId },
+	                    success: function (response) {
+	                        var heartColor = response == 0 ? 'white' : 'red';
+	                        $this.find('i').css('color', heartColor); 
+	                    },
+	                    error: function (xhr, status, error) {
+	                        console.error('서버 에러:', error);
+	                    }
+	                });
+	            });
+	        });
 	        
+	        function setupLikeButtonClickEvent() {
+	        	$('.col-lg-9 .row').off('click', '.like-btn').on('click', '.like-btn', function () {
+	                var $likeBtn = $(this);
+	                var recipeId = $likeBtn.data('recipe-id'); 
+	                var heartColor = $likeBtn.find('i').css('color');
+	                // 좋아요 버튼의 색상에 따라 다른 요청 보내기
+	                if (heartColor === 'rgb(255, 0, 0)') { // 빨간색인 경우
+	                    $.ajax({
+	                        type: 'GET',
+	                        url: '/deleteUserLike',
+	                        data: { recipe_id: recipeId },
+	                        success: function (response) {
+	                            $likeBtn.find('i').css('color', 'white');
+	                        },
+	                        error: function (xhr, status, error) {
+	                            console.error('좋아요 취소 중 에러가 발생하였습니다:', error);
+	                        }
+	                    });
+	                } else { // 흰색인 경우
+	                    $.ajax({
+	                        type: 'GET',
+	                        url: '/userLikeUP',
+	                        data: { recipe_id: recipeId },
+	                        success: function (response) {
+	                            $likeBtn.find('i').css('color', 'red');
+	                        },
+	                        error: function (xhr, status, error) {
+	                            console.error('좋아요 업데이트 중 에러가 발생하였습니다:', error);
+	                        }
+	                    });
+	                }
+	            });
+	        }
 	        
 			// 카테고리 링크 클릭 시
 			$('.col-lg-12').on('click', '.fruite-categorie a', function(e) {
 				e.preventDefault();
 				category = $(this).text().trim();
 				keyword = "";
-				$('#paginationContainer').empty(); // 페이지 버튼 컨테이너 비우기
-				// AJAX 요청 보내기
+				$('#paginationContainer').empty(); 
+				
 				getRecipeByCategory(category, 1); // 페이지 번호 1로 초기화
 			});
 			//전체 상품 페이징
@@ -321,65 +381,81 @@
 				});
 			}//end getRecipeByCategory()
 			
-			// 받아온 상품 정보를 업데이트하는 함수
 			function updateRecipes(response) {
 			    var recipesContainer = $('.col-lg-9 .row'); // 상품 목록 컨테이너 선택
 			    recipesContainer.empty(); // 기존 상품 목록 비우기
-			
-			    // 받아온 데이터를 페이지에 맞게 출력
+
 			    $.each(response.recipes, function(index, recipe) {
-			        var recipeCategoryHTML = createRecipeHTML(recipe.recipe_category);
-			        // 상품 정보를 HTML로 생성하는 코드
 			        var recipeHTML = '<div class="col-md-6 col-lg-6 col-xl-4">' +
 			        '<div class="rounded position-relative fruite-item">' +
 			        '<div class="fruite-img">' +
 			        '<img src="' + recipe.recipe_img + '" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">' +
 			        '</div>' +
-			        recipeCategoryHTML + // 카테고리 HTML 추가
+			        '<button class="like-btn" style="position: absolute; bottom: 10px; right: 10px; background-color: pink; border: 2px solid pink; border-radius: 50%; padding: 5px;"' +
+			        'data-recipe-id="' + recipe.recipe_id + '">' +
+			        '<i class="fas fa-heart" style="color: ' + '(userlike == 0 ?'+ 'red' + ':' + 'white' + ')' + ';"></i>' +
+			        '</button>' +
+			        '<div class="position-absolute top-0 start-0 px-3 py-1 rounded" style="background-color: ';
+
+			    switch (recipe.recipe_category) {
+			        case '밥':
+			            recipeHTML += 'green';
+			            break;
+			        case '국&찌개':
+			            recipeHTML += 'orange';
+			            break;
+			        case '반찬':
+			            recipeHTML += '#0084d1';
+			            break;
+			        case '후식':
+			            recipeHTML += '#bf02bc';
+			            break;
+			        case '일품':
+			            recipeHTML += '#fc6d6d';
+			            break;
+			        default:
+			            recipeHTML += 'white'; 
+			    }
+
+			    recipeHTML += '; font-size: 17px; color: white; font-weight: bold; top: 10px !important; left: 10px !important;">' +
+			   		 recipe.recipe_category +
+			        '</div>' +
 			        '<div class="p-4 border border-secondary border-top-0 rounded-bottom">' +
 			        '<h6 class="text-center">' + recipe.recipe_name + '</h6>' +
 			        '<div class="d-flex justify-content-center">' +
-			        '<a href="#" data-value="' + recipe.recipe_id + '"' + // recipe_id 추가
-			        ' class="btn border border-secondary rounded-pill px-3 text-primary" style="margin-top:10px;">' +
-			        '<i class="fa fa-search me-2 text-primary"></i> 레시피 상세보기</a>' + // 버튼에 data-value 추가
+			        '<a href="#" data-value="' + recipe.recipe_id + '" class="btn border border-secondary rounded-pill px-3 text-primary" style="margin-top:10px;">' +
+			        '<i class="fa fa-search me-2 text-primary"></i>레시피 상세 보기</a>' +
 			        '</div>' +
 			        '</div>' +
 			        '</div>' +
 			        '</div>';
-			        recipesContainer.append(recipeHTML); // 새로운 레시피를 기존의 레시피 목록에 추가
+			        recipesContainer.append(recipeHTML); 
 			    });
-			
-
+			        
+			         $('.like-btn').each(function() {
+	                var $this = $(this); 
+	                var recipeId = $this.data('recipe-id');
+	               
+	                $.ajax({
+	                    type: 'GET',
+	                    url: '/searchUserLike',
+	                    data: { recipe_id: recipeId },
+	                    success: function (response) {
+	                        var heartColor = response == 0 ? 'white' : 'red';
+	                        $this.find('i').css('color', heartColor); 
+	                    },
+	                    error: function (xhr, status, error) {
+	                        console.error('서버 에러:', error);
+	                    }
+	                });
+	            });
+			    setupLikeButtonClickEvent();
 			    // 페이징 버튼 업데이트
 			    $('#paginationContainer').empty();
 			    createPaginationButtons(response.pageInfo); // 카테고리 다시 그리기
-			   
-			}//end updateRecipes()
+			}
 			
-			function createRecipeHTML(recipeCategory) {
-			    var backgroundColor;
-			    switch (recipeCategory) {
-			        case '밥':
-			            backgroundColor = 'green';
-			            break;
-			        case '국&찌개':
-			            backgroundColor = 'orange';
-			            break;
-			        case '반찬':
-			            backgroundColor = 'skyblue';
-			            break;
-			        case '후식':
-			            backgroundColor = '#D09AFF';
-			            break;
-			        case '일품':
-			            backgroundColor = '#fc6d6d';
-			            break;
-			        default:
-			            backgroundColor = ''; // Default background color
-			    }
-			    var html = '<div class="text-white px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; background-color: ' + backgroundColor + ';">' + recipeCategory + '</div>';
-			    return html;
-			}//end createRecipeHTML()
+			
 
 	        // 페이지 버튼 생성 함수
 	        function createPaginationButtons(pageInfo) {

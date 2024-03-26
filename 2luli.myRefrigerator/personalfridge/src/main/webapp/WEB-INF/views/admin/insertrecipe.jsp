@@ -170,7 +170,7 @@
       // Data validation can be added here
 
       // Redirect to /insertRecipe with data
-      window.location.href = '/RecipePlus?recipe_name=' + encodeURIComponent(recipe_name) + '&recipe_content=' + encodeURIComponent(recipe_content) + '&ingredient=' + encodeURIComponent(ingredient) + '&recipe_category=' + encodeURIComponent(recipe_category) + '&recipe_img=' + encodeURIComponent(recipe_img) + '&nutrition_facts=' + encodeURIComponent(nutrition_facts);
+      window.location.href = '/admin/RecipePlus?recipe_name=' + encodeURIComponent(recipe_name) + '&recipe_content=' + encodeURIComponent(recipe_content) + '&ingredient=' + encodeURIComponent(ingredient) + '&recipe_category=' + encodeURIComponent(recipe_category) + '&recipe_img=' + encodeURIComponent(recipe_img) + '&nutrition_facts=' + encodeURIComponent(nutrition_facts);
   });
 </script>
 

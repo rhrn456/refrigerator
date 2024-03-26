@@ -2,39 +2,102 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.ship.ShipMapper">
 
-
+	<!-- 송장번호를 통한 이동경로 가져오기 -->
 	<select id="getShipByShipCode" parameterType="String"  resultType="Ship">
         SELECT * 
         FROM ship
         WHERE ship_code = #{ship_code} AND go_on = 0
     </select>
+    
+    <!-- 새로운 이동 스케줄 저장 -->
+    <insert id="inserShipInfo" parameterType="Ship">
+	    INSERT INTO ship (user_id, ship_code, arrive, sub_adress, now_location)
+	    VALUES (#{user_id}, #{ship_code}, #{arrive}, #{sub_adress}, #{now_location})
+	</insert>
 	
+	<!-- 새로운 이동 스케줄 저장 -->
+    <insert id="UpdateShip" parameterType="Ship">
+	    INSERT INTO ship (user_id, ship_code, arrive, sub_adress, now_location, admin_check)
+	    VALUES (#{user_id}, #{ship_code}, #{arrive}, #{sub_adress}, #{now_location}, #{admin_check})
+	</insert>
+	
+	<!-- 목적지 도착시 체크 -->
     <update id="PassShip" parameterType="int">
 	    UPDATE ship
-	    SET go_on = 1
+	    SET go_on = 2
 	    WHERE ship_id = #{ship_id} 
 	</update>
 	
+	<!-- 배송 내역 삭제 -->
 	<delete id="deleteShipByShipCode" parameterType="String">
     	delete
     	from ship 
     	where ship_code = #{ship_code}
     </delete>
     
-    <insert id="inserShipInfo" parameterType="Ship">
-    INSERT INTO ship (user_id, ship_code, arrive, sub_adress, now_location)
-    VALUES (#{user_id}, #{ship_code}, #{arrive}, #{sub_adress}, #{now_location})
-	</insert>
-	
-    <insert id="UpdateShip" parameterType="Ship">
-    INSERT INTO ship (user_id, ship_code, arrive, sub_adress, now_location)
-    VALUES (#{user_id}, #{ship_code}, #{arrive}, #{sub_adress}, #{now_location})
-	</insert>
-	
+	<!-- 사용자 배송 내역 조회 -->
 	<select id="getShipByUserId" parameterType="String"  resultType="Ship">
         SELECT * 
         FROM ship
         WHERE user_id = #{user_id}
     </select>
+    
+    <!-- 모든 배송신청 내역 가져오기 -->
+    <select id ="getAllShipInfoAdmin" resultType="Ship">
+    	SELECT ship_code, user_id, arrive
+    	FROM ship
+   		WHERE admin_check = 0
+    </select>    
+    
+    <!-- 관리자가 승인한 제품 배송 -->
+    <update id="UpdateShipAndAdminCheck" parameterType="String">
+	    UPDATE ship
+	    SET admin_check = 1
+	    WHERE ship_code = #{ship_code} 
+	</update>
+	
+	<!-- 모든 배송내역 Page나타내기 -->
+    <select id ="getAllShipPage" parameterType="map" resultType="Ship">
+    	SELECT ship_code, user_id, arrive
+    	FROM ship 
+   		WHERE admin_check = 0
+   		LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+    <!-- 송장번호 해당하는 재료 및 정보 가져오기 -->
+    <select id ="getAllItemByShipCode" parameterType="String" resultType="ShipItem">
+    	SELECT s.ship_code, s.user_id, s.arrive, s.sub_adress, now_location, s.go_on, 
+    		   p.product_name, c.product_quantity,p.special_product
+    	FROM ship s
+    	JOIN 
+    		cart c ON s.ship_code = c.ship_code
+    	JOIN 
+   			 product p ON c.product_id = p.product_id
+   		WHERE s.admin_check = 0 AND s.ship_code = #{ship_code}
+    </select> 
+    
+  	<!-- 배송 시작된 내역 Page나타내기 -->
+    <select id ="getAllShipSchedulePage" parameterType="map" resultType="Ship">
+    	SELECT ship_code, user_id, arrive
+    	FROM ship 
+   		WHERE admin_check = 1
+   		GROUP BY ship_code, user_id, arrive
+   		LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+     <!-- 배송 시작된 내역 전부 가져오기 -->
+    <select id ="getAllShipSchdule" resultType="Ship">
+    	SELECT ship_code, user_id, arrive
+    	FROM ship
+   		WHERE admin_check = 1
+   		GROUP BY ship_code, user_id, arrive
+    </select>
+    
+      <!-- 송장번호로 이동내역 조회 -->
+    <select id ="MovingShipSchedule" parameterType="String" resultType="Ship">
+    	SELECT *
+    	FROM ship
+   		WHERE admin_check = 1 AND ship_code = #{ship_code}
+    </select>    
     
 </mapper>

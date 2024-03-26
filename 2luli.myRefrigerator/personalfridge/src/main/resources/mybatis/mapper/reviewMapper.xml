@@ -17,11 +17,10 @@
 	        review r
 	    JOIN 
 	        recipe rc ON r.recipe_id = rc.recipe_id
-	    <where>
 	        <if test="category != ''">
+	    WHERE
 	           rc.recipe_category = #{category}
 	        </if>
-	    </where>
 	</select>
 	
 	<!-- 모든 리뷰/ 카테고리 페이징 -->
@@ -38,11 +37,10 @@
 		    review r
 		JOIN 
 		    recipe rc ON r.recipe_id = rc.recipe_id
-		<where>
 	        <if test="category != ''">
+		WHERE
 	          rc.recipe_category = #{category}
 	        </if>
-	    </where>
 		LIMIT #{pageSize} OFFSET #{offset}
 	</select> 
 	
@@ -60,12 +58,11 @@
 		    review r
 		JOIN 
 		    recipe rc ON r.recipe_id = rc.recipe_id
-		<where>
+		WHERE
 		     rc.recipe_name LIKE CONCAT('%', #{keyword}, '%')
 	        <if test="category != ''">
 	            AND rc.recipe_category = #{category}
 	        </if>
-	    </where>
 	</select>
 	
 	<!-- 카테고리/ 검색 페이징 -->
@@ -82,12 +79,11 @@
 		    review r
 		JOIN 
 		    recipe rc ON r.recipe_id = rc.recipe_id
-		<where>
+		WHERE
 		     rc.recipe_name LIKE CONCAT('%', #{keyword}, '%')
 	        <if test="category != ''">
 	            AND rc.recipe_category = #{category}
 	        </if>
-	    </where>
 		LIMIT #{pageSize} OFFSET #{offset}
 	</select> 	
 	
@@ -112,9 +108,8 @@
 		    review r
 		JOIN 
 		    recipe rc ON r.recipe_id = rc.recipe_id
-		<where>
+		WHERE
 			r.review_id = #{review_id}
-		</where>
 	</select>
 	
 	<!-- 레시피 id로 리뷰가져오기 -->

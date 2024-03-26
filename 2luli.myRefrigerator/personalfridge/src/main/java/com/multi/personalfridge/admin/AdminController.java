@@ -4,6 +4,7 @@ package com.multi.personalfridge.admin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,20 +21,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.multi.personalfridge.dto.UserLikeDTO;
+import com.multi.personalfridge.common.ShipScheduler;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeAndProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
 import com.multi.personalfridge.dto.ReviewDTO;
+import com.multi.personalfridge.dto.ShipDTO;
+import com.multi.personalfridge.dto.ShipItemDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.product.ProductService;
 import com.multi.personalfridge.recipe.RecipeProductService;
 import com.multi.personalfridge.recipe.RecipeService;
 import com.multi.personalfridge.review.ReviewService;
+import com.multi.personalfridge.ship.ShipService;
 import com.multi.personalfridge.user.UserService;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
 	private final RecipeService recipeService;
@@ -42,6 +48,8 @@ public class AdminController {
 	private final ReviewService reviewService;
 	private final AdminService adminService;
 	private final UserService userService;
+	private final ShipService shipService;
+	private final ShipScheduler shipScheduler;
 	
 	@Autowired
 	public AdminController(RecipeService recipeService,
@@ -49,17 +57,21 @@ public class AdminController {
 							RecipeProductService recipeProductService,
 							ReviewService reviewService,
 							AdminService adminService,
-							UserService userService) {
+							UserService userService,
+							ShipService shipService,
+							ShipScheduler shipScheduler) {
 		this.recipeService = recipeService;
 	    this.productService = productService;
 	    this.recipeProductService = recipeProductService;
 	    this.reviewService = reviewService;
 	    this.adminService = adminService;
 	    this.userService = userService;
+	    this.shipService = shipService;
+	    this.shipScheduler = shipScheduler;
 	}
 	
 	//관리자 페이지
-	@GetMapping("/admin")
+	@GetMapping("/page")
 	public String goAdmin(Model model) {
 		List<RecipeDTO> recipeList = recipeService.getAllrecipe();
 		List<String> likeList = adminService.getAllLike();
@@ -124,7 +136,7 @@ public class AdminController {
 	}
 	
 	//레시피 등록 페이지
-	@GetMapping("/insertRecipeAdmin")
+	@GetMapping("insertRecipeAdmin")
 	public String insertRecipe() {
 		return "admin/insertrecipe";
 	}
@@ -134,9 +146,125 @@ public class AdminController {
 	public String insertProduct() {
 		return "admin/isnertproduct";
 	}
+	//배송 신청 목록 가져오기
+	@GetMapping("/shipcontrollerAdmin")
+	public String shipcontrollerAdmin(@RequestParam(defaultValue ="1") int page, Model model){
+		int pageSize = 12;
+		List<ShipDTO> shipList = shipService.getAllShipPage(page, pageSize);
+		List<ShipDTO> shipItems = shipService.getAllShipInfoAdmin();
+		int totalShips = shipItems.size();
+		int totalPages = (int) Math.ceil((double) totalShips / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+		PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+											.total(totalShips)
+											.pageAmount(totalPages)
+											.currentPage(page)
+											.amount(pageSize)
+											.build();
+	    		
+		model.addAttribute("shipList", shipList);
+		model.addAttribute("pageInfo", pageRequestDTO);
+		return "/admin/shipcontrolleradmin";
+	}
+	//배송 신청 목록 페이징
+	@GetMapping("/getShipByPage")
+	@ResponseBody
+	public Map<String, Object> getShipByKeword(@RequestParam int page, @RequestParam int pageSize){
+
+		List<ShipDTO> shipList = shipService.getAllShipPage(page, pageSize);
+		List<ShipDTO> shipItems = shipService.getAllShipInfoAdmin();
+	    int totalShips = shipItems.size();
+	    int totalPages = (int) Math.ceil((double) totalShips / pageSize);
+	    if (totalPages > 5) {
+	        totalPages = 5;
+	    }
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+								            .total(totalShips)
+								            .pageAmount(totalPages)
+								            .currentPage(page)
+								            .amount(pageSize)
+								            .build();
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("shipList", shipList);
+	    response.put("pageInfo", pageRequestDTO);
+
+	    return response;
+	}
+	//송장번호에 해당하는 재료 및 정보 가져오기
+	@GetMapping("/getshipItemlist")
+	@ResponseBody
+	public Map<String, Object> getshipItemlist(@RequestParam String ship_code) {
+		List<ShipItemDTO> shipList = shipService.getAllItemByShipCode(ship_code);
+		Map<String, List<ShipItemDTO>> groupedShipList = shipList.stream()
+				.collect(Collectors.groupingBy(ShipItemDTO::getShip_code));
+		Map<String, Object> response = new HashMap<>();
+		response.put("groupedShipList", groupedShipList); 
+		return response;
+	}
 	
+	//제품 발송하기
+	@PostMapping("/startShip")
+	@ResponseBody
+	public String startShipAdmin(@RequestParam String ship_code) {
+		System.out.println("잘넘어왔어:" + ship_code);
+		boolean result = shipService.UpdateShipAndAdminCheck(ship_code);
+		  if(result) {
+			  System.out.println("시작");
+			  shipScheduler.startScheduler(ship_code);
+		 return "success";
+	  }else {
+			return "error";
+			}
+	  }
+	//배송 시작된 목록
+	@GetMapping("/shipScheduleAdmin")
+	public String shipScheduleAdmin(@RequestParam(defaultValue ="1") int page, Model model){
+		int pageSize = 12;
+		List<ShipDTO> shipList = shipService.getAllShipSchedulePage(page, pageSize);
+		List<ShipDTO> shipItems = shipService.getAllShipSchdule();
+		int totalShips = shipItems.size();
+		int totalPages = (int) Math.ceil((double) totalShips / pageSize); 
+		if(totalPages >5) {
+			totalPages = 5;
+		}
+		PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+											.total(totalShips)
+											.pageAmount(totalPages)
+											.currentPage(page)
+											.amount(pageSize)
+											.build();
+	    		
+		model.addAttribute("shipList", shipList);
+		model.addAttribute("pageInfo", pageRequestDTO);
+		return "/admin/shipscheduleadmin";
+	}
 	
+	//송장으로 이동경로 조회
+	@GetMapping("/getshipschduleAdmin")
+	@ResponseBody
+	public Map<String, Object> getshipschduleAdmin(@RequestParam String ship_code) {
+		List<ShipDTO> shipList = shipService.MovingShipSchedule(ship_code);
+		Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
+				.collect(Collectors.groupingBy(ShipDTO::getShip_code));
+		Map<String, Object> response = new HashMap<>();
+		response.put("groupedShipList", groupedShipList); 
+		return response;
+	}
 	
+	//제품 발송하기
+	@PostMapping("/deleteShipByShipCode")
+	@ResponseBody
+	public String deleteShipByShipCode(@RequestParam String ship_code) {
+		boolean result = shipService.deleteShipByShipCode(ship_code);
+		  if(result) {
+		 return "success";
+	  }else {
+			return "error";
+			}
+	  }
 	//레시피 관련 START------------------------------------------------------------------------
 	//레시피 리스트 페이지
 	@GetMapping("/RecipeListAdmin")
@@ -168,7 +296,7 @@ public class AdminController {
 		System.out.println(recipe_id);
 		boolean result = recipeService.recipeDeletById(recipe_id);
 		if(result) {
-			return "redirect:/RecipeListAdmin";
+			return "redirect:/admin/RecipeListAdmin";
 		}else {
 		return "error";
 		}
@@ -213,7 +341,16 @@ public class AdminController {
 		return "admin/recipereviewadmin";
 	}
 	
-	
+	//리뷰 삭제
+	@GetMapping("/reviewdeleteadmin/{review_id}")
+	public String ReviewDeleteAdmin(@PathVariable int review_id) {
+		boolean result = reviewService.reviewDeletById(review_id);
+		if(result) {
+			return "redirect:/amdin/ReviewRecipeAdmin";
+		}else {
+		return "error";
+		}
+	}
 	//레시피 관련 END ---------------------------------------------------------------------
 	
 	
@@ -268,7 +405,7 @@ public class AdminController {
 	public String userUpdateToManager(@PathVariable("user_id") String user_id) {
 		boolean result = userService.userUpdateToManager(user_id);
 		if(result) {
-			return "redirect:/userListadmin";
+			return "redirect:/admin/userListadmin";
 		}else {
 		return "error";
 		}
@@ -280,7 +417,7 @@ public class AdminController {
 	public String userDeleteAdmin(@PathVariable("user_id") String user_id) {
 	boolean result = userService.deleteUserAdmin(user_id);
 	if(result) {
-		return "redirect:/userListadmin";
+		return "redirect:/admin/userListadmin";
 	}else {
 	return "error";
 	}
@@ -313,7 +450,7 @@ public class AdminController {
 	}
 	
 	//매니저 리스트 페이지
-	@GetMapping("getAllManagerrAndPage")
+	@GetMapping("/getAllManagerrAndPage")
 	@ResponseBody
 	public Map<String, Object> ManagerListAndPageAdmin(@RequestParam String keyword, @RequestParam int page, @RequestParam int pageSize, Model model) {
 	   Map<String, Object> parameters = new HashMap<>();
@@ -342,7 +479,7 @@ public class AdminController {
 		boolean result = adminService.ManagerUpdateToUser(user_id);
 		System.out.println(result);
 		if(result) {
-			return "redirect:/managerListadmin";
+			return "redirect:/admin/managerListadmin";
 		}else {
 		return "error";
 		}
@@ -398,7 +535,7 @@ public class AdminController {
 	            }
 	        }
 	        // 모든 제품이 성공적으로 처리된 경우에만 성공 반환
-	        return "redirect:/RecipeListAdmin";
+	        return "redirect:/admin/RecipeListAdmin";
 	    } catch (JsonProcessingException e) {
 	        // JSON 파싱에 실패한 경우에 대한 예외 처리
 	        e.printStackTrace();
@@ -411,7 +548,7 @@ public class AdminController {
 	public String ProductPlus(@ModelAttribute ProductDTO product) {
 		 boolean result = productService.ProductPlus(product);
 		 if(result) {
-			 return "redirect:/admin";			 
+			 return "redirect:/admin/page";			 
 		 }
 		 return "error";
 	}
@@ -468,7 +605,7 @@ public class AdminController {
 		public String ProductDeleteAdmin(@PathVariable int product_id) {
 			boolean result = productService.productDeletById(product_id);
 			if(result) {
-				return "redirect:/SpecialProductAllList";
+				return "redirect:/admin/SpecialProductAllList";
 			}else {
 			return "error";
 			}
@@ -490,5 +627,6 @@ public class AdminController {
 			ProductDTO product =  productService.getProductById(product_id);
 			return product;
 		}
+		
 
 }

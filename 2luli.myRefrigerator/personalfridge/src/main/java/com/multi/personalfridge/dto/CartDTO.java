@@ -19,4 +19,5 @@ public class CartDTO {
 	private int product_id;
 	private Integer product_quantity;
 	private int product_buycheck;
+	private String ship_code;
 }

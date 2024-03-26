@@ -26,6 +26,7 @@ public class ReviewService {
 		parameters.put("category", category);
 		parameters.put("pageSize", pageSize);
 		parameters.put("offset", offset);
+		System.out.println(parameters);
 		return reviewMapper.ReviewAndPage(parameters);
 	}
 

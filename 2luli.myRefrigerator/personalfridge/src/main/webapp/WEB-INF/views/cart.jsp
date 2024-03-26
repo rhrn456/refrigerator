@@ -92,6 +92,7 @@
 h2 {
   margin-top: 0;
 }
+
 </style>
 </head>
 <body>
@@ -118,7 +119,7 @@ h2 {
 	    <div class="modal-content">
 	        <span class="close" onclick="closeModal()">&times;</span>
 	        <h2 style="text-align: center;">배송 정보 입력</h2>
-	        <div class="modal-inputs">
+	        <div class="modal-inputs" style="width:400px;">
 	        <select id="locationDropdown">
 	        <option value="부산">부산</option>
 	        <option value="서울">서울</option>
@@ -131,7 +132,10 @@ h2 {
 	        <option value="충청남도">충청남도</option>
 	        <option value="충청북도">충청북도</option>
 	        </select>
-	        <input type="text" style="width:450px;"id="addressInput" placeholder="주소를 입력하세요">
+	        <input type="text" id="sample4_postcode" placeholder="우편번호">
+			<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+			<input type="text" id="sample4_roadAddress" style="width:400px; margin-top:5px;" placeholder="도로명주소">
+			<span id="guide" style="color:#999;display:none"></span>
 	        </div>
 	        <button class="btn btn-primary" onclick="confirmAddress()">확인</button>
 	    </div>
@@ -141,6 +145,7 @@ h2 {
 	<!-- footer End -->
 	
     <!-- JavaScript Libraries -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -151,6 +156,37 @@ h2 {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 	<script>
+	
+	 function sample4_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+	                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var roadAddr = data.roadAddress; // 도로명 주소 변수
+	                var extraRoadAddr = ''; // 참고 항목 변수
+
+	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                    extraRoadAddr += data.bname;
+	                }
+	                // 건물명이 있고, 공동주택일 경우 추가한다.
+	                if(data.buildingName !== '' && data.apartment === 'Y'){
+	                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                if(extraRoadAddr !== ''){
+	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+	                }
+
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample4_postcode').value = data.zonecode;
+	                document.getElementById("sample4_roadAddress").value = roadAddr; 
+	            }
+	        }).open();
+	    }
 	//택배 주소 창열기
 	function openModal() {
 		var modal = document.getElementById("deliveryModal");
@@ -162,35 +198,16 @@ h2 {
 		var modal = document.getElementById("deliveryModal");
 		modal.style.display = "none";
 	}
-	
+
 	function confirmAddress() {
 		var locationDropdown = document.getElementById('locationDropdown');
 		var selectedLocation = locationDropdown.value;
-		var addressInput = document.getElementById('addressInput');
-		var enteredAddress = addressInput.value;
-	    
-	    // 선택된 위치와 입력된 주소 확인
-	    console.log('선택된 위치:', selectedLocation);
-	    console.log('입력된 주소:', enteredAddress);
-	
-	    $.ajax({
-			type: "POST",
-	        url: "/delevery",
-	        contentType: "application/json",
-	        data: JSON.stringify({
-	            arrive: selectedLocation,
-	            sub_adress: enteredAddress
-	        }),
-	        success: function(response) {
-	            console.log('배송 정보 전송 성공');
-	            sendProducts();
-	            closeModal();
-	        },
-	        error: function(xhr, status, error) {
-	            console.error('배송 정보 전송 실패');
-	            console.error(error);
-	        }
-	    });
+		var arrive = locationDropdown.value;
+		var addressInput = document.getElementById('sample4_roadAddress').value;
+		var index = addressInput.indexOf(' ') + 1;
+		var enteredAddress = addressInput.substring(index);
+		var sub_adress = addressInput.substring(index);
+		sendProducts(selectedLocation,enteredAddress);
 	}
 	
 	function closeModal() {
@@ -279,7 +296,7 @@ h2 {
        // renderProductList();
     }
 
-    function sendProducts() {
+    function sendProducts(selectedLocation,enteredAddress) {
         if (cartItemList.length === 0) {
             alert('빈칸에 입력해주세요');
             return;
@@ -298,9 +315,12 @@ h2 {
             alert('빈칸에 입력해주세요');
             return;
         }
-
+		var arrive = selectedLocation;
+		var sub_adress = enteredAddress;
+		console.log(sub_adress);
+		console.log(arrive);
         var productListString = JSON.stringify(cartItemList); 
-        window.location.href = '/buyproduct?cartProducts=' + encodeURIComponent(productListString);
+        window.location.href = '/buyproduct?cartProducts=' + encodeURIComponent(productListString) + '&arrive=' + arrive + '&sub_adress=' + sub_adress;
 
     }
 	

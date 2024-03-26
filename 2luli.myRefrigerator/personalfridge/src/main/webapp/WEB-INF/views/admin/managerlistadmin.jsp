@@ -243,7 +243,7 @@ $(document).ready(function() {
         var pageSize = 12; // 페이지당 아이템 수
         $.ajax({
             type: "GET",
-            url: "/getAllManagerrAndPage",
+            url: "/admin/getAllManagerrAndPage",
             data: {
             	keyword: "",
                 page: page,
@@ -264,7 +264,7 @@ $(document).ready(function() {
 	    // AJAX 요청 보내기
 	    $.ajax({
 	        type: "GET",
-	        url: "/getAllManagerrAndPage",
+	        url: "/admin/getAllManagerrAndPage",
 	        data: {
 	            keyword: keyword,
 	            page: page,
@@ -393,7 +393,7 @@ $(document).ready(function() {
 
             confirmUpdateButton.onclick = function() {
                 var UserId = confirmButton.dataset.userId; 
-                window.location.href = '/managerupdateadmin/' + UserId; 
+                window.location.href = '/admin/managerupdateadmin/' + UserId; 
             }
 
         });

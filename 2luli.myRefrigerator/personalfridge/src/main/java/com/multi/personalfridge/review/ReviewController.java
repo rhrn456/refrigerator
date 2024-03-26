@@ -74,17 +74,6 @@ public class ReviewController {
 		    return parameters;
 		}
 		
-		//상품 삭제
-			@GetMapping("/reviewdeleteadmin/{review_id}")
-			public String ReviewDeleteAdmin(@PathVariable int review_id) {
-				System.out.println(review_id);
-				boolean result = reviewService.reviewDeletById(review_id);
-				if(result) {
-					return "redirect:/ReviewRecipeAdmin";
-				}else {
-				return "error";
-				}
-			}
 
 			
 			//수정하기위에 데이터 던져주기
