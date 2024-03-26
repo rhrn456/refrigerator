@@ -56,7 +56,7 @@
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">나만의 레시피</h1>
             <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="/recipeshop">음식 레시피</a></li>
+                <li class="breadcrumb-item"><a href="/recipeshop">이루리 요리책</a></li>
                 <li class="breadcrumb-item active text-white">나만의 레시피</li>
             </ol>
         </div>
@@ -75,32 +75,17 @@
 											<h3>카테고리</h3>
 											<br>
 											<ul class="list-unstyled fruite-categorie">
-												<li>
-													<div class="d-flex justify-content-between fruite-name">
-														<a href="#"><i class="fas fa-apple-alt me-2"></i>밥</a>
-													</div>
-												</li>
-												<li>
-													<div class="d-flex justify-content-between fruite-name">
-														<a href="#"><i class="fas fa-apple-alt me-2"></i>반찬</a>
-													</div>
-												</li>
-												<li>
-													<div class="d-flex justify-content-between fruite-name">
-														<a href="#"><i class="fas fa-apple-alt me-2"></i>국&찌개</a>
-													</div>
-												</li>
-												<li>
-													<div class="d-flex justify-content-between fruite-name">
-														<a href="#"><i class="fas fa-apple-alt me-2"></i>후식</a>
-													</div>
-												</li>
-												<li>
-													<div class="d-flex justify-content-between fruite-name">
-														<a href="#"><i class="fas fa-apple-alt me-2"></i>일품</a>
-													</div>
-												</li>
-											</ul>
+											<li>
+												<div class="d-flex justify-content-between fruite-name">
+													<a href="#"><i class="fas fa-apple-alt me-2"></i>이루리 요리책</a>
+												</div>
+											</li>
+											<li>
+												<div class="d-flex justify-content-between fruite-name">
+													<a href="#"><i class="fas fa-apple-alt me-2"></i>나만의 레시피</a>
+												</div>
+											</li>
+										</ul>
 										</div>
 									</div>
 								</div>
