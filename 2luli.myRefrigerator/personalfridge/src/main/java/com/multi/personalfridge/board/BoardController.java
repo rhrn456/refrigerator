@@ -99,7 +99,7 @@ public class BoardController {
 	}
 	
 	// Create
-	@GetMapping("/boardInsert")
+	@GetMapping("/mypage/boardInsert")
 	public String insertForm() {
 		return "board/boardInsert";
 	}
@@ -136,7 +136,7 @@ public class BoardController {
 	}
 	
 	// Update
-	@GetMapping("/updateBoard")
+	@GetMapping("/mypage/updateBoard")
 	public String updateForm(@RequestParam("boardNo") int boardNo, Model model) {
 		
 		BoardDTO board = service.getBoardByBoardNo(boardNo);

@@ -156,8 +156,10 @@
 								  marker.setMap(map);
 								</script>
 								</c:if>
-								<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/updateBoard?boardNo=${board.board_no}'">수정</button>
-								<button id="board-delete-btn" class="btn btn-primary" data-value="${board.board_no}">삭제</button>
+								<c:if test="${not empty sessionScope.userId}">
+									<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/mypage/updateBoard?boardNo=${board.board_no}'">수정</button>
+									<button id="board-delete-btn" class="btn btn-primary" data-value="${board.board_no}">삭제</button>
+								</c:if>
 							</div>
 						</div>
 						
