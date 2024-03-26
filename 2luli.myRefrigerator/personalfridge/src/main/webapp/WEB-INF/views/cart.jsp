@@ -124,7 +124,7 @@ h2 {
 		<div class="row justify-content-center" style="margin-top: 150px; margin-left: 200px; ">
 				<ul id="cartproductList" class="row mt-3" style="margin-right:2px;"></ul>
 		</div>
-		<button id="sendProductsButton" onclick="openModal()">제품 보내기</button>
+		<button id="sendProductsButton" onclick="openModal()">구매하기</button>
 	</div>
 	<!-- Cart Page End -->
 	
@@ -269,9 +269,9 @@ h2 {
         var productList = document.getElementById('cartproductList');
         productList.innerHTML = ''; // 이전 상품들을 모두 삭제
 
-        viewCartList.forEach(function(product) {
+        viewCartList.forEach(function(product, index) {
             var productListItem = document.createElement('li');
-            productListItem.classList.add('col-lg-3', 'col-md-6', 'mb-4');
+            productListItem.classList.add('mb-4');
 
             var productImage = document.createElement('img');
             productImage.src = product.product_img;
@@ -283,7 +283,7 @@ h2 {
             productName.textContent = product.product_name;
             productListItem.appendChild(productName);
 
-            var productQuantity = document.createElement('p');
+            var productQuantity = document.createElement('input');
             productQuantity.textContent = 'Quantity: ' + product.product_quantity;
             productListItem.appendChild(productQuantity);
 
@@ -291,24 +291,24 @@ h2 {
             productPrice.textContent = 'Price: ' + product.product_price + '원';
             productListItem.appendChild(productPrice);
 
-            var addToCartButton = document.createElement('button');
-            addToCartButton.textContent = 'X';
-            addToCartButton.classList.add('btn', 'btn-primary');
-            addToCartButton.style.width = 'auto';
-            productListItem.appendChild(addToCartButton);
-
+            var deleteCartItemButton = document.createElement('button');
+            deleteCartItemButton.textContent = 'X';
+            deleteCartItemButton.classList.add('btn', 'btn-primary');
+            deleteCartItemButton.style.width = 'auto';
+            deleteCartItemButton.onclick = function() {
+                removeProduct(index);
+            };
+            productListItem.appendChild(deleteCartItemButton);
+			
             productList.appendChild(productListItem);
         });
     }
-
-
-
     
     // 레시피 재료 삭제
     function removeProduct(index) {
     	cartItemList.splice(index, 1); // 전송할 데이터 삭제
-    	viewCart.splice(index, 1); // 출력용 재료 삭제
-       // renderProductList();
+    	viewCartList.splice(index, 1); // 출력용 재료 삭제
+       	renderProductList();
     }
 
     function sendProducts(selectedLocation,enteredAddress) {
@@ -371,8 +371,6 @@ h2 {
 	function updateProducts(response) {
 	    var productsContainer = $('.col-lg-11 .row');
 	    productsContainer.empty(); // 기존 상품 목록 비우기
-	   	console.log("여기 열렸어");
-	   	console.log(response);
 	    // 받아온 데이터를 페이지에 맞게 출력
 	    $.each(response.viewCart, function(index, viewCart) {
 	        // 상품 정보를 HTML로 생성하는 코드
@@ -392,8 +390,7 @@ h2 {
 	            '</div>' +
 	            '</div>' +
 	            '</div>';
-	            console.log(productHTML);
-	        productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
+		        productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
 	    });
 	}
 	
@@ -401,7 +398,7 @@ h2 {
     function renderRecipeItems() {
         var recipeItemsList = document.getElementById('recipeItemsList');
         recipeItemsList.innerHTML = ''; // 기존 목록 초기화
-
+		
         // recipeItems 배열을 순회하면서 각 제품의 정보를 출력
         recipeItems.forEach(function(item) {
 			// 각 제품을 나타내는 요소 생성
