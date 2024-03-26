@@ -159,8 +159,8 @@
                                             <h4>마이 페이지</h4>
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
-									                <div class="d-flex justify-content-between allproduct">
-									                    <a href="/userEdit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
+									                <div class="d-flex justify-content-between allproduct" id=editButton>
+									                    <a href="#"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
 									                </div>
 									            </li>
 									            <li>
@@ -289,7 +289,7 @@
 											    </nav>
 						                      </div>
 						                </div>
-						            </div> 
+						            </div> <!-- col-12 끝 -->
 							   </div>
 							</div>
                         </div>
@@ -310,7 +310,7 @@
         <!-- Fruits Shop End-->
 
 		<script type="text/javascript">
-	      //모달창이 작동하는 함수
+	      //게정 삭제창 작동하는 함수
 	 		var deleteButton = document.getElementById("deleteButton");
 	        var modalContainer = document.getElementById("modalContainer");
 	        var confirmButton = document.getElementById("confirmDeleteButton");
@@ -337,7 +337,7 @@
 	            // 서버에 비밀번호 확인 요청
 	            $.ajax({
 	                type: 'post',
-	                url: "/mypage/selectPassword", // 요청을 처리할 서버의 URL
+	                url: "/deleteUser", // 요청을 처리할 서버의 URL
 	                data: {
 	                    user_id: userId, // 세션에서 사용자 ID 가져오기
 	                    password: password
@@ -370,35 +370,37 @@
         </script>
         
         <div id="modalupdateContainer" class="modal-container">
-	        <div class="modal-content">
-	            <p>회원 탈퇴를 진행하시겠습니까?<br>비밀번호를 적어주세요</p>
-	            <input type="password" class="form-comtrol form-control-user" id="editpasswordInput" name="password" placeholder="비밀번호">
-	            <button id="confirmupdateDeleteButton" class="modal-button">회원 탈퇴</button>
-	            <button id="cancelupdateDeleteButton" class="modal-button">취소</button>
-	        </div>
-    	</div>
+        <div class="modal-content">
+            <p>정보수정을 진행하시겠습니까?<br>비밀번호를 적어주세요</p>
+            <input type="password" class="form-comtrol form-control-user" id="editpasswordInput" name="password" placeholder="비밀번호">
+            <button id="confirmupdateButton" class="modal-button">확인</button>
+            <button id="cancelupdateButton" class="modal-button">취소</button>
+        </div>
+        
+        
+    </div>
 
 		<script type="text/javascript">
-	      //모달창이 작동하는 함수
-	 		var deleteButton = document.getElementById("deleteButton");
+	      //정보수정창 작동하는 함수
+	 		var editButton = document.getElementById("editButton");
 	        var modalupdateContainer = document.getElementById("modalupdateContainer");
-	        var confirmupdateDeleteButton = document.getElementById("confirmupdateDeleteButton");
-	        var cancelupdateDeleteButton = document.getElementById("cancelupdateDeleteButton");
+	        var confirmupdateButton = document.getElementById("confirmupdateButton");
+	        var cancelupdateButton = document.getElementById("cancelupdateButton");
 	        
-	        deleteButton.onclick = function() {
-	            modalContainer.style.display = "block";
+	        editButton.onclick = function() {
+	        	modalupdateContainer.style.display = "block";
 	        }
 	
-	        cancelButton.onclick = function() {
-	            modalContainer.style.display = "none";
+	        cancelupdateButton.onclick = function() {
+	        	modalupdateContainer.style.display = "none";
         	}
 	        
-	        confirmButton.onclick = function() {
+	        confirmupdateButton.onclick = function() {
 	        	//1. inputbox password value 
 				//2. jsp session 값  sessionScope
 				// ${sessionScope.userid} = 
 			//1,2 
-	        	var password = $("#passwordInput").val(); // 입력 필드에서 비밀번호 값 추출
+	        	var password = $("#editpasswordInput").val(); // 입력 필드에서 비밀번호 값 추출
 	        	var userId = "${sessionScope.userId}"
 	        	console.log(password);
 	        	console.log(userId);
@@ -406,7 +408,7 @@
 	            // 서버에 비밀번호 확인 요청
 	            $.ajax({
 	                type: 'post',
-	                url: "/mypage/selectPassword", // 요청을 처리할 서버의 URL
+	                url: "/selectPassword", // 요청을 처리할 서버의 URL
 	                data: {
 	                    user_id: userId, // 세션에서 사용자 ID 가져오기
 	                    password: password
@@ -416,9 +418,9 @@
 	                    // 서버 응답 처리
 	                    
 	                    if (response == 1) {
-                        	alert("비밀번호 확인 성공. 회원 탈퇴를 진행합니다.");
+                        	alert("비밀번호 확인 성공. 수정 완료했습니다.");
                         	
-                        	window.location.href = "/logout";
+                        	window.location.href = "/Edit";
                         	// 회원 탈퇴 로직을 여기에 추가
                    		} else {
                         	alert("비밀번호가 일치하지 않습니다.");
