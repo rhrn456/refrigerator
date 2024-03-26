@@ -182,7 +182,7 @@
 							    </div>
 							    <div>
 							        <button type="button" id=newPasswordButton>비밀번호 변경</button>
-							        <button type="submit" formaction="/mypage/updateUser">정보 수정</button>
+							        <button type="submit" formaction="/updateUser">정보 수정</button>
 							    </div>
 							</form>
 

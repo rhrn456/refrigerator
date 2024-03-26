@@ -290,7 +290,7 @@ public class UserController {
     
     
  // 마이페이지 정보수정
-    @PostMapping("/mypage/updateUser")
+    @PostMapping("/updateUser")
     public String updateUser(@ModelAttribute UserDTO user, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         // 사용자 정보 업데이트 로직 실행
         String user_id = (String) request.getSession().getAttribute("userId");
@@ -301,7 +301,7 @@ public class UserController {
         
         if (updateResult) {
             redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-            return "redirect:/mypage?user_id=" + user.getUser_id();
+            return "redirect:/mypage/info?user_id=" + user.getUser_id();
         } else {
             redirectAttributes.addFlashAttribute("error", "회원 정보 업데이트에 실패했습니다.");
             return "redirect:/mypage/edit?user_id=" + user.getUser_id(); // 정보 수정 페이지로 리다이렉션
