@@ -113,6 +113,7 @@ public class BoardController {
 								HttpServletRequest request) {
 		BoardDTO newBoard = new BoardDTO();
 		
+		//추후삭제
 		System.out.println(latitude);
 		System.out.println(longitude);
 		
@@ -122,6 +123,8 @@ public class BoardController {
 		newBoard.setContent(content);
 		newBoard.setB_category_no(CategoryNo);
 		newBoard.setUser_id(userId);
+		newBoard.setLatitude(latitude);
+		newBoard.setLongitude(longitude);
 		boolean result = service.insertBoard(newBoard);
 		
 		if(result) {

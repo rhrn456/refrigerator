@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="getBoardByBoardNo" parameterType="_int" resultType="Board">
-		SELECT board_no, title, content, user_id, b.b_category_no, board_create_date, hit
+		SELECT board_no, title, content, user_id, b.b_category_no, board_create_date, hit, latitude, longitude
 		FROM board b, board_category c WHERE b.b_category_no = c.b_category_no AND b.board_no = #{boardNo}
 	</select>
 	
@@ -23,8 +23,8 @@
 	</select>
 	
 	<insert id="insertBoard" parameterType="Board">
-		INSERT INTO board(title, content, user_id, b_category_no, board_create_date)
-		VALUES (#{title}, #{content}, #{user_id}, #{b_category_no}, now())
+		INSERT INTO board(title, content, user_id, b_category_no, board_create_date, latitude, longitude)
+		VALUES (#{title}, #{content}, #{user_id}, #{b_category_no}, now(), #{latitude}, #{longitude})
 	</insert>
 	
 	<update id="updateBoard" parameterType="map">

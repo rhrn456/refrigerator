@@ -22,4 +22,6 @@ public class BoardDTO {
 	private Timestamp board_create_date;
 	private Integer hit;
 	private Integer refrigerator_product_id;
+	private Double latitude;
+	private Double longitude;
 }

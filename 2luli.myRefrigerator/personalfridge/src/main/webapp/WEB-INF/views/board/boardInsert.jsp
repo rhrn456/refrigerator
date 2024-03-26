@@ -85,6 +85,11 @@
 							            <form action="/insertBoard" method="POST" id="locationForm">
 								            <div class="card-body">								                
 								                <c:if test="${empty refrigeratorProdcut}">
+								                	<style>
+														#map {
+															display: none;
+														}
+													</style>
 								                	<input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" required>
 								             		<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required></textarea>
 							                		<div class="dropdown">
@@ -101,13 +106,18 @@
 								                	<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>개수 : ${refrigeratorProdcut.product_quantity}
 소비기한 : ${refrigeratorProdcut.limit_date}</textarea>
 									                <div class="dropdown">
-									                    <select id="board_category" name="CategoryNo" class="form-control mb-3"">
+									                    <select id="board_category" name="CategoryNo" class="form-control mb-3" >
 									                        <option value="2">공유 게시판</option>
 									                    </select>
 									                </div>
+									                    <script>
+													        window.onload = function() {
+													            requestLocationAndInitMap();
+													        };
+													    </script>
 								                </c:if>
 								                
-								                <div id="map" style="width:100%;height:400px;display: none"></div>
+								                <div id="map" style="width:100%;height:400px;"></div>
 								                <p id="result"></p>
 								                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=70cfc06e9436eefff5f27287fb6bfd38"></script>
 							                	<script>							                		

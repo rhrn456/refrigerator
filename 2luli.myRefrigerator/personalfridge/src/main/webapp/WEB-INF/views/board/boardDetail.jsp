@@ -124,8 +124,38 @@
 										<tr>
 											<td colspan="6" class="view_text">${board.content}</td>
 										</tr>
-									</tbody>
+									</tbody>									
 								</table>
+								<c:if test="${not empty board.latitude}">
+								<div id="map" style="width: 100%; height: 400px;"></div>
+								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=70cfc06e9436eefff5f27287fb6bfd38"></script>
+								<script>
+								  // 페이지에서 제공하는 좌표값으로 변수를 설정
+								  var latitude = ${board.latitude};
+								  var longitude = ${board.longitude};
+								
+								  // 지도를 생성할 때 필요한 기본 옵션
+								  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+								      mapOption = {
+								          center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표를 서버로부터 받아온 값으로 설정
+								          level: 3 // 지도의 확대 레벨
+								      };  
+								
+								  // 지도를 생성합니다    
+								  var map = new kakao.maps.Map(mapContainer, mapOption); 
+								
+								  // 마커가 표시될 위치입니다 
+								  var markerPosition  = new kakao.maps.LatLng(latitude, longitude); 
+								
+								  // 마커를 생성합니다
+								  var marker = new kakao.maps.Marker({
+								      position: markerPosition
+								  });
+								
+								  // 마커가 지도 위에 표시되도록 설정합니다
+								  marker.setMap(map);
+								</script>
+								</c:if>
 								<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/updateBoard?boardNo=${board.board_no}'">수정</button>
 								<button id="board-delete-btn" class="btn btn-primary" data-value="${board.board_no}">삭제</button>
 							</div>
@@ -153,7 +183,7 @@
 	<!-- Back to Top -->
 	<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 	
-	<!-- JavaScript Libraries -->
+	<!-- JavaScript Libraries -->	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
