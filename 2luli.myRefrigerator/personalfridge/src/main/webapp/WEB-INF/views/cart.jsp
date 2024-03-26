@@ -83,6 +83,9 @@
 
 .mb-4 {
 	list-style-type: none;
+	padding-left: 0;
+	margin-bottom: 0.1rem !important;
+	border-radius: 6px;
 }
 
 /* 주소 입력 요소 정렬 */
@@ -98,9 +101,18 @@ h2 {
 }
 
 #sendProductsButton {
-	float:right;
+	position: absolute;
+	left: 50%;
 	width: 100px;
 	border-radius: 15px;
+}
+
+#productImage {
+	-webkit-border-radius: 6px;
+}
+
+img {
+	-webkit-border-radius: 6px;
 }
 
 </style>
@@ -272,25 +284,28 @@ h2 {
         viewCartList.forEach(function(product, index) {
             var productListItem = document.createElement('li');
             productListItem.classList.add('mb-4');
-
+            productListItem.style.border = '1px solid #c6c9cc';
+			
             var productImage = document.createElement('img');
             productImage.src = product.product_img;
             productImage.style.width = '100px';
             productImage.alt = product.product_name;
             productListItem.appendChild(productImage);
-
+			
             var productName = document.createElement('h3');
             productName.textContent = product.product_name;
+            productName.style.display = 'inline';
             productListItem.appendChild(productName);
-
+			
             var productQuantity = document.createElement('input');
             productQuantity.textContent = 'Quantity: ' + product.product_quantity;
             productListItem.appendChild(productQuantity);
-
+			
             var productPrice = document.createElement('p');
             productPrice.textContent = 'Price: ' + product.product_price + '원';
+            productPrice.style.display = 'inline';
             productListItem.appendChild(productPrice);
-
+			
             var deleteCartItemButton = document.createElement('button');
             deleteCartItemButton.textContent = 'X';
             deleteCartItemButton.classList.add('btn', 'btn-primary');
@@ -425,6 +440,7 @@ h2 {
             // 리스트에 각 제품 요소 추가
             recipeItemsList.appendChild(listItem);
         });
+        
         
         // 총 가격 출력
         var totalPriceElement = document.createElement('hr');
