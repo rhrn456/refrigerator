@@ -86,10 +86,11 @@ public class UserService {
 	            }
 	            // 비밀번호 업데이트
 	            user.setPassword(encodedNewPassword);
-	            int updatedRows = userMapper.updateUser(user);
+	            int updatedRows = userMapper.updatePassword(user);
+
 	            // 업데이트된 행이 없는 경우
 	            if (updatedRows == 0) {
-	                System.out.println("Failed to update the password.");
+
 	                return false;
 	            }
 	            return true;

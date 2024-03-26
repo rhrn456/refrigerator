@@ -294,11 +294,10 @@ public class UserController {
     public String updateUser(@ModelAttribute UserDTO user, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         // 사용자 정보 업데이트 로직 실행
         String user_id = (String) request.getSession().getAttribute("userId");
-        
+      
         user.setUser_id(user_id);
-        System.out.println("UserController, updateuser" + user);
         boolean updateResult = userService.updateUser(user);
-        
+      
         if (updateResult) {
             redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
             return "redirect:/mypage/info?user_id=" + user.getUser_id();
@@ -311,7 +310,9 @@ public class UserController {
     // 비밀번호 변경
     @PostMapping("/updatePassword")
     public String updatePassword(HttpSession session, @RequestParam("newPassword") String newPassword, RedirectAttributes redirectAttributes) {
-        String userId = (String) session.getAttribute("userId");
+//        System.out.println("UserController, updateuser");
+    	String userId = (String) session.getAttribute("userId");
+//    	System.out.println("userController, updateuser, userId = " +userId);
         if (userId == null) {
             redirectAttributes.addFlashAttribute("error", "로그인이 필요합니다.");
             return "redirect:/login";
@@ -319,17 +320,16 @@ public class UserController {
 
         // 새 비밀번호 암호화
         String encodedNewPassword = passwordEncoder.encode(newPassword);
-        
         // 비밀번호 업데이트 서비스 호출
         boolean isPasswordChanged = userService.updatePassword(userId, encodedNewPassword);
-
         if (isPasswordChanged) {
             redirectAttributes.addFlashAttribute("successMessage", "비밀번호가 성공적으로 변경되었습니다.");
+            return "redirect:/mypage/info?user_id=" + userId;
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "비밀번호 변경에 실패했습니다.");
         }
 
-        return "redirect:/mypage";
+        return "redirect:/";
     }
 
     

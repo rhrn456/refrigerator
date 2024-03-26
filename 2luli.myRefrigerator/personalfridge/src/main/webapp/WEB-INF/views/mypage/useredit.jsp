@@ -337,7 +337,7 @@
     </div>
 
 		<script type="text/javascript">
-	      //비밀번호 변경전 확인 함수
+	      //정보수정 함수
 	 		var newPasswordButton = document.getElementById("newPasswordButton");
 	        var modalcheckpwContainer = document.getElementById("modalcheckpwContainer");
 	        var confirmcheckpwButton = document.getElementById("confirmcheckpwButton");
@@ -422,14 +422,13 @@
 	        confirmupdatepwButton.onclick = function() {
 	        	
 	        	var userId = "${sessionScope.userId}"
-	        	var newpassword = $("#newpassword").val();
+	        	var newPassword = $("#newpassword").val();
 	        	var confirmNewPassword = $("#confirmNewPassword").val();
-	        	console.log(newpassword);
 	        	console.log(newpassword);
 	        	console.log(userId);
 	        	
-	        	if (newpassword !== confirmNewPassword) {
-                	alert("비밀번호 확인 성공.");
+	        	if (newPassword !== confirmNewPassword) {
+                	alert("비밀번호가 일치하지 않습니다");
                 	return;
 	        	}
 	            // 비밀번호 변경함수
@@ -438,12 +437,12 @@
 	                url: "/updatePassword", // 요청을 처리할 서버의 URL
 	                data: {
 	                    user_id: userId, // 세션에서 사용자 ID 가져오기
-	                    newpassword: newpassword
+	                    newPassword: newPassword
 	                },
 	                success: function() {
 	                	
 	                	alert("비밀번호 변경 완료");
-	                	window.location.href = "/mypage?user_id=" + userId;
+	                	window.location.href = "/mypage/info?user_id=" + userId;
                    		
 	                },
 	                error: function(request,status,error) {
