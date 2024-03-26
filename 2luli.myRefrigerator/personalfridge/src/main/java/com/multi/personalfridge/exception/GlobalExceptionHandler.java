@@ -1,4 +1,4 @@
-package com.multi.personalfridge.common;
+package com.multi.personalfridge.exception;
 
 import java.io.IOException;
 import java.sql.SQLException;
