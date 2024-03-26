@@ -1,5 +1,7 @@
 package com.multi.personalfridge.user;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,9 +80,11 @@ public class UserController {
 	 int cartCountNormal = cartService.getCartCountNormal(user_id);
 	 int cartCountSpecial = cartService.getCartCountSpecial(user_id);
 	 int cartCount = cartCountNormal + cartCountSpecial;
-   	if(user.isDelete_plug() == true) {
-   		return "redirect:/";
-   	}
+	 if (user == null || user.getDelete_plug() == 1) {
+		 //여러 시도끝에 그냥 인코드 해서 에러메세지넘겨줌
+		    String errorMessage = "해당하는 정보가 없습니다.";
+		    return "redirect:/loginPage?errorMessage=" + URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
+		}
    	
    	//비크립트로 비밀번호 검증
    	if (user != null && passwordEncoder.matches(password, user.getPassword()) ) {
@@ -136,6 +140,11 @@ public class UserController {
     @PostMapping("/findId")
     public String findId(@RequestParam String user_name, @RequestParam String mail, Model model) {
     	UserDTO user = userService.getUserByEmailAndName(user_name, mail);
+    	if (user == null || user.getDelete_plug() == 1) {
+   		 //여러 시도끝에 그냥 인코드 해서 에러메세지넘겨줌
+   		    String errorMessage = "해당하는 정보가 없습니다.";
+   		    return "redirect:/findIdPage?errorMessage=" + URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
+   		}
     	String userId = user.getUser_id();
     	model.addAttribute("userId", userId);
     	return "user/getuserid"; 
@@ -149,10 +158,15 @@ public class UserController {
     //암호 넘겨주기
     @PostMapping("/findPassword")
     public String findPassword(@RequestParam String mail, String user_name, Model model) {
-    	
+    	UserDTO user = userService.getUserByEmailAndName(user_name, mail);
+    	if (user == null || user.getDelete_plug() == 1) {
+     		 //여러 시도끝에 그냥 인코드 해서 에러메세지넘겨줌
+     		    String errorMessage = "해당하는 정보가 없습니다.";
+     		    return "redirect:/findPasswordPage?errorMessage=" + URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
+     		}
     	//랜덤 비밀번호 생성 후 메일로 보내기
     	String str = randomPassword.generateRandomString();
-    	emailService.sendSimpleMessage(mail, "우리집 AI 냉장고 임시 비밀번호 발송해드렸습니다.", (str.toString() + "임시 비밀번호를 사용해 비밀번호를 변경해주세요."));
+    	emailService.sendSimpleMessage(mail, "우리집 AI 냉장고 임시 비밀번호 발송해드렸습니다.", (str.toString() + "  " + "임시 비밀번호를 사용해 비밀번호를 변경해주세요."));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/checkquickpassword");
         model.addAttribute("mail",mail);
@@ -167,8 +181,6 @@ public class UserController {
     public String LosingChangePassword(@RequestParam String user_name,
     									@RequestParam String mail,
     									Model model) {
-    	System.out.println("두번째:" + user_name);
-    	System.out.println(mail);
     	ModelAndView modelAndView = new ModelAndView();
     	modelAndView.setViewName("user/makenewpassword");
     	model.addAttribute("mail",mail);
@@ -181,9 +193,6 @@ public class UserController {
     public String MakeNewPassword(@RequestParam String user_name,
 									@RequestParam String mail,
 									@RequestParam String password) {
-    	System.out.println("세번째:" +user_name);
-    	System.out.println(mail);
-    	System.out.println(password);
     	UserDTO user = userService.getUserByEmailAndName(user_name, mail);
     	String hashedPassword = passwordEncoder.encode(password);
     	user.setPassword(hashedPassword);
@@ -198,6 +207,7 @@ public class UserController {
     @GetMapping("/userLikeUP")
     @ResponseBody
     public String userLikeUP(@RequestParam int recipe_id, HttpServletRequest request) {
+    	System.out.println(recipe_id);
     	HttpSession session = request.getSession();
 	    String user_id = (String) session.getAttribute("userId");
     	boolean result = userService.insertUserLike(recipe_id, user_id);

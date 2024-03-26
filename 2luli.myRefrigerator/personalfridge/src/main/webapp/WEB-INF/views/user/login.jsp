@@ -77,9 +77,15 @@ margin-top:170px;
 									   <a href="socalLogin" class="btn btn-google btn-user btn-block">
 									        <i class="fab fa-google fa-fw"></i> Login with Google
 									    </a>
-									    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-		                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+									    <a href="#" class="btn btn-facebook btn-user btn-block">
+		                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
 		                                </a>
+									    <a href="#" class="btn btn-facebook btn-user btn-block" style="background-color:#4aa8d8;">
+		                                    <i class="fab fa-twitter fa-fw"></i> Login with Twitter
+		                                </a>
+									   <a href="#" class="btn btn-user btn-block" style="background-color:#fee500;">
+										    <i class="fa fa-comment fa-fw"></i> Login with Kakao
+										</a>
 									</form>
                                     <hr>
                                     <div class="text-center">
@@ -105,7 +111,15 @@ margin-top:170px;
 	document.getElementById("roginImage").addEventListener("click", function() {
 	    window.location.href = "/"; // 클릭 시 "/" 경로로 이동
 	});
+	//에러메세지가 있다면 알럿트로 넘어온 에러메세지 뛰어주기
+	<% String errorMessage = request.getParameter("errorMessage"); %>
+	<% if (errorMessage != null) { %>
+	    alert("<%= errorMessage %>");
+	<% } %>
 	
+	document.getElementById("roginImage").addEventListener("click", function() {
+	    window.location.href = "/"; // 클릭 시 "/" 경로로 이동
+	});
 	
 
 	 

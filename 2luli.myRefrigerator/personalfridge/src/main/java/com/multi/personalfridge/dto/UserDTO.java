@@ -23,6 +23,6 @@ public class UserDTO {
 	private int job_num;
 	private Timestamp create_user_date;
 	private Timestamp delete_user_date;
-	private boolean delete_plug;
+	private int delete_plug;
 	private String delete_content;
 }
