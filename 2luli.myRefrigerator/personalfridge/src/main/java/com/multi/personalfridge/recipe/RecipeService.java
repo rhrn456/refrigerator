@@ -115,6 +115,12 @@ public class RecipeService {
 		return recipeMapper.getRecipeById(recipe_id);
 	}
 
+	//인기 레시피 4종 가져오기
+	public List<RecipeDTO> getPopularRecipe() {
+	
+		return recipeMapper.getPopularRecipe();
+	}
+
 
 
 }

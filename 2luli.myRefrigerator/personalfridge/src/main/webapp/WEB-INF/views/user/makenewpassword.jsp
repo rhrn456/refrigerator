@@ -103,6 +103,7 @@ body {
 	    window.location.href = "/"; // 클릭 시 "/" 경로로 이동
 	});
 	
+	
 	</script>
 </body>
 

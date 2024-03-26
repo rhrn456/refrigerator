@@ -91,4 +91,14 @@
     	from recipe 
     	where recipe_id = #{recipe_id}
     </delete>
+    
+    <!-- 인기 레시피 가져오기 -->
+    <select id ="getPopularRecipe" resultType="Recipe">
+    SELECT u.recipe_id, r.recipe_name, r.recipe_img
+	FROM userlike u
+	JOIN recipe r ON r.recipe_id = u.recipe_id
+	GROUP BY u.recipe_id
+	ORDER BY COUNT(u.recipe_id) DESC
+	LIMIT 4
+	</select>
 </mapper>

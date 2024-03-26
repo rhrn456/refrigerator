@@ -41,6 +41,9 @@ public interface RecipeMapper {
 	//레시피 조회
 	public RecipeDTO getRecipeById(int recipe_id);
 	
+	//인기 레시피 가져오기
+	public List<RecipeDTO> getPopularRecipe();
+	
 	
 
 

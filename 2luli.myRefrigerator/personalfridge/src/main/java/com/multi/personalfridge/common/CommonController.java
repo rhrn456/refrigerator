@@ -54,7 +54,7 @@ public class CommonController {
 	
 	@GetMapping("/")
 	public String getMainRecipe(Model model) {
-	    List<RecipeDTO> recipe = recipeService.getAllrecipe();
+	    List<RecipeDTO> recipe = recipeService.getPopularRecipe();
 	    List<ProductDTO> products = productService.getAllSepcialProduct();
 	    //랜덤으로 섞는다
 	    Collections.shuffle(products);

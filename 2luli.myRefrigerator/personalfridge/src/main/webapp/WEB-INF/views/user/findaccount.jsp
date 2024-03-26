@@ -90,6 +90,15 @@ body {
 	document.getElementById("roginImage").addEventListener("click", function() {
 	    window.location.href = "/"; // 클릭 시 "/" 경로로 이동
 	});
+	
+	<% String errorMessage = request.getParameter("errorMessage"); %>
+	<% if (errorMessage != null) { %>
+	    alert("<%= errorMessage %>");
+	<% } %>
+	
+	document.getElementById("roginImage").addEventListener("click", function() {
+	    window.location.href = "/"; // 클릭 시 "/" 경로로 이동
+	});
 	</script>
 </body>
 

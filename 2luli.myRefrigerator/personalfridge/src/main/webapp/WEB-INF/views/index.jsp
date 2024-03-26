@@ -132,7 +132,7 @@
 	                            <div class="row g-4">
 	                                <c:set var="count" value="0" />
 	                                <c:forEach items="${recipe}" var="RecipeDTO">
-	                                    <div class="col-md-6 col-lg-4 col-xl-3" style="display: ${count < 4 ? 'block' : 'none'};">
+	                                    <div class="col-md-6 col-lg-4 col-xl-3">
 	                                        <div class="rounded position-relative fruite-item">
 	                                            <div class="fruite-img">
 	                                                <img src="${RecipeDTO.recipe_img}" class="img-fluid w-100 rounded-top" alt="">
@@ -168,7 +168,6 @@
 								            </div>
 	                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
 	                                                <h4 class="recipe-name" title="${RecipeDTO.recipe_name}">${RecipeDTO.recipe_name}</h4>
-	                                                <p style="height:20px;">${RecipeDTO.recipe_content}</p>
 	                                                <div class="d-flex justify-content-between flex-lg-wrap" style="margin-left:40px;">
 	                                                     <a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
 									                       class="btn border border-secondary rounded-pill px-3 text-primary gorecipe" style="margin-top:10px;">
