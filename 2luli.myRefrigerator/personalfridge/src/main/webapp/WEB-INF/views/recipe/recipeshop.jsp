@@ -90,6 +90,10 @@
 	<!-- Single Page Header start -->
 	<div class="container-fluid page-header py-5">
 		<h1 class="text-center text-white display-6">이루리 요리책</h1>
+		<ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item active text-white">이루리 요리책</li>
+                <li class="breadcrumb-item"><a href="/board?CategoryNo=3">나만의 레시피</a></li>
+            </ol>
 	</div>
 	<!-- Single Page Header End -->
 
