@@ -19,5 +19,6 @@ public class CartProductDTO {
     private String product_price;
     private String product_img;
     private int special_product;
+    private String ship_code;
 
 }

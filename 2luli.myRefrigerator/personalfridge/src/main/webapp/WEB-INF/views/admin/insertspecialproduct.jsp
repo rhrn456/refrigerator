@@ -189,7 +189,7 @@
 		      // Data validation can be added here
 		
 		      // Redirect to /insertRecipe with data
-		      window.location.href = '/ProductPlus?product_name=' + encodeURIComponent(product_name) + 
+		      window.location.href = '/admin/ProductPlus?product_name=' + encodeURIComponent(product_name) + 
 		    		  				  '&product_content=' + encodeURIComponent(product_content) + 
 		    		  				  '&product_quantity=' + encodeURIComponent(product_quantity) + 
 		    		  				  '&product_price=' + encodeURIComponent(product_price) + 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,8 +22,10 @@ import com.multi.personalfridge.dto.CartProductDTO;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
+import com.multi.personalfridge.dto.UserLikeDTO;
 import com.multi.personalfridge.product.ProductService;
 import com.multi.personalfridge.recipe.RecipeService;
+import com.multi.personalfridge.user.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -33,12 +36,17 @@ public class CommonController {
 	private final ProductService productService;
 	private final RecipeService recipeService;
 	private final CartService cartService;
+	private final UserService userService;
 
 	@Autowired
-	public CommonController(ProductService productService, RecipeService recipeService, CartService cartService) {
+	public CommonController(ProductService productService, 
+							RecipeService recipeService, 
+							CartService cartService,
+							UserService userService) {
 	    this.productService = productService;
 	    this.recipeService = recipeService;
 	    this.cartService = cartService;
+	    this.userService = userService;
 	}
 	
 	//메인 화면 데이터(레시피, 특가 상품)
@@ -70,13 +78,13 @@ public class CommonController {
 	
 
 	// 장바구니
-	@GetMapping("/mycart")
+	@GetMapping("/mypage/mycart")
 	public String cart(HttpServletRequest request, Model model) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
 	    if (userId == null || userId.isEmpty()) {
-	        return "error";
+	        return "redirect:/loginPage";
 	    }
 	    List<CartProductDTO> cartList = cartService.getCartProducts(userId);
 	    Map<String, CartProductDTO> mergedCartMap = new HashMap<>();
@@ -116,6 +124,17 @@ public class CommonController {
 		model.addAttribute("recipelist",recipelist);
 		 model.addAttribute("pageInfo", pageRequestDTO);
 		return "recipe/recipeshop";
+	}
+	
+	//좋와요 확인
+	@GetMapping("/searchUserLike")
+	@ResponseBody
+	public String searchUserLike(@RequestParam int recipe_id, HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+	    String user_id = (String) session.getAttribute("userId");
+	    UserLikeDTO userlike = userService.searchUserLike(recipe_id, user_id);
+	    String result = userlike != null ? "1" : "0";
+	    return result;
 	}
 	
 	//일반 상품 목록

@@ -183,6 +183,35 @@ public class UserService {
 	public boolean verifyPassword(String userId, String password) {	
 		return false;
 	}
+	
+	//좋와요 등록
+	public boolean insertUserLike(int recipe_id, String user_id) {
+		try {
+			userMapper.insertUserLike(recipe_id, user_id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	//좋와요 조회 레시피 목록에서
+	public UserLikeDTO searchUserLike(int recipe_id, String user_id) {
+		 Map<String, Object> parameters = new HashMap<>();
+		 parameters.put("recipe_id", recipe_id);
+		 parameters.put("user_id", user_id);
+		return userMapper.searchUserLike(parameters);
+	}
+
+	public boolean deleteUserLike(int recipe_id, String user_id) {
+		try {
+			 Map<String, Object> parameters = new HashMap<>();
+			 parameters.put("recipe_id", recipe_id);
+			 parameters.put("user_id", user_id);
+			userMapper.deleteUserLike(parameters);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	
 }

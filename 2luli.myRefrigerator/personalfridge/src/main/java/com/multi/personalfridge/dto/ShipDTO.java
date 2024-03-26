@@ -23,4 +23,5 @@ public class ShipDTO {
 	private String now_location;
 	private int go_on;
 	private Date move_time;
+	private int admin_check;
 }

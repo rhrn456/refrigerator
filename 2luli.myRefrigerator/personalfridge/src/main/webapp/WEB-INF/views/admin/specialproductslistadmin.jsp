@@ -315,7 +315,7 @@
             // AJAX 요청 보내기
             $.ajax({
                 type: "GET",
-                url: "/findproduct",
+                url: "/admin/findproduct",
                 data: {
                     product_id: productId
                 },
@@ -368,7 +368,7 @@
             // AJAX 요청 보내기
             $.ajax({
                 type: 'POST',
-                url: '/ProductUpdateAdmin',
+                url: '/admin/ProductUpdateAdmin',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function(response) {
@@ -583,7 +583,7 @@
 		
 		        confirmButton.onclick = function() {
 		            var productId = confirmButton.dataset.productId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
-		            window.location.href = '/productdeleteadmin/' + productId; // 해당 product_id를 사용하여 삭제 URL로 이동
+		            window.location.href = '/admin/productdeleteadmin/' + productId; // 해당 product_id를 사용하여 삭제 URL로 이동
 		        }
 		    });
 		}

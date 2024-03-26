@@ -315,7 +315,7 @@
             // AJAX 요청 보내기
             $.ajax({
                 type: "GET",
-                url: "/findrecipe",
+                url: "/admin/findrecipe",
                 data: {
                     recipe_id: recipeId
                 },
@@ -360,7 +360,7 @@
             // AJAX 요청 보내기
             $.ajax({
                 type: 'POST',
-                url: '/RecipeUpdateAdmin',
+                url: '/admin/RecipeUpdateAdmin',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function(response) {
@@ -587,7 +587,7 @@
 		    $('.edit-ingredients-btn').click(function() {
 		        var recipeId = $(this).closest('.card').find('.recipe-id').text();
 		        console.log(recipeId);
-		        window.location.href = '/RecipePlus?recipe_id=' + recipeId;
+		        window.location.href = '/admin/RecipePlus?recipe_id=' + recipeId;
 		    });
 		
 		    $('.btn-danger').click(function() {
@@ -612,7 +612,7 @@
 		        confirmButton.onclick = function() {
 		            var recipeId = confirmButton.dataset.recipeId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
 		            console.log("레시피 아이디:" + recipeId);
-		            window.location.href = '/recipedeleteadmin/' + recipeId; // 해당 product_id를 사용하여 삭제 URL로 이동
+		            window.location.href = '/admin/recipedeleteadmin/' + recipeId; // 해당 product_id를 사용하여 삭제 URL로 이동
 		        }
 		    });
 		}

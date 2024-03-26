@@ -130,33 +130,47 @@
         
 
 		<div class="col-lg-11">
-       <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 490px; ">
+       <div class="row justify-content-center" style="margin-top: 200px; width: 50%; margin-left: 550px; ">
            <c:forEach var="review" items="${reviews}">
                 <div class="card">
 						<c:choose>
 					    <c:when test="${review.recipe_category == '밥'}">
 					        <div class="regular-product" style="background-color: green;">${review.recipe_category}</div>
 					    </c:when>
-					    <c:when test="${review.recipe_category == '국/찌개'}">
+					    <c:when test="${review.recipe_category == '국&찌개'}">
 					        <div class="regular-product" style="background-color: orange;">${review.recipe_category}</div>
 					    </c:when>
 					    <c:when test="${review.recipe_category == '반찬'}">
-					        <div class="regular-product" style="background-color: skyblue;">${review.recipe_category}</div>
+					        <div class="regular-product" style="background-color: #0084d1;">${review.recipe_category}</div>
+					    </c:when>
+					    <c:when test="${review.recipe_category == '후식'}">
+					        <div class="regular-product" style="background-color: #bf02bc;">${review.recipe_category}</div>
+					    </c:when>
+					    <c:when test="${review.recipe_category == '일품'}">
+					        <div class="regular-product" style="background-color: #fc6d6d;">${review.recipe_category}</div>
 					    </c:when>
 					    <c:otherwise>
-					        <div class="regular-product">${recipe.recipe_category}</div>
+					        <div>${recipe.recipe_category}</div>
 					    </c:otherwise>
 					</c:choose>
                     <div class="card-info">
                      <div class="review-id" style="display: none;">${review.review_id}</div>
        				<div class="user-id" style="display: none;">${review.user_id}</div>
-                        <a>작성자: ${review.user_id}</a>
-                        <a>레시피: ${review.recipe_name}</a>
-                    </div>
+                        <a> 
+                        <script>
+		                    var recipeName = "${review.recipe_name}";
+		                    if (recipeName.length > 8) {
+		                        recipeName = recipeName.substring(0, 8) + "...";
+		                    }
+		                    document.write(recipeName);
+		                </script>
+		                </a>
                     <c:set var="createDate" value="${review.create_review_date}" />
 					<c:set var="formattedDate" value="${fn:substringBefore(createDate, ' ')}" />              
-                    <div class="card-details">
                         <a>작성날짜: ${formattedDate}</a>
+                    </div>
+                    <div class="card-details">
+                     <a>작성자: ${review.user_id}</a>
                     </div>
                 </div>
             </c:forEach>
@@ -272,6 +286,8 @@
         //검색 이벤트 생성
         bindSearchEvents();
 
+        
+        
      // 검색 버튼 클릭 및 엔터 키 이벤트를 바인딩
         function bindSearchEvents() {
             $('#searchButton').on('click', function() {
@@ -422,7 +438,10 @@
 
             // 받아온 데이터를 페이지에 맞게 출력
 			$.each(response.reviews, function(index, review) {
-				
+				var recipeName = review.recipe_name;
+				if (recipeName.length > 8) {
+				    recipeName = recipeName.substring(0, 8) + "...";
+				}
 			   var recipeCategoryHTML = createRecipeHTML(review.recipe_category);
 			   var createDate = new Date(review.create_review_date);
 		       var formattedDate = createDate.toISOString().split('T')[0]; 
@@ -432,11 +451,11 @@
 			        '<div class="card-info">' +
 			        '<div class="review-id" style="display: none;">' + review.review_id + '</div>' +
 			        '<div class="user-id" style="display: none;">' + review.user_id + '</div>' +
-			        '<a>작성자: ' + review.user_id + '</a>' +
-			        '<a>레시피: ' + review.recipe_name + '</a>' +
+			        '<a>' + recipeName + '</a>' +
+			        '<a>작성날짜: ' + formattedDate + '</a>' +
 			        '</div>' +
 			        '<div class="card-details">' +
-			        '<a>작성날짜: ' + formattedDate + '</a>' +
+			        '<a>작성자: ' + review.user_id + '</a>' +
 			        '</div>' +
 			        '</div>';
 			    productsContainer.append(productHTML); // 새로운 상품을 기존의 상품 목록에 추가
@@ -456,11 +475,17 @@
 		        case '밥':
 		            backgroundColor = 'green';
 		            break;
-		        case '국/찌개':
+		        case '국&찌개':
 		            backgroundColor = 'orange';
 		            break;
 		        case '반찬':
-		            backgroundColor = 'skyblue';
+		            backgroundColor = '#0084d1';
+		            break;
+		        case '후식':
+		            backgroundColor = '#bf02bc';
+		            break;
+		        case '일품':
+		            backgroundColor = '#fc6d6d';
 		            break;
 		        default:
 		            backgroundColor = ''; // Default background color
@@ -546,7 +571,7 @@
 		
 		        confirmButton.onclick = function() {
 		            var reviewId = confirmButton.dataset.reviewId; // 확인 버튼의 data-product-id 속성에서 product_id 가져오기
-		            window.location.href = '/reviewdeleteadmin/' + reviewId; // 해당 product_id를 사용하여 삭제 URL로 이동
+		            window.location.href = '/admin/reviewdeleteadmin/' + reviewId; // 해당 product_id를 사용하여 삭제 URL로 이동
 		        }
 		    });
 		}
@@ -561,14 +586,18 @@
                     <h4>레시피 카테고리</h4>
                     <div class="list-unstyled allrecipe-categorie">
                         <div class="d-flex justify-content-center recipe-topcategory"style="margin: 0 -15px;">
-                            <a href="/ReviewRecipeAdmin" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>모든 레시피</a>
+                            <a href="/admin/ReviewRecipeAdmin" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>모든 레시피</a>
                             <span>|</span>
                             <div class="d-flex justify-content-center Recipe-category">
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>밥</a>
                             <span>|</span>
-                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>국/찌개</a>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>국&찌개</a>
                             <span>|</span>
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>반찬</a>
+                            <span>|</span>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>후식</a>
+                            <span>|</span>
+                            <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>일품</a>
                         </div>
                       </div>
                     </div>	
@@ -579,7 +608,7 @@
         function initializeSearchField() {
             var inputGroupHTML = `
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" style="margin-left:250px; max-width:300px;" placeholder="검색할 레시피 이름을 적어주세요" id="searchInput1">
+                    <input type="text" class="form-control" style="margin-left:285px; max-width:300px;" placeholder="검색할 레시피 이름을 적어주세요" id="searchInput1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="searchButton">검색</button>
                     </div>
@@ -589,8 +618,7 @@
            
         }
     });
-
-
+	
 
    </script>
 </body>

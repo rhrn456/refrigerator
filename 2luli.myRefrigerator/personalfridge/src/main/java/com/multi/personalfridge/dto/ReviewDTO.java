@@ -19,5 +19,7 @@ public class ReviewDTO {
     private String user_id;
     private int recipe_id;
     private Timestamp create_review_date;
+    private String recipe_name;
+    private String recipe_category;
 
 }

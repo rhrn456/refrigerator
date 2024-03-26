@@ -253,7 +253,7 @@ $(document).ready(function() {
         var pageSize = 12; // 페이지당 아이템 수
         $.ajax({
             type: "Get",
-            url: "/getAllUserAndPage",
+            url: "/admin/getAllUserAndPage",
             data: {
             	keyword: "",
                 page: page,
@@ -274,7 +274,7 @@ $(document).ready(function() {
 	    // AJAX 요청 보내기
 	    $.ajax({
 	        type: "GET",
-	        url: "/getAllUserAndPage",
+	        url: "/admin/getAllUserAndPage",
 	        data: {
 	            keyword: keyword,
 	            page: page,
@@ -390,8 +390,6 @@ $(document).ready(function() {
             
             var UserId = $(this).closest('.card').find('.user-id').text();
             var UserName = $(this).closest('.card').find('.user-name').text();
-            console.log(UserId);
-            console.log(UserName);
             // 관리자 등록 모달을 표시하고 확인 버튼과 취소 버튼에 대한 이벤트 리스너 추가
             var modalContainer = document.getElementById("ManagerContainer");
             var confirmButton = document.getElementById("confirmUpdateButton");
@@ -411,7 +409,7 @@ $(document).ready(function() {
 
             confirmUpdateButton.onclick = function() {
                 var UserId = confirmButton.dataset.userId; 
-                window.location.href = '/userupdateadmin/' + UserId; 
+                window.location.href = '/admin/userupdateadmin/' + UserId; 
             }
 
             isModalOpen = true; // 모달 열릴 때 상태 변경
@@ -449,7 +447,7 @@ $(document).ready(function() {
             confirmDeleteButton.onclick = function() {
                 var UserId = confirmDeleteButton.dataset.userId; // userId를 소문자로 변경
                 console.log(UserId);
-                window.location.href = '/userdeleteadmin/' + UserId; 
+                window.location.href = '/admin/userdeleteadmin/' + UserId; 
             }
 
             isModalOpen = true; // 모달 열릴 때 상태 변경

@@ -53,6 +53,12 @@ public interface UserMapper {
 	
 //  마이페이지 유저 정보 조회
 	UserDTO getUserInfo(String user_id);
+
+	int insertUserLike(int recipe_id, String user_id);
+
+	UserLikeDTO searchUserLike(Map parameters);
+
+	int deleteUserLike(Map parameters);
 	
 	
 }

@@ -52,16 +52,14 @@ public class UserController {
 	@GetMapping("/goPage")
 	public String goPage(HttpServletRequest request) {
 		 String userId = (String) request.getSession().getAttribute("userId");
-	     Integer userAdmin = (Integer) request.getSession().getAttribute("userAdmin");
-	            if (userAdmin != null && (userAdmin == 1 || userAdmin == 2)) {
-	                return "redirect:/admin";
-	                
-	            } else if (userId != null) {
-		            return "redirect:/mypage?user_id=" + userId;
-		            
-		        } else {
-	                return "redirect:/loginPage";
-		        }
+		 Integer userAdmin = (Integer) request.getSession().getAttribute("userAdmin");
+			 if (userAdmin != null && (userAdmin == 1 || userAdmin == 2)) {
+			        return "redirect:/admin/page";
+			    } else if (userId != null) {
+			        return "redirect:/mypage/info?user_id=" + userId;
+			    } else {
+			        return "redirect:/loginPage";
+			    }
 	       }
 	    
 	
@@ -80,7 +78,6 @@ public class UserController {
 	 int cartCountNormal = cartService.getCartCountNormal(user_id);
 	 int cartCountSpecial = cartService.getCartCountSpecial(user_id);
 	 int cartCount = cartCountNormal + cartCountSpecial;
-   	System.out.println(cartCount);
    	if(user.isDelete_plug() == true) {
    		return "redirect:/";
    	}
@@ -93,7 +90,7 @@ public class UserController {
 	        session.setMaxInactiveInterval(300);
 	        //관리자/매니저라면 관리자 페이지로 사용자는 메인으로
    	if(user.getJob_num() == 1 || user.getJob_num() == 2){
-   		return "redirect:/admin";  
+   		return "redirect:admin/page";  
 	   	} else {
 	   		return "redirect:/";
 	   	}
@@ -148,28 +145,75 @@ public class UserController {
     public String findPasswordPage() {
     	return "user/findpassword";
     }
-    //비밀번호 찾기
+
+    //암호 넘겨주기
     @PostMapping("/findPassword")
-    public String findPassword(@RequestParam String mail, String user_name) {
-    	UserDTO user = userService.getUserByEmailAndName(user_name, mail);
+    public String findPassword(@RequestParam String mail, String user_name, Model model) {
     	
     	//랜덤 비밀번호 생성 후 메일로 보내기
     	String str = randomPassword.generateRandomString();
-    	emailService.sendSimpleMessage(mail, "우리집 AI 냉장고 임시 비밀번호 발송해드렸습니다.", str.toString());
-    	
-    	//생성된 랜덤 비밀번호로 사용자 비밀번호 면경 변경
-    	user.setPassword(str);
-    	String hashedPassword = passwordEncoder.encode(user.getPassword());
+    	emailService.sendSimpleMessage(mail, "우리집 AI 냉장고 임시 비밀번호 발송해드렸습니다.", (str.toString() + "임시 비밀번호를 사용해 비밀번호를 변경해주세요."));
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/checkquickpassword");
+        model.addAttribute("mail",mail);
+        model.addAttribute("user_name",user_name);
+        model.addAttribute("str",str);
+        
+        return "user/checkquickpassword";
+    }
+    
+    //암호 확인후 비번 변경 페이지 이동
+    @PostMapping("/loseUserChangePassword")
+    public String LosingChangePassword(@RequestParam String user_name,
+    									@RequestParam String mail,
+    									Model model) {
+    	System.out.println("두번째:" + user_name);
+    	System.out.println(mail);
+    	ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.setViewName("user/makenewpassword");
+    	model.addAttribute("mail",mail);
+        model.addAttribute("user_name",user_name);
+        return "user/makenewpassword";
+    }
+    
+    //비밀번호 변경
+    @PostMapping("/makenewpassword")
+    public String MakeNewPassword(@RequestParam String user_name,
+									@RequestParam String mail,
+									@RequestParam String password) {
+    	System.out.println("세번째:" +user_name);
+    	System.out.println(mail);
+    	System.out.println(password);
+    	UserDTO user = userService.getUserByEmailAndName(user_name, mail);
+    	String hashedPassword = passwordEncoder.encode(password);
     	user.setPassword(hashedPassword);
     	boolean result = userService.updateUser(user);
     	if(result) {
     		return "redirect:/loginPage";
     	}
     	return "error"; 
+    	
     }
-    
+    //좋와요 누르기
+    @GetMapping("/userLikeUP")
+    @ResponseBody
+    public String userLikeUP(@RequestParam int recipe_id, HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+	    String user_id = (String) session.getAttribute("userId");
+    	boolean result = userService.insertUserLike(recipe_id, user_id);
+    	return "success";
+    }
+    //좋와요 삭제
+    @GetMapping("/deleteUserLike")
+    @ResponseBody
+    public String deleteUserLike(@RequestParam int recipe_id, HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+	    String user_id = (String) session.getAttribute("userId");
+    	boolean result = userService.deleteUserLike(recipe_id, user_id);
+    	return "success";
+    }
   //마이페이지 접속 및 조회
-    @GetMapping("/mypage")
+    @GetMapping("/mypage/info")
     public ModelAndView getUserInfo(@RequestParam String user_id) {
     	ModelAndView mav = new ModelAndView("mypage/mypage");
     	UserDTO mypage = userService.getUserInfo(user_id);
@@ -192,7 +236,6 @@ public class UserController {
     		result = userService.deleteUser(user_id);
     	}
     	
-    	System.out.println("UserController, result : " + result);
     	return result;
     	//System.out.println("UserController, selectpassword" + selectPasswordResult);
     	
@@ -214,7 +257,7 @@ public class UserController {
     }
 
  // 마이페이지에서 정보수정 페이지로
-    @GetMapping("/Edit")
+    @GetMapping("/mypage/userEdit")
 	public ModelAndView updateUserPage1S(HttpServletRequest request) {
     	String user_id = (String) request.getSession().getAttribute("userId");
     	//select user userId service -> mapper -> mapper.xml 
@@ -281,7 +324,7 @@ public class UserController {
 
     
     // 환불 및 교환 시 연락처/이메일 페이지 이동
-    @GetMapping("/refundPage")
+    @GetMapping("/mypage/refundPage")
     public String refundPage() {
         return "mypage/refund"; // 환불/교환 페이지로 이동
     }

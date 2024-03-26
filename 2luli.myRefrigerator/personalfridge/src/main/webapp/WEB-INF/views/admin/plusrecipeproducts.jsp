@@ -445,7 +445,7 @@ function initializeSearchField() {
 
         var productListString = JSON.stringify(recipeProducts);
         console.log(productListString);
-        window.location.href = '/RecipeProductPlus?recipeProducts=' + encodeURIComponent(productListString);
+        window.location.href = '/admin/RecipeProductPlus?recipeProducts=' + encodeURIComponent(productListString);
     }
 
     function renderProductList() {

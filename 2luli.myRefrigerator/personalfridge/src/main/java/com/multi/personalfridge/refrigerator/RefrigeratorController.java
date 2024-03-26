@@ -27,6 +27,9 @@ import com.multi.personalfridge.product.ProductService;
 import com.multi.personalfridge.recipe.RecipeProductService;
 import com.multi.personalfridge.recipe.RecipeService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,10 +51,14 @@ public class RefrigeratorController {
 	private RecipeService recipeService;
 	
 	//나의 냉장고 들어왔을때 메인페이지
-	@GetMapping("/refrigerator")                     //세션 유저변수명
-	public ModelAndView getMethodName(@SessionAttribute("userId") String user_id) {
+	@GetMapping("/mypage/refrigerator")                     //세션 유저변수명
+	public ModelAndView getMethodName(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		
+	    HttpSession session = request.getSession();
+	    String user_id = (String) session.getAttribute("userId");
+		 if (user_id == "" || user_id == null || user_id.isEmpty()) {
+		        return new ModelAndView("redirect:/loginPage");
+		    }
 		//유저 아이디와 맞는 냉장고아이디를 불러옴 (최초 접속시에는 생성)
 		Integer refrigeratorId = refrigeratorService.getRefrigeratorId(user_id);
 		if (refrigeratorId == null) {

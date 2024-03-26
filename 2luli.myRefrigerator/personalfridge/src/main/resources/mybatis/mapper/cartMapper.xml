@@ -26,7 +26,7 @@
 		    SELECT DISTINCT c.product_id
 		    FROM cart c
 		    INNER JOIN product p ON c.product_id = p.product_id
-		    WHERE c.user_id = #{user_id} AND c.product_buycheck = 0 AND p.special_product = 0
+		    WHERE c.user_id = #{user_id} AND c.product_buycheck = 0 AND p.special_product = 0<!-- if문으로 하나로 수정 -->
 		) AS cart_product;
 	</select>
 	
@@ -61,7 +61,7 @@
 
 	<!-- 구개목록 등록 -->
 	<insert id="buyProduct" parameterType="Cart">
-	    INSERT INTO cart (user_id, product_id, product_quantity,product_buycheck)
-	    VALUES (#{user_id}, #{product_id}, #{product_quantity},1)
+	    INSERT INTO cart (user_id, product_id, product_quantity,product_buycheck,ship_code)
+	    VALUES (#{user_id}, #{product_id}, #{product_quantity}, 1, #{ship_code})
 	</insert>
 </mapper>
