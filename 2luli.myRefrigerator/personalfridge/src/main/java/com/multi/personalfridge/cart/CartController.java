@@ -105,7 +105,6 @@ public class CartController {
 	@GetMapping("/buyproduct")
 	public String buyProduct(@RequestParam("cartProducts") String cartProductsJson, @RequestParam String arrive, @RequestParam String sub_adress, HttpServletRequest request) {
 		String str = random.generateRandomString();
-		System.out.println(str);
 		// 세션에서 userId 가져오기
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
@@ -124,7 +123,6 @@ public class CartController {
 	            product.setUser_id(userId); // userId 설정
 	            cartService.removeCartItem(product.getProduct_id(),product.getUser_id());
 	            product.setShip_code(str);
-	            System.out.println(product);
 	            //카트에 제품이랑 송장 저장
 	            boolean result = cartService.buyProduct(product);
 	            if (!result) {
