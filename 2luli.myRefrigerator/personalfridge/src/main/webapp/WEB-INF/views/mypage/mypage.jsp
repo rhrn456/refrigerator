@@ -425,7 +425,7 @@
                         	// 회원 탈퇴 로직을 여기에 추가
                    		} else {
                         	alert("비밀번호가 일치하지 않습니다.");
-                        	window.location.href = "/mypage?user_id=" + userId;
+                        	window.location.href = "/mypage/info?user_id=" + userId;
                     	}
 	                    //-> controller selectPassword reutrn  
 							// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
