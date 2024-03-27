@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.multi.personalfridge.recipe.RecipeMapper">
+	
+	<select id="getAllrecipe" resultType="Recipe">
+		SELECT * FROM recipe
+	</select>
+	
+	<insert id="insertRecipe"
+		parameterType="Recipe">
+		INSERT INTO recipe (recipe_name, recipe_content, ingredient, recipe_category, recipe_img,nutrition_facts
+		)
+		VALUES (#{recipe_name}, #{recipe_content}, #{ingredient},
+		#{recipe_category},#{recipe_img},#{nutrition_facts}
+		)
+	</insert>
+	
+	<select id="getReturnInsertRecipe" resultType="Recipe">
+		SELECT * FROM recipe
+		WHERE recipe_name = #{recipe_name}
+	</select>
+	
+		<!-- 모든 레시피 페이징 -->
+	<select id="getAllRecipePage" parameterType="map" resultType="Recipe">
+		SELECT *
+		FROM recipe
+		LIMIT #{pageSize} OFFSET #{offset}
+	</select>
+	
+		<!-- 레시피 검색/페이징 -->
+	<select id ="getRecipesBykeywordAndPage"  parameterType="map"  resultType="Recipe">
+	select *
+	from recipe
+	where recipe_name LIKE CONCAT('%', #{keyword}, '%')
+	<if test='category != ""'>
+         AND recipe_category = #{category}
+     </if>
+	LIMIT #{pageSize} OFFSET #{offset}
+	</select> 
+	
+	<!-- 레시피 검색 가져오기 -->
+	<select id ="getRecipesBykeyword" parameterType="map" resultType="Recipe">
+	SELECT *
+	FROM recipe
+	WHERE recipe_name LIKE CONCAT('%', #{keyword}, '%')
+	<if test='category != ""'>
+         AND recipe_category = #{category}
+     </if>
+	</select>
+	
+	<!-- 레시피 카테고리  OR 레시피 페이징 -->
+   <select id="getRecipesByCategoryAndPage" parameterType="map" resultType="Recipe">
+     SELECT * 
+     FROM recipe
+    <if test='category != ""'>
+     WHERE recipe_category = #{category} 
+    </if>
+     LIMIT #{pageSize} OFFSET #{offset}
+  	</select>
+  	
+  	<!-- 레시피 카테고리 OR 모두 가져 오기 -->
+  	<select id ="getRecipesByCategory" parameterType="map"  resultType="Recipe">
+	select *
+	from recipe
+	<if test='category != ""'>
+      where recipe_category = #{category} 
+    </if>
+	</select>
+	
+	<!-- 레시피 id조회 가져오기 -->
+	<select id ="getRecipeById" parameterType="int" resultType="Recipe">
+	select *
+	from recipe
+    where recipe_id = #{recipe_id}
+	</select>
+	
+	<!-- 레시피 업데이트 하가 -->
+	<update id="recipetUpdate" parameterType="Recipe">
+	update recipe set recipe_name = #{recipe_name}, 
+						recipe_content = #{recipe_content}, 
+						ingredient = #{ingredient},
+						recipe_category = #{recipe_category},
+						recipe_img = #{recipe_img},
+						nutrition_facts = #{nutrition_facts}
+	where recipe_id = #{recipe_id}
+	</update>
+	
+	<!-- 레시피 삭제 -->
+	<delete id="recipeDeletById" parameterType="int">
+    	delete
+    	from recipe 
+    	where recipe_id = #{recipe_id}
+    </delete>
+    
+    <!-- 인기 레시피 가져오기 -->
+    <select id ="getPopularRecipe" resultType="Recipe">
+    SELECT u.recipe_id, r.recipe_name, r.recipe_img
+	FROM userlike u
+	JOIN recipe r ON r.recipe_id = u.recipe_id
+	GROUP BY u.recipe_id
+	ORDER BY COUNT(u.recipe_id) DESC
+	LIMIT 4
+	</select>
+</mapper>

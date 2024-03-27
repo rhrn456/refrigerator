@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.multi.personalfridge.cart.CartMapper">
+
+	<!-- 카트 정보 불러오기 -->
+	<select id="getCartProducts" resultType="CartProduct">
+	    SELECT c.cart_id, c.product_id, c.product_quantity,
+	           p.product_name, p.product_price, p.product_img, p.special_product
+	    FROM cart c
+	    INNER JOIN product p ON c.product_id = p.product_id
+	    WHERE c.user_id = #{user_id} AND c.product_buycheck = 0
+	</select>
+	
+ 	<!-- 카트 상품 등록 -->
+    <insert id="insertCart" parameterType="Cart">
+	    INSERT INTO cart (user_id, product_id, product_quantity)
+	    VALUES (#{user_id}, #{product_id}, #{product_quantity})
+	</insert>
+	
+
+	
+	<!-- 카트목록 카운팅 사용 -->
+	<select id="getCartCountNormal" parameterType="String" resultType="int">
+	 SELECT COUNT(*) AS count
+		FROM (
+		    SELECT DISTINCT c.product_id
+		    FROM cart c
+		    INNER JOIN product p ON c.product_id = p.product_id
+		    WHERE c.user_id = #{user_id} AND c.product_buycheck = 0 AND p.special_product = 0<!-- if문으로 하나로 수정 -->
+		) AS cart_product;
+	</select>
+	
+	<select id="getCartCountSpecial" parameterType="String" resultType="int">
+	 SELECT COUNT(*) AS count
+		FROM (
+		    SELECT DISTINCT c.product_id
+		    FROM cart c
+		    INNER JOIN product p ON c.product_id = p.product_id
+		    WHERE c.user_id = #{user_id} AND c.product_buycheck = 0 AND p.special_product = 1
+		) AS cart_product;
+	</select>
+	
+	
+	<!-- <select id="getCartCount" parameterType="String" resultType="Integer">
+	   SELECT COUNT(*) AS count
+		FROM (
+		    SELECT DISTINCT c.product_id
+		    FROM cart c
+		    INNER JOIN product p ON c.product_id = p.product_id
+		    WHERE c.user_id = #{user_id} 
+		        AND  p.product_name = p.product_name  AND p.special_product=p.special_product
+		) AS cart_product;
+	</select> -->
+
+	<!-- 카트 목록 삭제 -->
+	<delete id="removeCartItem" parameterType="map">
+    	delete
+    	from cart
+    	where product_id = #{product_id} AND user_id = #{user_id} AND product_buycheck = 0
+    </delete>
+
+	<!-- 구개목록 등록 -->
+	<insert id="buyProduct" parameterType="Cart">
+	    INSERT INTO cart (user_id, product_id, product_quantity,product_buycheck,ship_code)
+	    VALUES (#{user_id}, #{product_id}, #{product_quantity}, 1, #{ship_code})
+	</insert>
+</mapper>

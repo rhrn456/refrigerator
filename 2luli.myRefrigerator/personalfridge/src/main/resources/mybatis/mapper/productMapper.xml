@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.multi.personalfridge.product.ProductMapper">
+	
+	<!-- 상품 전부가져오기 -->
+	<select id ="getFullProduct" resultType="Product">
+	select *
+	from product
+	</select>
+	
+	<!-- 상품 id조회 가져오기 -->
+	<select id ="getProductById" parameterType="int" resultType="Product">
+	select *
+	from product
+    where product_id = #{product_id}
+	</select>
+	
+	<!-- 상품 업데이트 하가 -->
+	<update id="productUpdate" parameterType="Product">
+	update product set product_name = #{product_name}, 
+						product_content = #{product_content}, 
+						product_quantity = #{product_quantity},
+						product_price = #{product_price},
+						product_img = #{product_img},
+						limit_date = #{limit_date},
+						product_category = #{product_category},
+						special_product = #{special_product}
+	where product_id = #{product_id}
+	</update>
+	<!-- 상품 삭제 -->
+	<delete id="productDeletById" parameterType="int">
+    	delete
+    	from product 
+    	where product_id = #{product_id}
+    </delete>
+	
+	
+	<!-- 일반 상품 START -->
+	
+	<!-- 일반 상품 모두 가져오기 -->
+	<select id ="getAllProduct" resultType="Product">
+	select *
+	from product
+	where special_product = 0
+	</select>
+	
+	<!-- 일반 상품 페이징 -->
+	<select id ="getAllProductPage"  parameterType="map"  resultType="Product">
+	select *
+	from product
+	where special_product = 0
+	LIMIT #{pageSize} OFFSET #{offset}
+	</select> 
+	
+	<!-- 일반 상품 검색/페이징 -->
+	<select id ="getProductsBykeywordAndPage"  parameterType="map"  resultType="Product">
+	select *
+	from product
+	where special_product = 0 
+	AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
+	<if test='category != ""'>
+         AND product_category = #{category}
+     </if>
+	LIMIT #{pageSize} OFFSET #{offset}
+	</select> 
+	
+	<!-- 일반 상품 검색 가져오기 -->
+	<select id ="getProductsBykeyword" parameterType="map" resultType="Product">
+	SELECT *
+	FROM product
+	WHERE special_product = 0 
+	AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
+	<if test='category != ""'>
+         AND product_category = #{category}
+     </if>
+	</select>
+	
+	<!-- 일반 상품 카테고리  OR 일반 모든 상품 페이징 -->
+   <select id="getProductsByCategoryAndPage" parameterType="map" resultType="Product">
+     SELECT * FROM product
+     WHERE special_product = 0 
+    <if test='category != ""'>
+      AND  product_category = #{category} 
+    </if>
+     LIMIT #{pageSize} OFFSET #{offset}
+  	</select>
+  	
+  	<!-- 일반 상품 카테고리 OR 모두 가져 오기 -->
+  	<select id ="getProductsByCategory" parameterType="map"  resultType="Product">
+	select *
+	from product
+	where special_product = 0
+	<if test='category != ""'>
+      AND  product_category = #{category} 
+    </if>
+	</select>
+	
+	<!-- 일반 상품 END -->
+	
+	<!-- 특가 상품 START -->
+	
+	<!-- 특가 상품 모두 가져오기 -->
+	<select id ="getAllSepcialProduct" resultType="Product">
+	select *
+	from product
+	where special_product = 1
+	</select>
+	
+	<!-- 특가 상품 페이징 -->
+	<select id ="getAllSepcialProductPage"  parameterType="map"  resultType="Product">
+	select *
+	from product
+	where special_product = 1
+	LIMIT #{pageSize} OFFSET #{offset}
+	</select> 
+	
+	<!-- 특가 상품 검색/페이징-->
+	<select id ="getSpecialProductsBykeywordAndPage"  parameterType="map"  resultType="Product">
+	select *
+	from product
+	where special_product = 1 
+	AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
+	 <if test='category != ""'>
+      AND  product_category = #{category} 
+     </if>
+	LIMIT #{pageSize} OFFSET #{offset}
+	</select> 
+	
+	<!-- 특가 상품 검색 가져오기-->
+	<select id ="getSpecialProductsBykeyword" parameterType="map"  resultType="Product">
+	SELECT *
+    FROM product
+    WHERE special_product = 1 
+    AND (product_name LIKE CONCAT('%', #{keyword}, '%') OR product_content LIKE CONCAT('%', #{keyword}, '%'))
+     <if test='category != ""'>
+         AND product_category = #{category}
+     </if>
+	</select>
+	
+    <!-- 특가 상품 카테고리 OR 특가 모든 상품 2Page/페이징 -->
+    <select id="getSpecialProductsByCategoryAndPage" parameterType="map" resultType="Product">
+     SELECT * FROM product
+     WHERE special_product = 1 
+     <if test='category != ""'>
+      AND  product_category = #{category} 
+     </if>
+     LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+    <!-- 특가 상품 카테고리 OR 특가 모든 상품 가져오기 -->	
+	<select id ="getSpecialProductsByCategory" resultType="Product">
+	select *
+	from product
+	where special_product = 1
+	<if test='category != ""'>
+    AND  product_category = #{category} 
+    </if>
+	</select>
+    <!-- 특가 상품 END -->
+    
+    <!-- 일반/특가 상품 등록 -->
+    <insert id="ProductPlus" parameterType="Product">
+    INSERT INTO product (product_name, product_content, product_quantity, product_price, product_img, limit_date, product_category,special_product)
+    VALUES (#{product_name}, #{product_content}, #{product_quantity}, #{product_price}, #{product_img}, #{limit_date},  #{product_category}, #{special_product})
+	</insert>
+	
+</mapper>

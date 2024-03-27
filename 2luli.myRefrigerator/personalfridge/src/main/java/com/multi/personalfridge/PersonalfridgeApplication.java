@@ -1,18 +1,23 @@
 package com.multi.personalfridge;
 
-import javax.sql.DataSource;
-
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
-@MapperScan(basePackages= "com.multi.personalfridge.admin")
+
+@MapperScan({"com.multi.personalfridge.user", 
+			 "com.multi.personalfridge.socailuser", 
+			 "com.multi.personalfridge.admin", 
+			 "com.multi.personalfridge.cart", 
+			 "com.multi.personalfridge.product", 
+			 "com.multi.personalfridge.recipe",
+			 "com.multi.personalfridge.review",
+			 "com.multi.personalfridge.refrigerator",
+			 "com.multi.personalfridge.board",
+			 "com.multi.personalfridge.ship",
+			 "com.multi.personalfridge.common"})
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class PersonalfridgeApplication {
 
 	public static void main(String[] args) {

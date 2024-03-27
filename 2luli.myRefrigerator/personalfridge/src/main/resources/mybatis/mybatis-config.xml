@@ -2,12 +2,24 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<settings>
-	  <setting name="mapUnderscoreToCamelCase" value="true"/>
-	</settings>
-<typeAliases>
-	<typeAlias type="com.multi.personalfridge.admin.AdminDTO" alias="Admin"/>
-</typeAliases>  
 
+<typeAliases>
+	<typeAlias type="com.multi.personalfridge.dto.UserDTO" alias="User"/>
+	<typeAlias type="com.multi.personalfridge.dto.SocialUserDTO" alias="SocialUser"/>
+	<typeAlias type="com.multi.personalfridge.dto.ProductDTO" alias="Product"/>
+	<typeAlias type="com.multi.personalfridge.dto.RecipeDTO" alias="Recipe"/>
+	<typeAlias type="com.multi.personalfridge.dto.RecipeProductDTO" alias="RecipeProduct"/>
+	<typeAlias type="com.multi.personalfridge.dto.RecipeAndProductDTO" alias="RecipeAndProduct"/>
+	<typeAlias type="com.multi.personalfridge.dto.ReviewDTO" alias="Review"/>
+	<typeAlias type="com.multi.personalfridge.dto.RefrigeratorProdcutDTO" alias="RefrigeratorProdcut"/>
+	<typeAlias type="com.multi.personalfridge.dto.BoardDTO" alias="Board"/>
+	<typeAlias type="com.multi.personalfridge.dto.BoardCategoryDTO" alias="Category"/>
+	<typeAlias type="com.multi.personalfridge.dto.EmailSendDTO" alias="EmailSend"/>
+	<typeAlias type="com.multi.personalfridge.dto.UserLikeDTO" alias="UserLike"/>
+	<typeAlias type="com.multi.personalfridge.dto.CartDTO" alias="Cart"/>
+	<typeAlias type="com.multi.personalfridge.dto.CartProductDTO" alias="CartProduct"/>
+	<typeAlias type="com.multi.personalfridge.dto.ShipDTO" alias="Ship"/>
+	<typeAlias type="com.multi.personalfridge.dto.ShipItemDTO" alias="ShipItem"/>
+</typeAliases>
 
 </configuration>

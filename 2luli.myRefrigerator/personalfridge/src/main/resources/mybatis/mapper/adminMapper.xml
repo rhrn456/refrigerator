@@ -2,9 +2,57 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.admin.AdminMapper">
 
-	<select id ="getAlluser" resultType="Admin">
+	<select id ="getAlluser" resultType="User">
 	select *
 	from user
 	</select>
- 
+
+	<!-- 모든 회원 조회 -->
+	<select id="getAllManager"  resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 1
+    </select>
+
+	<!-- 모든 회원 조회 페이지 -->
+	<select id="getAllManagerPage"  parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 1
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+	<!-- 매니저 -> 사용자 전환 -->
+	<update id="ManagerUpdateToUser" parameterType="String">
+	    UPDATE user
+	    SET job_num = 0
+	    WHERE user_id = #{user_id} 
+	</update>
+	
+	<!-- 모든 매니저 검색 -->
+	<select id="getAllManagerByKeyword" parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 1 
+		AND (
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+            OR user_name LIKE CONCAT('%', #{keyword}, '%')
+        )
+    </select>
+    
+	<!-- 모든 매니저 검색/전체 조회 페이지 -->
+	<select id="getAllManagerByKeywordPage"  parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 1
+    	<if test='keyword != ""'>
+        AND (
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+            OR user_name LIKE CONCAT('%', #{keyword}, '%')
+        )
+    </if>
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+    <select id="getAllLike" resultType="string">
+       SELECT r.recipe_category
+		FROM userlike l
+		LEFT JOIN recipe r ON r.recipe_id = l.recipe_id
+    </select>
 </mapper>

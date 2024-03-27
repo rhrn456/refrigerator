@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.multi.personalfridge.common.CommonMapper">
+
+	<select id="getOverLimitProduct" resultType="EmailSend">
+		SELECT product_name, limit_date, mail 
+		FROM refrigerator_product rp,refrigerator r, user u 
+		WHERE limit_date &lt; DATE_ADD(CURDATE(), INTERVAL 3 DAY) AND rp.refrigerator_id = r.refrigerator_id AND r.user_id = u.user_id 
+		order by mail;
+	</select>
+</mapper>

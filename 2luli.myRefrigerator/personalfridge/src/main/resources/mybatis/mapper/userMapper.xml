@@ -2,5 +2,166 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.user.UserMapper">
 
+	<!-- 회원가입  -->
+	<insert id="insertUser" parameterType="User">
+        INSERT INTO user (user_id, password, user_name, mail, adress, phone)
+        VALUES (#{user_id}, #{password}, #{user_name}, #{mail}, #{adress}, #{phone}) 
+    </insert>
+	
+	<!-- 로그인  -->
+	<select id="login" 
+			parameterType="string" 
+			resultType="User">
+        SELECT * FROM user
+        WHERE user_id = #{user_id} 
+    </select>
+    
+    <!-- 아이디 찾기 -->
+	<select id="getUserByEmailAndName" 
+			parameterType="string" 
+			resultType="User">
+        SELECT * FROM user
+        WHERE user_name = #{user_name} AND mail = #{mail}
+    </select>
+    
+    <!-- 회원 정보 수정 -->
+	<update id="updateUser" parameterType="User">
+	    UPDATE user
+	    SET 
+	        user_name = #{user_name},
+	        mail = #{mail},
+	        adress = #{adress},
+	        phone = #{phone}
+	    WHERE user_id = #{user_id} 
+	</update>
+	
+	<!--  비밀번호 변경  -->
+	<update id="updatePassword" parameterType="User">
+	 UPDATE user 
+	 SET password = #{password} 
+	 WHERE user_id = #{user_id} 
+	 </update>
+	
+    <!-- 소셜 회원 정보 추가 수정 -->
+	<update id="InsertUserInfoBySocial" parameterType="User">
+	    UPDATE user
+	    SET 
+	        adress = #{adress},
+	        phone = #{phone}
+	    WHERE user_id = #{user_id} 
+	</update>
+
+	<!-- 회원 삭제 -->
+	<delete id="deleteUser" parameterType="String">
+	    UPDATE user
+	    SET delete_plug = true ,delete_user_date = now(),delete_content= #{delete_content} 
+	    WHERE user_id = #{user_id}
+	</delete>
+	
+	<!--  회원 삭제 비밀번호 조회 -->
+	<select id="selectPassword" parameterType="map" resultType="_int">
+		SELECT count(user_id)
+		FROM user
+		WHERE user_id = #{user_id} and password = #{password}
+	</select>
+
+
+	
+	<!-- 회원 상세정보 조회 -->
+	<select id="getUserById" 
+			parameterType="string" 
+			resultType="User">
+        SELECT * FROM user
+        WHERE user_id = #{user_id}
+    </select>
+
+	<!-- 모든 회원 조회 -->
+	<select id="getAlluser"  resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0
+    </select>
+
+	<!-- 모든 회원 조회 페이지 -->
+	<select id="getAllUserPage"  parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+	<!-- 모든 회원 검색 조회-->
+	<select id="getAlluserByKeyword" parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0 
+        <if test='keyword != ""'>
+		AND (
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+            OR user_name LIKE CONCAT('%', #{keyword}, '%')
+            OR mail LIKE CONCAT('%', #{keyword}, '%')
+            OR adress LIKE CONCAT('%', #{keyword}, '%')
+            OR phone LIKE CONCAT('%', #{keyword}, '%')
+        )
+        </if>
+    </select>
+    
+	<!-- 모든 회원 검색 조회 페이지 -->
+	<select id="getAllUserByKewordPage"  parameterType="map" resultType="User">
+        SELECT * FROM user
+        WHERE job_num = 0
+    	<if test='keyword != ""'>
+        AND (
+            user_id LIKE CONCAT('%', #{keyword}, '%')
+            OR user_name LIKE CONCAT('%', #{keyword}, '%')
+            OR mail LIKE CONCAT('%', #{keyword}, '%')
+            OR adress LIKE CONCAT('%', #{keyword}, '%')
+            OR phone LIKE CONCAT('%', #{keyword}, '%')
+        )
+    </if>
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+    <!-- 회원 삭제 -->
+   	<delete id="deleteUserAdmin" parameterType="String">
+  		 DELETE FROM user WHERE user_id = #{user_id}
+	</delete>
+	
+	<!-- 사용자 -> 매니저 등록 -->
+	<update id="userUpdateToManager" parameterType="String">
+	    UPDATE user
+	    SET job_num = 1
+	    WHERE user_id = #{user_id} 
+	</update>
+	
+	<!-- 찜목록 조회 -->
+	<select id="getUserLike" parameterType="String" resultType="UserLike">
+		SELECT l.like_id, l.user_id, l.recipe_id, l.like_date, r.recipe_name 
+		FROM userlike l
+		INNER JOIN recipe r ON l.recipe_id = r.recipe_id
+		WHERE user_id=#{user_id}
+	</select>
+	
+	<!-- 마이페이지 유저 조회 -->
+	<select id="getUserInfo" parameterType="String" resultType="User">
+		SELECT user_id, password, user_name, mail, adress, phone from user
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<!-- 좋와요 추가 -->
+	<insert id="insertUserLike" parameterType="UserLike">
+        INSERT INTO userlike (user_id, recipe_id)
+        VALUES (#{user_id}, #{recipe_id}) 
+    </insert>
+    
+    <!-- 레시피별 좋와요 조회 -->
+	<select id="searchUserLike" parameterType="map" resultType="UserLike">
+		SELECT *
+		FROM userlike
+		WHERE user_id = #{user_id} AND recipe_id = #{recipe_id} 
+	</select>
+	
+	<!-- 좋와요 췩소-->
+   	<delete id="deleteUserLike" parameterType="map">
+  		 DELETE FROM userlike 
+  		 WHERE user_id = #{user_id} AND recipe_id = #{recipe_id}
+	</delete>
 
 </mapper>
