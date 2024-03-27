@@ -38,6 +38,8 @@ public interface ShipMapper {
 
 	public List<ShipDTO> MovingShipSchedule(String ship_code);
 
+	public void VisitShip(Integer ship_id);
+
 		
 	
 

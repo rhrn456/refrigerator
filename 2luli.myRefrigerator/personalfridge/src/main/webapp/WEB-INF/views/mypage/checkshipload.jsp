@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,6 +112,9 @@
                                 <p><strong>배송지:</strong> ${ship.arrive}${ship.sub_adress}</p>
                             </div>
                            <div class="ship-info-right" style="flex: 1;">
+                           <c:set var="dateFormat" value="yyyy-MM-dd HH:mm" />
+							<fmt:formatDate value="${ship.move_time}" pattern="${dateFormat}" var="formattedMoveTime" />
+							<p style="margin-bottom:-3px;"><strong>이동 시간:</strong> ${formattedMoveTime}</p>
 							    <p>
 							        <c:choose>
 									    <c:when test="${ship.go_on == 0}">
@@ -142,12 +146,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 	
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+    //시간 출력
     function toggleCard(card) {
         card.classList.toggle('show');
     }

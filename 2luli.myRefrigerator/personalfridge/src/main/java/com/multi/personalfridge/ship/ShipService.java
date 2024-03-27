@@ -101,4 +101,8 @@ public class ShipService {
 		
 		return shipMapper.MovingShipSchedule(ship_code);
 	}
+	public void VisitShip(Integer ship_id) {
+		
+		shipMapper.VisitShip(ship_id);
+	}
 }
