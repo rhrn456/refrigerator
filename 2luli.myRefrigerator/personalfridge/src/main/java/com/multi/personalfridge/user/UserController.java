@@ -50,6 +50,12 @@ public class UserController {
         this.cartService = cartService;
     }
     
+    
+    @GetMapping("/paygo")
+    public String paygo() {
+    	
+    	return "pay_modal";
+    }
     //이동 페이지
 	@GetMapping("/goPage")
 	public String goPage(HttpServletRequest request) {

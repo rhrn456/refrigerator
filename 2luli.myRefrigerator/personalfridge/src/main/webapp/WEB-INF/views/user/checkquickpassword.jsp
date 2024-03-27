@@ -63,7 +63,7 @@ body {
 			                             <img src="img/house-AI-BI.png" style="max-width: 50%; max-height: 50%; margin-top:-30px; margin-bottom:20px;">
                                         <h1 class="h4 text-gray-900 mb-4">암호를 입력해주세요</h1>
                                     </div>
-									   <form class="user" action="/user/loseUserChangePassword" method="POST">
+									   <form class="user" action="/loseUserChangePassword" method="POST">
 									    <div class="form-group">
 									       <input type="text" class="form-control form-control-user" id="accesnum" name="accesnum" placeholder="암호 입력창" required>
 									    </div>

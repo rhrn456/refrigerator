@@ -94,6 +94,12 @@ body {
                                 <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                                 </a>
+                                 <a href="#" class="btn btn-facebook btn-user btn-block" style="background-color:#4aa8d8;">
+		                            <i class="fab fa-twitter fa-fw"></i> Login with Twitter
+                                </a>
+							   <a href="#" class="btn btn-user btn-block" style="background-color:#fee500;">
+								    <i class="fa fa-comment fa-fw"></i> Login with Kakao
+								</a>
                             </form>
                             <hr>
                             <div class="text-center">

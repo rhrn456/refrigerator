@@ -70,7 +70,7 @@
                                     </script> -->
                                 </div>
                             </div>
-                            <a href="/contact" id="header-item" class="nav-item nav-link" style="margin-left:30px; color:#3D3D3D; font-size: 20px;">고객센터</a>
+                            <a href="/paygo" id="header-item" class="nav-item nav-link" style="margin-left:30px; color:#3D3D3D; font-size: 20px;">고객센터</a>
                         </div>
 						<div class="d-flex m-3 me-0" >
 						    <a href="/mypage/refrigerator" class="position-relative me-4 my-auto" data-tooltip="나의 냉장고">

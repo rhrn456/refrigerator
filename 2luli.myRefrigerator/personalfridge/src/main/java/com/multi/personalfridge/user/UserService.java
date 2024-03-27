@@ -214,5 +214,21 @@ public class UserService {
 		}
 	}
 
+	//------------------------------------------------
+
+	public void paid(Map<String, Object> map) {
+		userMapper.paid(map);
+	}
+
+
+	public void rePaid(Map<String, Object> map) {
+		userMapper.rePaid(map);		
+	}
+
+
+	public String paidCheck(String ID) {
+	    return userMapper.paidCheck(ID);
+	}
+
 	
 }

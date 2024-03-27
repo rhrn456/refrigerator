@@ -111,8 +111,8 @@ public class SnsController {
 
     	UserDTO user = userService.getUserById(user_id);
     	if(user == null) {
-    		 mv.setViewName("/loginPage");
-    		return "/loginPage";
+    		 mv.setViewName("redirect:/loginPage");
+    		return "redirect:/loginPage";
     	}
     	int cartCountNormal = cartService.getCartCountNormal(user_id);
 	   	int cartCountSpecial = cartService.getCartCountSpecial(user_id);

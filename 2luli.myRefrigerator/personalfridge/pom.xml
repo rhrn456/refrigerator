@@ -65,6 +65,12 @@
 			<version>3.0.3</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- 추가한 코드 2024-03-27 결제 위한 코드-->
+		<dependency>
+	    <groupId>com.github.iamport</groupId>
+	    <artifactId>iamport-rest-client-java</artifactId>
+	    <version>0.2.23</version>
+	</dependency>
 		<!-- JSP 설정 -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -104,6 +110,13 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<!-- 추가한 코드 2024-03-27 결제 위한 코드-->
+		<repositories>
+			<repository>
+			    <id>jitpack.io</id>
+			    <url>https://jitpack.io</url>
+			</repository>
+		</repositories>
 
 	<build>
 		<plugins>

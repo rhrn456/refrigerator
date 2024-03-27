@@ -60,5 +60,14 @@ public interface UserMapper {
 
 	int deleteUserLike(Map parameters);
 	
+//------------------------------------------------------
+	void paid(Map<String, Object> map);
+
+	void rePaid(Map<String, Object> map);
+
+	String paidCheck(String ID);
+
+	
+	
 	
 }
