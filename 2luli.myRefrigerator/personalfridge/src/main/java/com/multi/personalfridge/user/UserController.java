@@ -234,7 +234,6 @@ public class UserController {
     	ModelAndView mav = new ModelAndView("mypage/mypage");
     	UserDTO mypage = userService.getUserInfo(user_id);
         mav.addObject("mypage", mypage);
-//        System.out.println("UserController" + mypage);
         return mav;
     }
     
@@ -243,17 +242,14 @@ public class UserController {
     @PostMapping("/deleteUser")
     @ResponseBody
     public int deleteUser(@RequestParam String user_id, String password, HttpSession session, RedirectAttributes redirectAttributes) {
-//    	System.out.println("UserController, selectpassword");
     	int result = 0;
     	UserDTO user = userService.login(user_id);
     	if(passwordEncoder.matches(password, user.getPassword())) {
     		
-    		//public int deleteUser(String userId) {
     		result = userService.deleteUser(user_id);
     	}
     	
     	return result;
-    	//System.out.println("UserController, selectpassword" + selectPasswordResult);
     	
     }
     	

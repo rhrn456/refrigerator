@@ -1,5 +1,6 @@
 package com.multi.personalfridge.ship;
 
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +41,10 @@ public class ShipController {
 	      HttpSession session = request.getSession();
 	      String userId = (String) session.getAttribute("userId");
 	      List<ShipDTO> shipList = shipService.getShipByUserId(userId);
+	      // 송장 번호별로 그룹화된 맵 생성
 	      Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
 	       .collect(Collectors.groupingBy(ShipDTO::getShip_code));
-	      groupedShipList.values().forEach(list -> list.sort(Comparator.comparing(ShipDTO::getMove_time)));
-	      System.out.println(groupedShipList);
+
 	      model.addAttribute("groupedShipList", groupedShipList); 
 	      return "/mypage/checkshipload";
 	  }

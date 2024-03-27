@@ -269,9 +269,9 @@ img {
 		var productName = firstProduct.product_name; // 첫 번째 배열의 product_name 가져오기
 		var productCount = viewCartList.length; // viewCartList의 배열 수 가져오기
 		
-		var totalPrice = viewCartList.reduce(function(total, item) {
-		    return total + item.product_price;
-		}, 0);
+	    var totalPrice = viewCartList.reduce(function(total, item) {
+	        return total + (item.product_quantity * item.product_price);
+	    }, 0);
 		console.log(totalPrice);
 		requestPay(productCount,productName,totalPrice,selectedLocation,enteredAddress)
 		//sendProducts(selectedLocation,enteredAddress);
