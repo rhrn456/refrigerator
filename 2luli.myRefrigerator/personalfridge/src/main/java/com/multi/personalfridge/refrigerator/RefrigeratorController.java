@@ -41,7 +41,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class RefrigeratorController {
 	
-	
 	@Autowired
 	private RefrigeratorService refrigeratorService;	
 	@Autowired
