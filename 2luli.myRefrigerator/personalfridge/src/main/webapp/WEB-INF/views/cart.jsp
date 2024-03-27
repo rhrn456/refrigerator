@@ -135,6 +135,7 @@ img {
 		<div class="row justify-content-center" style="margin-top: 150px; margin-left: 200px; ">
 				<ul id="cartproductList" class="row mt-3" style="margin-right:2px;"></ul>
 		</div>
+		<!-- 구매버튼 -->
 		<button id="sendProductsButton" onclick="openModal()">구매하기</button>
 	</div>
 	<!-- Cart Page End -->
