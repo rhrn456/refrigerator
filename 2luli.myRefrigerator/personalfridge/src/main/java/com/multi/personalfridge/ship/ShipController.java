@@ -1,5 +1,6 @@
 package com.multi.personalfridge.ship;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,6 +42,8 @@ public class ShipController {
 	      List<ShipDTO> shipList = shipService.getShipByUserId(userId);
 	      Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
 	       .collect(Collectors.groupingBy(ShipDTO::getShip_code));
+	      groupedShipList.values().forEach(list -> list.sort(Comparator.comparing(ShipDTO::getMove_time)));
+	      System.out.println(groupedShipList);
 	      model.addAttribute("groupedShipList", groupedShipList); 
 	      return "/mypage/checkshipload";
 	  }

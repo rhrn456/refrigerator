@@ -113,13 +113,16 @@
                            <div class="ship-info-right" style="flex: 1;">
 							    <p>
 							        <c:choose>
-							            <c:when test="${ship.go_on == 0}">
-							                <strong>배송 상태:</strong> 배송 중&nbsp;
-							            </c:when>
-							            <c:otherwise>
-							                <strong>배송 상태:</strong> 하차 완료&nbsp;
-							            </c:otherwise>
-							        </c:choose>
+									    <c:when test="${ship.go_on == 0}">
+									        <strong>배송 상태:</strong> 배송 중&nbsp;
+									    </c:when>
+									    <c:when test="${ship.go_on == 2}">
+									        <strong>배송 상태:</strong> 배송 완료&nbsp;
+									    </c:when>
+									    <c:otherwise>
+									        <strong>배송 상태:</strong> 하차 완료&nbsp;
+									    </c:otherwise>
+									</c:choose>
 							        <strong>현재 위치:</strong> ${ship.now_location} 
 							    </p>
 							</div>

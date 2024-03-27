@@ -1,6 +1,7 @@
 package com.multi.personalfridge.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,6 @@ public class ShipDTO {
 	private String sub_adress;
 	private String now_location;
 	private int go_on;
-	private Date move_time;
+	private Timestamp move_time;
 	private int admin_check;
 }
