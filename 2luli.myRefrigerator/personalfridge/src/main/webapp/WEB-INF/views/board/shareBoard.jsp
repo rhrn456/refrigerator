@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -33,6 +33,16 @@
 	<!-- Navbar start -->
 	<%@ include file="../header.jsp"%>
 	<!-- Navbar End -->
+	
+        <style>
+		    .fruite-categorie li {
+		        margin-bottom: 15px; /* 목록 항목 간의 간격을 늘립니다. */
+		    }
+		
+		    .fruite-categorie a {
+		        font-size: 18px; /* 링크(글자)의 크기를 키웁니다. */
+		    }
+		</style>
 </head>
 
 <body>
@@ -64,10 +74,10 @@
                                 <div class="row g-4">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <h4>카테고리</h4>
+                                            <h3>카테고리</h3>
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
+                                                    <div class="d-flex justify-content-between fruite-name" style="margin-top:15px;">
                                                         <a href="/board?CategoryNo=1"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
                                                     </div>
                                                 </li>

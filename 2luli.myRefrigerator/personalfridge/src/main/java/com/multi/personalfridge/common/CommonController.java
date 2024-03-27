@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,9 +23,12 @@ import com.multi.personalfridge.dto.CartProductDTO;
 import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
+import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 import com.multi.personalfridge.dto.UserLikeDTO;
 import com.multi.personalfridge.product.ProductService;
+import com.multi.personalfridge.recipe.RecipeProductService;
 import com.multi.personalfridge.recipe.RecipeService;
+import com.multi.personalfridge.refrigerator.RefrigeratorService;
 import com.multi.personalfridge.user.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,23 +41,29 @@ public class CommonController {
 	private final RecipeService recipeService;
 	private final CartService cartService;
 	private final UserService userService;
+	private final RefrigeratorService refrigeratorService;
+	private final RecipeProductService recipeProductService;
 
 	@Autowired
 	public CommonController(ProductService productService, 
 							RecipeService recipeService, 
 							CartService cartService,
-							UserService userService) {
+							UserService userService,
+							RefrigeratorService refrigeratorService,
+							RecipeProductService recipeProductService) {
 	    this.productService = productService;
 	    this.recipeService = recipeService;
 	    this.cartService = cartService;
 	    this.userService = userService;
+	    this.refrigeratorService = refrigeratorService;
+	    this.recipeProductService = recipeProductService;
 	}
 	
 	//메인 화면 데이터(레시피, 특가 상품)
 
 	
 	@GetMapping("/")
-	public String getMainRecipe(Model model) {
+	public String getMainRecipe(Model model, HttpServletRequest request) {
 	    List<RecipeDTO> recipe = recipeService.getPopularRecipe();
 	    List<ProductDTO> products = productService.getAllSepcialProduct();
 	    //랜덤으로 섞는다
@@ -66,6 +76,65 @@ public class CommonController {
 	    }
 	    model.addAttribute("products", selectedProducts);
 	    model.addAttribute("recipe", recipe);
+	    
+	    HttpSession session = request.getSession();
+	    String userId = (String) session.getAttribute("userId");
+		
+	    if (userId != null) {
+		    //유저아이디와 맞는 냉장고의 아이디를 불러옴
+		    int refrigeratorId = refrigeratorService.getRefrigeratorId(userId);
+		    
+			//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
+			List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
+			
+			//냉장고 속 제품과 맞는 재료들 불러옴
+			ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
+			ArrayList<Integer> idList = new ArrayList<Integer>();
+			for (int i = 0; i < refrigeratorProductList.size(); i++) {
+				productList.addAll(productService.getProductsBykeyword("", refrigeratorProductList.get(i).getProduct_name()));			
+			}
+			
+			//중복제거
+			for (int i = productList.size() - 1; i >= 0 ; i--) {
+				for (Integer integer : idList) {
+					if (productList.get(i).getProduct_id().equals(integer)) {
+						productList.remove(i);
+						if (i > 0) {
+							i--;
+						}
+					}
+				}
+				idList.add(productList.get(i).getProduct_id());			
+			}
+			idList.clear();
+			
+			//불러온 재료가 들어간 레시피의 id를 불러옴
+			ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
+			for (ProductDTO product : productList) {
+				recipeIdList.addAll(recipeProductService.getRecipeIdByProductId(product.getProduct_id()));
+			}
+		
+			//중복제거
+			for (int i = recipeIdList.size() - 1; i >= 0 ; i--) {
+				for (Integer integer : idList) {
+					if (recipeIdList.get(i).equals(integer)) {
+						recipeIdList.remove(i);
+						if (i > 0) {
+							i--;
+						}
+					}
+				}
+				idList.add(recipeIdList.get(i));			
+			}
+			
+			ArrayList<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
+			for (Integer recipeId : recipeIdList) {
+				recipeList.add(recipeService.getRecipeById(recipeId));
+			}
+			
+			model.addAttribute("recipeList", recipeList);
+		}
+	    
 	    return "index";
 	}
 	

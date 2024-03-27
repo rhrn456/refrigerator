@@ -352,62 +352,6 @@ thead th {
 			</form>
 		</div>
 	</div>
-
-	<div class="container-fluid fruite py-5">
-		<div class="container py-5">
-			<div class="tab-class text-center">
-				<div class="row g-4">
-					<div class="col-lg-8 mx-auto" style="margin-bottom: -10px;">
-						<h3 class="mb-0">
-							<i class="fa fa-calculator" aria-hidden="true""></i> 나의 냉장고 속 재료와 딱 맞는 레시피 추천!
-						</h3>
-						<br><br>
-					</div>
-				</div>
-				<div class="tab-content">
-					<div id="tab-1" class="tab-pane fade show p-0 active">
-						<div class="row g-4 justify-content-center">
-							<!-- 수정된 부분 -->
-							<div class="col-lg-12">
-								<div class="row g-4">
-									<c:set var="count" value="0" />
-									<c:forEach items="${recipeList}" var="RecipeDTO">
-										<div class="col-md-6 col-lg-4 col-xl-3"
-											style="display: ${count < 4 ? 'block' : 'none'};">
-											<div class="rounded position-relative fruite-item">
-												<div class="fruite-img">
-													<img src="${RecipeDTO.recipe_img}"
-														class="img-fluid w-100 rounded-top" alt="">
-												</div>
-												<div
-													class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-													style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
-												<div
-													class="p-4 border border-secondary border-top-0 rounded-bottom">
-													<h4>${RecipeDTO.recipe_name}</h4>
-													<p>${RecipeDTO.recipe_content}</p>
-													<div class="d-flex justify-content-between flex-lg-wrap"
-														style="margin-left: 40px;">
-														<a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
-															class="btn border border-secondary rounded-pill px-3 text-primary gorecipe"
-															style="margin-top: 10px;"> <i
-															class="fa fa-search me-2 text-primary"></i>레시피 상세 보기
-														</a>
-													</div>
-												</div>
-											</div>
-										</div>
-										<c:set var="count" value="${count + 1}" />
-									</c:forEach>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- footer start -->
 	<%@ include file="footer.jsp"%>
 	<!-- footer End -->
