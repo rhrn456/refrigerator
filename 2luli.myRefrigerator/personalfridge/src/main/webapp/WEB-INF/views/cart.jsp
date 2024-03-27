@@ -281,7 +281,7 @@ img {
 		var modal = document.getElementById('deliveryModal');
 	    modal.style.display = 'none';
 	}
-	
+	//dnfk
 	// 사용자가 모달 외부를 클릭하면 모달이 닫히도록 설정
 	window.onclick = function(event) {
 		var modal = document.getElementById("deliveryModal");
