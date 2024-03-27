@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class RefrigeratorController {
 	
+	
 	@Autowired
 	private RefrigeratorService refrigeratorService;	
 	@Autowired
@@ -68,56 +69,10 @@ public class RefrigeratorController {
 		
 		mv.addObject("refrigeratorId", refrigeratorId); 
 		
+		
 		//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);	
-		
-		//냉장고 속 제품과 맞는 재료들 불러옴
-		ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
-		ArrayList<Integer> idList = new ArrayList<Integer>();
-		for (int i = 0; i < refrigeratorProductList.size(); i++) {
-			productList.addAll(productService.getProductsBykeyword("", refrigeratorProductList.get(i).getProduct_name()));			
-		}
-		
-		//중복제거
-		for (int i = productList.size() - 1; i >= 0 ; i--) {
-			for (Integer integer : idList) {
-				if (productList.get(i).getProduct_id().equals(integer)) {
-					productList.remove(i);
-					if (i > 0) {
-						i--;
-					}
-				}
-			}
-			idList.add(productList.get(i).getProduct_id());			
-		}
-		idList.clear();
-		
-		//불러온 재료가 들어간 레시피의 id를 불러옴
-		ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
-		for (ProductDTO product : productList) {
-			recipeIdList.addAll(recipeProductService.getRecipeIdByProductId(product.getProduct_id()));//프로덕트아이디로 레피시프로덕트에서 레시피아이디 중복제거하고 가져올 서비스 메서드 매퍼 만들어줘야함
-		}
-	
-		//중복제거
-		for (int i = recipeIdList.size() - 1; i >= 0 ; i--) {
-			for (Integer integer : idList) {
-				if (recipeIdList.get(i).equals(integer)) {
-					recipeIdList.remove(i);
-					if (i > 0) {
-						i--;
-					}
-				}
-			}
-			idList.add(recipeIdList.get(i));			
-		}
-		
-		ArrayList<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
-		for (Integer recipeId : recipeIdList) {
-			recipeList.add(recipeService.getRecipeById(recipeId));
-		}
-		
-		mv.addObject("recipeList", recipeList);
 		
 		mv.setViewName("refrigeratorTest2");
 		
