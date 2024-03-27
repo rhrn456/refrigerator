@@ -14,19 +14,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
-
+	
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
+	
     <!-- Libraries Stylesheet -->
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
+	
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+	
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
     <!-- Navbar start -->
 	<%@ include file="header.jsp" %>
     <!-- Navbar End -->
@@ -87,6 +89,9 @@
 	border-radius: 6px;
 }
 
+.row>* {
+}
+
 /* 주소 입력 요소 정렬 */
 #locationDropdown,
 #addressInput {
@@ -97,6 +102,10 @@
 /* 주소 입력 모달 타이틀 정렬 */
 h2 {
   margin-top: 0;
+}
+
+ul {
+	margin-right:2px;
 }
 
 #sendProductsButton {
@@ -133,9 +142,9 @@ img {
 	<!-- Cart Page start -->
 	<div class="col-lg-11">
 		<div class="row justify-content-center" style="margin-top: 150px; margin-left: 200px; ">
-				<ul id="cartproductList" class="row mt-3" style="margin-right:2px;"></ul>
+				<ul id="cartproductList" class="row mt-3"></ul>
+				<a class="quantity_modify_btn" data-cartId="${cart.cart_id}">변경</a>
 		</div>
-		<!-- 구매버튼 -->
 		<button id="sendProductsButton" onclick="openModal()">구매하기</button>
 	</div>
 	<!-- Cart Page End -->
@@ -175,44 +184,12 @@ img {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-	<!-- jQuery -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-	<!-- iamport.payment.js -->
-	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+	
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 	<script>
-	//결제 aPI(productCount,productName
-	function requestPay(productCount, productName, totalPrice, selectedLocation, enteredAddress) {
-    // IMP.request_pay(param, callback) 결제창 호출
-    var uid = '';
-    console.log(selectedLocation);
-    console.log(enteredAddress);
-    console.log(productCount);
-    console.log(productName);
-    if (productCount === 1) {
-        productNameString = productName;
-    } else {
-        productNameString = productName + " 외 " + (productCount - 1);
-    }
-    IMP.init('imp12886452');
-    IMP.request_pay({ // param
-        pg: "kakaopay", // PG사 선택
-        pay_method: "card", // 지불 수단
-        name: productNameString, // 상품명
-        amount: totalPrice, // 가격
-        buyer_addr: selectedLocation + enteredAddress,// 구매자 주소지
-        m_redirect_url: 'https://example.com/mobile/complete', // 모바일 결제시 사용할 url
-        digital: true, // 실제 물품인지 무형의 상품인지(핸드폰 결제에서 필수 파라미터)
-        app_scheme: '' // 돌아올 app scheme
-    }, function (rsp) { // callback
-        if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-            // 결제가 성공하면 sendProducts 함수를 호출할 때 selectedLocation와 enteredAddress를 전달합니다.
-            sendProducts(selectedLocation, enteredAddress);
-        }
-    });
-}
 	
 	 function sample4_execDaumPostcode() {
 	        new daum.Postcode({
@@ -274,14 +251,13 @@ img {
 	    }, 0);
 		console.log(totalPrice);
 		requestPay(productCount,productName,totalPrice,selectedLocation,enteredAddress)
-		//sendProducts(selectedLocation,enteredAddress);
 	}
 	
 	function closeModal() {
 		var modal = document.getElementById('deliveryModal');
 	    modal.style.display = 'none';
 	}
-	//dnfk
+	
 	// 사용자가 모달 외부를 클릭하면 모달이 닫히도록 설정
 	window.onclick = function(event) {
 		var modal = document.getElementById("deliveryModal");
@@ -339,11 +315,37 @@ img {
             productName.style.display = 'inline';
             productListItem.appendChild(productName);
 			
-            var productQuantity = document.createElement('input');
+            /* var productQuantity = document.createElement('input');
             productQuantity.textContent = 'Quantity: ' + product.product_quantity;
-            productListItem.appendChild(productQuantity);
+            productListItem.appendChild(productQuantity); */
 			
-            var productPrice = document.createElement('p');
+            var productQuantity = document.createElement('div');
+            productQuantity.textContent = 'Quantity: ' + product.product_quantity;
+            productQuantity.style.display = 'inline';
+            productListItem.appendChild(productQuantity);
+            
+            /* 수량버튼 */
+            $(".plus_btn").on("click", function(){
+            	let quantity = $(this).parent("div").find("input").val();
+            	$(this).parent("div").find("input").val(++quantity);
+            });
+            $(".minus_btn").on("click", function(){
+            	let quantity = $(this).parent("div").find("input").val();
+            	if(quantity > 1){
+            		$(this).parent("div").find("input").val(--quantity);		
+            	}
+            });
+            
+            /* 수량 수정 버튼 */
+            $(".quantity_modify_btn").on("click", function(){
+            	let cart_id = $(this).data("cart_id");
+            	let productQuantity = $(this).parent("div").find("a").val();
+            	$(".update_cart_id").val(cart_id);
+            	$(".update_productQuantity").val(productQuantity);
+            	$(".updateProducts").submit();
+            });
+            
+            var productPrice = document.createElement('span');
             productPrice.textContent = 'Price: ' + product.product_price + '원';
             productPrice.style.display = 'inline';
             productListItem.appendChild(productPrice);
@@ -356,7 +358,6 @@ img {
                 removeProduct(index);
             };
             productListItem.appendChild(deleteCartItemButton);
-			
             productList.appendChild(productListItem);
         });
     }
@@ -369,7 +370,6 @@ img {
     }
 
     function sendProducts(selectedLocation,enteredAddress) {
-    	console.log("잘된다");
         if (cartItemList.length === 0) {
             alert('빈칸에 입력해주세요');
             return;
@@ -485,17 +485,22 @@ img {
         });
         
         
-        // 총 가격 출력
+     	// 총 가격 출력
         var totalPriceElement = document.createElement('hr');
         totalPriceElement.style.marginTop = '130px'; // 위쪽 여백 추가
+        totalPriceElement.style.color = 'red';
         recipeItemsList.appendChild(totalPriceElement);
 
         var totalTextElement = document.createElement('span');
         totalTextElement.textContent = '전체 금액: ';
+        totalTextElement.style.color = 'red';
 
         var totalPriceValueElement = document.createElement('span');
         var totalPrice = calculateTotalPrice(); // 총 가격 계산 함수 호출
-        totalPriceValueElement.textContent = totalPrice + '원';
+        var formattedTotalPrice = totalPrice.toLocaleString('en-US');
+        totalPriceValueElement.textContent = ' ' + formattedTotalPrice + '원';
+        totalPriceValueElement.style.color = 'red';
+        totalPriceValueElement.style.fontWeight = 'bold';
         totalPriceValueElement.style.float = 'right'; // 오른쪽으로 부유(floating)
 		
         totalTextElement.style.fontSize = '20px'; // 폰트 크기 설정
@@ -504,8 +509,8 @@ img {
         recipeItemsList.appendChild(totalPriceValueElement);
     }
 
-    // 총 가격 계산 함수
-    function calculateTotalPrice() {
+	// 총 가격 계산 함수
+	function calculateTotalPrice() {
         var totalPrice = 0;
         recipeItems.forEach(function(item) {
             totalPrice += item.product_price * item.product_quantity;
