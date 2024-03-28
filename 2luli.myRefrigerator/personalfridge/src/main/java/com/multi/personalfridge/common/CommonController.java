@@ -83,74 +83,76 @@ public class CommonController {
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
 	    
-    	String str = "";
-    	Double carbs = 0.0;
-    	Double fat = 0.0;  
-    	List<RecipeDTO> allRecipeList = recipeService.getAllrecipe();
-    	List<RecipeDTO> dietRecipeList = new ArrayList<RecipeDTO>();
-    	UserDTO user = userService.getUserById(userId);
-    	
-    	for (RecipeDTO recipeDTO : allRecipeList) {
-    		str = recipeDTO.getNutrition_facts();
-    		
-    		 // 탄수화물의 숫자 추출
-            String carbsPattern = "탄수화물 : (\\d+(\\.\\d+)?)";
-            Pattern pattern = Pattern.compile(carbsPattern);
-            Matcher matcher = pattern.matcher(str);
-            if (matcher.find()) {
-            	carbs = Double.parseDouble(matcher.group(1));
-            }
-            
-            // 지방 숫자 추출
-            String fatPattern = "지방 : (\\d+(\\.\\d+)?)";
-            pattern = Pattern.compile(fatPattern);
-            matcher = pattern.matcher(str);
-            if (matcher.find()) {
-            	fat = Double.parseDouble(matcher.group(1));
-            }
-            
-            double diet =  (carbs*4) + (fat*9);
-            
-            //설정 다이어트에 따른 레시피 구분
-            if (user.getDiet() != null) {
-                switch (user.getDiet()) {
-    			case "verySlim": {
-    				if (diet <= 100) {
-    					dietRecipeList.add(recipeDTO);
-    				}
-    				break;
-    			}
-    			case "slim": {
-    				if (diet > 100 & diet <= 150 ) {
-    					dietRecipeList.add(recipeDTO);
-    				}
-    				break;
-    			}
-    			case "maintain": {
-    				if (diet > 150 & diet <= 200 ) {
-    					//없음
-    				}
-    				break;
-    			}
-    			case "gain": {
-    				if (diet > 200 & diet <= 250 ) {
-    					dietRecipeList.add(recipeDTO);
-    				}
-    				break;
-    			}
-    			case "veryGain": {
-    				if (diet > 250) {
-    					dietRecipeList.add(recipeDTO);
-    				}
-    				break;
-    			}
-    			default:
-    				dietRecipeList.add(recipeDTO);
-    			}
-			}            
-
-		}
-    	model.addAttribute("dietRecipeList", dietRecipeList);
+	    if (userId != null) {
+	    	String str = "";
+	    	Double carbs = 0.0;
+	    	Double fat = 0.0;  
+	    	List<RecipeDTO> allRecipeList = recipeService.getAllrecipe();
+	    	List<RecipeDTO> dietRecipeList = new ArrayList<RecipeDTO>();
+	    	UserDTO user = userService.getUserById(userId);
+	    	
+	    	for (RecipeDTO recipeDTO : allRecipeList) {
+	    		str = recipeDTO.getNutrition_facts();
+	    		
+	    		 // 탄수화물의 숫자 추출
+	            String carbsPattern = "탄수화물 : (\\d+(\\.\\d+)?)";
+	            Pattern pattern = Pattern.compile(carbsPattern);
+	            Matcher matcher = pattern.matcher(str);
+	            if (matcher.find()) {
+	            	carbs = Double.parseDouble(matcher.group(1));
+	            }
+	            
+	            // 지방 숫자 추출
+	            String fatPattern = "지방 : (\\d+(\\.\\d+)?)";
+	            pattern = Pattern.compile(fatPattern);
+	            matcher = pattern.matcher(str);
+	            if (matcher.find()) {
+	            	fat = Double.parseDouble(matcher.group(1));
+	            }
+	            
+	            double diet =  (carbs*4) + (fat*9);
+	            
+	            //설정 다이어트에 따른 레시피 구분
+	            if (user.getDiet() != null) {
+	                switch (user.getDiet()) {
+	    			case "verySlim": {
+	    				if (diet <= 100) {
+	    					dietRecipeList.add(recipeDTO);
+	    				}
+	    				break;
+	    			}
+	    			case "slim": {
+	    				if (diet > 100 & diet <= 150 ) {
+	    					dietRecipeList.add(recipeDTO);
+	    				}
+	    				break;
+	    			}
+	    			case "maintain": {
+	    				if (diet > 150 & diet <= 200 ) {
+	    					//없음
+	    				}
+	    				break;
+	    			}
+	    			case "gain": {
+	    				if (diet > 200 & diet <= 250 ) {
+	    					dietRecipeList.add(recipeDTO);
+	    				}
+	    				break;
+	    			}
+	    			case "veryGain": {
+	    				if (diet > 250) {
+	    					dietRecipeList.add(recipeDTO);
+	    				}
+	    				break;
+	    			}
+	    			default:
+	    				dietRecipeList.add(recipeDTO);
+	    			}
+				}            
+	
+			}
+	    	model.addAttribute("dietRecipeList", dietRecipeList);
+	    }
 		
 	    if (userId != null) {
 		    //유저아이디와 맞는 냉장고의 아이디를 불러옴

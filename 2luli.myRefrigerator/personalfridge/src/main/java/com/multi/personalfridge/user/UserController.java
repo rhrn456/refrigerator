@@ -360,17 +360,7 @@ public class UserController {
     public String refundPage() {
         return "mypage/refund"; // 환불/교환 페이지로 이동
     }
-    
-    // 마이페이지 찜 목록
-    @GetMapping("/mypage/userlike")
-    public ModelAndView getUserLike(@RequestParam String user_id) {
-    	ModelAndView mav = new ModelAndView("mypage/userlike");
-    	List<UserLikeDTO> likeList = userService.getUserLike(user_id);
-        mav.addObject("likeList", likeList);      
-//        System.out.println(likeList.size());
-        return mav;
-    }
-    
+        
     @GetMapping("/mypage/diet")
     public ModelAndView dietPage(String dietOption, HttpServletRequest request) {
     	String userId = (String) request.getSession().getAttribute("userId");    
