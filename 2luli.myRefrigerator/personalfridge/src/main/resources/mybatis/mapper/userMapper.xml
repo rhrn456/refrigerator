@@ -158,7 +158,7 @@
 		WHERE user_id = #{user_id} AND recipe_id = #{recipe_id} 
 	</select>
 	
-	<!-- 좋와요 췩소-->
+	<!-- 좋와요 취소-->
    	<delete id="deleteUserLike" parameterType="map">
   		 DELETE FROM userlike 
   		 WHERE user_id = #{user_id} AND recipe_id = #{recipe_id}
