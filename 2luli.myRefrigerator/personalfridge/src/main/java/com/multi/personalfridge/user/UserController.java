@@ -2,7 +2,10 @@ package com.multi.personalfridge.user;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,8 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.multi.personalfridge.cart.CartService;
 import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.common.RandomStringGenerator;
+import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.dto.UserLikeDTO;
+import com.multi.personalfridge.recipe.RecipeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -36,18 +41,21 @@ public class UserController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final RandomStringGenerator randomPassword;
     private final CartService cartService;
+    private final RecipeService recipeService;
 
     @Autowired
     public UserController(UserService userService,
     					EmailService emailService,
     					BCryptPasswordEncoder passwordEncoder,
     					RandomStringGenerator randomPassword,
-    					CartService cartService) {
+    					CartService cartService,
+    					RecipeService recipeService) {
         this.userService = userService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.randomPassword = randomPassword;
         this.cartService = cartService;
+        this.recipeService = recipeService;
     }
     
     
@@ -351,7 +359,26 @@ public class UserController {
         return mav;
     }
     
-
+    @GetMapping("/mypage/diet")
+    public ModelAndView dietPage(String dietOption, HttpServletRequest request) {
+    	String userId = (String) request.getSession().getAttribute("userId");    
+    	
+    	//다이어트 업데이트
+    	if (dietOption != null) {
+    		userService.updateDietByUserId(userId, dietOption);
+		}
+    	
+    	UserDTO user = userService.getUserById(userId);    	
+    	ModelAndView mv = new ModelAndView("mypage/diet");
+    	
+    	
+    	
+    	//전체 레시피에서 지방,탄수화물만 추출하여 칼로리로 변환
+    	
+    	mv.addObject("dietObject", user.getDiet()); // 유저테이블에서 불러와야함
+    	
+    	return mv;
+    }
     
     
 }

@@ -25,4 +25,5 @@ public class UserDTO {
 	private Timestamp delete_user_date;
 	private int delete_plug;
 	private String delete_content;
+	private String diet;
 }

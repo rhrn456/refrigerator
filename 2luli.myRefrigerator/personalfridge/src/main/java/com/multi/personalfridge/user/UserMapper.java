@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
 import com.multi.personalfridge.dto.ProductDTO;
@@ -66,6 +67,8 @@ public interface UserMapper {
 	void rePaid(Map<String, Object> map);
 
 	String paidCheck(String ID);
+
+	void updateDietByUserId(@Param("userId") String userId,@Param("dietOption") String dietOption);
 
 	
 	

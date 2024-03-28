@@ -317,11 +317,11 @@ thead th {
 			<!-- paging -->
 			<c:if test="${0 != refrigeratorProductList.size()}">
 				<div class="pagination-container">
-				    <button class="page-button" onclick="goToPage(1)" disabled="${currentPage == 1}">&laquo;</button>
-				    <c:forEach begin="1" end="${refrigeratorProductList.size() / 10 + 1}" var="i">
+                    <button class="page-button" onclick="window.location.href='/mypage/refrigerator?page=1'" ${currentPage == 1 ? 'disabled' : ''}>&laquo;</button>
+                    <c:forEach begin="1" end="${endPage}" var="i">
 				        <button class="page-button ${currentPage == i ? 'active' : ''}" onclick="window.location.href='/mypage/refrigerator?page=${i}'">${i}</button>
 				    </c:forEach>
-				    <button class="page-button" onclick="goToPage(${totalPages})" disabled="${currentPage == totalPages}">&raquo;</button>
+                    <button class="page-button" onclick="window.location.href='/mypage/refrigerator?page=${endPage}'" ${currentPage == endPage ? 'disabled' : ''}>&raquo;</button>
 				</div>
 			</c:if>
 			

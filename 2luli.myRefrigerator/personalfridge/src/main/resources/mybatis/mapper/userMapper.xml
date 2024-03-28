@@ -7,6 +7,12 @@
         INSERT INTO user (user_id, password, user_name, mail, adress, phone)
         VALUES (#{user_id}, #{password}, #{user_name}, #{mail}, #{adress}, #{phone}) 
     </insert>
+    
+    <update id="updateDietByUserId">
+    	UPDATE user
+    	SET diet = #{dietOption}
+    	WHERE user_id = #{userId}
+    </update>
 	
 	<!-- 로그인  -->
 	<select id="login" 

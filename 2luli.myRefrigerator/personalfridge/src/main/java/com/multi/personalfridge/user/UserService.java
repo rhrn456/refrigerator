@@ -230,5 +230,10 @@ public class UserService {
 	    return userMapper.paidCheck(ID);
 	}
 
+	public void updateDietByUserId(String userId, String dietOption) {
+		userMapper.updateDietByUserId(userId, dietOption);
+		
+	}
+
 	
 }

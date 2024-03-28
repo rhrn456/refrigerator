@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import com.multi.personalfridge.dto.PageRequestDTO;
 import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
+import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.dto.UserLikeDTO;
 import com.multi.personalfridge.product.ProductService;
 import com.multi.personalfridge.recipe.RecipeProductService;
@@ -79,60 +82,130 @@ public class CommonController {
 	    
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
+	    
+    	String str = "";
+    	Double carbs = 0.0;
+    	Double fat = 0.0;  
+    	List<RecipeDTO> allRecipeList = recipeService.getAllrecipe();
+    	List<RecipeDTO> dietRecipeList = new ArrayList<RecipeDTO>();
+    	UserDTO user = userService.getUserById(userId);
+    	
+    	for (RecipeDTO recipeDTO : allRecipeList) {
+    		str = recipeDTO.getNutrition_facts();
+    		
+    		 // 탄수화물의 숫자 추출
+            String carbsPattern = "탄수화물 : (\\d+(\\.\\d+)?)";
+            Pattern pattern = Pattern.compile(carbsPattern);
+            Matcher matcher = pattern.matcher(str);
+            if (matcher.find()) {
+            	carbs = Double.parseDouble(matcher.group(1));
+            }
+            
+            // 지방 숫자 추출
+            String fatPattern = "지방 : (\\d+(\\.\\d+)?)";
+            pattern = Pattern.compile(fatPattern);
+            matcher = pattern.matcher(str);
+            if (matcher.find()) {
+            	fat = Double.parseDouble(matcher.group(1));
+            }
+            
+            double diet =  (carbs*4) + (fat*9);
+            
+            //설정 다이어트에 따른 레시피 구분
+            if (user.getDiet() != null) {
+                switch (user.getDiet()) {
+    			case "verySlim": {
+    				if (diet <= 100) {
+    					dietRecipeList.add(recipeDTO);
+    				}
+    				break;
+    			}
+    			case "slim": {
+    				if (diet > 100 & diet <= 150 ) {
+    					dietRecipeList.add(recipeDTO);
+    				}
+    				break;
+    			}
+    			case "maintain": {
+    				if (diet > 150 & diet <= 200 ) {
+    					//없음
+    				}
+    				break;
+    			}
+    			case "gain": {
+    				if (diet > 200 & diet <= 250 ) {
+    					dietRecipeList.add(recipeDTO);
+    				}
+    				break;
+    			}
+    			case "veryGain": {
+    				if (diet > 250) {
+    					dietRecipeList.add(recipeDTO);
+    				}
+    				break;
+    			}
+    			default:
+    				dietRecipeList.add(recipeDTO);
+    			}
+			}            
+
+		}
+    	model.addAttribute("dietRecipeList", dietRecipeList);
 		
 	    if (userId != null) {
 		    //유저아이디와 맞는 냉장고의 아이디를 불러옴
-		    int refrigeratorId = refrigeratorService.getRefrigeratorId(userId);
-		    
-			//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
-			List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
+		    Integer refrigeratorId = refrigeratorService.getRefrigeratorId(userId);
 			
-			//냉장고 속 제품과 맞는 재료들 불러옴
-			ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
-			ArrayList<Integer> idList = new ArrayList<Integer>();
-			for (int i = 0; i < refrigeratorProductList.size(); i++) {
-				productList.addAll(productService.getProductsBykeyword("", refrigeratorProductList.get(i).getProduct_name()));			
-			}
-			
-			//중복제거
-			for (int i = productList.size() - 1; i >= 0 ; i--) {
-				for (Integer integer : idList) {
-					if (productList.get(i).getProduct_id().equals(integer)) {
-						productList.remove(i);
-						if (i > 0) {
-							i--;
+			if (refrigeratorId != null) {				
+				//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
+				List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
+				//냉장고 속 제품과 맞는 재료들 불러옴
+				ArrayList<ProductDTO> productList = new ArrayList<ProductDTO>();
+				ArrayList<Integer> idList = new ArrayList<Integer>();
+				for (int i = 0; i < refrigeratorProductList.size(); i++) {
+					productList.addAll(productService.getProductsBykeyword("", refrigeratorProductList.get(i).getProduct_name()));			
+				}
+				
+				//중복제거
+				for (int i = productList.size() - 1; i >= 0 ; i--) {
+					for (Integer integer : idList) {
+						if (productList.get(i).getProduct_id().equals(integer)) {
+							productList.remove(i);
+							if (i > 0) {
+								i--;
+							}
 						}
 					}
+					idList.add(productList.get(i).getProduct_id());			
 				}
-				idList.add(productList.get(i).getProduct_id());			
-			}
-			idList.clear();
+				idList.clear();
+				
+				//불러온 재료가 들어간 레시피의 id를 불러옴
+				ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
+				for (ProductDTO product : productList) {
+					recipeIdList.addAll(recipeProductService.getRecipeIdByProductId(product.getProduct_id()));
+				}
 			
-			//불러온 재료가 들어간 레시피의 id를 불러옴
-			ArrayList<Integer> recipeIdList = new ArrayList<Integer>();
-			for (ProductDTO product : productList) {
-				recipeIdList.addAll(recipeProductService.getRecipeIdByProductId(product.getProduct_id()));
-			}
-		
-			//중복제거
-			for (int i = recipeIdList.size() - 1; i >= 0 ; i--) {
-				for (Integer integer : idList) {
-					if (recipeIdList.get(i).equals(integer)) {
-						recipeIdList.remove(i);
-						if (i > 0) {
-							i--;
+				//중복제거
+				for (int i = recipeIdList.size() - 1; i >= 0 ; i--) {
+					for (Integer integer : idList) {
+						if (recipeIdList.get(i).equals(integer)) {
+							recipeIdList.remove(i);
+							if (i > 0) {
+								i--;
+							}
 						}
 					}
+					idList.add(recipeIdList.get(i));			
 				}
-				idList.add(recipeIdList.get(i));			
+				
+				ArrayList<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
+				for (Integer recipeId : recipeIdList) {
+					recipeList.add(recipeService.getRecipeById(recipeId));
+				}
+				
+				model.addAttribute("recipeList", recipeList);
 			}
-			
-			ArrayList<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
-			for (Integer recipeId : recipeIdList) {
-				recipeList.add(recipeService.getRecipeById(recipeId));
-			}
-			
-			model.addAttribute("recipeList", recipeList);
 		}
 	    
 	    return "index";

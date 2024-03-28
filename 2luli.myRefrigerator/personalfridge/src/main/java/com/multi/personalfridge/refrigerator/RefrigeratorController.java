@@ -68,11 +68,12 @@ public class RefrigeratorController {
 		}
 		
 		mv.addObject("refrigeratorId", refrigeratorId); 
-		
+        mv.addObject("currentPage", page);      		
 		
 		//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
 		mv.addObject("refrigeratorProductList", refrigeratorProductList);
+        mv.addObject("endPage", refrigeratorProductList.size() / 10 + 1);   
 		
 		List<RefrigeratorProdcutDTO> refrigeratorProductListForEach = refrigeratorService.getRefrigeratorProductForEach(refrigeratorId, (page - 1) * 10);
 		mv.addObject("refrigeratorProductListForEach", refrigeratorProductListForEach);
