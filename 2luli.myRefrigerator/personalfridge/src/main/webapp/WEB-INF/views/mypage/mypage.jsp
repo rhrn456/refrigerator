@@ -146,7 +146,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>다이어트</a>
+                                                        <a href="/mypage/diet"><i class="fas fa-apple-alt me-2"></i>다이어트</a>
                                                         
                                                     </div>
                                                 </li>
