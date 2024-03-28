@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
 import com.multi.personalfridge.dto.ProductDTO;
+import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.dto.UserLikeDTO;
 
@@ -49,7 +50,7 @@ public interface UserMapper {
 	int InsertUserInfoBySocial(UserDTO user);
 		
 //	찜목록 조회
-	List<UserLikeDTO> getUserLike(String user_id);
+	List<RecipeDTO> getUserLike(String user_id);
 	
 //  마이페이지 유저 정보 조회
 	UserDTO getUserInfo(String user_id);

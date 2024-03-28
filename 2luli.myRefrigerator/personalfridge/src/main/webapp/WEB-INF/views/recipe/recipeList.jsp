@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- <c:forEach var="RecipeDTO" items="${recipeList}">
+ <c:forEach var="RecipeDTO" items="${likeList}">
  	${RecipeDTO.recipe_id}
 	${RecipeDTO.recipe_name}
 	${RecipeDTO.recipe_img}
