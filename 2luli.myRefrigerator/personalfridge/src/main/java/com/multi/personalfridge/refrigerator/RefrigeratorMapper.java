@@ -3,6 +3,7 @@ package com.multi.personalfridge.refrigerator;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 
@@ -22,5 +23,7 @@ public interface RefrigeratorMapper {
 	int insertRefrigerator(String user_id);
 
 	RefrigeratorProdcutDTO getRefrigeratorProductByRefrigeratorProductId(int refrigeratorProductId);
+
+	List<RefrigeratorProdcutDTO> getRefrigeratorProductForEach(@Param("refrigeratorId") Integer refrigeratorId,@Param("page") int page);
 
 }

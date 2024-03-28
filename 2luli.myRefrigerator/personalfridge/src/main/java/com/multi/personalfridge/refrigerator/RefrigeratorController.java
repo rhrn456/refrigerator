@@ -52,7 +52,8 @@ public class RefrigeratorController {
 	
 	//나의 냉장고 들어왔을때 메인페이지
 	@GetMapping("/mypage/refrigerator")                     //세션 유저변수명
-	public ModelAndView getMethodName(HttpServletRequest request) {
+	public ModelAndView getMethodName(@RequestParam(defaultValue = "1") int page, HttpServletRequest request) {
+		System.out.println(page);
 		ModelAndView mv = new ModelAndView();
 	    HttpSession session = request.getSession();
 	    String user_id = (String) session.getAttribute("userId");
@@ -71,7 +72,10 @@ public class RefrigeratorController {
 		
 		//냉장고 아이디와 맞는 냉장고의 재료를 리스트로 불러옴
 		List<RefrigeratorProdcutDTO> refrigeratorProductList = refrigeratorService.getRefrigeratorProduct(refrigeratorId);
-		mv.addObject("refrigeratorProductList", refrigeratorProductList);	
+		mv.addObject("refrigeratorProductList", refrigeratorProductList);
+		
+		List<RefrigeratorProdcutDTO> refrigeratorProductListForEach = refrigeratorService.getRefrigeratorProductForEach(refrigeratorId, (page - 1) * 10);
+		mv.addObject("refrigeratorProductListForEach", refrigeratorProductListForEach);
 		
 		mv.setViewName("refrigeratorTest2");
 		

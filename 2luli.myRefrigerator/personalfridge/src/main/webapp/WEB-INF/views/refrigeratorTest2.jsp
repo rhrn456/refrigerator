@@ -37,7 +37,6 @@
 <!-- Navbar start -->
 <%@ include file="header.jsp"%>
 <!-- Navbar End -->
-
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -151,6 +150,30 @@ function shareProduct(refrigeratorProductId){
 </script>
 
 <style>
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.page-button {
+    border: none;
+    padding: 8px 16px;
+    margin: 0 4px;
+    background-color: #DD3161; /* 기본 배경색 */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.page-button:hover, .page-button.active {
+    background-color: #263F73; /* 활성화 또는 마우스 오버 시 배경색 */
+}
+
+.page-button[disabled] {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
 .btn-group .btn:not(:last-child) {
 	margin-right: 15px; /* 마지막 버튼을 제외한 모든 버튼에 오른쪽 마진을 15픽셀로 설정 */
 }
@@ -246,7 +269,7 @@ thead th {
 					</thead>
 					<tbody>
 						<c:if test="${0 != refrigeratorProductList.size()}">
-							<c:forEach var="product" items="${refrigeratorProductList}">
+							<c:forEach var="product" items="${refrigeratorProductListForEach}">
 								<tr>
 									<td>
 										<p class="mb-0 mt-4" style="font-weight: 900;">${product.product_name}</p>
@@ -291,6 +314,17 @@ thead th {
 						비어있습니다.</h2>
 				</c:if>
 			</div>
+			<!-- paging -->
+			<c:if test="${0 != refrigeratorProductList.size()}">
+				<div class="pagination-container">
+				    <button class="page-button" onclick="goToPage(1)" disabled="${currentPage == 1}">&laquo;</button>
+				    <c:forEach begin="1" end="${refrigeratorProductList.size() / 10 + 1}" var="i">
+				        <button class="page-button ${currentPage == i ? 'active' : ''}" onclick="window.location.href='/mypage/refrigerator?page=${i}'">${i}</button>
+				    </c:forEach>
+				    <button class="page-button" onclick="goToPage(${totalPages})" disabled="${currentPage == totalPages}">&raquo;</button>
+				</div>
+			</c:if>
+			
 			<div id="productForm" class="mt-5">
 				<div class="edit-form-container">
 					<form>
@@ -322,6 +356,7 @@ thead th {
 			</div>
 		</div>
 	</div>
+
 	<!-- Cart Page End -->
 	<div class="container" id="editForm">
 		<div class="edit-form-container">

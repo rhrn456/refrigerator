@@ -45,6 +45,11 @@ public class RefrigeratorService {
 		// TODO Auto-generated method stub
 		return refrigeratorMapper.getRefrigeratorProductByRefrigeratorProductId(refrigeratorProductId);
 	}
+
+	public List<RefrigeratorProdcutDTO> getRefrigeratorProductForEach(Integer refrigeratorId, int page) {
+		// TODO Auto-generated method stub
+		return refrigeratorMapper.getRefrigeratorProductForEach(refrigeratorId,page);
+	}
 	
 	
 }
