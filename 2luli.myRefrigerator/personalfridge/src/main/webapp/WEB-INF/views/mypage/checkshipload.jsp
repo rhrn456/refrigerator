@@ -97,7 +97,7 @@
     <h1>배송 정보</h1>
     <div class="ship-items">
         <%-- ship_code를 기준으로 그룹화된 Map을 순회 --%>
-        <c:forEach var="group" items="${groupedShipList}">
+        <c:forEach var="group" items="${sortedGroupedShipList}">
             <%-- 그룹별 카드 생성 --%>
             <div class="card mb-3">
                 <div class="card-header">

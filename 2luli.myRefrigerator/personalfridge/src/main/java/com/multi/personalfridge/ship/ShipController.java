@@ -1,7 +1,10 @@
 package com.multi.personalfridge.ship;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,10 +45,24 @@ public class ShipController {
 	      String userId = (String) session.getAttribute("userId");
 	      List<ShipDTO> shipList = shipService.getShipByUserId(userId);
 	      // 송장 번호별로 그룹화된 맵 생성
+	      Collections.sort(shipList, Comparator.comparing(ShipDTO::getShip_id));
+	      System.out.println(shipList);
 	      Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
 	       .collect(Collectors.groupingBy(ShipDTO::getShip_code));
+	      
+	      groupedShipList.values().forEach(list -> {
+	    	    Collections.sort(list, Comparator.comparing(ShipDTO::getShip_id));
+	    	});
 
-	      model.addAttribute("groupedShipList", groupedShipList); 
+	    	// 정렬된 첫 번째 ShipDTO를 기준으로 재배치
+	    	List<Map.Entry<String, List<ShipDTO>>> sortedGroupedList = new ArrayList<>(groupedShipList.entrySet());
+	    	Collections.sort(sortedGroupedList, Comparator.comparing(entry -> entry.getValue().get(0).getShip_id()));
+
+	    	// 정렬된 리스트를 다시 맵으로 변환
+	    	LinkedHashMap<String, List<ShipDTO>> sortedGroupedShipList = new LinkedHashMap<>();
+	    	sortedGroupedList.forEach(entry -> sortedGroupedShipList.put(entry.getKey(), entry.getValue()));
+
+	      model.addAttribute("sortedGroupedShipList", sortedGroupedShipList); 
 	      return "/mypage/checkshipload";
 	  }
 	 
