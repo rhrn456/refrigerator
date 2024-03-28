@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.multi.personalfridge.dto.ProductDTO;
+import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.dto.UserLikeDTO;
 
@@ -170,7 +171,8 @@ public class UserService {
 
 	
 	// 찜목록 조회
-	public List<UserLikeDTO> getUserLike(String user_id) {
+	public List<RecipeDTO> getUserLike(String user_id) {
+//		System.out.println("UserService, getuserLike user_id = " + user_id);
 		return userMapper.getUserLike(user_id);
 	}
 	

@@ -327,7 +327,7 @@
         <!--비밀번호 변경전 확인 수정창-->
         <div id="modalcheckpwContainer" class="modal-container">
         <div class="modal-content">
-            <p>정보수정을 진행하시겠습니까?<br>비밀번호를 적어주세요</p>
+            <p>비밀번호 변경을 진행하시겠습니까?<br>비밀번호를 적어주세요</p>
             <input type="password" class="form-comtrol form-control-user" id="checkpwpasswordInput" name="password" placeholder="비밀번호">
             <button id="confirmcheckpwButton" class="modal-button">확인</button>
             <button id="cancelcheckpwButton" class="modal-button">취소</button>
@@ -337,7 +337,7 @@
     </div>
 
 		<script type="text/javascript">
-	      //정보수정 함수
+	      //비밀번호 변경 전 확인
 	 		var newPasswordButton = document.getElementById("newPasswordButton");
 	        var modalcheckpwContainer = document.getElementById("modalcheckpwContainer");
 	        var confirmcheckpwButton = document.getElementById("confirmcheckpwButton");
@@ -378,9 +378,10 @@
                         	alert("비밀번호 확인 성공.");
                         	
                         	modalupdatepwContainer.style.display = "block";
+                        	modalcheckpwContainer.style.display = "none";
                    		} else {
                         	alert("비밀번호가 일치하지 않습니다.");
-                        	window.location.href = "/mypage?user_id=" + userId;
+                        	window.location.href = "/mypage/info?user_id=" + userId;
                     	}
 	                    //-> controller selectPassword reutrn  
 							// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
@@ -428,7 +429,7 @@
 	        	console.log(userId);
 	        	
 	        	if (newPassword !== confirmNewPassword) {
-                	alert("비밀번호가 일치하지 않습니다");
+                	alert("재입력한 비밀번호와 일치하지 않습니다");
                 	return;
 	        	}
 	            // 비밀번호 변경함수
@@ -442,13 +443,14 @@
 	                success: function() {
 	                	
 	                	alert("비밀번호 변경 완료");
-	                	window.location.href = "/mypage/info?user_id=" + userId;
+	                	window.location.href = "/logout";
                    		
 	                },
 	                error: function(request,status,error) {
 	                    // AJAX 요청 실패 시 처리
 	                    console.error("AJAX 요청 실패:", status, error); // AJAX 요청 실패 시 에러 로그
 	                    alert("오류가 발생했습니다. 나중에 다시 시도해주세요.");
+	                    window.location.href = "/mypage/info?user_id=" + userId;
 	                }
 	            	}); 
 	        	

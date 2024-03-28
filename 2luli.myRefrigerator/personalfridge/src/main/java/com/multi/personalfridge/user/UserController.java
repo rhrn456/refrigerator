@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.multi.personalfridge.cart.CartService;
 import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.common.RandomStringGenerator;
+import com.multi.personalfridge.dto.RecipeDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.dto.UserLikeDTO;
 
@@ -228,7 +229,19 @@ public class UserController {
     	boolean result = userService.deleteUserLike(recipe_id, user_id);
     	return "success";
     }
-  //마이페이지 접속 및 조회
+
+    // 마이페이지 찜 목록 접속
+    @GetMapping("/userLikePage")
+    public ModelAndView getUserLike(@RequestParam String user_id) {
+    	ModelAndView mav = new ModelAndView();
+    	List<RecipeDTO> likeList = userService.getUserLike(user_id);
+    	mav.setViewName("mypage/userlike");
+        mav.addObject("likeList", likeList);      
+//        System.out.println(likeList.size());
+        return mav;
+    }
+    
+    //마이페이지 접속 및 조회
     @GetMapping("/mypage/info")
     public ModelAndView getUserInfo(@RequestParam String user_id) {
     	ModelAndView mav = new ModelAndView("mypage/mypage");
@@ -269,7 +282,7 @@ public class UserController {
     }
 
  // 마이페이지에서 정보수정 페이지로
-    @GetMapping("/mypage/userEdit")
+    @GetMapping("/userEdit")
 	public ModelAndView updateUserPage1S(HttpServletRequest request) {
     	String user_id = (String) request.getSession().getAttribute("userId");
     	//select user userId service -> mapper -> mapper.xml 
@@ -341,17 +354,6 @@ public class UserController {
         return "mypage/refund"; // 환불/교환 페이지로 이동
     }
     
-    // 마이페이지 찜 목록
-    @GetMapping("/mypage/userlike")
-    public ModelAndView getUserLike(@RequestParam String user_id) {
-    	ModelAndView mav = new ModelAndView("mypage/userlike");
-    	List<UserLikeDTO> likeList = userService.getUserLike(user_id);
-        mav.addObject("likeList", likeList);      
-//        System.out.println(likeList.size());
-        return mav;
-    }
-    
-
     
     
 }

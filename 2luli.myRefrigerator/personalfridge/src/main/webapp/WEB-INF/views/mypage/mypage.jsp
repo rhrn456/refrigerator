@@ -159,13 +159,13 @@
                                             <h4>마이 페이지</h4>
                                             <ul class="list-unstyled fruite-categorie">
                                                 <li>
-									                <div class="d-flex justify-content-between allproduct">
-									                    <a href="/mypage/userEdit"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
+									                <div class="d-flex justify-content-between allproduct" id=editButton>
+									                    <a href="#"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
 
 									                </div>
 									            </li>
 									            <li>
-                                                    <div class="d-flex justify-content-between product-category">
+                                                    <div class="d-flex justify-content-between product-category" id=userlikebutton>
                                                         <a href="#"><i class="fas fa-apple-alt me-2"></i>찜한 레시피</a>
                                                         
                                                     </div>
@@ -354,7 +354,7 @@
                         	// 회원 탈퇴 로직을 여기에 추가
                    		} else {
                         	alert("비밀번호가 일치하지 않습니다.");
-                        	window.location.href = "/mypage?user_id=" + userId;
+                        	window.location.href = "/mypage/info?user_id=" + userId;
                     	}
 	                    //-> controller selectPassword reutrn  
 							// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
@@ -382,11 +382,21 @@
     </div>
 
 		<script type="text/javascript">
-	      //정보수정창 작동하는 함수
+	     
+	      	// 찜목록 버튼
+	      	var userlikebutton = document.getElementById("userlikebutton");
+	      	
+	      	userlikebutton.onclick = function() {
+	      		window.location.href = "/userLikePage";
+	      	}
+	      	
+	      	//정보수정창 작동하는 함수
 	 		var editButton = document.getElementById("editButton");
 	        var modalupdateContainer = document.getElementById("modalupdateContainer");
 	        var confirmupdateButton = document.getElementById("confirmupdateButton");
 	        var cancelupdateButton = document.getElementById("cancelupdateButton");
+	        
+	        
 	        
 	        editButton.onclick = function() {
 	        	modalupdateContainer.style.display = "block";
@@ -419,9 +429,9 @@
 	                    // 서버 응답 처리
 	                    
 	                    if (response == 1) {
-                        	alert("비밀번호 확인 성공. 수정 완료했습니다.");
+                        	alert("비밀번호 확인 성공.");
                         	
-                        	window.location.href = "/Edit";
+                        	window.location.href = "/userEdit";
                         	// 회원 탈퇴 로직을 여기에 추가
                    		} else {
                         	alert("비밀번호가 일치하지 않습니다.");
