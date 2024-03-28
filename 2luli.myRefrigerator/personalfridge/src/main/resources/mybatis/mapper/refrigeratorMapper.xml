@@ -14,6 +14,15 @@
 		order by limit_date		
 	</select>
 	
+	<select id="getRefrigeratorProductForEach" resultType="RefrigeratorProdcut">
+		select *
+		from refrigerator_product
+		where refrigerator_id = #{refrigeratorId}
+		order by limit_date		
+		limit 10
+		offset #{page}
+	</select>
+	
 	<select id="getRefrigeratorProductByRefrigeratorProductId" parameterType="_int"  resultType="RefrigeratorProdcut">
 		select *
 		from refrigerator_product

@@ -21,6 +21,7 @@ import com.multi.personalfridge.common.RandomStringGenerator;
 import com.multi.personalfridge.dto.CartDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
 import com.multi.personalfridge.dto.ShipDTO;
+import com.multi.personalfridge.refrigerator.RefrigeratorService;
 import com.multi.personalfridge.ship.ShipService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +36,8 @@ public class CartController {
 	RandomStringGenerator random;
 	@Autowired
 	ShipService shipService;
+	@Autowired
+	RefrigeratorService refrigeratorService;
 	
 	@GetMapping("/insertCart")
 	public String insertCart(@RequestParam("cartProducts") String cartProductsJson, HttpServletRequest request) {
@@ -125,6 +128,7 @@ public class CartController {
 	            product.setShip_code(str);
 	            //카트에 제품이랑 송장 저장
 	            boolean result = cartService.buyProduct(product);
+	            System.out.println(product);
 	            if (!result) {
 	                return "error";
 	            }
