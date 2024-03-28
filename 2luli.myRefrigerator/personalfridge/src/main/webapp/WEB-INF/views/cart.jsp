@@ -82,14 +82,12 @@
   width: 100%;
 }
 
-.mb-4 {
+.mt-3 {
 	list-style-type: none;
-	padding-left: 0;
-	margin-bottom: 0.1rem !important;
-	border-radius: 6px;
 }
 
 .row>* {
+	width: 500px;
 }
 
 /* 주소 입력 요소 정렬 */
@@ -102,10 +100,6 @@
 /* 주소 입력 모달 타이틀 정렬 */
 h2 {
   margin-top: 0;
-}
-
-ul {
-	margin-right:2px;
 }
 
 #sendProductsButton {
@@ -141,8 +135,8 @@ img {
 	
 	<!-- Cart Page start -->
 	<div class="col-lg-11">
-		<div class="row justify-content-center" style=" width:500px;margin-top: 150px; margin-left: 200px; ">
-				<ul id="cartproductList" class="row mt-3"></ul>
+		<div class="row justify-content-center" style="margin-top: 150px; margin-left: 200px;">
+			<ul id="cartproductList" class="row mt-3"></ul>
 		</div>
 		<button id="sendProductsButton" onclick="openModal()">구매하기</button>
 	</div>
@@ -219,18 +213,19 @@ img {
 	            }
 	        }).open();
 	    }
+	 
 	//택배 주소 창열기
 	function openModal() {
 		var modal = document.getElementById("deliveryModal");
 		modal.style.display = "block";
 	}
-
+	
 	// 모달 닫기
 	function closeModal() {
 		var modal = document.getElementById("deliveryModal");
 		modal.style.display = "none";
 	}
-
+	
 	function confirmAddress() {
 		var locationDropdown = document.getElementById('locationDropdown');
 		var selectedLocation = locationDropdown.value;
@@ -288,11 +283,9 @@ img {
             };
             viewCartList.push(viewCart);
             renderRecipeItems();
-            
         });
     }
 	
-   
     // 레시피 재료 삭제
     function removeProduct(index) {
     	cartItemList.splice(index, 1); // 전송할 데이터 삭제
@@ -306,7 +299,7 @@ img {
             alert('빈칸에 입력해주세요');
             return;
         }
-
+		
         var isEmpty = false;
         cartItemList.forEach(function(product) {
             if (!product.product_quantity || !product.product_id) {
@@ -315,21 +308,18 @@ img {
                 return; // 반복문 종료
             }
         });
-
+		
         if (isEmpty) {
             alert('빈칸에 입력해주세요');
             return;
         }
+        
 		var arrive = selectedLocation;
 		var sub_adress = enteredAddress;
-		console.log(sub_adress);
-		console.log(arrive);
         var productListString = JSON.stringify(cartItemList); 
         window.location.href = '/buyproduct?cartProducts=' + encodeURIComponent(productListString) + '&arrive=' + arrive + '&sub_adress=' + sub_adress;
-
     }
 	
-   
 	// 받아온 상품 정보를 업데이트하는 함수
 	function updateProducts(response) {
 	    var productsContainer = $('.col-lg-11 .row');
@@ -357,7 +347,6 @@ img {
 	    });
 	}
 	
-
 	 // 제품 목록을 출력하는 함수
     function renderRecipeItems() {
         var recipeItemsList = document.getElementById('cartproductList');
@@ -369,37 +358,69 @@ img {
             var listItem = document.createElement('li');
             listItem.style.marginBottom = '4px';
             listItem.style.fontSize = '20px';
-
+			
+            // 제품 이미지 출력
+            var imgElement = document.createElement('img');
+            imgElement.setAttribute('src', item.product_img); // 이미지 URL 설정
+            imgElement.setAttribute('alt', item.product_name); // 대체 텍스트 설정
+            imgElement.style.width = '50px';
+            listItem.appendChild(imgElement);
+            
             // 제품 이름 출력
             var nameElement = document.createElement('span');
             nameElement.textContent = item.product_name;
+            nameElement.style.marginLeft = '10px';
             listItem.appendChild(nameElement);
-
+			
             // 제품 수량 출력
             var quantityElement = document.createElement('span');
             quantityElement.textContent = ' ' + 'X' + ' ' + item.product_quantity  + '개';
             listItem.appendChild(quantityElement);
-
+			
+            // 가격, 삭제버튼 묶음
+            var priceList =  document.createElement('div');
+            priceList.style.display = 'flex'; // 절대 위치 설정
+            priceList.style.float = 'right'; // 절대 위치 설정
+            priceList.style.marginTop = '10px'; // 절대 위치 설정
+            
             // 제품 가격 출력
             var formattedPrice = (item.product_price * item.product_quantity).toLocaleString('en-US');
             var priceElement = document.createElement('span');
             priceElement.textContent = ' ' + formattedPrice + '원';
-            priceElement.style.float = 'right'; // 오른쪽으로 부유(floating)
-            listItem.appendChild(priceElement);
-
+            priceList.appendChild(priceElement);
+			
+            var removeButton = document.createElement('div');
+            removeButton.style.width = '20px'; // 절대 위치 설정
+            removeButton.style.marginLeft = '5px'; // 절대 위치 설정
+            removeButton.style.textAlign = 'center'; // 절대 위치 설정
+            removeButton.style.fontWeight = 'bold'; // 절대 위치 설정
+            removeButton.style.fontSize = '40px;'; // 절대 위치 설정
+            removeButton.style.color = 'white'; // 글자색 설정
+            removeButton.style.cursor = 'pointer'; // 커서 모양 변경
+            removeButton.textContent = 'X'; // 텍스트 설정
+            removeButton.style.backgroundColor = '#dc2e5e'; // 패딩 설정
+			
+            removeButton.onclick = function() {
+                removeProduct(index);
+            };
+            priceList.appendChild(removeButton);
+            
+            listItem.appendChild(priceList);
+            
             // 리스트에 각 제품 요소 추가
             recipeItemsList.appendChild(listItem);
         });
+        
         // 총 가격 출력
         var totalPriceElement = document.createElement('hr');
-        totalPriceElement.style.marginTop = '50px'; // 위쪽 여백 추가
+        totalPriceElement.style.marginTop = '30px'; // 위쪽 여백 추가
         totalPriceElement.style.color = 'red';
         recipeItemsList.appendChild(totalPriceElement);
-
+		
         var totalTextElement = document.createElement('span');
         totalTextElement.textContent = '전체 금액: ';
         totalTextElement.style.color = 'red';
-
+		
         var totalPriceValueElement = document.createElement('span');
         var totalPrice = calculateTotalPrice(); // 총 가격 계산 함수 호출
         var formattedTotalPrice = totalPrice.toLocaleString('en-US');
