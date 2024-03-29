@@ -54,51 +54,6 @@
 		.modal-button {
 		          margin-top: 20px;
 		}
-		.id {
-		  width: 100%;
-		  border:none;
-		  outline:none;
-		  color: #636e72;
-		  font-size:16px;
-		  height:25px;
-		  background: none;
-		}
-		.name {
-		  width: 100%;
-		  border:none;
-		  outline:none;
-		  color: #636e72;
-		  font-size:16px;
-		  height:25px;
-		  background: none;
-		}
-		.email {
-		  width: 100%;
-		  border:none;
-		  outline:none;
-		  color: #636e72;
-		  font-size:16px;
-		  height:25px;
-		  background: none;
-		}
-		.adress {
-		  width: 100%;
-		  border:none;
-		  outline:none;
-		  color: #636e72;
-		  font-size:16px;
-		  height:25px;
-		  background: none;
-		}
-		.phone {
-		  width: 100%;
-		  border:none;
-		  outline:none;
-		  color: #636e72;
-		  font-size:16px;
-		  height:25px;
-		  background: none;
-		}
 		.mypagemenu {
 			margin-right:-80px;
 		    border: 3px solid #ccc;
@@ -178,11 +133,6 @@
         <!-- Spinner End -->
 
 
-
-
-
-
-
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">My Page</h1>     
@@ -198,7 +148,7 @@
 									                    <a href="#">회원정보 수정</a>
 									                </div>
                                                     <div class="product-category" id=userlikebutton>
-                                                        <a href="#">찜한 레시피</a>    
+                                                        <a href="/userLikePage?user_id=${mypage.user_id}">찜한 레시피</a>    
                                                     </div>
                                                
                                                     <div class="product-category">
@@ -333,11 +283,7 @@
 		<script type="text/javascript">
 	     
 	      	// 찜목록 버튼
-	      	var userlikebutton = document.getElementById("userlikebutton");
-	      	
-	      	userlikebutton.onclick = function() {
-	      		window.location.href = "/userLikePage";
-	      	}
+	      
 	      	
 	      	//정보수정창 작동하는 함수
 	 		var editButton = document.getElementById("editButton");
