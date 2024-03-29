@@ -179,12 +179,17 @@ img {
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 	
+	 <!-- 결제 API JS -->
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 	<script>
 	//결제 aPI(productCount,productName
 		function requestPay(productCount, productName, totalPrice, selectedLocation, enteredAddress) {
-	    // IMP.request_pay(param, callback) 결제창 호출
 	    var uid = '';
 	    console.log(selectedLocation);
 	    console.log(enteredAddress);
@@ -195,6 +200,7 @@ img {
 	    } else {
 	        productNameString = productName + " 외 " + (productCount - 1);
 	    }
+	    var IMP = window.IMP;
 	    IMP.init('imp12886452');
 	    IMP.request_pay({ // param
 	        pg: "kakaopay", // PG사 선택
