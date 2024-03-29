@@ -86,7 +86,7 @@
 	list-style-type: none;
 }
 
-.row>* {
+#cartproductList {
 	width: 500px;
 }
 
@@ -291,7 +291,7 @@ img {
     		type: "GET",
     		url: "productDeletById",
     		data: {
-    			index: product_id
+    			product_id: index
     		},
     		success: function(response) {
     			
