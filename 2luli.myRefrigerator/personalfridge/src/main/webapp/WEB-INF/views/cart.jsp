@@ -86,7 +86,7 @@
 	list-style-type: none;
 }
 
-.row>* {
+#cartproductList {
 	width: 500px;
 }
 
@@ -316,6 +316,22 @@ img {
         });
     }
 	
+    function removeByIndex(index) {
+    	$.ajax({
+    		type: "GET",
+    		url: "productDeletById",
+    		data: {
+    			product_id: index
+    		},
+    		success: function(response) {
+    			
+    		},
+    		error: function(xhr, status, error) {
+    			console.error(error);
+    		}
+    	})
+    }
+    
     // 레시피 재료 삭제
     function removeProduct(index) {
     	cartItemList.splice(index, 1); // 전송할 데이터 삭제
@@ -432,6 +448,7 @@ img {
 			
             removeButton.onclick = function() {
                 removeProduct(index);
+                removeByIndex(index);
             };
             priceList.appendChild(removeButton);
             
