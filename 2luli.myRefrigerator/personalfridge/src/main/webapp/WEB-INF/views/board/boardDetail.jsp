@@ -161,7 +161,7 @@
 									<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/mypage/updateBoard?boardNo=${board.board_no}'">수정</button>
 									<button id="board-delete-btn" class="btn btn-primary" data-value="${board}">삭제</button>
 								</c:if>
-								<c:if test="${not empty board.latitude}">
+								<c:if test="${not empty board.latitude and sessionScope.userId ne board.user_id}">
 									<button id="board-modify-btn" class="btn btn-primary" onclick="requestShare()">공유 요청</button>
 								</c:if>
 							</div>

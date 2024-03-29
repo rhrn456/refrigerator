@@ -168,14 +168,16 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modifyBoard")
-	public String modifyBoard(@RequestParam("boardNo") int boardNo, @ModelAttribute BoardDTO newBoard) {
+	public String modifyBoard(@RequestParam("boardNo") int boardNo,
+								@ModelAttribute BoardDTO newBoard) {
 		boolean result = false;
-		
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
 		
 		if(board.getBoard_no() == boardNo) {
 			board.setTitle(newBoard.getTitle());
 			board.setContent(newBoard.getContent());
+			board.setLatitude(newBoard.getLatitude());
+			board.setLongitude(newBoard.getLongitude());
 			result = service.updateBoard(board);
 		}
 		

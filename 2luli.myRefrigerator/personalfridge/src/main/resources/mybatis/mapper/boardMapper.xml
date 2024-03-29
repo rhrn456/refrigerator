@@ -27,8 +27,8 @@
 		VALUES (#{title}, #{content}, #{user_id}, #{b_category_no}, now(), #{latitude}, #{longitude})
 	</insert>
 	
-	<update id="updateBoard" parameterType="map">
-		UPDATE board SET title = #{title}, content = #{content} WHERE board_no = #{board_no}
+	<update id="updateBoard" parameterType="Board">
+		UPDATE board SET title = #{title}, content = #{content}, latitude = #{latitude},longitude = #{longitude} WHERE board_no = #{board_no}
 	</update>
 	
 	<update id="updateHit" parameterType="_int">
