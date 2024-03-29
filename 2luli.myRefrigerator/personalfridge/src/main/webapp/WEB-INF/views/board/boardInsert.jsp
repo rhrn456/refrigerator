@@ -103,8 +103,8 @@
 									                </div>
 								                </c:if>								                	
 								                <c:if test="${not empty refrigeratorProdcut}">
-								                	<input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" value="${refrigeratorProdcut.product_name} 공유하고 싶어요!" required>
-								                	<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>개수 : ${refrigeratorProdcut.product_quantity} 소비기한 : ${refrigeratorProdcut.limit_date}</textarea>
+								                	<input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" value="${refrigeratorProdcut.product_name} 공유하고 싶어요!" required readonly="readonly">
+								                	<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>개수 : ${refrigeratorProdcut.product_quantity}, 소비기한 : ${refrigeratorProdcut.limit_date}</textarea>
 									                <div class="dropdown">
 									                    <select id="board_category" name="CategoryNo" class="form-control mb-3" >
 									                        <option value="2">공유 게시판</option>
