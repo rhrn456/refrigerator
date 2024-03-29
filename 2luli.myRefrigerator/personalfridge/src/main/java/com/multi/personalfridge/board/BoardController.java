@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.tags.shaded.org.apache.bcel.generic.NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.dto.BoardCategoryDTO;
 import com.multi.personalfridge.dto.BoardDTO;
 import com.multi.personalfridge.dto.PageRequestDTO;
+import com.multi.personalfridge.dto.UserDTO;
+import com.multi.personalfridge.user.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +34,10 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService service;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private EmailService emailService;
 	
 	// 게시판 카테고리/페이징
 	@GetMapping("/getBoardByCategory")
@@ -97,7 +106,7 @@ public class BoardController {
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
 		model.addAttribute("board", board);
 		
-		return "/mypage/board/boardDetail";
+		return "/board/boardDetail";
 	}
 	
 	// Create
@@ -195,8 +204,19 @@ public class BoardController {
 	}
 	
 	@PostMapping("/mypage/requestShare")
-	public ResponseEntity<String> requestShare(Integer board_no, String board_title){
-		System.out.println(board_no + board_title);
+	public ResponseEntity<String> requestShare(Integer board_no, HttpServletRequest request){
+		//보드넘버로 작성자이메일, 세션유저로 로그인유저 이메일 가져와서 작성자에게 로그인유저의 유저네임과 메일을 함게 보내줌 
+		String userId = (String) request.getSession().getAttribute("userId");
+		BoardDTO board = service.getBoardByBoardNo(board_no);		
+		UserDTO writer = userService.getUserById(board.getUser_id());
+		UserDTO user = userService.getUserById(userId);
+		String writerMail = writer.getMail();		
+		String userMail = user.getMail();
+		String userName = user.getUser_name();
+		String[] contentText = board.getTitle().split(" ");
+		String content = contentText[0];
+		
+		emailService.sendSimpleMessage(writerMail, content + " 공유받고 싶어요~", "안녕하세요, 우리집AI냉장고 유저 " + userName + "입니다. " + userMail + "로 연락주세요");
 		return ResponseEntity.ok("good");
 	}
 	

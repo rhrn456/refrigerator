@@ -159,10 +159,10 @@
 								</c:if>
 								<c:if test="${sessionScope.userId eq board.user_id}">
 									<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/mypage/updateBoard?boardNo=${board.board_no}'">수정</button>
-									<c:if test="${not empty board.latitude}">
-									<button id="board-modify-btn" class="btn btn-primary" onclick="requestShare()">공유</button>
-									</c:if>
 									<button id="board-delete-btn" class="btn btn-primary" data-value="${board}">삭제</button>
+								</c:if>
+								<c:if test="${not empty board.latitude}">
+									<button id="board-modify-btn" class="btn btn-primary" onclick="requestShare()">공유 요청</button>
 								</c:if>
 							</div>
 						</div>
@@ -225,9 +225,7 @@
 			$.ajax({
 				type: "POST",
 				url: "/mypage/requestShare",
-				data: {
-					board_no: ${board.board_no}
-					},
+	            data: { board_no: ${board.board_no} },
 				success: function(response){
 					alert("성공적으로 메일이 전송되었습니다")
 				},
