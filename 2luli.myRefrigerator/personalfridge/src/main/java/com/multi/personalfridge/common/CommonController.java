@@ -151,6 +151,7 @@ public class CommonController {
 				}            
 	
 			}
+	    	Collections.shuffle(dietRecipeList);
 	    	model.addAttribute("dietRecipeList", dietRecipeList);
 	    }
 		
@@ -205,7 +206,7 @@ public class CommonController {
 				for (Integer recipeId : recipeIdList) {
 					recipeList.add(recipeService.getRecipeById(recipeId));
 				}
-				
+				Collections.shuffle(recipeList);
 				model.addAttribute("recipeList", recipeList);
 			}
 		}

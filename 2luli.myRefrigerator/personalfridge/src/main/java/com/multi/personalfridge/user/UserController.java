@@ -72,7 +72,7 @@ public class UserController {
 			 if (userAdmin != null && (userAdmin == 1 || userAdmin == 2)) {
 			        return "redirect:/admin/page";
 			    } else if (userId != null) {
-			        return "redirect:/mypage/info?user_id=" + userId;
+			        return "redirect:/mypage/info";
 			    } else {
 			        return "redirect:/loginPage";
 			    }
@@ -250,7 +250,9 @@ public class UserController {
     
     //마이페이지 접속 및 조회
     @GetMapping("/mypage/info")
-    public ModelAndView getUserInfo(@RequestParam String user_id) {
+    public ModelAndView getUserInfo( HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+	    String user_id = (String) session.getAttribute("userId");
     	ModelAndView mav = new ModelAndView("mypage/mypage");
     	UserDTO mypage = userService.getUserInfo(user_id);
         mav.addObject("mypage", mypage);
@@ -322,19 +324,17 @@ public class UserController {
       
         if (updateResult) {
             redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-            return "redirect:/mypage/info?user_id=" + user.getUser_id();
+            return "redirect:/mypage/info";
         } else {
             redirectAttributes.addFlashAttribute("error", "회원 정보 업데이트에 실패했습니다.");
             return "redirect:/mypage/edit?user_id=" + user.getUser_id(); // 정보 수정 페이지로 리다이렉션
         }
     }
     
-    // 비밀번호 변경
+    // 마이페이지 비밀번호 변경
     @PostMapping("/updatePassword")
     public String updatePassword(HttpSession session, @RequestParam("newPassword") String newPassword, RedirectAttributes redirectAttributes) {
-//        System.out.println("UserController, updateuser");
     	String userId = (String) session.getAttribute("userId");
-//    	System.out.println("userController, updateuser, userId = " +userId);
         if (userId == null) {
             redirectAttributes.addFlashAttribute("error", "로그인이 필요합니다.");
             return "redirect:/login";
@@ -346,7 +346,7 @@ public class UserController {
         boolean isPasswordChanged = userService.updatePassword(userId, encodedNewPassword);
         if (isPasswordChanged) {
             redirectAttributes.addFlashAttribute("successMessage", "비밀번호가 성공적으로 변경되었습니다.");
-            return "redirect:/mypage/info?user_id=" + userId;
+            return "redirect:/mypage/info";
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "비밀번호 변경에 실패했습니다.");
         }
@@ -360,26 +360,17 @@ public class UserController {
     public String refundPage() {
         return "mypage/refund"; // 환불/교환 페이지로 이동
     }
-        
+    
+    //마이페이지 다이어트 수정
     @GetMapping("/mypage/diet")
-    public ModelAndView dietPage(String dietOption, HttpServletRequest request) {
+    public String dietPage(String dietOption, HttpServletRequest request) {
     	String userId = (String) request.getSession().getAttribute("userId");    
-    	
     	//다이어트 업데이트
     	if (dietOption != null) {
     		userService.updateDietByUserId(userId, dietOption);
 		}
-    	
-    	UserDTO user = userService.getUserById(userId);    	
-    	ModelAndView mv = new ModelAndView("mypage/diet");
-    	
-    	
-    	
-    	//전체 레시피에서 지방,탄수화물만 추출하여 칼로리로 변환
-    	
-    	mv.addObject("dietObject", user.getDiet()); // 유저테이블에서 불러와야함
-    	
-    	return mv;
+	
+    	return "redirect:/mypage/info";
     }
     
     

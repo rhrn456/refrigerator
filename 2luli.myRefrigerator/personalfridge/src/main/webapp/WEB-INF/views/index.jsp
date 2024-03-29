@@ -139,9 +139,129 @@
 	</div>
 	<!-- Hero End -->
 
+	
+
+	<c:if test="${recipeList.size() > 0}"><!-- 냉장고 레시피 시작 -->
+		<div class="container-fluid fruite">
+			<div class="container">
+				<div class="tab-class text-center">
+					<div class="row g-4">		
+						<div class="col-lg-8 mx-auto" style="margin-bottom: -60px;">
+							<h3 class="mb-0">
+								<i class="fa fa-carrot" style="color: #f57316;"></i>냉장고에 남아있는 재료를 사용해 즐거운 요리 시간을 보내세요!
+							</h3>
+							<p class="mb-4" style="font-size: 20px;">
+							 <i class="fa fa-drumstick-bite" style="color:#b8652a;"></i>
+							 맛있는 요리와 함께 행복한 하루!
+							 </p>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane fade show p-0 active">
+							<div class="row g-4 justify-content-center">
+								<!-- 수정된 부분 -->
+								<div class="col-lg-12">
+									<div class="row g-4">
+										<c:set var="count" value="0" />
+										<c:forEach items="${recipeList}" var="RecipeDTO">
+											<div class="col-md-6 col-lg-4 col-xl-3"
+												style="display: ${count < 4 ? 'block' : 'none'};">
+												<div class="rounded position-relative fruite-item">
+													<div class="fruite-img">
+														<img src="${RecipeDTO.recipe_img}"
+															class="img-fluid w-100 rounded-top" alt="">
+													</div>
+													<div
+														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+														style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
+													<div
+														class="p-4 border border-secondary border-top-0 rounded-bottom">
+														<h4 class="recipe-name">${RecipeDTO.recipe_name}</h4>
+														<div class="d-flex justify-content-between flex-lg-wrap"
+															style="margin-left: 40px;">
+															<a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
+																class="btn border border-secondary rounded-pill px-3 text-primary gorecipe"
+																style="margin-top: 10px;"> <i
+																class="fa fa-search me-2 text-primary"></i>레시피 상세 보기
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<c:set var="count" value="${count + 1}" />
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if><!-- 냉장고 레시피 끝 -->
+	
+	<c:if test="${dietRecipeList.size() > 0}"> <!-- 다이어튼 레시피 시작 -->
+		<div class="container-fluid fruite py-5">
+			<div class="container ">
+				<div class="tab-class text-center">
+					<div class="row g-4">
+						<div class="col-lg-8 mx-auto" style="margin-bottom: -10px;">
+							<h3 class="mb-0">
+								<i class="fa fa-calculator" aria-hidden="true""></i>
+								나의 다이어트 목표에 알맞은 레시피 추천!
+							</h3>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane fade show p-0 active">
+							<div class="row g-4 justify-content-center">
+								<!-- 수정된 부분 -->
+								<div class="col-lg-12">
+									<div class="row g-4">
+										<c:set var="count" value="0" />
+										<c:forEach items="${dietRecipeList}" var="RecipeDTO">
+											<div class="col-md-6 col-lg-4 col-xl-3"
+												style="display: ${count < 4 ? 'block' : 'none'};">
+												<div class="rounded position-relative fruite-item">
+													<div class="fruite-img">
+														<img src="${RecipeDTO.recipe_img}"
+															class="img-fluid w-100 rounded-top" alt="">
+													</div>
+													<div
+														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+														style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
+													<div
+														class="p-4 border border-secondary border-top-0 rounded-bottom">
+														<h4 class="recipe-name" title="${RecipeDTO.recipe_name}">${RecipeDTO.recipe_name}</h4>
+														<div class="d-flex justify-content-center"
+														    style="margin-top: 10px;">
+														    <a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
+														        class="btn border border-secondary rounded-pill px-3 text-primary gorecipe">
+														        <i class="fa fa-search me-2 text-primary"></i>레시피
+														    </a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<c:set var="count" value="${count + 1}" />
+										</c:forEach>					
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if><!-- 다이어트 레시피 끝 -->
+	
 	<!-- Fruits Shop Start-->
 	<div class="container-fluid fruite py-5">
-		<div class="container py-5">
+		<div class="container">
 			<div class="tab-class text-center">
 				<div class="row g-4">
 					<div class="col-lg-8 mx-auto" style="margin-bottom: -10px;">
@@ -149,7 +269,7 @@
 							<i class="fa fa-bolt" style="color: orange;"></i> 재료까지 한번에 빠른 추천
 							레시피
 						</h3>
-						<p class="mb-4" style="font-size: 15px;">
+						<p class="mb-4" style="font-size: 20px;">
 							<i class="fa fa-solid fa-pepper-hot"
 								style="color: red; margin-left: 5px;"></i>이번주 제일핫한 음식! 어휴 뜨거!<i
 								class="fa fa-fire" style="color: red; margin-left: 5px;"></i>
@@ -225,16 +345,18 @@
 	</div>
 
 	<!-- Fruits Shop End-->
-
+	
 	<!-- Vesitable Shop Start-->
-	<div class="container vesitable py-5 text-center">
+	<div class="container vesitable text-center">
 		<div class="row">
 			<div class="lap" style="margin-bottom: -60px;">
 				<h3 class="mb-0">
 					<i class="fa fa-solid fa-wallet" style="color: brown;"></i> 가벼운 지갑을
 					지켜줄 알뜰시장!
 				</h3>
-				<p class="mb-4" style="font-size: 15px;">신선도 보장! 최소 10% ~ 최대 30%
+				<p class="mb-4" style="font-size: 20px;">
+				<i class=" fa-arrow-down-wide-short"></i>
+				신선도 보장! 최소 10% ~ 최대 30%
 					할인</p>
 			</div>
 			<div class="owl-carousel vegetable-carousel justify-content-center">
@@ -315,120 +437,7 @@
 		</div>
 	</div>
 
-	<c:if test="${recipeList.size() > 0}">
-		<div class="container-fluid fruite py-5">
-			<div class="container py-5">
-				<div class="tab-class text-center">
-					<div class="row g-4">
-						<div class="col-lg-8 mx-auto" style="margin-bottom: -10px;">
-							<h3 class="mb-0">
-								<i class="fa fa-calculator" aria-hidden="true""></i> 나의 냉장고 속
-								재료와 딱 맞는 레시피 추천!
-							</h3>
-							<br>
-							<br>
-						</div>
-					</div>
-					<div class="tab-content">
-						<div id="tab-1" class="tab-pane fade show p-0 active">
-							<div class="row g-4 justify-content-center">
-								<!-- 수정된 부분 -->
-								<div class="col-lg-12">
-									<div class="row g-4">
-										<c:set var="count" value="0" />
-										<c:forEach items="${recipeList}" var="RecipeDTO">
-											<div class="col-md-6 col-lg-4 col-xl-3"
-												style="display: ${count < 4 ? 'block' : 'none'};">
-												<div class="rounded position-relative fruite-item">
-													<div class="fruite-img">
-														<img src="${RecipeDTO.recipe_img}"
-															class="img-fluid w-100 rounded-top" alt="">
-													</div>
-													<div
-														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-														style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
-													<div
-														class="p-4 border border-secondary border-top-0 rounded-bottom">
-														<h4 class="recipe-name">${RecipeDTO.recipe_name}</h4>
-														<div class="d-flex justify-content-between flex-lg-wrap"
-															style="margin-left: 40px;">
-															<a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
-																class="btn border border-secondary rounded-pill px-3 text-primary gorecipe"
-																style="margin-top: 10px;"> <i
-																class="fa fa-search me-2 text-primary"></i>레시피 상세 보기
-															</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<c:set var="count" value="${count + 1}" />
-										</c:forEach>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</c:if>
 	
-	<c:if test="${dietRecipeList.size() > 0}">
-		<div class="container-fluid fruite py-5">
-			<div class="container py-5">
-				<div class="tab-class text-center">
-					<div class="row g-4">
-						<div class="col-lg-8 mx-auto" style="margin-bottom: -10px;">
-							<h3 class="mb-0">
-								<i class="fa fa-calculator" aria-hidden="true""></i>
-								나의 다이어트 목표에 알맞은 레시피 추천!
-							</h3>
-							<br>
-							<br>
-						</div>
-					</div>
-					<div class="tab-content">
-						<div id="tab-1" class="tab-pane fade show p-0 active">
-							<div class="row g-4 justify-content-center">
-								<!-- 수정된 부분 -->
-								<div class="col-lg-12">
-									<div class="row g-4">
-										<c:set var="count" value="0" />
-										<c:forEach items="${dietRecipeList}" var="RecipeDTO">
-											<div class="col-md-6 col-lg-4 col-xl-3"
-												style="display: ${count < 4 ? 'block' : 'none'};">
-												<div class="rounded position-relative fruite-item">
-													<div class="fruite-img">
-														<img src="${RecipeDTO.recipe_img}"
-															class="img-fluid w-100 rounded-top" alt="">
-													</div>
-													<div
-														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-														style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
-													<div
-														class="p-4 border border-secondary border-top-0 rounded-bottom">
-														<h4 class="recipe-name" title="${RecipeDTO.recipe_name}">${RecipeDTO.recipe_name}</h4>
-														<div class="d-flex justify-content-center"
-														    style="margin-top: 10px;">
-														    <a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
-														        class="btn border border-secondary rounded-pill px-3 text-primary gorecipe">
-														        <i class="fa fa-search me-2 text-primary"></i>레시피
-														    </a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<c:set var="count" value="${count + 1}" />
-										</c:forEach>					
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</c:if>
 
 
 	<!-- footer start -->
@@ -444,7 +453,6 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->

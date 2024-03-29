@@ -60,7 +60,7 @@
 		    border-radius: 10px;
 		    font-size:20px;
 		    text-align: center;
-		    height:420px;
+		    height:370px;
 		    width:200px;
 		}
 		.product-category{
@@ -120,7 +120,9 @@
 		    align-items: center; 
 		    justify-content: center;
 		}
+		.form-control option {
 	
+		}
         </style>
     </head>
     
@@ -149,11 +151,7 @@
 									                </div>
                                                     <div class="product-category" id=userlikebutton>
                                                         <a href="/userLikePage?user_id=${mypage.user_id}">찜한 레시피</a>    
-                                                    </div>
-                                               
-                                                    <div class="product-category">
-                                                        <a href="/mypage/diet">다이어트</a>                                                       
-                                                    </div>                                               
+                                                    </div>                                              
                                                     <div class="product-category">
                                                         <a href="/mypage/checkshipload">배송조회</a>                                                    
                                                     </div>
@@ -177,6 +175,22 @@
 											    <div class="userInformation">
 											        <div class="userId">ID: ${mypage.user_id}</div>
 											        <div class="userName">이름: ${mypage.user_name}</div>
+											        <!-- 다이어트 목표 선택 폼 -->
+											        <form action="/mypage/diet" method="GET" id="dietForm" style="display: flex;">
+											            <div class="form-group" >
+											                <!-- 드롭다운 메뉴 추가 -->
+											               <select id="dietOption" name="dietOption" class="form-control" style="text-align: center !important;">
+															    <option value="verySlim">매우 날씬하게</option>
+															    <option value="slim">날씬하게</option>
+															    <option value="maintain">현재상태 유지</option>
+															    <option value="gain">증량</option>
+															    <option value="veryGain">매우 증량</option>
+															</select>
+											            </div>
+											            <div class="form-group" style="margin-left: 10px;">
+											                <button type="submit" id="submitForm" class="btn btn-md  border" style="background-color: #525252; color:white;">저장</button>
+											            </div>
+											        </form>
 											    </div>
 											</div>
 									        <div class="userTextForm">
@@ -193,7 +207,7 @@
 									        </div>
 									    </div>
 									</div>
-							</div>
+							    </div>
 
         <div id="modalContainer" class="modal-container">
         <div class="modal-content">
@@ -207,67 +221,6 @@
     </div>
         <!-- Fruits Shop End-->
 
-		<script type="text/javascript">
-
-		 
-	      //게정 삭제창 작동하는 함수
-	 		var deleteButton = document.getElementById("deleteButton");
-	        var modalContainer = document.getElementById("modalContainer");
-	        var confirmButton = document.getElementById("confirmDeleteButton");
-	        var cancelButton = document.getElementById("cancelDeleteButton");
-	        
-	        deleteButton.onclick = function() {
-	            modalContainer.style.display = "block";
-	        }
-	
-	        cancelButton.onclick = function() {
-	            modalContainer.style.display = "none";
-        	}
-	        
-	        confirmButton.onclick = function() {
-	        	//1. inputbox password value 
-				//2. jsp session 값  sessionScope
-				// ${sessionScope.userid} = 
-			//1,2 
-	        	var password = $("#passwordInput").val(); // 입력 필드에서 비밀번호 값 추출
-	        	var userId = "${sessionScope.userId}"
-	        	console.log(password);
-	        	console.log(userId);
-
-	            // 서버에 비밀번호 확인 요청
-	            $.ajax({
-	                type: 'post',
-	                url: "/deleteUser", // 요청을 처리할 서버의 URL
-	                data: {
-	                    user_id: userId, // 세션에서 사용자 ID 가져오기
-	                    password: password
-	                },
-	                success: function(response) {
-	                	//alert(response); 값호출
-	                    // 서버 응답 처리
-	                    
-	                    if (response == 1) {
-                        	alert("비밀번호 확인 성공. 회원 탈퇴를 진행합니다.");
-                        	
-                        	window.location.href = "/logout";
-                        	// 회원 탈퇴 로직을 여기에 추가
-                   		} else {
-                        	alert("비밀번호가 일치하지 않습니다.");
-                        	window.location.href = "/mypage/info?user_id=" + userId;
-                    	}
-	                    //-> controller selectPassword reutrn  
-							// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
-	                },
-	                error: function(xhr, status, error) {
-	                    // AJAX 요청 실패 시 처리
-	                    console.error("AJAX 요청 실패:", status, error); // AJAX 요청 실패 시 에러 로그
-	                    alert("오류가 발생했습니다. 나중에 다시 시도해주세요.");
-	                }
-	            }); 
-	        	
-	        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
-	        }
-        </script>
         
         <div id="modalupdateContainer" class="modal-container">
         <div class="modal-content">
@@ -279,75 +232,6 @@
         
         
     </div>
-
-		<script type="text/javascript">
-	     
-	      	// 찜목록 버튼
-	      
-	      	
-	      	//정보수정창 작동하는 함수
-	 		var editButton = document.getElementById("editButton");
-	        var modalupdateContainer = document.getElementById("modalupdateContainer");
-	        var confirmupdateButton = document.getElementById("confirmupdateButton");
-	        var cancelupdateButton = document.getElementById("cancelupdateButton");
-	        
-	        
-	        
-	        editButton.onclick = function() {
-	        	modalupdateContainer.style.display = "block";
-	        }
-	
-	        cancelupdateButton.onclick = function() {
-	        	modalupdateContainer.style.display = "none";
-        	}
-	        
-	        confirmupdateButton.onclick = function() {
-	        	//1. inputbox password value 
-				//2. jsp session 값  sessionScope
-				// ${sessionScope.userid} = 
-			//1,2 
-	        	var password = $("#editpasswordInput").val(); // 입력 필드에서 비밀번호 값 추출
-	        	var userId = "${sessionScope.userId}"
-	        	console.log(password);
-	        	console.log(userId);
-
-	            // 서버에 비밀번호 확인 요청
-	            $.ajax({
-	                type: 'post',
-	                url: "/selectPassword", // 요청을 처리할 서버의 URL
-	                data: {
-	                    user_id: userId, // 세션에서 사용자 ID 가져오기
-	                    password: password
-	                },
-	                success: function(response) {
-	                	//alert(response); 값호출
-	                    // 서버 응답 처리
-	                    
-	                    if (response == 1) {
-                        	alert("비밀번호 확인 성공.");
-                        	
-                        	window.location.href = "/userEdit";
-                        	// 회원 탈퇴 로직을 여기에 추가
-                   		} else {
-                        	alert("비밀번호가 일치하지 않습니다.");
-                        	window.location.href = "/mypage/info?user_id=" + userId;
-                    	}
-	                    //-> controller selectPassword reutrn  
-							// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
-	                },
-	                error: function(xhr, status, error) {
-	                    // AJAX 요청 실패 시 처리
-	                    console.error("AJAX 요청 실패:", status, error); // AJAX 요청 실패 시 에러 로그
-	                    alert("오류가 발생했습니다. 나중에 다시 시도해주세요.");
-	                }
-	            }); 
-	        	
-	        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
-	        }
-	        
-	        
-        </script>
-			
        
 
         
@@ -364,5 +248,148 @@
      <!-- footer start -->
        <%@ include file="../footer.jsp" %>
         <!-- footer End -->
+        
+        <script>
+        var userDiet = "${mypage.diet}";
+
+        // userDiet 값에 따라 선택된 옵션을 설정
+        var dietOption = document.getElementById("dietOption");
+        switch(userDiet) {
+            case "verySlim":
+                dietOption.value = "verySlim";
+                break;
+            case "slim":
+                dietOption.value = "slim";
+                break;
+            case "maintain":
+                dietOption.value = "maintain";
+                break;
+            case "gain":
+                dietOption.value = "gain";
+                break;
+            case "veryGain":
+                dietOption.value = "veryGain";
+                break;
+            default:
+                dietOption.value = "";
+        }
+        
+      	//정보수정창 작동하는 함수
+ 		var editButton = document.getElementById("editButton");
+        var modalupdateContainer = document.getElementById("modalupdateContainer");
+        var confirmupdateButton = document.getElementById("confirmupdateButton");
+        var cancelupdateButton = document.getElementById("cancelupdateButton");
+        
+        
+        
+        editButton.onclick = function() {
+        	modalupdateContainer.style.display = "block";
+        }
+
+        cancelupdateButton.onclick = function() {
+        	modalupdateContainer.style.display = "none";
+    	}
+        
+        confirmupdateButton.onclick = function() {
+        	//1. inputbox password value 
+			//2. jsp session 값  sessionScope
+			// ${sessionScope.userid} = 
+		//1,2 
+        	var password = $("#editpasswordInput").val(); // 입력 필드에서 비밀번호 값 추출
+        	var userId = "${sessionScope.userId}"
+        	console.log(password);
+        	console.log(userId);
+
+            // 서버에 비밀번호 확인 요청
+            $.ajax({
+                type: 'post',
+                url: "/selectPassword", // 요청을 처리할 서버의 URL
+                data: {
+                    user_id: userId, // 세션에서 사용자 ID 가져오기
+                    password: password
+                },
+                success: function(response) {
+                	//alert(response); 값호출
+                    // 서버 응답 처리
+                    
+                    if (response == 1) {
+                    	alert("비밀번호 확인 성공.");
+                    	
+                    	window.location.href = "/userEdit";
+                    	// 회원 탈퇴 로직을 여기에 추가
+               		} else {
+                    	alert("비밀번호가 일치하지 않습니다.");
+                    	window.location.href = "/mypage/info?user_id=" + userId;
+                	}
+                    //-> controller selectPassword reutrn  
+						// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
+                },
+                error: function(xhr, status, error) {
+                    // AJAX 요청 실패 시 처리
+                    console.error("AJAX 요청 실패:", status, error); // AJAX 요청 실패 시 에러 로그
+                    alert("오류가 발생했습니다. 나중에 다시 시도해주세요.");
+                }
+            }); 
+        	
+        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
+        }
+        
+ 		var deleteButton = document.getElementById("deleteButton");
+        var modalContainer = document.getElementById("modalContainer");
+        var confirmButton = document.getElementById("confirmDeleteButton");
+        var cancelButton = document.getElementById("cancelDeleteButton");
+        
+        deleteButton.onclick = function() {
+            modalContainer.style.display = "block";
+        }
+
+        cancelButton.onclick = function() {
+            modalContainer.style.display = "none";
+    	}
+        
+        confirmButton.onclick = function() {
+        	//1. inputbox password value 
+			//2. jsp session 값  sessionScope
+			// ${sessionScope.userid} = 
+		//1,2 
+        	var password = $("#passwordInput").val(); // 입력 필드에서 비밀번호 값 추출
+        	var userId = "${sessionScope.userId}"
+        	console.log(password);
+        	console.log(userId);
+
+            // 서버에 비밀번호 확인 요청
+            $.ajax({
+                type: 'post',
+                url: "/deleteUser", // 요청을 처리할 서버의 URL
+                data: {
+                    user_id: userId, // 세션에서 사용자 ID 가져오기
+                    password: password
+                },
+                success: function(response) {
+                	//alert(response); 값호출
+                    // 서버 응답 처리
+                    
+                    if (response == 1) {
+                    	alert("비밀번호 확인 성공. 회원 탈퇴를 진행합니다.");
+                    	
+                    	window.location.href = "/logout";
+                    	// 회원 탈퇴 로직을 여기에 추가
+               		} else {
+                    	alert("비밀번호가 일치하지 않습니다.");
+                    	window.location.href = "/mypage/info?user_id=" + userId;
+                	}
+                    //-> controller selectPassword reutrn  
+						// $('#message').html(data);  현재 화면 위 id="message" 영역 안에 data안에 담긴 html 코드를 넣어준다.             
+                },
+                error: function(xhr, status, error) {
+                    // AJAX 요청 실패 시 처리
+                    console.error("AJAX 요청 실패:", status, error); // AJAX 요청 실패 시 에러 로그
+                    alert("오류가 발생했습니다. 나중에 다시 시도해주세요.");
+                }
+            }); 
+        	
+        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
+        }
+        </script>
     </body>
 </html>

@@ -242,7 +242,6 @@ img {
 	    var totalPrice = viewCartList.reduce(function(total, item) {
 	        return total + (item.product_quantity * item.product_price);
 	    }, 0);
-		console.log(totalPrice);
 		requestPay(productCount,productName,totalPrice,selectedLocation,enteredAddress)
 	}
 	
