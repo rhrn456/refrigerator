@@ -116,11 +116,6 @@
         <!-- Spinner End -->
 
 
-
-
-
-
-
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">My Page</h1>     
@@ -140,7 +135,7 @@
 									            </li>
 									            <li>
                                                     <div class="d-flex justify-content-between product-category" id=userlikebutton>
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>찜한 레시피</a>
+                                                        <a href="/userLikePage?user_id=${mypage.user_id}"><i class="fas fa-apple-alt me-2"></i>찜한 레시피</a>
                                                         
                                                     </div>
                                                 </li>
@@ -293,11 +288,7 @@
 		<script type="text/javascript">
 	     
 	      	// 찜목록 버튼
-	      	var userlikebutton = document.getElementById("userlikebutton");
-	      	
-	      	userlikebutton.onclick = function() {
-	      		window.location.href = "/userLikePage";
-	      	}
+	      
 	      	
 	      	//정보수정창 작동하는 함수
 	 		var editButton = document.getElementById("editButton");
