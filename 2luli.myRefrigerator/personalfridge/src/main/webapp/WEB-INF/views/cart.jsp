@@ -182,7 +182,36 @@ img {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 	<script>
-	
+	//결제 aPI(productCount,productName
+		function requestPay(productCount, productName, totalPrice, selectedLocation, enteredAddress) {
+	    // IMP.request_pay(param, callback) 결제창 호출
+	    var uid = '';
+	    console.log(selectedLocation);
+	    console.log(enteredAddress);
+	    console.log(productCount);
+	    console.log(productName);
+	    if (productCount === 1) {
+	        productNameString = productName;
+	    } else {
+	        productNameString = productName + " 외 " + (productCount - 1);
+	    }
+	    IMP.init('imp12886452');
+	    IMP.request_pay({ // param
+	        pg: "kakaopay", // PG사 선택
+	        pay_method: "card", // 지불 수단
+	        name: productNameString, // 상품명
+	        amount: totalPrice, // 가격
+	        buyer_addr: selectedLocation + enteredAddress,// 구매자 주소지
+	        m_redirect_url: 'https://example.com/mobile/complete', // 모바일 결제시 사용할 url
+	        digital: true, // 실제 물품인지 무형의 상품인지(핸드폰 결제에서 필수 파라미터)
+	        app_scheme: '' // 돌아올 app scheme
+	    }, function (rsp) { // callback
+	        if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+	            // 결제가 성공하면 sendProducts 함수를 호출할 때 selectedLocation와 enteredAddress를 전달합니다.
+	            sendProducts(selectedLocation, enteredAddress);
+	        }
+	    });
+	}
 	 function sample4_execDaumPostcode() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {

@@ -355,7 +355,7 @@
 					지켜줄 알뜰시장!
 				</h3>
 				<p class="mb-4" style="font-size: 20px;">
-				<i class=" fa-arrow-down-wide-short"></i>
+				<i class="fas fa-arrow-down-wide-short"></i>
 				신선도 보장! 최소 10% ~ 최대 30%
 					할인</p>
 			</div>
