@@ -86,7 +86,7 @@ public class RefrigeratorController {
 	//비동기로 재료을 추가
 	@PostMapping("/insertRefrigeratorProduct")
 	public ResponseEntity<String> postMethodName(@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut) {
-		System.out.println(refrigeratorProdcut);/*확인용 추후삭제*/
+		System.out.println(refrigeratorProdcut.getLimit_date());/*확인용 추후삭제*/
 		boolean result = refrigeratorService.insertRefrigeratorProdcut(refrigeratorProdcut);
 		
 		if (result) {

@@ -1,7 +1,11 @@
 package com.multi.personalfridge.cart;
 
 import java.net.URI;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +23,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.multi.personalfridge.common.RandomStringGenerator;
 import com.multi.personalfridge.dto.CartDTO;
+import com.multi.personalfridge.dto.ProductDTO;
 import com.multi.personalfridge.dto.RecipeProductDTO;
+import com.multi.personalfridge.dto.RefrigeratorProdcutDTO;
 import com.multi.personalfridge.dto.ShipDTO;
+import com.multi.personalfridge.product.ProductService;
 import com.multi.personalfridge.refrigerator.RefrigeratorService;
 import com.multi.personalfridge.ship.ShipService;
 
@@ -38,6 +45,8 @@ public class CartController {
 	ShipService shipService;
 	@Autowired
 	RefrigeratorService refrigeratorService;
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping("/insertCart")
 	public String insertCart(@RequestParam("cartProducts") String cartProductsJson, HttpServletRequest request) {
@@ -108,15 +117,20 @@ public class CartController {
 	@GetMapping("/buyproduct")
 	public String buyProduct(@RequestParam("cartProducts") String cartProductsJson, @RequestParam String arrive, @RequestParam String sub_adress, HttpServletRequest request) {
 		String str = random.generateRandomString();
+		RefrigeratorProdcutDTO refrigeratorProdcut = new RefrigeratorProdcutDTO();
+		//오늘날짜 받아오기
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		// 세션에서 userId 가져오기
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
+	    Integer refrigeratoId = refrigeratorService.getRefrigeratorId(userId);
 	    if (userId == null || userId.isEmpty()) {
 	        // userId가 없으면 에러 반환
 	        return "redirect:/loginPage";
 	    }
-	    try {
-	        ObjectMapper objectMapper = new ObjectMapper(); 
+	    try {	    	
+	        ObjectMapper objectMapper = new ObjectMapper(); 	        
 	        
 	        // JSON 문자열을 CartDTO 배열로 변환
 	        CartDTO[] cartProducts = objectMapper.readValue(cartProductsJson, CartDTO[].class);
@@ -126,6 +140,39 @@ public class CartController {
 	            product.setUser_id(userId); // userId 설정
 	            cartService.removeCartItem(product.getProduct_id(),product.getUser_id());
 	            product.setShip_code(str);
+	            
+	            //구매한 재료를 냉장고에 넣어주기
+	            ProductDTO productDTO = productService.getProductById(product.getProduct_id());
+	            String nameAndCount = productDTO.getProduct_name();
+	            Integer quantity  = product.getProduct_quantity();
+	            //소비기한 계산 및 데이터를 DB에 맞게 변환
+	            Integer plusLimitDate = productDTO.getLimit_date();
+	            LocalDate limitDate = today.plusDays(plusLimitDate);
+	            String formattedLimitDate = limitDate.format(formatter);
+	            Date sqlLimitDate = Date.valueOf(formattedLimitDate);
+	            
+	            
+	            String[] parts = nameAndCount.split("(?<=\\D) (?=\\d)");
+	            refrigeratorProdcut.setRefrigerator_id(refrigeratoId);
+	            refrigeratorProdcut.setProduct_name(parts[0]);
+	            refrigeratorProdcut.setLimit_date(sqlLimitDate);
+	            //물품의 수량을 맞춰서 입력
+	            if (parts.length > 1) {
+	            	if (quantity > 1) {
+	            		refrigeratorProdcut.setProduct_quantity(parts[1] + " X " + quantity);
+					} else {
+						refrigeratorProdcut.setProduct_quantity(parts[1]);
+					}	            	
+				} else {
+					if (quantity > 1) {
+						refrigeratorProdcut.setProduct_quantity(quantity + "개");
+					} else {
+						refrigeratorProdcut.setProduct_quantity("1개");
+					}					
+				}
+	            
+	            refrigeratorService.insertRefrigeratorProdcut(refrigeratorProdcut);
+	            
 	            //카트에 제품이랑 송장 저장
 	            boolean result = cartService.buyProduct(product);
 	            if (!result) {
