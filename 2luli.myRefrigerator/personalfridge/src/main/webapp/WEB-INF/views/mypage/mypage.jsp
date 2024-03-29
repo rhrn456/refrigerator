@@ -100,6 +100,7 @@
 		  background: none;
 		}
 		.mypagemenu {
+			margin-right:-80px;
 		    border: 3px solid #ccc;
 		    border-radius: 10px;
 		    font-size:20px;
@@ -187,9 +188,9 @@
             <h1 class="text-center text-white display-6">My Page</h1>     
         </div>
         <!-- Single Page Header End -->
-					<div class = "myPAgeBox" style="display:flex; justify-content: center; margin-top: 50px;">
+					<div class = "myPAgeBox" style="display:flex; justify-content: center; margin-top: 50px; margin-left:250px;" >
 						<div class="row g-4">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" >
                                         <div class="mypagemenu">
                                             <h3 style="margin-top:20px;">마이 페이지</h3>
                                             <hr>
@@ -216,7 +217,7 @@
 			                                      </div>
 			                                  </div>
 			                              </div>
-									<div class="col-lg-9">
+									<div class="col-lg-8" style="margin-top:50px;">
 									    <div class="box user-info-card">
 									        <h5>회원 정보</h5>
 											<div class="userTextForm" style="margin-top:5px;">
