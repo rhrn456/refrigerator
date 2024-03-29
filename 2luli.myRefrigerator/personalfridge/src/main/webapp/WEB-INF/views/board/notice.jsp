@@ -148,7 +148,7 @@
 										    </nav>
 					                	</div>
 					                </div>
-					                <c:if test="${not empty sessionScope.userId}">
+					                <c:if test="${sessionScope.userAdmin == 2}">
 					                	<a href="/mypage/boardInsert" style="float:right; border: 1px solid #ffB524; padding:10px">글쓰기</a>
 					                </c:if>
 					            </div>
@@ -173,7 +173,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->

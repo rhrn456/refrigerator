@@ -66,7 +66,7 @@ public class BoardController {
 		} else if(CategoryNo == 3) {
 			Category = "myRecipe";
 		} else {
-			return "../404";
+			return "error/error";
 		}
 		
 		List<BoardDTO> boardList = service.getAllBoardByCategoryNo(CategoryNo);
@@ -91,11 +91,12 @@ public class BoardController {
 	
 	@GetMapping("/view")
 	public String getBoardByBoardNo(@RequestParam("boardNo") int boardNo, Model model) {
+		System.out.println(boardNo);
 		service.updateHit(boardNo);
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
 		model.addAttribute("board", board);
 		
-		return "board/boardDetail";
+		return "/mypage/board/boardDetail";
 	}
 	
 	// Create
@@ -130,7 +131,7 @@ public class BoardController {
 		if(result) {
 			return "redirect:/board?CategoryNo=" + CategoryNo;
 		} else {
-			return "../404";
+			return "error/error";
 		}
 		
 	}
@@ -171,7 +172,7 @@ public class BoardController {
 		if(result) {
 			return "redirect:/view?boardNo=" + boardNo;
 		} else {
-			return "../404";
+			return "error/error";
 		}
 		
 	}
@@ -187,7 +188,7 @@ public class BoardController {
 		if(result) {
 			return "redirect:/board?CategoryNo=" + CategoryNo;
 		} else {
-			return "../404";
+			return "error/error";
 		}
 		
 	}

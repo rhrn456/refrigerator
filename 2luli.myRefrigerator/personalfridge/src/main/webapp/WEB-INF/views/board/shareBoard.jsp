@@ -151,9 +151,6 @@
 										    </nav>
 					                	</div>
 					                </div>
-					                <c:if test="${not empty sessionScope.userId}">
-					                	<a href="/mypage/boardInsert" style="float:right; border: 1px solid #ffB524; padding:10px">글쓰기</a>
-					                </c:if>
 					            </div>
 							</div>
 						</div>

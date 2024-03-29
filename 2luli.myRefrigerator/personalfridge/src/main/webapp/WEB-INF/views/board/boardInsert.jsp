@@ -95,16 +95,16 @@
 							                		<div class="dropdown">
 									                    <select id="board_category" name="CategoryNo" class="form-control mb-3"">
 									                        <option value="" selected disabled hidden>게시판 분류</option>
-									                        <option value="1">공지사항</option>
-									                        <option value="2">공유 게시판</option>
+									                        <c:if test="${sessionScope.userAdmin == 2}">
+									                        	<option value="1">공지사항</option>
+									                        </c:if>
 									                        <option value="3">나만의 레시피</option>
 									                    </select>
 									                </div>
 								                </c:if>								                	
 								                <c:if test="${not empty refrigeratorProdcut}">
 								                	<input type="text" id="title" name="title" placeholder="제목" class="form-control mb-3" value="${refrigeratorProdcut.product_name} 공유하고 싶어요!" required>
-								                	<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>개수 : ${refrigeratorProdcut.product_quantity}
-소비기한 : ${refrigeratorProdcut.limit_date}</textarea>
+								                	<textarea id="content" name="content" placeholder="내용" class="form-control mb-3" rows="8" required>개수 : ${refrigeratorProdcut.product_quantity} 소비기한 : ${refrigeratorProdcut.limit_date}</textarea>
 									                <div class="dropdown">
 									                    <select id="board_category" name="CategoryNo" class="form-control mb-3" >
 									                        <option value="2">공유 게시판</option>
@@ -235,7 +235,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->
