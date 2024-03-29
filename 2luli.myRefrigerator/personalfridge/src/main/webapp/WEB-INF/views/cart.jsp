@@ -191,10 +191,6 @@ img {
 	//결제 aPI(productCount,productName
 		function requestPay(productCount, productName, totalPrice, selectedLocation, enteredAddress) {
 	    var uid = '';
-	    console.log(selectedLocation);
-	    console.log(enteredAddress);
-	    console.log(productCount);
-	    console.log(productName);
 	    if (productCount === 1) {
 	        productNameString = productName;
 	    } else {

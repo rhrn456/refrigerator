@@ -128,7 +128,6 @@ public class CartController {
 	            product.setShip_code(str);
 	            //카트에 제품이랑 송장 저장
 	            boolean result = cartService.buyProduct(product);
-	            System.out.println(product);
 	            if (!result) {
 	                return "error";
 	            }
