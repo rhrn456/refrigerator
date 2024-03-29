@@ -54,11 +54,6 @@
 		.modal-button {
 		          margin-top: 20px;
 		}
-		.userTextForm {
-		  border-bottom: 2px solid #adadad;
-		  margin: 30px;
-		  padding: 10px 10px;
-		}
 		.id {
 		  width: 100%;
 		  border:none;
@@ -104,6 +99,72 @@
 		  height:25px;
 		  background: none;
 		}
+		.mypagemenu {
+		    border: 3px solid #ccc;
+		    border-radius: 10px;
+		    font-size:20px;
+		    text-align: center;
+		    height:420px;
+		    width:200px;
+		}
+		.product-category{
+		 	margin-top:11px;
+		 	display: block;
+		 	padding:10px;
+		}
+		.product-category:hover {
+		    background-color: #f0f0f0;
+		}
+		.product-category:active {
+		    background-color: #ccc;
+		}
+		.product-category a{
+			color:#666666;
+		}
+		hr:not([size]) {
+		    height: 2px !important;
+		}
+		
+		.user-info-card {
+		    border: 1px solid #ccc;
+		    border-radius: 10px;
+		    padding: 20px;
+		    max-width: 600px; 
+		    margin: 0 auto;
+		    background-color: #f9f9f9;
+		}
+		
+		.userTextForm {
+			display: flex;
+			margin-tp:5px;
+		    margin-bottom: 15px;
+		    border-bottom: 1px solid #ccc; 
+		    padding-bottom: 10px; 
+		}
+		
+		.userTextForm p {
+		    margin: 0;
+		    text-align: left;
+		}
+		
+		.user-info-card h2 {
+		    margin-bottom: 20px; 
+		}
+		.userIcon {
+		    flex: 1;
+		    text-align: left;
+		    font-size: 100px; 
+		}
+		.userInformation {
+		    font-size: 15px;
+		    font-weight: 900;
+		    flex: 3;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center; 
+		    justify-content: center;
+		}
+		
         </style>
     </head>
     
@@ -129,82 +190,58 @@
 					<div class = "myPAgeBox" style="display:flex; justify-content: center; margin-top: 50px;">
 						<div class="row g-4">
                                     <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>마이 페이지</h4>
-                                            <ul class="list-unstyled fruite-categorie">
-                                                <li>
-									                <div class="d-flex justify-content-between allproduct" id=editButton>
-									                    <a href="#"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
-
+                                        <div class="mypagemenu">
+                                            <h3 style="margin-top:20px;">마이 페이지</h3>
+                                            <hr>
+									                <div class="product-category" id=editButton>
+									                    <a href="#">회원정보 수정</a>
 									                </div>
-									            </li>
-									            <li>
-                                                    <div class="d-flex justify-content-between product-category" id=userlikebutton>
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>찜한 레시피</a>
-                                                        
+                                                    <div class="product-category" id=userlikebutton>
+                                                        <a href="#">찜한 레시피</a>    
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="/mypage/diet"><i class="fas fa-apple-alt me-2"></i>다이어트</a>
-                                                        
+                                               
+                                                    <div class="product-category">
+                                                        <a href="/mypage/diet">다이어트</a>                                                       
+                                                    </div>                                               
+                                                    <div class="product-category">
+                                                        <a href="/mypage/checkshipload">배송조회</a>                                                    
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="/mypage/checkshipload"><i class="fas fa-apple-alt me-2"></i>배송조회</a>
-                                                     
+                                              
+                                                    <div class="product-category">
+                                                        <a href="#">구매내역</a>                                                      
+                                                    </div>                                          
+                                                    <div class="product-category" id="deleteButton">
+                                                        <a href="#">회원탈퇴</a>
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>구매내역</a>
-                                                      
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>주문취소</a>
-                                                      
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="/mypage/refundPage"><i class="fas fa-apple-alt me-2"></i>환불/교환 문의</a>
-                                                       
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category" id="deleteButton">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>회원탈퇴</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-							<div class="col-lg-9">
-								<div class="box" style="text-align: center;" >
-									<h2>회원 정보</h2>
-									<div class="userTextForm">
-										<p class="id">ID: ${mypage.user_id}</p>
+			                                      </div>
+			                                  </div>
+			                              </div>
+									<div class="col-lg-9">
+									    <div class="box user-info-card">
+									        <h5>회원 정보</h5>
+											<div class="userTextForm" style="margin-top:5px;">
+											    <div class="userIcon">
+											        <i class="fas fa-user-circle"></i>
+											    </div>
+											    <div class="userInformation">
+											        <div class="userId">ID: ${mypage.user_id}</div>
+											        <div class="userName">이름: ${mypage.user_name}</div>
+											    </div>
+											</div>
+									        <div class="userTextForm">
+									           <i class="fas fa-envelope"> 
+									   			 ${mypage.mail}</i>
+									        </div>
+									        <div class="userTextForm">
+									        <i class="fa fa-map-marker-alt">
+									            ${mypage.adress}</i>
+									        </div>
+									        <div class="userTextForm1" style="margin-top:-5px;">
+									        <i class="fas fa-phone">
+									           ${mypage.phone}</i>
+									        </div>
+									    </div>
 									</div>
-									<div class="userTextForm">
-									<p class="name">이름: ${mypage.user_name}</p>
-									</div>
-									<div class="userTextForm">
-									<p class="email">이메일: ${mypage.mail}</p>
-									</div>
-									<div class="userTextForm">
-									<p class="adress">주소: ${mypage.adress}</p>
-									</div>
-									<div class="userTextForm">
-									<p class="phone">핸드폰 번호: ${mypage.phone}</p>
-									</div>
-								</div>
-							   </div>
 							</div>
 
         <div id="modalContainer" class="modal-container">
@@ -220,6 +257,8 @@
         <!-- Fruits Shop End-->
 
 		<script type="text/javascript">
+
+		 
 	      //게정 삭제창 작동하는 함수
 	 		var deleteButton = document.getElementById("deleteButton");
 	        var modalContainer = document.getElementById("modalContainer");
@@ -358,6 +397,8 @@
 	        	
 	        	//window.location.href = '/mypage?user_id=' + "${sessionScope.userId}";
 	        }
+	        
+	        
         </script>
 			
        
@@ -373,8 +414,8 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 		
-    </body>
      <!-- footer start -->
        <%@ include file="../footer.jsp" %>
         <!-- footer End -->
+    </body>
 </html>
