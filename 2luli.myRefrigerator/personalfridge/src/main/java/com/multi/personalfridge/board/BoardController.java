@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -191,6 +192,12 @@ public class BoardController {
 			return "error/error";
 		}
 		
+	}
+	
+	@PostMapping("/mypage/requestShare")
+	public ResponseEntity<String> requestShare(Integer board_no, String board_title){
+		System.out.println(board_no + board_title);
+		return ResponseEntity.ok("good");
 	}
 	
 }

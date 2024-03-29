@@ -92,7 +92,7 @@
 		
 		.userTextForm {
 			display: flex;
-			margin-tp:5px;
+			margin-top:5px;
 		    margin-bottom: 15px;
 		    border-bottom: 1px solid #ccc; 
 		    padding-bottom: 10px; 
@@ -120,7 +120,7 @@
 		    align-items: center; 
 		    justify-content: center;
 		}
-		
+	
         </style>
     </head>
     
