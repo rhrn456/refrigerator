@@ -104,6 +104,36 @@
 		  height:25px;
 		  background: none;
 		}
+        .box {
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff; /* 진한 파란색 배경 */
+            color: #dc2e5e; /* 진한 핑크색 텍스트 */
+            border-radius: 10px;
+            width: 60%;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #27417b; /* 진한 핑크색 제목 */
+        }
+
+        .box {
+            text-align: left; /* 전체 박스를 왼쪽 정렬 */
+            width: max-content; /* 내용에 맞게 최대 너비 조정 */
+            margin: auto; /* 가운데 정렬 */
+        }
+
+        .userTextForm {
+            display: flex; /* Flexbox 레이아웃 사용 */
+            align-items: center; /* 세로 중앙 정렬 */
+            justify-content: flex-start; /* 시작 지점에서 정렬 */
+            margin-bottom: 10px; /* 항목 사이의 간격 */
+        }
+
+        .userTextForm span, .userTextForm h2 {
+            margin-right: 10px; /* 오른쪽 여백 설정 */
+        }
         </style>
     </head>
     
@@ -189,19 +219,19 @@
 								<div class="box" style="text-align: center;" >
 									<h2>회원 정보</h2>
 									<div class="userTextForm">
-										<p class="id">ID: ${mypage.user_id}</p>
+									<span class="id">ID </span><h2>${mypage.user_id}</h2>
 									</div>
 									<div class="userTextForm">
-									<p class="name">이름: ${mypage.user_name}</p>
+									<span class="name">이름 </span><h2>${mypage.user_name}</h2>
 									</div>
 									<div class="userTextForm">
-									<p class="email">이메일: ${mypage.mail}</p>
+									<span class="email">이메일 </span><h2>${mypage.mail}</h2>
 									</div>
 									<div class="userTextForm">
-									<p class="adress">주소: ${mypage.adress}</p>
+									<span class="adress">주소 </span><h2>${mypage.adress}</h2>
 									</div>
 									<div class="userTextForm">
-									<p class="phone">핸드폰 번호: ${mypage.phone}</p>
+									<span class="phone">핸드폰 번호 </span><h2>${mypage.phone}</h2>
 									</div>
 								</div>
 							   </div>

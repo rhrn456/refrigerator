@@ -65,6 +65,7 @@
 	</style>
 </head>
 
+
 <body>
 	<!-- Spinner Start -->
 	<div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
@@ -158,7 +159,10 @@
 								</c:if>
 								<c:if test="${not empty sessionScope.userId}">
 									<button id="board-modify-btn" class="btn btn-primary" onclick="location.href='/mypage/updateBoard?boardNo=${board.board_no}'">수정</button>
-									<button id="board-delete-btn" class="btn btn-primary" data-value="${board.board_no}">삭제</button>
+									<c:if test="${not empty board.latitude}">
+									<button id="board-modify-btn" class="btn btn-primary" onclick="requestShare()">공유</button>
+									</c:if>
+									<button id="board-delete-btn" class="btn btn-primary" data-value="${board}">삭제</button>
 								</c:if>
 							</div>
 						</div>
@@ -214,8 +218,25 @@
 	
 	confirmButton.onclick = function() {
 		location.href = '/deleteBoard?boardNo=' + boardNo;
-    } 
+    } 	
 	
+	function requestShare() {
+		if(confirm("작성자에게 공유 요청 메일을 보내시겠습니까?")){
+			$.ajax({
+				type: "POST",
+				url: "/mypage/requestShare",
+				data: {
+					board_no: ${board.board_no}
+					},
+				success: function(response){
+					alert("성공적으로 메일이 전송되었습니다")
+				},
+		        error: function(xhr, status, error){
+		            console.error(xhr.responseText);
+		        } 
+			})
+		}
+	}
 	</script>
 	
 </body>
