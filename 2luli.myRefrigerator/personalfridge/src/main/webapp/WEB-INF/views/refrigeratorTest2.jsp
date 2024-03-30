@@ -184,7 +184,7 @@ function shareProduct(refrigeratorProductId){
 }
 
 thead th {
-	color: #81c408; /* 글자 색을 노란색으로 변경 */
+	color: #DD3161;
 }
 
 .edit-form-container {
@@ -203,10 +203,15 @@ thead th {
 }
 
 #updateForm, #submitForm {
-	background-color: #81c408 !important;
+	background-color: #DD3161 !important;
 	/* !important를 사용하여 다른 스타일에 의해 덮어쓰이지 않도록 함 */
 	color: white;
 }
+.form-control:focus {
+    border-color: #DD3161;
+    box-shadow: 0 0 0 0.2rem rgba(221, 49, 97, 0.25);
+}
+
 </style>
 
 <body>
@@ -260,11 +265,11 @@ thead th {
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col">Name</th>
-							<th scope="col">Quantity</th>
-							<th scope="col">AppendDate</th>
-							<th scope="col">LimitDate</th>
-							<th scope="col" style="width: 100px;">Handle</th>
+							<th scope="col">이름</th>
+							<th scope="col">수량</th>
+							<th scope="col">추가 날짜</th>
+							<th scope="col">소비 기한</th>
+							<th scope="col" style="width: 100px;">작업 버튼</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -310,7 +315,7 @@ thead th {
 				<c:if test="${0 == refrigeratorProductList.size()}">
 					<br>
 					<br>
-					<h2 style="text-align: center; color: #81c408;">나의 냉장고가
+					<h2 style="text-align: center; color: #DD3161;">나의 냉장고가
 						비어있습니다.</h2>
 				</c:if>
 			</div>
@@ -332,19 +337,19 @@ thead th {
 							value="${refrigeratorId}">
 
 						<div class="form-group">
-							<label for="editProductName" class="mb-2"><strong>Name</strong></label>
+							<label for="editProductName" class="mb-2"><strong>이름</strong></label>
 							<input type="text" id="productName" name="productName"
 								class="form-control">
 						</div>
 
 						<div class="form-group">
-							<label for="editProductQuantity" class="mb-2"><strong>Quantity</strong></label>
+							<label for="editProductQuantity" class="mb-2"><strong>수량</strong></label>
 							<input type="text" id="productQuantity" name="productQuantity"
 								class="form-control">
 						</div>
 
 						<div class="form-group">
-							<label for="editLimitDate" class="mb-2"><strong>LimitDate</strong></label>
+							<label for="editLimitDate" class="mb-2"><strong>소비 기한</strong></label>
 							<input type="date" id="limitDate" name="limitDate"
 								class="form-control">
 						</div>
@@ -360,24 +365,24 @@ thead th {
 	<!-- Cart Page End -->
 	<div class="container" id="editForm">
 		<div class="edit-form-container">
-			<h2 style="text-align: center; color: #81c408;">Product Edit</h2>
+			<h2 style="text-align: center; color: #DD3161;">정보 수정</h2>
 			<form>
 				<input type="hidden" id="editProductId" name="editProductId">
 
 				<div class="form-group">
-					<label for="editProductName" class="mb-2"><strong>Name</strong></label>
+					<label for="editProductName" class="mb-2"><strong>이름</strong></label>
 					<input type="text" id="editProductName" name="editProductName"
 						class="form-control">
 				</div>
 
 				<div class="form-group">
-					<label for="editProductQuantity" class="mb-2"><strong>Quantity</strong></label>
+					<label for="editProductQuantity" class="mb-2"><strong>수량</strong></label>
 					<input type="text" id="editProductQuantity"
 						name="editProductQuantity" class="form-control">
 				</div>
 
 				<div class="form-group">
-					<label for="editLimitDate" class="mb-2"><strong>LimitDate</strong></label>
+					<label for="editLimitDate" class="mb-2"><strong>소비 기한</strong></label>
 					<input type="date" id="editLimitDate" name="editLimitDate"
 						class="form-control">
 				</div>
@@ -406,6 +411,7 @@ thead th {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/waypoints/waypoints.min.js"></script>
+	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->

@@ -54,6 +54,60 @@
 		.modal-button {
 		          margin-top: 20px;
 		}
+#usereditBox {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-group {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #6c757d; /* 회색 계열의 배경색 */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s; /* 부드러운 색상 전환 효과 */
+}
+
+.button-group button:hover {
+    background-color: #5a6268; /* 호버 시 더 어두운 회색으로 변경 */
+}
+
+#newPasswordButton {
+    background-color: #adb5bd; /* 더 밝은 회색 계열 */
+}
+
+#newPasswordButton:hover {
+    background-color: #919ca6; /* 호버 시 더 어두운 회색으로 변경 */
+}
         </style>
     </head>
     
@@ -162,29 +216,29 @@
 
 							<div class="col-lg-9">
 								
-							<form action="/user/updateInfo" id="usereditBox" method="post" style="text-align: center;">
-							    <h2>회원 정보 수정</h2>
-							    <div>
-							        <label for="name">이름:</label>
-							        <input type="text" id="name" name="user_name" required value="${useredit.user_name}">
-							    </div>
-							    <div>
-							        <label for="email">이메일:</label>
-							        <input type="email" id="email" name="mail" required value="${useredit.mail}">
-							    </div>
-							    <div>
-							        <label for="address">주소:</label>
-							        <input type="text" id="address" name="adress" required value="${useredit.adress}">
-							    </div>
-							    <div>
-							        <label for="phone">핸드폰번호:</label>
-							        <input type="text" id="phone" name="phone" required value="${useredit.phone}">
-							    </div>
-							    <div>
-							        <button type="button" id=newPasswordButton>비밀번호 변경</button>
-							        <button type="submit" formaction="/updateUser">정보 수정</button>
-							    </div>
-							</form>
+<form action="/user/updateInfo" id="usereditBox" method="post" style="text-align: center;">
+    <h2>회원 정보 수정</h2>
+    <div class="input-group">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="user_name" required value="${useredit.user_name}">
+    </div>
+    <div class="input-group">
+        <label for="email">이메일:</label>
+        <input type="email" id="email" name="mail" required value="${useredit.mail}">
+    </div>
+    <div class="input-group">
+        <label for="address">주소:</label>
+        <input type="text" id="address" name="adress" required value="${useredit.adress}">
+    </div>
+    <div class="input-group">
+        <label for="phone">핸드폰번호:</label>
+        <input type="text" id="phone" name="phone" required value="${useredit.phone}">
+    </div>
+    <div class="button-group">
+        <button type="button" id="newPasswordButton">비밀번호 변경</button>
+        <button type="submit" formaction="/updateUser">정보 수정</button>
+    </div>
+</form>
 
 							    <div class="row g-4 justify-content-center">
 							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
