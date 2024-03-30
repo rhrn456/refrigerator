@@ -56,7 +56,6 @@
 		}
 #usereditBox {
     max-width: 500px;
-    margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
@@ -108,6 +107,38 @@
 #newPasswordButton:hover {
     background-color: #919ca6; /* 호버 시 더 어두운 회색으로 변경 */
 }
+
+.mypagemenu {
+    margin-right: -80px;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    font-size: 20px;
+    text-align: center;
+    height: 320px;
+    width: 200px;
+}
+
+.product-category {
+    margin-top: 11px;
+    display: block;
+    padding: 10px;
+}
+
+.product-category:hover {
+    background-color: #f0f0f0;
+}
+
+.product-category:active {
+    background-color: #ccc;
+}
+
+.product-category a {
+    color: #666666;
+}
+
+hr:not([size]) {
+    height: 2px !important;
+}
         </style>
     </head>
     
@@ -120,29 +151,6 @@
         <!-- Spinner End -->
 
 
-
-
-
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal Search End -->
-
-
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">My Page</h1>     
@@ -150,160 +158,54 @@
         <!-- Single Page Header End -->
 
 
-        <!-- Fruits Shop Start-->
-        <div class="container-fluid fruite py-5">
-            <div class="container py-5">
-                <div class="row g-4">
-                    <div class="col-lg-12">
-                        <div class="row g-4">
-                            <div class="col-lg-3">
-                                <div class="row g-4">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4>마이 페이지</h4>
-                                            <ul class="list-unstyled fruite-categorie">
-                                                <li>
-									                <div class="d-flex justify-content-between allproduct">
-									                    <a href="#"><i class="fas fa-apple-alt me-2"></i>회원정보 수정</a>
+
+					<div class = "myPAgeBox" style="display:flex; justify-content: space-around; margin-top: 50px; margin-left:500px;" >
+						<div class="row g-4">
+                                    <div class="col-lg-12" >
+                                        <div class="mypagemenu">
+                                            <h3 style="margin-top:20px;">마이 페이지</h3>
+                                            <hr>
+									                <div class="product-category" id=editButton>
+									                    <a href="#">회원정보 수정</a>
 									                </div>
-									            </li>
-									            <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>찜한 레시피</a>
-                                                        
+                                                    <div class="product-category" id=userlikebutton>
+                                                        <a href="/userLikePage?user_id=${mypage.user_id}">찜한 레시피</a>    
+                                                    </div>                                              
+                                                    <div class="product-category">
+                                                        <a href="/mypage/buyproductcheck">구매내역</a>                                                      
+                                                    </div>                                          
+                                                    <div class="product-category" id="deleteButton">
+                                                        <a href="#">회원탈퇴</a>
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>다이어트</a>
-                                                        
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>배송조회</a>
-                                                     
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>구매내역</a>
-                                                      
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>주문취소</a>
-                                                      
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>환불/교환 문의</a>
-                                                       
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between product-category" id="deleteButton">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>회원탈퇴</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-							<div class="col-lg-9">
-								
-<form action="/user/updateInfo" id="usereditBox" method="post" style="text-align: center;">
-    <h2>회원 정보 수정</h2>
-    <div class="input-group">
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="user_name" required value="${useredit.user_name}">
-    </div>
-    <div class="input-group">
-        <label for="email">이메일:</label>
-        <input type="email" id="email" name="mail" required value="${useredit.mail}">
-    </div>
-    <div class="input-group">
-        <label for="address">주소:</label>
-        <input type="text" id="address" name="adress" required value="${useredit.adress}">
-    </div>
-    <div class="input-group">
-        <label for="phone">핸드폰번호:</label>
-        <input type="text" id="phone" name="phone" required value="${useredit.phone}">
-    </div>
-    <div class="button-group">
-        <button type="button" id="newPasswordButton">비밀번호 변경</button>
-        <button type="submit" formaction="/updateUser">정보 수정</button>
-    </div>
-</form>
-
-							    <div class="row g-4 justify-content-center">
-							        <!-- 상품 목록을 페이지에 맞게 자르기 -->
-							        <c:forEach var="product" items="${products}" >
-							                <div class="col-md-6 col-lg-6 col-xl-4">
-							                    <div class="rounded position-relative fruite-item">
-							                        <div class="fruite-img">
-							                            <img src="${product.product_img}" class="img-fluid w-100 rounded-top" alt="" style="max-width: 300px; max-height: 150px;">
-							                        </div>
-							                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; background-color: green !important;">${product.product_category}</div>
-							                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-							                            <h4>${product.product_name}</h4>
-							                            <p>${product.product_content}</p>
-							                            <p>유통기한 : 구매일로부터 ${product.limit_date}일</p>
-							                            <div class="d-flex justify-content-between flex-lg-wrap">
-							                                <p class="text-dark fs-5 fw-bold mb-0">${product.product_price}</p>
-							                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-							                            </div>
-							                        </div>
-							                    </div>
-							                </div>
-							        </c:forEach>
-							    </div>
-								 <div class="col-12">
-						                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer" >
-							                 <!-- 총 페이지 수 계산 -->
-						                    <c:set var="totalPages" value="${pageInfo.pageAmount}" />
-											<div class="col-auto">
-											    <nav class="page navigation">
-											        <ul class="pagination">
-											            <!-- Prev 버튼 -->
-											            <c:if test="${pageInfo.prev}">
-											                <li class="page-item">
-											                    <a class="page-link rounded ${pageInfo.startPage - 1 == pageInfo.currentPage ? 'active' : ''}"
-											                       href="#" data-value="${pageInfo.startPage - 1}" aria-label="Previous">Prev</a>
-											                </li>
-											            </c:if>
-											            
-											            <!-- 페이지 버튼 -->
-											            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
-											                <li class="page-item">
-											                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
-											                        ${pageNumber}
-											                    </a>
-											                </li>
-											            </c:forEach>
-											            
-											            <!-- Next 버튼 -->
-											            <c:if test="${pageInfo.next}">
-											                <li class="page-item next">
-											                    <a class="page-link rounded ${pageInfo.endPage + 1 == pageInfo.currentPage ? 'active' : ''}"
-											                       href="#" data-value="${pageInfo.endPage + 1}" aria-label="next">Next</a>
-											                </li>
-											            </c:if>
-											        </ul>
-											    </nav>
-						                      </div>
-						                </div>
-						            </div> <!-- col-12 끝 -->
-							   </div>
-							</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			                                      </div>
+			                                  </div>
+			                              </div>
+										<div class="col-lg-9">		
+											<form action="/user/updateInfo" id="usereditBox" method="post" style="text-align: center;">
+											    <h2>회원 정보 수정</h2>
+											    <div class="input-group">
+											        <label for="name">이름:</label>
+											        <input type="text" id="name" name="user_name" required value="${useredit.user_name}">
+											    </div>
+											    <div class="input-group">
+											        <label for="email">이메일:</label>
+											        <input type="email" id="email" name="mail" required value="${useredit.mail}">
+											    </div>
+											    <div class="input-group">
+											        <label for="address">주소:</label>
+											        <input type="text" id="address" name="adress" required value="${useredit.adress}">
+											    </div>
+											    <div class="input-group">
+											        <label for="phone">핸드폰번호:</label>
+											        <input type="text" id="phone" name="phone" required value="${useredit.phone}">
+											    </div>
+											    <div class="button-group">
+											        <button type="button" id="newPasswordButton">비밀번호 변경</button>
+											        <button type="submit" formaction="/updateUser">정보 수정</button>
+											    </div>
+											</form>
+										</div>
+										</div>
 
         <!-- 삭제창 작동 -->
         <div id="modalContainer" class="modal-container">
