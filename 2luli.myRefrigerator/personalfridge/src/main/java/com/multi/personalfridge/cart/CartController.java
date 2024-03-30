@@ -75,7 +75,7 @@ public class CartController {
 	            }
 	        }
 	        // 모든 제품이 성공적으로 처리된 경우에만 성공 반환
-	        return "redirect:/mycart";
+	        return "redirect:/mypage/mycart";
 	    } catch (JsonProcessingException e) {
 	        // JSON 파싱에 실패한 경우에 대한 예외 처리
 	        e.printStackTrace();
@@ -186,7 +186,7 @@ public class CartController {
 	         ship.setSub_adress(sub_adress);
 			 ship.setNow_location("이루리");
 			 ship.setUser_id(userId);
-			 shipService.inserShipInfo(ship);
+			 shipService.UpdateShip(ship);
 			 
 			 //다저장되었으면 택배 조회창으로
 	       	 int cartCountNormal = cartService.getCartCountNormal(userId);

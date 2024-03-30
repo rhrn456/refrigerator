@@ -270,7 +270,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
@@ -627,7 +626,7 @@
                     <h4>레시피 카테고리</h4>
                     <div class="list-unstyled allrecipe-categorie">
                         <div class="d-flex justify-content-center recipe-topcategory"style="margin: 0 -15px;">
-                            <a href="/RecipeListAdmin" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>모든 레시피</a>
+                            <a href="/admin/RecipeListAdmin" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>모든 레시피</a>
                             <span>|</span>
                             <div class="d-flex justify-content-center Recipe-category">
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-utensils me-2"></i>밥</a>

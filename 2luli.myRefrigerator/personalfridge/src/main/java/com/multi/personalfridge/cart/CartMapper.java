@@ -24,4 +24,6 @@ public interface CartMapper {
 
 	int getCartCountSpecial(String userId);
 
+	List<CartProductDTO> buyProductCheck(String user_id);
+
 }

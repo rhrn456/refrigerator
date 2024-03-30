@@ -3,9 +3,14 @@ package com.multi.personalfridge.user;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +27,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.multi.personalfridge.cart.CartService;
 import com.multi.personalfridge.common.EmailService;
 import com.multi.personalfridge.common.RandomStringGenerator;
+import com.multi.personalfridge.dto.CartProductDTO;
 import com.multi.personalfridge.dto.RecipeDTO;
+import com.multi.personalfridge.dto.ShipDTO;
 import com.multi.personalfridge.dto.UserDTO;
 import com.multi.personalfridge.dto.UserLikeDTO;
 import com.multi.personalfridge.recipe.RecipeService;
@@ -50,6 +57,7 @@ public class UserController {
     					RandomStringGenerator randomPassword,
     					CartService cartService,
     					RecipeService recipeService) {
+    	
         this.userService = userService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
@@ -59,11 +67,6 @@ public class UserController {
     }
     
     
-    @GetMapping("/paygo")
-    public String paygo() {
-    	
-    	return "pay_modal";
-    }
     //이동 페이지
 	@GetMapping("/goPage")
 	public String goPage(HttpServletRequest request) {
@@ -180,7 +183,7 @@ public class UserController {
      		}
     	//랜덤 비밀번호 생성 후 메일로 보내기
     	String str = randomPassword.generateRandomString();
-    	emailService.sendSimpleMessage(mail, "우리집 AI 냉장고 임시 비밀번호 발송해드렸습니다.", (str.toString() + "  " + "임시 비밀번호를 사용해 비밀번호를 변경해주세요."));
+    	emailService.sendSimpleMessage(mail, "우리집 AI 냉장고 임시 비밀번호 발송해드렸습니다.", ("<strong>임시비밀번호 : </strong>" + " "  + str.toString() + "  " + "<br>임시 비밀번호를 사용해 비밀번호를 변경해주세요."));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/checkquickpassword");
         model.addAttribute("mail",mail);
@@ -221,7 +224,6 @@ public class UserController {
     @GetMapping("/userLikeUP")
     @ResponseBody
     public String userLikeUP(@RequestParam int recipe_id, HttpServletRequest request) {
-    	System.out.println(recipe_id);
     	HttpSession session = request.getSession();
 	    String user_id = (String) session.getAttribute("userId");
     	boolean result = userService.insertUserLike(recipe_id, user_id);
@@ -244,7 +246,6 @@ public class UserController {
     	List<RecipeDTO> likeList = userService.getUserLike(user_id);
     	mav.setViewName("mypage/userlike");
         mav.addObject("likeList", likeList);      
-//        System.out.println(likeList.size());
         return mav;
     }
     
@@ -373,6 +374,32 @@ public class UserController {
     	return "redirect:/mypage/info";
     }
     
+    //마이페이지 구매확인 페이지
+    @GetMapping("/mypage/buyproductcheck")
+    public String buyProductCheck(HttpServletRequest request, Model model) {
+    	String user_id = (String) request.getSession().getAttribute("userId");  	
+    	List<CartProductDTO> cartproduct = cartService.buyProductCheck(user_id);
+    	
+    	 Collections.sort(cartproduct, Comparator.comparing(CartProductDTO::getShip_id));
+	      Map<String, List<CartProductDTO>> groupedShipList = cartproduct.stream()
+	       .collect(Collectors.groupingBy(CartProductDTO::getShip_code));
+	      
+	      groupedShipList.values().forEach(list -> {
+	    	    Collections.sort(list, Comparator.comparing(CartProductDTO::getShip_id));
+	    	});
+
+	    	// 정렬된 첫 번째 ShipDTO를 기준으로 재배치
+	    	List<Map.Entry<String, List<CartProductDTO>>> sortedGroupedList = new ArrayList<>(groupedShipList.entrySet());
+	    	Collections.sort(sortedGroupedList, Comparator.comparing(entry -> entry.getValue().get(0).getShip_id()));
+
+	    	// 정렬된 리스트를 다시 맵으로 변환
+	    	LinkedHashMap<String, List<CartProductDTO>> sortedGroupedShipList = new LinkedHashMap<>();
+	    	sortedGroupedList.forEach(entry -> sortedGroupedShipList.put(entry.getKey(), entry.getValue()));
+	    	
+    	model.addAttribute("sortedGroupedShipList",sortedGroupedShipList);
+    	return "mypage/buyproductlist";
+    }
     
+
 }
 

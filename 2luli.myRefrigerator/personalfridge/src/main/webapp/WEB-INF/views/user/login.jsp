@@ -58,7 +58,7 @@ margin-top:170px;
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">우리집 AI 냉장고</h1>
+                                         <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
                                     </div>
 									<form class="user" method="POST" action="/Login">
 									    <div class="form-group">

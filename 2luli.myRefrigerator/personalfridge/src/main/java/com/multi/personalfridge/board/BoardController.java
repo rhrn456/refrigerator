@@ -101,7 +101,6 @@ public class BoardController {
 	
 	@GetMapping("/view")
 	public String getBoardByBoardNo(@RequestParam("boardNo") int boardNo, Model model) {
-		System.out.println(boardNo);
 		service.updateHit(boardNo);
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
 		model.addAttribute("board", board);
@@ -124,9 +123,6 @@ public class BoardController {
 								HttpServletRequest request) {
 		BoardDTO newBoard = new BoardDTO();
 		
-		//추후삭제
-		System.out.println(latitude);
-		System.out.println(longitude);
 		
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");

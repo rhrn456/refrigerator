@@ -61,25 +61,19 @@ body {
 			                        <div class="p-5">
 			                            <div class="text-center">
 			                             <img src="img/house-AI-BI.png" style="max-width: 50%; max-height: 50%; margin-top:-30px; margin-bottom:20px;">
-                                        <h1 class="h4 text-gray-900 mb-4">암호를 입력해주세요</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">임시 비밀번호를 입력해주세요</h1>
                                     </div>
 									   <form class="user" action="/loseUserChangePassword" method="POST">
 									    <div class="form-group">
-									       <input type="text" class="form-control form-control-user" id="accesnum" name="accesnum" placeholder="암호 입력창" required>
+									       <input type="text" class="form-control form-control-user" id="accesnum" name="accesnum" placeholder="임시 비밀번호 입력창" required>
 									    </div>
 									    <input type="hidden" id="str" name="str" value="${str}">
 							    		 <input type="hidden" id="user_name" name="user_name" value="${user_name}">
    										 <input type="hidden" id="mail" name="mail" value="${mail}">
 									    <button type="submit" class="btn btn-primary btn-user btn-block">
-									          암호 확인 하기
+									          임시 비밀번호 확인 하기
 									    </button>
 									    <hr>
-									   <a href="socalLogin" class="btn btn-google btn-user btn-block">
-									        <i class="fab fa-google fa-fw"></i> Login with Google
-									    </a>
-									    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-		                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-		                                </a>
 									</form>
                                     <hr>
                                     <div class="text-center" style="margin-bottom:-30px;">

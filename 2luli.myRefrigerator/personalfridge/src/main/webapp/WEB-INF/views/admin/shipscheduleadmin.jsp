@@ -254,7 +254,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
@@ -394,14 +393,17 @@ $(document).ready(function() {
              	    	var deliveryStatus = '';
              	    	switch (group[i].go_on) {
              	    	    case 0:
-             	    	        deliveryStatus = '배송 중';
+             	    	        deliveryStatus = '상품 준비중';
              	    	        break;
              	    	    case 1:
-             	    	        deliveryStatus = '하차 완료';
+             	    	        deliveryStatus = '배송 중';
              	    	        break;
              	    	    case 2:
-             	    	        deliveryStatus = '배송 완료';
+             	    	        deliveryStatus = '하차 완료';
              	    	        break;
+             	    	   case 3:
+            	    	        deliveryStatus = '배송 완료';
+            	    	        break;
              	    	    default:
              	    	        deliveryStatus = '알 수 없음';
              	    	}

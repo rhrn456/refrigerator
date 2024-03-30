@@ -59,6 +59,7 @@ body {
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
+                                    <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
                                         <h1 class="h4 text-gray-900 mb-2">비밀번호를 잊어버리셨나요?</h1>
                                         <p class="mb-4">걱정하지 않으셔도 됩니다.<br>아래에 이메일 주소를 입력하세요. <br>임시비밀번호 를 보내드리겠습니다!</p>
                                     </div>

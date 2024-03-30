@@ -78,6 +78,7 @@
 <body>
     <div class="container">
         <div class="text-center">
+        <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
          <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google 로고" class="logo-img">
         <p class="mb-4">상품 배송을 위해 핸드폰 번호와 이메일을 작성해주세요.</p>
         </div>

@@ -56,6 +56,7 @@ body {
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
+                            <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
                                 <h1 class="h4 text-gray-900 mb-4">계정을 만들어보세요!</h1>
                             </div>
                            <form class="user" action="/signup" method="post">
@@ -82,7 +83,7 @@ body {
 								        </div>
 								    </div>
 								    <div class="form-group">
-								        <input type="phone" class="form-control form-control-user" id="phone" name="phone" placeholder="번호를 적을땐 - 를빼고 적어주세요(11자리)" required>
+								        <input type="phone" class="form-control form-control-user" id="phone" name="phone" placeholder="번호를 적을땐 - 를 적어주세요(11자리)" required>
 								    </div>
 								    <button type="submit" class="btn btn-primary btn-user btn-block">
 								        회원 가입 하기

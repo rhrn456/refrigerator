@@ -80,9 +80,7 @@ public class ReviewController {
 			@GetMapping("/getreviewInfo")
 			@ResponseBody
 			public ReviewDTO FindRecipe(@RequestParam int review_id) {
-				System.out.println(review_id);
 				ReviewDTO review =  reviewService.getReviewById(review_id);
-				System.out.println(review);
 				return review;
 			}
 			
@@ -101,7 +99,6 @@ public class ReviewController {
 				review.setRecipe_id(recipeId);
 				review.setReview_content(review_content);
 				review.setUser_id(userId);
-				System.out.println(review);
 				boolean result = reviewService.insertReview(review);
 				if (result) {
 					return "redirect:/recipedetail?recipe_id=" + URLEncoder.encode(String.valueOf(review.getRecipe_id()), "UTF-8");
@@ -115,7 +112,6 @@ public class ReviewController {
 			@PostMapping("/update")
 			@ResponseBody
 			public String updateReview(@RequestBody ReviewDTO review) throws UnsupportedEncodingException {
-				System.out.println(review);
 				boolean result = reviewService.updateReview(review);
 				if (result) {
 					return "redirect:/recipedetail?recipe_id=" + URLEncoder.encode(String.valueOf(review.getRecipe_id()), "UTF-8");

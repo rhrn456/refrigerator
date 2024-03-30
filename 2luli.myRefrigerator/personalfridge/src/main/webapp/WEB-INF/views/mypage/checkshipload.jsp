@@ -118,13 +118,16 @@
 							    <p>
 							        <c:choose>
 									    <c:when test="${ship.go_on == 0}">
-									        <strong>배송 상태:</strong> 배송 중&nbsp;
+									        <strong>배송 상태:</strong> 상품 준비중&nbsp;
+									    </c:when>
+									    <c:when test="${ship.go_on == 1}">
+									        <strong>배송 상태:</strong> 배송중&nbsp;
 									    </c:when>
 									    <c:when test="${ship.go_on == 2}">
-									        <strong>배송 상태:</strong> 배송 완료&nbsp;
+									        <strong>배송 상태:</strong> 하차 완료&nbsp;
 									    </c:when>
 									    <c:otherwise>
-									        <strong>배송 상태:</strong> 하차 완료&nbsp;
+									        <strong>배송 상태:</strong> 배송 완료&nbsp;
 									    </c:otherwise>
 									</c:choose>
 							        <strong>현재 위치:</strong> ${ship.now_location} 
@@ -137,7 +140,7 @@
         </c:forEach>
     </div>
 </div>
-<div style="height:100px;">
+<div style="height:160px;">
 
 </div>
 

@@ -14,8 +14,6 @@ public interface ShipMapper {
 
 	public ShipDTO getShipByShipCode(String ship_code);
 
-	public int inserShipInfo(ShipDTO ship);
-
 	public void UpdateShip(ShipDTO ship);
 
 	public void PassShip(int ship_id);
@@ -39,6 +37,8 @@ public interface ShipMapper {
 	public List<ShipDTO> MovingShipSchedule(String ship_code);
 
 	public void VisitShip(Integer ship_id);
+
+	public List<ShipDTO> getShipALL(String ship_code);
 
 		
 	

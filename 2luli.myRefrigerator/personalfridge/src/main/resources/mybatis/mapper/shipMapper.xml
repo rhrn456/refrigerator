@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.multi.personalfridge.ship.ShipMapper">
-
-	<!-- 송장번호를 통한 이동경로 가져오기 -->
+	<!-- 모든 배송 정보 가져오기 -->
+	<select id="getShipALL" parameterType="String"  resultType="Ship">
+        SELECT * 
+        FROM ship
+        WHERE ship_code = #{ship_code}
+    </select>
+    
+	<!-- 송장번호를 통한 택배 스케줄 시작 0은 기본값 -->
 	<select id="getShipByShipCode" parameterType="String"  resultType="Ship">
         SELECT * 
         FROM ship
-        WHERE ship_code = #{ship_code} AND go_on = 0
+        WHERE ship_code = #{ship_code} AND go_on = 1
     </select>
     
-    <!-- 새로운 이동 스케줄 저장 -->
-    <insert id="inserShipInfo" parameterType="Ship">
-	    INSERT INTO ship (user_id, ship_code, arrive, sub_adress, now_location)
-	    VALUES (#{user_id}, #{ship_code}, #{arrive}, #{sub_adress}, #{now_location})
-	</insert>
-	
 	<!-- 새로운 이동 스케줄 저장 -->
     <insert id="UpdateShip" parameterType="Ship">
-	    INSERT INTO ship (user_id, ship_code, arrive, sub_adress, now_location, admin_check)
-	    VALUES (#{user_id}, #{ship_code}, #{arrive}, #{sub_adress}, #{now_location}, #{admin_check})
+	    INSERT INTO ship (user_id, ship_code, arrive, go_on, sub_adress, now_location, admin_check)
+	    VALUES (#{user_id}, #{ship_code}, #{arrive}, #{go_on}, #{sub_adress}, #{now_location}, #{admin_check})
 	</insert>
 	
 	<!-- 목적지 도착시 체크 -->
     <update id="VisitShip" parameterType="int">
 	    UPDATE ship
-	    SET go_on = 1
+	    SET go_on = 2
 	    WHERE ship_id = #{ship_id} 
 	</update>
 	
 	<!-- 목적지 도착시 체크 -->
     <update id="PassShip" parameterType="int">
 	    UPDATE ship
-	    SET go_on = 2
+	    SET go_on = 3
 	    WHERE ship_id = #{ship_id} 
 	</update>
 	
@@ -59,11 +59,11 @@
     <!-- 관리자가 승인한 제품 배송 -->
     <update id="UpdateShipAndAdminCheck" parameterType="String">
 	    UPDATE ship
-	    SET admin_check = 1
+	    SET admin_check = 1, go_on = 1
 	    WHERE ship_code = #{ship_code} 
 	</update>
 	
-	<!-- 모든 배송내역 Page나타내기 -->
+	<!-- 모든 배송신청내역 Page나타내기 -->
     <select id ="getAllShipPage" parameterType="map" resultType="Ship">
     	SELECT ship_code, user_id, arrive
     	FROM ship 
@@ -71,7 +71,7 @@
    		LIMIT #{pageSize} OFFSET #{offset}
     </select>
     
-    <!-- 송장번호 해당하는 재료 및 정보 가져오기 -->
+    <!-- 송장번호 해당하는 배송신청 재료 및 정보 가져오기 -->
     <select id ="getAllItemByShipCode" parameterType="String" resultType="ShipItem">
     	SELECT s.ship_code, s.user_id, s.arrive, s.sub_adress, now_location, s.go_on, 
     		   p.product_name, c.product_quantity,p.special_product
