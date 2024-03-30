@@ -319,12 +319,12 @@ img {
     function removeByIndex(index) {
     	$.ajax({
     		type: "GET",
-    		url: "productDeletById",
+    		url: "/productDeletById",
     		data: {
     			product_id: index
     		},
     		success: function(response) {
-    			
+    			console.log(response);
     		},
     		error: function(xhr, status, error) {
     			console.error(error);
@@ -337,7 +337,7 @@ img {
     	cartItemList.splice(index, 1); // 전송할 데이터 삭제
     	viewCartList.splice(index, 1); // 출력용 재료 삭제
     	//데이터베이스 카트 id 가져와서 삭제
-       	renderProductList();
+       	renderRecipeItems();
     }
 
     function sendProducts(selectedLocation,enteredAddress) {
@@ -446,13 +446,14 @@ img {
             removeButton.textContent = 'X'; // 텍스트 설정
             removeButton.style.backgroundColor = '#dc2e5e'; // 패딩 설정
 			
-            removeButton.onclick = function() {
-                removeProduct(index);
-                removeByIndex(index);
-            };
             priceList.appendChild(removeButton);
             
             listItem.appendChild(priceList);
+            
+            removeButton.onclick = function(index) {
+                removeProduct(index);
+                removeByIndex(index);
+            };
             
             // 리스트에 각 제품 요소 추가
             recipeItemsList.appendChild(listItem);
