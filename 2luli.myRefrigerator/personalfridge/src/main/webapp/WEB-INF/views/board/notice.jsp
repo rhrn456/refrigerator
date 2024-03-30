@@ -177,14 +177,14 @@
 
 	<!-- Template Javascript -->
 	<script src="js/main.js">
-	var CategoryNo = "";
+	var CategoryNo = 1;
 	
-	function getBoardByCategoryNo(CategoryNo, page) {
+	function getAllBoardByCategoryNo(CategoryNo, page) {
 	    var pageSize = 10; // 페이지당 아이템 수
 	    
 	    $.ajax({
 	        type: "GET",
-	        url: "/getBoardByCategoryNo",
+	        url: "/board",
 	        data: {
 	        	CategoryNo : CategoryNo,
 	            page : page,
@@ -199,15 +199,47 @@
 	    });
 	}
 	
-	function createPaginationButtons(totalPages, currentPage) {
-	    var paginationContainer = $('#paginationContainer');
-	    paginationContainer.empty();
-	    
-	    for (var i = 1; i <= totalPages; i++) {
-	        var button = $('<a href="#" class="page-link rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
-	        paginationContainer.append(button);
-	    }
+	function updateBoards(response) {
+        var boardsContainer = $('.col-lg-9 .row');
+        boardssContainer.empty();
+        $.each(response.boards, function(index, boards) {
+            boardsContainer.append(boardHTML);
+        });
+		
+        $('#paginationContainer').empty();
+        createPaginationButtons(response.pageInfo);
+    }
 	
+	function createPaginationButtons(pageInfo) {
+   	 var paginationContainer = $('#paginationContainer');
+        var paginationHTML =
+            '<div class="col-auto">' +
+            '<nav class="page navigation">' +
+            '<ul class="pagination">';
+
+        if (pageInfo.prev) {
+            paginationHTML += '<li class="page-item">' +
+                '<a class="page-link rounded ' + (pageInfo.startPage - 1 === pageInfo.currentPage ? 'active' : '') + '" aria-label="Previous" data-value="' + (pageInfo.startPage - 1) + '" href="#">Prev</a>' +
+                '</li>';
+        }
+
+        for (var num = pageInfo.startPage; num <= pageInfo.endPage; num++) {
+            paginationHTML += '<li class="page-item ' + (pageInfo.currentPage == num ? "active" : "") + '">' +
+                '<a class="page-link rounded ' + (num == pageInfo.currentPage ? 'active' : '') + '" href="#" data-value="' + num + '">' + num + '</a>' +
+                '</li>';
+        }
+
+        if (pageInfo.next) {
+            paginationHTML += '<li class="page-item next">' +
+                '<a class="page-link rounded" aria-label="next" data-value="' + (pageInfo.endPage + 1) + '" href="#">Next</a>' +
+                '</li>';
+        }
+
+        paginationHTML += '</ul>' +
+            '</nav>' +
+            '</div>';
+            
+        paginationContainer.append(paginationHTML);
 	}
 	
 	$('#paginationContainer').on('click', 'a', function(e) {
@@ -217,7 +249,7 @@
 	        // Prev 또는 Next 링크를 클릭한 경우
 	        page = $(this).attr('value');
 	    }
-	    getBoardByCategoryNo(CategoryNo, page);
+	    getAllBoardByCategoryNo(CategoryNo, page);
 	});
 	
 	</script>
