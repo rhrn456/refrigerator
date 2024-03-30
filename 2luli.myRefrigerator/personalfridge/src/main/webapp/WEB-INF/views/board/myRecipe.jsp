@@ -77,7 +77,7 @@
 											<ul class="list-unstyled fruite-categorie">
 											<li>
 												<div class="d-flex justify-content-between fruite-name">
-													<a href="#"><i class="fas fa-apple-alt me-2"></i>이루리 요리책</a>
+													<a href="/recipeshop"><i class="fas fa-apple-alt me-2"></i>이루리 요리책</a>
 												</div>
 											</li>
 											<li>
