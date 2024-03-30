@@ -41,30 +41,7 @@ public class ShipController {
 	@Autowired
 	ShipService shipService;
 	  
-	  @GetMapping("/mypage/checkshipload")
-	  public String checkshipload(HttpServletRequest request, Model model) {
-		  String userId = (String) request.getSession().getAttribute("userId");
-	      List<ShipDTO> shipList = shipService.getShipByUserId(userId);
-	      // 송장 번호별로 그룹화된 맵 생성
-	      Collections.sort(shipList, Comparator.comparing(ShipDTO::getShip_id));
-	      Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
-	       .collect(Collectors.groupingBy(ShipDTO::getShip_code));
-	      
-	      groupedShipList.values().forEach(list -> {
-	    	    Collections.sort(list, Comparator.comparing(ShipDTO::getShip_id));
-	    	});
 
-	    	// 정렬된 첫 번째 ShipDTO를 기준으로 재배치
-	    	List<Map.Entry<String, List<ShipDTO>>> sortedGroupedList = new ArrayList<>(groupedShipList.entrySet());
-	    	Collections.sort(sortedGroupedList, Comparator.comparing(entry -> entry.getValue().get(0).getShip_id()));
-
-	    	// 정렬된 리스트를 다시 맵으로 변환
-	    	LinkedHashMap<String, List<ShipDTO>> sortedGroupedShipList = new LinkedHashMap<>();
-	    	sortedGroupedList.forEach(entry -> sortedGroupedShipList.put(entry.getKey(), entry.getValue()));
-
-	      model.addAttribute("sortedGroupedShipList", sortedGroupedShipList); 
-	      return "/mypage/checkshipload";
-	  }
 	  
 	  @GetMapping("/checkwheredelivery")
 	  @ResponseBody

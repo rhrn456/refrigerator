@@ -47,6 +47,19 @@
 			.list-unstyled.fruite-categorie li a:hover {
 			    color: #fc9a9a; /* hover 시 색상 변경 */
 			}
+		    .like-btn {
+	        position: absolute;
+	        bottom: 10px;
+	        right: 10px;
+	        background-color: pink;
+	        border: 2px solid pink;
+	        border-radius: 50%;
+	        padding:2px;
+	        width: 30px; /* 원 모양의 지름 설정 */
+	        height: 30px; /* 원 모양의 지름 설정 */
+	        text-align: center;
+		    }
+					
 		</style>
     </head>
 
@@ -160,7 +173,7 @@
 								            <div class="fruite-img">
 								                <img src="${RecipeDTO.recipe_img}" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">
 								            </div>
-								                   <button class="like-btn" style="position: absolute; bottom: 10px; right: 10px; background-color: pink; border: 2px solid pink; border-radius: 50%; padding: 5px;"
+								                   <button class="like-btn"
 									                        data-recipe-id="${RecipeDTO.recipe_id}">
 									                    <i class="fas fa-heart" style="color: ${userlike == 0 ? 'red' : 'white'};"></i>
 									                </button>
@@ -392,7 +405,7 @@
 			        '<div class="fruite-img">' +
 			        '<img src="' + recipe.recipe_img + '" class="img-fluid w-100 rounded-top" alt="" style="width: 180px; height: 230px;">' +
 			        '</div>' +
-			        '<button class="like-btn" style="position: absolute; bottom: 10px; right: 10px; background-color: pink; border: 2px solid pink; border-radius: 50%; padding: 5px;"' +
+			        '<button class="like-btn"' +
 			        'data-recipe-id="' + recipe.recipe_id + '">' +
 			        '<i class="fas fa-heart" style="color: ' + '(userlike == 0 ?'+ 'red' + ':' + 'white' + ')' + ';"></i>' +
 			        '</button>' +
