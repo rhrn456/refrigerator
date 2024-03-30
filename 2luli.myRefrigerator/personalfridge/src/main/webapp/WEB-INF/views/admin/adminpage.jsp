@@ -113,7 +113,7 @@
         <!-- Slidebar End -->
         
  		<!-- Area Chart -->
-			<div class="row justify-content-center" style="margin-top: 230px; width: 80%; margin-left: 180px;">
+			<div class="row justify-content-center" style="margin-top: 230px; width: 80%; margin-left: 190px;">
                       <div class="col-xl-4 col-lg-7">
                           <div class="card shadow mb-4">
                               <!-- Card Header - Dropdown -->
@@ -140,7 +140,7 @@
                               </div>
                               <!-- Card Body -->
 								<div class="card-body" style="height: 350px; overflow: hidden;">
-								    <div id="piechart" style="width: 600px; height: 500px; margin-top: -100px; margin-left:-45px;"></div>
+								    <div id="piechart" style="width: 600px; height: 500px; margin-top: -80px; margin-left:-80px;"></div>
                                   <div class="chart-area">
                                       <canvas id="myAreaChart"></canvas>
                                   </div>
@@ -148,7 +148,7 @@
                           </div>
                       </div>
                       
-                                            <div class="col-xl-4 col-lg-7">
+                        <div class="col-xl-4 col-lg-7">
                           <div class="card shadow mb-4">
                               <!-- Card Header - Dropdown -->
                               <div

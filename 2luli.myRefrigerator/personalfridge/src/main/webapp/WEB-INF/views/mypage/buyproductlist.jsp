@@ -154,7 +154,7 @@
 		    z-index: 1000; 
 		}
 		.mypagemenu {
-			margin-top:-510px;
+			margin-top:-20px;
 			margin-right:20px;
 		    border: 3px solid #ccc;
 		    border-radius: 10px;
@@ -185,7 +185,7 @@
 <body>
 
 					<div class = "myPAgeBox" >
-						<div class="row g-4">
+						 <div class="row g-4">
                                     <div class="col-lg-12" >
                                         <div class="mypagemenu">
                                             <h3 style="margin-top:20px;">마이 페이지</h3>
@@ -280,10 +280,6 @@
 			</div>
 		</div>
 	</div>
-<div style="height:160px;">
-
-</div>
-
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -293,6 +289,7 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+    
 		//배송위치 확인함수 시작
         $(".header-text").each(function() {
             var shipCode = $(this).text().split(": ")[1];
@@ -430,7 +427,7 @@
                     } else {
                         modalContent = '<p>해당하는 송장 정보가 없습니다.</p>';
                     }
-
+					console.log("실행");
                     $('.modal-contentinfo').html(modalContent);
                     $('.infoshipitem').css('display', 'flex');
                 },
