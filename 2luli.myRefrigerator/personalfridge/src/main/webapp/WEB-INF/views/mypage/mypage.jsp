@@ -32,7 +32,7 @@
        <%@ include file="../header.jsp" %>
         <!-- Navbar End -->
         <style>
-        .modal-container {
+.modal-container {
     display: none;
     position: fixed;
     top: 50%;
@@ -163,7 +163,7 @@ hr:not([size]) {
     </head>
     
     <body>
-
+	
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
@@ -323,10 +323,6 @@ hr:not([size]) {
     	}
         
         confirmupdateButton.onclick = function() {
-        	//1. inputbox password value 
-			//2. jsp session 값  sessionScope
-			// ${sessionScope.userid} = 
-		//1,2 
         	var password = $("#editpasswordInput").val(); // 입력 필드에서 비밀번호 값 추출
         	var userId = "${sessionScope.userId}"
         	console.log(password);

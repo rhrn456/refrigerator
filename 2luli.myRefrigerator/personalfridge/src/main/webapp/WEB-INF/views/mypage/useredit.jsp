@@ -169,7 +169,7 @@ hr:not([size]) {
 									                    <a href="#">회원정보 수정</a>
 									                </div>
                                                     <div class="product-category" id=userlikebutton>
-                                                        <a href="/userLikePage?user_id=${mypage.user_id}">찜한 레시피</a>    
+                                                        <a href="/userLikePage?user_id=${useredit.user_id}">찜한 레시피</a>    
                                                     </div>                                              
                                                     <div class="product-category">
                                                         <a href="/mypage/buyproductcheck">구매내역</a>                                                      
