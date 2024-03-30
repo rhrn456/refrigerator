@@ -91,7 +91,7 @@
     border-radius: 10px;
     font-size: 20px;
     text-align: center;
-    height: 370px;
+    height: 320px;
     width: 200px;
 }
 
@@ -189,11 +189,7 @@ hr:not([size]) {
                                                         <a href="/userLikePage?user_id=${mypage.user_id}">찜한 레시피</a>    
                                                     </div>                                              
                                                     <div class="product-category">
-                                                        <a href="/mypage/checkshipload">배송조회</a>                                                    
-                                                    </div>
-                                              
-                                                    <div class="product-category">
-                                                        <a href="#">구매내역</a>                                                      
+                                                        <a href="/mypage/buyproductcheck">구매내역</a>                                                      
                                                     </div>                                          
                                                     <div class="product-category" id="deleteButton">
                                                         <a href="#">회원탈퇴</a>
