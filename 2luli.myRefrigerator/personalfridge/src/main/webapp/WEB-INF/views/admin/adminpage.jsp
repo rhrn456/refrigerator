@@ -42,26 +42,34 @@
         
            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
            
+           
+           
     <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawBasic);
 
-      function drawChart() {
+    function drawBasic() {
+    	  var data = google.visualization.arrayToDataTable([
+    	        ['Category', 'Likes', { role: 'style' }],
+    	        ['밥', ${likeRice}, 'green'],
+    	        ['국&찌개', ${likeSoup}, 'orange'],
+    	        ['반찬', ${likeFood}, '#0084d1'],
+    	        ['후식', ${likeDesert}, '#bf02bc'],
+    	        ['일품', ${likefirst}, '#fc6d6d']
+    	    ]);
 
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['밥', ${likeRice}],
-          ['국&찌개', ${likeSoup} ],
-          ['반찬', ${likeFood}],
-          ['후식', ${likeDesert}],
-          ['일품', ${likefirst}]
-        ]);
+    	  var options = {
+    	    title: 'Likes by Category',
+    	    hAxis: {
+    	      title: 'Likes'
+    	    },
+    	    chartArea: {width: '50%', height: '50%' }
+    	  };
 
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data);
-      }
+    	  var chart = new google.visualization.ColumnChart(
+    			    document.getElementById('piechart'));
+      chart.draw(data, options);
+    }
     </script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -70,7 +78,7 @@
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-        	 ['Task', 'Hours per Day'],
+        	 ['Category', 'How much data'],
              ['밥', ${rice}],
              ['국&찌개', ${soup} ],
              ['반찬', ${food}],
@@ -132,7 +140,7 @@
                               </div>
                               <!-- Card Body -->
 								<div class="card-body" style="height: 350px; overflow: hidden;">
-								    <div id="piechart" style="width: 600px; height: 500px; margin-top: -100px; margin-left:-35px;"></div>
+								    <div id="piechart" style="width: 600px; height: 500px; margin-top: -100px; margin-left:-45px;"></div>
                                   <div class="chart-area">
                                       <canvas id="myAreaChart"></canvas>
                                   </div>
@@ -166,7 +174,7 @@
                               </div>
                               <!-- Card Body -->
 								<div class="card-body" style="height: 350px; overflow: hidden;">
-								    <div id="table_div" style="width: 600px; height: 500px; margin-top: -100px; margin-left:-35px;"></div>
+								    <div id="table_div" style="width: 600px; height: 500px; margin-top: -100px; margin-left:-15px;"></div>
                                   <div class="chart-area">
                                       <canvas id="myAreaChart"></canvas>
                                   </div>
@@ -179,15 +187,12 @@
        <%@ include file="../footer.jsp" %>
         <!-- footer End -->
 		
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
         
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->

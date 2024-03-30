@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.multi.personalfridge.common.RandomStringGenerator;
 import com.multi.personalfridge.common.ShipScheduler;
 import com.multi.personalfridge.dto.ShipDTO;
+import com.multi.personalfridge.dto.UserLikeDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,12 +43,10 @@ public class ShipController {
 	  
 	  @GetMapping("/mypage/checkshipload")
 	  public String checkshipload(HttpServletRequest request, Model model) {
-	      HttpSession session = request.getSession();
-	      String userId = (String) session.getAttribute("userId");
+		  String userId = (String) request.getSession().getAttribute("userId");
 	      List<ShipDTO> shipList = shipService.getShipByUserId(userId);
 	      // 송장 번호별로 그룹화된 맵 생성
 	      Collections.sort(shipList, Comparator.comparing(ShipDTO::getShip_id));
-	      System.out.println(shipList);
 	      Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
 	       .collect(Collectors.groupingBy(ShipDTO::getShip_code));
 	      
@@ -65,5 +65,31 @@ public class ShipController {
 	      model.addAttribute("sortedGroupedShipList", sortedGroupedShipList); 
 	      return "/mypage/checkshipload";
 	  }
+	  
+	  @GetMapping("/checkwheredelivery")
+	  @ResponseBody
+		public int searchUserLike(@RequestParam String ship_code) {
+		  List<ShipDTO> shipList = shipService.getShipALL(ship_code);
+		  int result = 1;
+		  for (ShipDTO ship : shipList) {
+	            if (ship.getGo_on() == 0) {
+	                result = 0;
+	            } else if (ship.getGo_on() == 3) {
+	            	result = 3;
+	            }
+	        }
+		  return result;
+	  }
+	  
+	  @GetMapping("/searchShipList")
+	  @ResponseBody
+		public Map<String, Object> searchShipListUser(@RequestParam String ship_code) {
+			List<ShipDTO> shipList = shipService.getShipALL(ship_code);
+			Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
+					.collect(Collectors.groupingBy(ShipDTO::getShip_code));
+			Map<String, Object> response = new HashMap<>();
+			response.put("groupedShipList", groupedShipList); 
+			return response;
+		}
 	 
 }

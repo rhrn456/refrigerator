@@ -79,7 +79,6 @@ public class CommonController {
 	    }
 	    model.addAttribute("products", selectedProducts);
 	    model.addAttribute("recipe", recipe);
-	    
 	    HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
 	    

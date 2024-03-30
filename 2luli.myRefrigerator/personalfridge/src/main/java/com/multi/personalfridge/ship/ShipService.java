@@ -21,16 +21,7 @@ public class ShipService {
 		
 		return shipMapper.getShipByShipCode(ship_code);
 	}
-	//새로운 이동 스케줄 저장
-	public boolean inserShipInfo(ShipDTO ship) {
-		try {
-			shipMapper.inserShipInfo(ship);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false; 
-		}
-	}
+
 	//새로운 이동 스케줄 저장
 	public void UpdateShip(ShipDTO ship) {
 		shipMapper.UpdateShip(ship);
@@ -104,5 +95,10 @@ public class ShipService {
 	public void VisitShip(Integer ship_id) {
 		
 		shipMapper.VisitShip(ship_id);
+	}
+
+	public List<ShipDTO> getShipALL(String ship_code) {
+		// TODO Auto-generated method stub
+		return shipMapper.getShipALL(ship_code);
 	}
 }

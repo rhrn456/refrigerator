@@ -55,12 +55,11 @@
 		          margin-top: 20px;
 		}
 		.mypagemenu {
-			margin-right:-80px;
 		    border: 3px solid #ccc;
 		    border-radius: 10px;
 		    font-size:20px;
 		    text-align: center;
-		    height:370px;
+		    height:310px;
 		    width:200px;
 		}
 		.product-category{
@@ -82,11 +81,11 @@
 		}
 		
 		.user-info-card {
+			margin-left:30px;
 		    border: 1px solid #ccc;
 		    border-radius: 10px;
 		    padding: 20px;
 		    max-width: 600px; 
-		    margin: 0 auto;
 		    background-color: #f9f9f9;
 		}
 		
@@ -120,9 +119,7 @@
 		    align-items: center; 
 		    justify-content: center;
 		}
-		.form-control option {
-	
-		}
+
         </style>
     </head>
     
@@ -140,7 +137,7 @@
             <h1 class="text-center text-white display-6">My Page</h1>     
         </div>
         <!-- Single Page Header End -->
-					<div class = "myPAgeBox" style="display:flex; justify-content: center; margin-top: 50px; margin-left:250px;" >
+					<div class = "myPAgeBox" style="display:flex; justify-content: center; margin-top: 50px;">
 						<div class="row g-4">
                                     <div class="col-lg-12" >
                                         <div class="mypagemenu">
@@ -151,13 +148,9 @@
 									                </div>
                                                     <div class="product-category" id=userlikebutton>
                                                         <a href="/userLikePage?user_id=${mypage.user_id}">찜한 레시피</a>    
-                                                    </div>                                              
+                                                    </div>                                               
                                                     <div class="product-category">
-                                                        <a href="/mypage/checkshipload">배송조회</a>                                                    
-                                                    </div>
-                                              
-                                                    <div class="product-category">
-                                                        <a href="#">구매내역</a>                                                      
+                                                        <a href="/mypage/buyproductcheck">구매내역</a>                                                      
                                                     </div>                                          
                                                     <div class="product-category" id="deleteButton">
                                                         <a href="#">회원탈퇴</a>
@@ -165,10 +158,10 @@
 			                                      </div>
 			                                  </div>
 			                              </div>
-									<div class="col-lg-8" style="margin-top:50px;">
+									<div class="col-lg-4">
 									    <div class="box user-info-card">
 									        <h5>회원 정보</h5>
-											<div class="userTextForm" style="margin-top:5px;">
+											<div class="userTextForm" style="margin:0;">
 											    <div class="userIcon">
 											        <i class="fas fa-user-circle"></i>
 											    </div>
@@ -179,7 +172,7 @@
 											        <form action="/mypage/diet" method="GET" id="dietForm" style="display: flex;">
 											            <div class="form-group" >
 											                <!-- 드롭다운 메뉴 추가 -->
-											               <select id="dietOption" name="dietOption" class="form-control" style="text-align: center !important;">
+											               <select id="dietOption" name="dietOption" class="form-control" style="text-align: center !important; background-color:white;">
 															    <option value="verySlim">매우 날씬하게</option>
 															    <option value="slim">날씬하게</option>
 															    <option value="maintain">현재상태 유지</option>

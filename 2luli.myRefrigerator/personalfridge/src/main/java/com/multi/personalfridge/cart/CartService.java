@@ -58,6 +58,12 @@ public class CartService {
 		
 	}
 
+	public List<CartProductDTO> buyProductCheck(String user_id) {
+		
+		return cartMapper.buyProductCheck(user_id);
+		
+	}
+
 
 
 }

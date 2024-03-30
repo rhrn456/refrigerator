@@ -1,5 +1,7 @@
 package com.multi.personalfridge.dto;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +22,7 @@ public class CartProductDTO {
     private String product_img;
     private int special_product;
     private String ship_code;
+    private int ship_id;
+    private int go_on;
 
 }

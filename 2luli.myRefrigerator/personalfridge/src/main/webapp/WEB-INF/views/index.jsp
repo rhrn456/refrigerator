@@ -146,11 +146,11 @@
 			<div class="container">
 				<div class="tab-class text-center">
 					<div class="row g-4">		
-						<div class="col-lg-8 mx-auto" style="margin-bottom: -60px;">
+						<div class="col-lg-8 mx-auto" style="margin-bottom: -50px;">
 							<h3 class="mb-0">
-								<i class="fa fa-carrot" style="color: #f57316;"></i>냉장고에 남아있는 재료를 사용해 즐거운 요리 시간을 보내세요!
+								<i class="fa fa-carrot" style="color: #f57316;"></i>냉장고에 남아있는 재료를 사용 해보세요!
 							</h3>
-							<p class="mb-4" style="font-size: 20px;">
+							<p class="mb-4" style="font-size: 20px; margin-top:2px;">
 							 <i class="fa fa-drumstick-bite" style="color:#b8652a;"></i>
 							 맛있는 요리와 함께 행복한 하루!
 							 </p>
@@ -174,8 +174,34 @@
 															class="img-fluid w-100 rounded-top" alt="">
 													</div>
 													<div
-														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-														style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
+													class="position-absolute top-0 start-0 px-3 py-1 rounded"
+													style="background-color: 
+								                    <c:choose>
+								                        <c:when test="${RecipeDTO.recipe_category eq '밥'}">
+								                            green
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '국&찌개'}">
+								                            orange
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '반찬'}">
+								                            #0084d1
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '후식'}">
+								                            #bf02bc
+								                        </c:when>
+								                        <c:when test="${RecipeDTO.recipe_category eq '일품'}">
+								                            #fc6d6d
+								                        </c:when>
+								                        <c:otherwise>
+								                            white 
+								                        </c:otherwise>
+								                    </c:choose>;
+								                 font-size:17px;   
+								                 color: white;
+								                 font-weight: bold;
+								               	 top: 10px !important;
+								                 left: 10px !important;">
+													${RecipeDTO.recipe_category}</div>
 													<div
 														class="p-4 border border-secondary border-top-0 rounded-bottom">
 														<h4 class="recipe-name">${RecipeDTO.recipe_name}</h4>
@@ -207,11 +233,14 @@
 			<div class="container ">
 				<div class="tab-class text-center">
 					<div class="row g-4">
-						<div class="col-lg-8 mx-auto" style="margin-bottom: -10px;">
+						<div class="col-lg-8 mx-auto" style="margin-bottom: -50px;">
 							<h3 class="mb-0">
-								<i class="fa fa-calculator" aria-hidden="true""></i>
-								나의 다이어트 목표에 알맞은 레시피 추천!
+								<i class="fa fa-dumbbell" style="color: #949494;"></i>맛있게 먹으면서도 건강하게!
 							</h3>
+							<p class="mb-4" style="font-size: 20px; margin-top:2px;">
+							 <i class="fas fa-thumbs-up" style="color:#80b7ff;"></i>
+							 다이어트 성공 기원!
+							 </p>
 							<br>
 							<br>
 						</div>
@@ -223,25 +252,51 @@
 								<div class="col-lg-12">
 									<div class="row g-4">
 										<c:set var="count" value="0" />
-										<c:forEach items="${dietRecipeList}" var="RecipeDTO">
+										<c:forEach items="${dietRecipeList}" var="Recipediet">
 											<div class="col-md-6 col-lg-4 col-xl-3"
 												style="display: ${count < 4 ? 'block' : 'none'};">
 												<div class="rounded position-relative fruite-item">
 													<div class="fruite-img">
-														<img src="${RecipeDTO.recipe_img}"
+														<img src="${Recipediet.recipe_img}"
 															class="img-fluid w-100 rounded-top" alt="">
 													</div>
-													<div
-														class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-														style="top: 10px; left: 10px;">${RecipeDTO.recipe_category}</div>
+												<div
+													class="position-absolute top-0 start-0 px-3 py-1 rounded"
+													style="background-color: 
+								                    <c:choose>
+								                        <c:when test="${Recipediet.recipe_category eq '밥'}">
+								                            green
+								                        </c:when>
+								                        <c:when test="${Recipediet.recipe_category eq '국&찌개'}">
+								                            orange
+								                        </c:when>
+								                        <c:when test="${Recipediet.recipe_category eq '반찬'}">
+								                            #0084d1
+								                        </c:when>
+								                        <c:when test="${Recipediet.recipe_category eq '후식'}">
+								                            #bf02bc
+								                        </c:when>
+								                        <c:when test="${Recipediet.recipe_category eq '일품'}">
+								                            #fc6d6d
+								                        </c:when>
+								                        <c:otherwise>
+								                            white 
+								                        </c:otherwise>
+								                    </c:choose>;
+								                 font-size:17px;   
+								                 color: white;
+								                 font-weight: bold;
+								               	 top: 10px !important;
+								                 left: 10px !important;">
+													${Recipediet.recipe_category}</div>
 													<div
 														class="p-4 border border-secondary border-top-0 rounded-bottom">
-														<h4 class="recipe-name" title="${RecipeDTO.recipe_name}">${RecipeDTO.recipe_name}</h4>
+														<h4 class="recipe-name" title="${Recipediet.recipe_name}">${Recipediet.recipe_name}</h4>
 														<div class="d-flex justify-content-center"
 														    style="margin-top: 10px;">
-														    <a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
+														    <a href="/recipedetail?recipe_id=${Recipediet.recipe_id}"
 														        class="btn border border-secondary rounded-pill px-3 text-primary gorecipe">
-														        <i class="fa fa-search me-2 text-primary"></i>레시피
+														        <i class="fa fa-search me-2 text-primary"></i>레시피 상세 보기
 														    </a>
 														</div>
 													</div>
@@ -269,7 +324,7 @@
 							<i class="fa fa-bolt" style="color: orange;"></i> 재료까지 한번에 빠른 추천
 							레시피
 						</h3>
-						<p class="mb-4" style="font-size: 20px;">
+						<p class="mb-4" style="font-size: 20px; margin-top:2px;">
 							<i class="fa fa-solid fa-pepper-hot"
 								style="color: red; margin-left: 5px;"></i>이번주 제일핫한 음식! 어휴 뜨거!<i
 								class="fa fa-fire" style="color: red; margin-left: 5px;"></i>
@@ -283,30 +338,30 @@
 							<div class="col-lg-12">
 								<div class="row g-4">
 									<c:set var="count" value="0" />
-									<c:forEach items="${recipe}" var="RecipeDTO">
+									<c:forEach items="${recipe}" var="Recipe">
 										<div class="col-md-6 col-lg-4 col-xl-3">
 											<div class="rounded position-relative fruite-item">
 												<div class="fruite-img">
-													<img src="${RecipeDTO.recipe_img}"
+													<img src="${Recipe.recipe_img}"
 														class="img-fluid w-100 rounded-top" alt="">
 												</div>
 												<div
 													class="position-absolute top-0 start-0 px-3 py-1 rounded"
 													style="background-color: 
 								                    <c:choose>
-								                        <c:when test="${RecipeDTO.recipe_category eq '밥'}">
+								                        <c:when test="${Recipe.recipe_category eq '밥'}">
 								                            green
 								                        </c:when>
-								                        <c:when test="${RecipeDTO.recipe_category eq '국&찌개'}">
+								                        <c:when test="${Recipe.recipe_category eq '국&찌개'}">
 								                            orange
 								                        </c:when>
-								                        <c:when test="${RecipeDTO.recipe_category eq '반찬'}">
+								                        <c:when test="${Recipe.recipe_category eq '반찬'}">
 								                            #0084d1
 								                        </c:when>
-								                        <c:when test="${RecipeDTO.recipe_category eq '후식'}">
+								                        <c:when test="${Recipe.recipe_category eq '후식'}">
 								                            #bf02bc
 								                        </c:when>
-								                        <c:when test="${RecipeDTO.recipe_category eq '일품'}">
+								                        <c:when test="${Recipe.recipe_category eq '일품'}">
 								                            #fc6d6d
 								                        </c:when>
 								                        <c:otherwise>
@@ -318,13 +373,13 @@
 								                 font-weight: bold;
 								               	 top: 10px !important;
 								                 left: 10px !important;">
-													${RecipeDTO.recipe_category}</div>
+													${Recipe.recipe_category}</div>
 												<div
 													class="p-4 border border-secondary border-top-0 rounded-bottom">
-													<h4 class="recipe-name" title="${RecipeDTO.recipe_name}">${RecipeDTO.recipe_name}</h4>
+													<h4 class="recipe-name" title="${Recipe.recipe_name}">${Recipe.recipe_name}</h4>
 													<div class="d-flex justify-content-between flex-lg-wrap"
 														style="margin-left: 40px;">
-														<a href="/recipedetail?recipe_id=${RecipeDTO.recipe_id}"
+														<a href="/recipedetail?recipe_id=${Recipe.recipe_id}"
 															class="btn border border-secondary rounded-pill px-3 text-primary gorecipe"
 															style="margin-top: 10px;"> <i
 															class="fa fa-search me-2 text-primary"></i>레시피 상세 보기
@@ -354,10 +409,11 @@
 					<i class="fa fa-solid fa-wallet" style="color: brown;"></i> 가벼운 지갑을
 					지켜줄 알뜰시장!
 				</h3>
-				<p class="mb-4" style="font-size: 20px;">
-				<i class="fas fa-arrow-down-wide-short"></i>
-				신선도 보장! 최소 10% ~ 최대 30%
-					할인</p>
+				<p class="mb-4" style="font-size: 20px; margin-top:2px;">
+				<i class="fa fa-dollar-sign" style="color:green;"></i>
+				신선도 보장! 최소 10% ~ 최대 30% 할인<i class="fa fa-dollar-sign" style="color:green; margin-left:7px;"></i>
+				</p>
+					
 			</div>
 			<div class="owl-carousel vegetable-carousel justify-content-center">
 				<c:forEach var="ProductDTO" items="${products}">

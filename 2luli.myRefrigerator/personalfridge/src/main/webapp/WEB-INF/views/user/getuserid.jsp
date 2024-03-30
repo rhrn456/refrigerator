@@ -54,10 +54,11 @@ margin-top:230px;
 	                <div class="card-body p-0">
 	                    <!-- Nested Row within Card Body -->
 	                    <div class="row">
-	                        <div class="col-lg-6 d-none d-lg-block bg-password-image" id="roginImage"></div>
+	                        <div class="col-lg-6 d-none d-lg-block" id="roginImage" style="background-image: url('https://cdn.pixabay.com/photo/2015/05/04/10/16/vegetables-752153_640.jpg'); background-size: cover; background-position: center;"></div>
 	                        <div class="col-lg-6">
 	                            <div class="p-5">
 	                                <div class="text-center">
+	                                <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
 	                                        <h1 class="h4 text-gray-900 mb-2">아이디를 찾았습니다.</h1>
 	                                         <p class="mb-4" style="font-size:30px; font-weight: bold;">아이디: ${userId}</p>
 	                                        <div class="text-center">

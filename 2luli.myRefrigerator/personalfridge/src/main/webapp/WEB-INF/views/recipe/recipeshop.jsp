@@ -149,8 +149,6 @@
 										</ul>
 									</div>
 								</div>
-								
-								
 							</div>
 						</div>
 						<div class="col-lg-9" style="margin-top:-52px;">
@@ -265,7 +263,6 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="lib/easing/easing.min.js"></script>
 	<script src="lib/waypoints/waypoints.min.js"></script>
-	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->

@@ -53,7 +53,7 @@ public class RefrigeratorController {
 	//나의 냉장고 들어왔을때 메인페이지
 	@GetMapping("/mypage/refrigerator")                     //세션 유저변수명
 	public ModelAndView getMethodName(@RequestParam(defaultValue = "1") int page, HttpServletRequest request) {
-		System.out.println(page);
+		
 		ModelAndView mv = new ModelAndView();
 	    HttpSession session = request.getSession();
 	    String user_id = (String) session.getAttribute("userId");
@@ -86,7 +86,7 @@ public class RefrigeratorController {
 	//비동기로 재료을 추가
 	@PostMapping("/insertRefrigeratorProduct")
 	public ResponseEntity<String> postMethodName(@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut) {
-		System.out.println(refrigeratorProdcut);/*확인용 추후삭제*/
+		
 		boolean result = refrigeratorService.insertRefrigeratorProdcut(refrigeratorProdcut);
 		
 		if (result) {
@@ -121,7 +121,7 @@ public class RefrigeratorController {
 	//재료 수정
 	@PutMapping("/updateRefrigeratorProduct")
 	public ResponseEntity<String> updateRefrigeratorProduct(@RequestBody RefrigeratorProdcutDTO refrigeratorProdcut) {
-		System.out.println(refrigeratorProdcut);/*확인용 추후삭제*/
+		
 		boolean result = refrigeratorService.updateRefrigeratorProduct(refrigeratorProdcut);
 		
 		if (result) {

@@ -209,10 +209,8 @@ public class AdminController {
 	@PostMapping("/startShip")
 	@ResponseBody
 	public String startShipAdmin(@RequestParam String ship_code) {
-		System.out.println("잘넘어왔어:" + ship_code);
 		boolean result = shipService.UpdateShipAndAdminCheck(ship_code);
 		  if(result) {
-			  System.out.println("시작");
 			  shipScheduler.startScheduler(ship_code);
 		 return "success";
 	  }else {
@@ -246,6 +244,7 @@ public class AdminController {
 	@GetMapping("/getshipschduleAdmin")
 	@ResponseBody
 	public Map<String, Object> getshipschduleAdmin(@RequestParam String ship_code) {
+		System.out.println("넘어옴" + ship_code);
 		List<ShipDTO> shipList = shipService.MovingShipSchedule(ship_code);
 		Map<String, List<ShipDTO>> groupedShipList = shipList.stream()
 				.collect(Collectors.groupingBy(ShipDTO::getShip_code));
@@ -254,7 +253,7 @@ public class AdminController {
 		return response;
 	}
 	
-	//제품 발송하기
+	//택배 정보 삭제
 	@PostMapping("/deleteShipByShipCode")
 	@ResponseBody
 	public String deleteShipByShipCode(@RequestParam String ship_code) {
@@ -293,7 +292,6 @@ public class AdminController {
 	//레시피 삭제
 	@GetMapping("/recipedeleteadmin/{recipe_id}")
 	public String RecipeDeleteAdmin(@PathVariable int recipe_id) {
-		System.out.println(recipe_id);
 		boolean result = recipeService.recipeDeletById(recipe_id);
 		if(result) {
 			return "redirect:/admin/RecipeListAdmin";
@@ -475,9 +473,7 @@ public class AdminController {
 	//매니저-> 사용자 등록
 	@GetMapping("/managerupdateadmin/{user_id}")
 	public String ManagerUpdateToUser(@PathVariable("user_id") String user_id) {
-		System.out.println(user_id);
 		boolean result = adminService.ManagerUpdateToUser(user_id);
-		System.out.println(result);
 		if(result) {
 			return "redirect:/admin/managerListadmin";
 		}else {

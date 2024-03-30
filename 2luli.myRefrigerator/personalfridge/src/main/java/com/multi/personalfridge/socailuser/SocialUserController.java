@@ -32,7 +32,6 @@ public class SocialUserController {
 	 //소셜 계정 정보 추가하기
     @PostMapping("/insertUserInfoBySocial")
     public String InsertUserInfoBySocial(UserDTO user, SocialUserDTO socialuser) {
-    	System.out.println(socialuser);
     	socialService.SocialSignUp(socialuser);
     	boolean result = userService.insertUser(user);
     	if(result) {

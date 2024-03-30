@@ -63,7 +63,7 @@ public class RecipeController {
 	
 	@RequestMapping("/insertRecipe")
 	public void insertRecipe(RecipeDTO recipeDTO) {
-		System.out.println(recipeDTO);
+	
 		boolean insertrecipe = recipeService.insertRecipe(recipeDTO);
 		//WEB-INF/views/recipe/insertInit.jsp
 	}

@@ -94,7 +94,7 @@
     
     <!-- 인기 레시피 가져오기 -->
     <select id ="getPopularRecipe" resultType="Recipe">
-    SELECT u.recipe_id, r.recipe_name, r.recipe_img
+    SELECT u.recipe_id, r.recipe_name, r.recipe_img, r.recipe_category
 	FROM userlike u
 	JOIN recipe r ON r.recipe_id = u.recipe_id
 	GROUP BY u.recipe_id

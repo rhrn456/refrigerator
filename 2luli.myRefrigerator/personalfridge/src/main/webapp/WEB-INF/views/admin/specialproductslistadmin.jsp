@@ -271,7 +271,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
@@ -596,7 +595,7 @@
                     <h4>특가 상품 카테고리</h4>
                     <div class="list-unstyled allproduct-categorie">
                         <div class="d-flex justify-content-center product-topcategory"style="margin: 0 -15px;">
-                            <a href="/SpecialProductAllList" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
+                            <a href="/admin/SpecialProductAllList" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
                             <span>|</span>
                             <div class="d-flex justify-content-center product-category">
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>가공 식품</a>

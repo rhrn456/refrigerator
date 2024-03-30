@@ -258,15 +258,12 @@
        <%@ include file="../footer.jsp" %>
         <!-- footer End -->
 		
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
         
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
@@ -596,7 +593,7 @@
                     <h4>일반 상품 카테고리</h4>
                     <div class="list-unstyled allproduct-categorie">
                         <div class="d-flex justify-content-center product-topcategory"style="margin: 0 -15px;">
-                            <a href="/productAllList" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
+                            <a href="/admin/productAllList" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>모든 재료</a>
                             <span>|</span>
                             <div class="d-flex justify-content-center product-category">
                             <a href="#" style="margin: 0 15px;"><i class="fas fa-apple-alt me-2"></i>가공 식품</a>
