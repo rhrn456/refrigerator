@@ -200,6 +200,14 @@ public class CartController {
 	        return "error";
 	    }
 	}
-
+	
+	@GetMapping("/deleteCart")
+	public String deleteCartItemById(@RequestParam int product_id, HttpServletRequest request) {
+		CartDTO cart = new CartDTO();
+		
+		
+		return null;
+	}
+	
 }
 
