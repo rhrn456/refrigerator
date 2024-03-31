@@ -69,7 +69,7 @@ body {
 								        </div>
 								    </div>
 								    <div class="form-group">
-								        <input type="mail" class="form-control form-control-user" id="mail" name="mail" placeholder="이메일" required>
+								        <input type="email" class="form-control form-control-user" id="mail" name="mail" placeholder="이메일" required>
 								    </div>
 								    <div class="form-group">
 								        <input type="adress" class="form-control form-control-user" id="adress" name="adress" placeholder="주소" required>
