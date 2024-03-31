@@ -395,7 +395,7 @@ public class UserController {
 	    	// 정렬된 리스트를 다시 맵으로 변환
 	    	LinkedHashMap<String, List<CartProductDTO>> sortedGroupedShipList = new LinkedHashMap<>();
 	    	sortedGroupedList.forEach(entry -> sortedGroupedShipList.put(entry.getKey(), entry.getValue()));
-	    	
+	    	System.out.println(sortedGroupedList);
     	model.addAttribute("sortedGroupedShipList",sortedGroupedShipList);
     	return "mypage/buyproductlist";
     }

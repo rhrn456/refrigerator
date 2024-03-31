@@ -122,7 +122,6 @@ hr:not([size]) {
     border-radius: 10px;
     padding: 20px;
     max-width: 600px;
-    margin: 0 auto;
     background-color: #f9f9f9;
 }
 
@@ -176,7 +175,7 @@ hr:not([size]) {
             <h1 class="text-center text-white display-6">My Page</h1>     
         </div>
         <!-- Single Page Header End -->
-					<div class = "myPAgeBox" style="display:flex; justify-content: center; margin-top: 50px; margin-left:250px;" >
+					<div class = "myPAgeBox" style="display:flex; justify-content: space-between; margin-top: 50px; margin-left:570px;" >
 						<div class="row g-4">
                                     <div class="col-lg-12" >
                                         <div class="mypagemenu">
@@ -197,7 +196,7 @@ hr:not([size]) {
 			                                      </div>
 			                                  </div>
 			                              </div>
-									<div class="col-lg-8" style="margin-top:50px;">
+									<div class="col-lg-6" style="margin-top:10px; margin-right:440px !important;">
 									    <div class="box user-info-card">
 									        <h5>회원 정보</h5>
 											<div class="userTextForm" style="margin-top:5px;">
