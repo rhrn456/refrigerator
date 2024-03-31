@@ -84,7 +84,28 @@
 		<div class="container py-5">
 			<div class="row g-4">
 				<div class="col-lg-12">
-					<div class="row g-4 justify-content-center">
+					<div class="row g-4">
+						<div class="col-lg-3">
+							<div class="row g-4">
+								<div class="col-lg-12">
+									<div class="mb-3">
+										<h3>카테고리</h3>
+										<ul class="list-unstyled fruite-categorie">
+											<li>
+												<div class="d-flex justify-content-between fruite-name" style="margin-top:15px;">
+													<a href="/board?CategoryNo=1"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
+												</div>
+											</li>
+											<li>
+												<div class="d-flex justify-content-between fruite-name">
+													<a href="/board?CategoryNo=2"><i class="fas fa-apple-alt me-2"></i>공유 게시판</a>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="col-lg-9">
 							<div class="row g-4 justify-content-center">
 						    	<table>
