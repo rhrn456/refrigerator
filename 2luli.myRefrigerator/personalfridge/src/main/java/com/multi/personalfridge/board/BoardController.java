@@ -103,7 +103,18 @@ public class BoardController {
 	public String getBoardByBoardNo(@RequestParam("boardNo") int boardNo, Model model) {
 		service.updateHit(boardNo);
 		BoardDTO board = service.getBoardByBoardNo(boardNo);
+		String Category = service.getCategoryName(board.getB_category_no());
+		
+		if(Category.equals("notice")) {
+			Category = "공지사항";
+		} else if(Category.equals("shareBoard")) {
+			Category = "공유 게시판";
+		} else if(Category.equals("myRecipe")) {
+			Category = "나만의 레시피";
+		}
+		
 		model.addAttribute("board", board);
+		model.addAttribute("Category", Category);
 		
 		return "/board/boardDetail";
 	}
