@@ -17,6 +17,7 @@
 
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -154,7 +155,8 @@
 		    z-index: 1000; 
 		}
 		.mypagemenu {
-			margin-top:-20px;
+			left:290px;
+			position: fixed;
 			margin-right:20px;
 		    border: 3px solid #ccc;
 		    border-radius: 10px;
@@ -183,8 +185,9 @@
     </style>
 </head>
 <body>
-
-					<div class = "myPAgeBox" >
+		<div class = "nullproduct" style="height:400px; text-align: center; margin: 0 auto; margin-top:400px; font-size: 60px;"> <i class="fas fa-shopping-cart"></i>구매내역이 없습니다.</div> 	 
+		                           
+		<div class = "myPAgeBox" >
 						 <div class="row g-4">
                                     <div class="col-lg-12" >
                                         <div class="mypagemenu">
@@ -206,11 +209,10 @@
 			                                  </div>
 			                              </div>
 											<div class="cart-mainbox">
-											    <%-- 각 ship_code 별로 카드 생성 --%>
 											    <c:forEach var="group" items="${sortedGroupedShipList}">
 											        <div class="card mb-3">
 											            <div class="card-header">
-											                <span class="header-text" style="display: none;">송장 번호: ${group.key}</span>
+											                <span class="header-text" id="groupkey" style="display: none;">${group.key}</span>
 											                <span class="whereisdelevery" style="font-size:20px; font-weight:bold;"></span>
 											            </div>
 											            <div class="card-body">
@@ -233,7 +235,7 @@
 											        </div>
 											    </c:forEach>
 											    </div>
-										    </div>
+										    </div> 
     										
 		<div class="infoshipitem modal-container">
 		    <div class="modal-contentinfo">
@@ -280,6 +282,10 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- footer start -->
+<%@ include file="../footer.jsp" %>
+<!-- footer End -->
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -289,10 +295,40 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
+    window.addEventListener('scroll', function() {
+        var scrollPosition = window.scrollY;
+        var myPageMenu = document.querySelector('.mypagemenu');
+        var distanceFromBottom = 1100;
+
+        if (scrollPosition > distanceFromBottom) {
+            myPageMenu.style.position = 'absolute';
+            myPageMenu.style.top = (scrollPosition - distanceFromBottom) + 'px';
+        } else {
+            myPageMenu.style.position = 'fixed';
+            myPageMenu.style.top = '230px';
+        }
+    });
+    
+    const groupKeyElement = document.getElementById('groupkey'); // #groupkey 요소를 가져옵니다.
+    const groupKey = groupKeyElement.textContent.trim(); // #groupkey 요소의 텍스트 내용을 가져옵니다.
+
+    console.log(groupKey);
+    const nullProductElement = document.querySelector('.nullproduct');
+    const myPAgeBoxElement = document.querySelector('.myPAgeBox');
+
+    // groupKey가 없는 경우를 확인
+    if (!groupKey || groupKey.length === 0) {
+        nullProductElement.style.display = 'block'; // nullProductElement 표시
+        myPAgeBoxElement.style.display = 'none';
+        
+    } else {
+        nullProductElement.style.display = 'none'; // nullProductElement 숨김
+        myPAgeBoxElement.style.display = 'inline-block;';
+    }
     
 		//배송위치 확인함수 시작
         $(".header-text").each(function() {
-            var shipCode = $(this).text().split(": ")[1];
+        	var shipCode = $(this).text();
             checkDeliveryStatus(shipCode);
         });
 	//배송위치확인
@@ -443,7 +479,4 @@
     });
     </script>
 </body>
-<!-- footer start -->
-<%@ include file="../footer.jsp" %>
-<!-- footer End -->
 </html>
