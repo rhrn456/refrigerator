@@ -155,8 +155,9 @@
 		    z-index: 1000; 
 		}
 		.mypagemenu {
+		    position: fixed;
+   			top: 230px;
 			left:290px;
-			position: fixed;
 			margin-right:20px;
 		    border: 3px solid #ccc;
 		    border-radius: 10px;
@@ -298,22 +299,22 @@
    
     
     const groupKeyElement = document.getElementById('groupkey'); // #groupkey 요소를 가져옵니다.
-    const groupKey = groupKeyElement.textContent.trim(); // #groupkey 요소의 텍스트 내용을 가져옵니다.
+  
+    console.log(groupKeyElement);
 
-    console.log(groupKey);
     const nullProductElement = document.querySelector('.nullproduct');
     const myPAgeBoxElement = document.querySelector('.myPAgeBox');
 
     // groupKey가 없는 경우를 확인
-    if (!groupKey || groupKey.length === 0) {
-        nullProductElement.style.display = 'block'; // nullProductElement 표시
-        myPAgeBoxElement.style.display = 'none';
-        
-    } else {
-        nullProductElement.style.display = 'none'; // nullProductElement 숨김
-        myPAgeBoxElement.style.display = 'block;';
-        //스크롤 이벤트
-        window.addEventListener('scroll', function() {
+	if (!groupKeyElement || groupKeyElement.length === 0) {
+	    nullProductElement.style.display = 'block'; // nullProductElement 표시
+	    myPAgeBoxElement.style.display = 'none';
+	} else {
+	    nullProductElement.style.display = 'none'; // nullProductElement 숨김
+	    myPAgeBoxElement.style.display = 'block';
+	    
+	    // 스크롤 이벤트를 조건에 따라 등록
+	    window.addEventListener('scroll', function() {
             var scrollPosition = window.scrollY;
             var myPageMenu = document.querySelector('.mypagemenu');
             var distanceFromBottom = 300;
@@ -324,6 +325,7 @@
             } else {
                 myPageMenu.style.position = 'fixed';
                 myPageMenu.style.top = '230px';
+                
             }
         });
     }

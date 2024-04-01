@@ -56,7 +56,9 @@ body {
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
+                            <a href="/">
                             <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
+                            </a>
                                 <h1 class="h4 text-gray-900 mb-4">계정을 만들어보세요!</h1>
                             </div>
                            <form class="user" action="/signup" method="post">

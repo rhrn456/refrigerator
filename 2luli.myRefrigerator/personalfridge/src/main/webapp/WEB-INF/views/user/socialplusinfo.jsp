@@ -78,7 +78,9 @@
 <body>
     <div class="container">
         <div class="text-center">
-         <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google 로고" class="logo-img">
+         <a href="/">
+         <img src="https://kr.object.ncloudstorage.com/2luli.refrigerator/house-AI-BI.png" style="max-width: 60%; max-height: 70%;  margin-bottom:-20px;">
+         </a>
         <p class="mb-4">상품 배송을 위해 핸드폰 번호와 이메일을 작성해주세요.</p>
         </div>
         <form class="user" action="/insertUserInfoBySocial" method="post">

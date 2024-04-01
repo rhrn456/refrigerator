@@ -58,7 +58,9 @@ margin-top:170px;
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                         <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
+                                    <a href="/">
+                                         <img src="img/house-AI-BI.png" href="getMainRecipe" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
+                                         </a>
                                     </div>
 									<form class="user" method="POST" action="/Login">
 									    <div class="form-group">

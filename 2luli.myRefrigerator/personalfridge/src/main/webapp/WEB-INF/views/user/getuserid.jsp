@@ -58,7 +58,9 @@ margin-top:230px;
 	                        <div class="col-lg-6">
 	                            <div class="p-5">
 	                                <div class="text-center">
+	                                <a href="/">
 	                                <img src="img/house-AI-BI.png" style="max-width: 70%; max-height: 70%; margin-top:-30px; margin-bottom:20px;">
+	                                </a>
 	                                        <h1 class="h4 text-gray-900 mb-2">아이디를 찾았습니다.</h1>
 	                                         <p class="mb-4" style="font-size:30px; font-weight: bold;">아이디: ${userId}</p>
 	                                        <div class="text-center">

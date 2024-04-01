@@ -86,7 +86,7 @@ public class SnsController {
         map.put("id_token",jwtToken);
         ResponseEntity<GoogleInfResponse> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
                 map, GoogleInfResponse.class);
-        String mail=resultEntity2.getBody().getEmail();       
+        String mail=resultEntity2.getBody().getEmail();      
         String name = resultEntity2.getBody().getFamily_name() + resultEntity2.getBody().getGiven_name();
         String str = random.generateRandomString();
         String userid = str;
@@ -94,7 +94,7 @@ public class SnsController {
         String snstype = "google";
         SocialUserDTO socialuser = new SocialUserDTO();
         
-        String first50Characters = jwtToken.substring(0, Math.min(jwtToken.length(), 50));
+        String first50Characters = jwtToken.substring(380, Math.min(jwtToken.length(), 420));
         ModelAndView mv = new ModelAndView();
     	String user_id = socialService.CheckToken(first50Characters);
         if(user_id == null || user_id =="") {
