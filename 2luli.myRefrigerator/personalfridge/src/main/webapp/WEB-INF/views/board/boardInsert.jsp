@@ -47,35 +47,9 @@
 		<div class="container py-5">
 			<div class="row g-4">
 				<div class="col-lg-12">
-					<div class="row g-4">
-						<div class="col-lg-3">
-							<div class="row g-4">
-								<div class="col-lg-12">
-									<div class="mb-3">
-										<h4>카테고리</h4>
-										<ul class="list-unstyled fruite-categorie">
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="/board?CategoryNo=1"><i class="fas fa-apple-alt me-2"></i>공지사항</a>
-												</div>
-											</li>
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="/board?CategoryNo=2"><i class="fas fa-apple-alt me-2"></i>공유 게시판</a>
-												</div>
-											</li>
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="/board?CategoryNo=3"><i class="fas fa-apple-alt me-2"></i>나만의 레시피</a>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
+					<div class="row g-4 justify-content-center">
 						<div class="col-lg-9">
-							<div class="row">
+							<div class="row justify-content-center">
 							    <div class="col-xl-8 col-lg-7" style="width: 80%">
 							        <div class="card shadow mb-4">
 							            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

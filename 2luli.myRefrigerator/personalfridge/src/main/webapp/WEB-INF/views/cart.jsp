@@ -104,9 +104,12 @@ h2 {
 
 #sendProductsButton {
 	position: absolute;
-	left: 50%;
-	width: 100px;
+	left: 48%;
+	width: 150px;
+	height: 40px;
 	border-radius: 15px;
+	background-color: #dc2e5e;
+	border-color: #dc2e5e;
 }
 
 #productImage {
@@ -134,7 +137,7 @@ img {
 	<!-- Single Page Header End -->
 	
 	<!-- Cart Page start -->
-	<div class="col-lg-11">
+	<div class="col-lg-11" style="margin-bottom: 150px;">
 		<div class="row justify-content-center" style="margin-top: 150px; margin-left: 200px;">
 			<ul id="cartproductList" class="row mt-3"></ul>
 		</div>
@@ -325,6 +328,7 @@ img {
     		},
     		success: function(response) {
     			console.log(response);
+    			updateProducts(response);
     		},
     		error: function(xhr, status, error) {
     			console.error(error);
@@ -435,6 +439,7 @@ img {
             priceElement.textContent = ' ' + formattedPrice + '원';
             priceList.appendChild(priceElement);
 			
+            // 삭제 버튼
             var removeButton = document.createElement('div');
             removeButton.style.width = '20px'; // 절대 위치 설정
             removeButton.style.marginLeft = '5px'; // 절대 위치 설정
@@ -465,9 +470,13 @@ img {
         totalPriceElement.style.color = 'red';
         recipeItemsList.appendChild(totalPriceElement);
 		
+        // 텍스트, 가격 묶음
+        var totalPriceList = document.createElement('li');
+        
         var totalTextElement = document.createElement('span');
         totalTextElement.textContent = '전체 금액: ';
         totalTextElement.style.color = 'red';
+        totalPriceList.appendChild(totalTextElement);
 		
         var totalPriceValueElement = document.createElement('span');
         var totalPrice = calculateTotalPrice(); // 총 가격 계산 함수 호출
@@ -476,11 +485,11 @@ img {
         totalPriceValueElement.style.color = 'red';
         totalPriceValueElement.style.fontWeight = 'bold';
         totalPriceValueElement.style.float = 'right'; // 오른쪽으로 부유(floating)
+        totalPriceList.appendChild(totalPriceValueElement);
 		
         totalTextElement.style.fontSize = '20px'; // 폰트 크기 설정
         totalPriceValueElement.style.fontSize = '20px'; // 폰트 크기 설정
-        recipeItemsList.appendChild(totalTextElement);
-        recipeItemsList.appendChild(totalPriceValueElement);
+        recipeItemsList.appendChild(totalPriceList);
     }
 	// 총 가격 계산 함수 // 구매 데이터
 	function calculateTotalPrice() {
