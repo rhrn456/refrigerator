@@ -201,12 +201,12 @@ public class CartController {
 	    }
 	}
 	
-	@GetMapping("/deleteCart")
+	@GetMapping("/deletecartitem")
+	@ResponseBody
 	public String deleteCartItemById(@RequestParam int product_id, HttpServletRequest request) {
-		CartDTO cart = new CartDTO();
-		
-		
-		return null;
+		String user_id = (String) request.getSession().getAttribute("userId");  
+		cartService.removeCartItem(product_id, user_id);
+		return "success";
 	}
 	
 }

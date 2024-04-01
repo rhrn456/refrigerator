@@ -308,6 +308,7 @@ img {
             
             // recipeItem을 생성하여 recipeItems 배열에 추가
             var viewCart = {
+            	product_id: CartProductDTO.product_id,
                 product_name: CartProductDTO.product_name,
                 product_quantity: CartProductDTO.product_quantity,
                 product_img: CartProductDTO.product_img,
@@ -456,6 +457,8 @@ img {
             listItem.appendChild(priceList);
             
             removeButton.onclick = function(index) {
+            	var productId = item.product_id;
+            	removeCartItem(productId);
                 removeProduct(index);
                 removeByIndex(index);
             };
@@ -499,6 +502,24 @@ img {
         });
         return totalPrice;
     }
+	function removeCartItem(productId) {
+	    console.log(productId);
+	    $.ajax({
+	        type: 'GET',
+	        url: '/deletecartitem',
+	        data: { product_id: productId }, // product_id를 데이터로 넘깁니다.
+	        success: function(response) {
+	        	alert('상품이 삭제되었습니다.');
+	            location.reload();
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Error removing product:', xhr.status);
+	            // 에러 처리
+	        }
+	    });
+	}
+
+	
 	
 </script>    
 </body>

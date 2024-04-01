@@ -180,7 +180,7 @@ tbody a {
 						<c:forEach var="RecipeDTO" items="${likeList}">
 							<tr>
 								<td style="width: 100px"><img src="${RecipeDTO.recipe_img}"
-									style="width: auto; height: auto; max-width: 90px; max-height: 90px;">
+									style="width: auto; height: auto; width: 90px; height: 90px;">
 								</td>
 								<td class="align-middle"><a href="#" id=userlikerecipe
 									data-value="${RecipeDTO.recipe_id}">${RecipeDTO.recipe_name}</a>
