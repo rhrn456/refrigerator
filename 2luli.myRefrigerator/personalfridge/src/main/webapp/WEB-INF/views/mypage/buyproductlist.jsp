@@ -323,7 +323,7 @@
         
     } else {
         nullProductElement.style.display = 'none'; // nullProductElement 숨김
-        myPAgeBoxElement.style.display = 'inline-block;';
+        myPAgeBoxElement.style.display = 'block;';
     }
     
 		//배송위치 확인함수 시작

@@ -240,12 +240,36 @@
 			text-align: center;
 
 		}
-		
-		.modal-button {
-		    margin-top: 20px;
-		}
+
 		.btn-add:hover {
 		    background-color: #bdbdbd !important; 
+		}
+		.modal-button {
+			float:right !important;
+    		padding: 10px 20px;
+		    margin: 5px;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    font-size: 16px;
+		}
+		
+		#confirmUpdateButton {
+		    background-color: #4CAF50; /* Green */
+		    color: white;
+		}
+		
+		#confirmUpdateButton:hover {
+		    background-color: #45a049;
+		}
+		
+		#cancelUpdateButton {
+		    background-color: #f44336; /* Red */
+		    color: white;
+		}
+		
+		#cancelUpdateButton:hover {
+		    background-color: #d32f2f;
 		}
 </style>
 </head>
@@ -311,24 +335,24 @@
 			        <h2>레시피의 평가를 남겨주세요!</h2>
 			        <hr style="width:900px; border-top: 2px solid black;">
 			    <div class="review-section" >
-			        <c:forEach items="${reviewList}" var="review">
-			            <div class="review" style="width:900px;">
-			            <div style="display: flex; justify-content: space-between; ">
-			               <a style="margin-top:10px !important; font-size:20px; weight:bold; " >${review.review_content}  </a>
-			                <c:if test="${review.user_id eq sessionScope.userId or sessionScope.userAdmin eq 2}">
-			                    <!-- 댓글 수정 및 삭제 버튼 -->
-			                    <div class="review-controls" style="margin-bottom:6px;">
-			                       <button id="updateButton" style="background-color:#0d6efd; color:white;" class="btn btn-sm" data-review-id="${review.review_id}" data-review-content="${review.review_content}" data-recipe-id="${recipe.recipe_id}" data-user-id="${review.user_id}">수정</button>
-			                       <button onclick="location.href='${pageContext.request.contextPath}/delete/${review.review_id}?recipe_id=${recipe.recipe_id}'" class="btn btn-danger btn-sm">삭제</button>
-			                    </div>
-			                </c:if>
-			              </div>
-			               <p style="display: flex; justify-content: space-between; font-size:13px;" > 작성자: ${review.user_id}
-							    <span style="float: right;">작성일: <fmt:formatDate value="${review.create_review_date}" pattern="yyyy-MM-dd | HH:mm"/></span>
-							</p>
-			              
-			            </div>
-			        </c:forEach>
+					<c:forEach items="${reviewList}" var="review">
+					    <div class="review" style="width:900px;">
+					        <div style="display: flex; justify-content: space-between;">
+					            <a style="margin-top:10px !important; font-size:20px; weight:bold;">${review.review_content}</a>
+					            <c:if test="${review.user_id eq sessionScope.userId or sessionScope.userAdmin eq 2}">
+					                <!-- 댓글 수정 및 삭제 버튼 -->
+					                <div class="review-controls" style="margin-bottom:6px;">
+					                    <button id="updateButton" style="background-color:#0d6efd; color:white;" class="btn btn-sm" data-review-id="${review.review_id}" data-review-content="${review.review_content}" data-recipe-id="${recipe.recipe_id}" data-user-id="${review.user_id}">수정</button>
+					                    <button onclick="confirmDelete('${pageContext.request.contextPath}/delete/${review.review_id}?recipe_id=${recipe.recipe_id}')" class="btn btn-danger btn-sm">삭제</button>
+					                </div>
+					            </c:if>
+					        </div>
+					        <p style="display: flex; justify-content: space-between; font-size:13px;"> 작성자: ${review.user_id}
+					            <span style="float: right;">작성일: <fmt:formatDate value="${review.create_review_date}" pattern="yyyy-MM-dd | HH:mm"/></span>
+					        </p>
+					    </div>
+					</c:forEach>
+			       
 			
 			        <!-- 댓글 작성 폼 -->
 			        <form action="${pageContext.request.contextPath}/review/add" method="post" class="mt-3 mb-3" id="RecipeCommentForm"  style="width:900px;display: flex; justify-content: center; align-items: center;">
@@ -425,6 +449,14 @@
 			initializeSearchField();
 			bindSearchEvents();
             
+			 function confirmDelete(url) {
+			        if (confirm("정말 삭제하시겠습니까?")) {
+			            window.location.href = url; 
+			        } else {
+			           
+			        }
+			    }
+			 
 			//리뷰 시간 출력
 			function formatDate(dateString) {
 			    var date = new Date(dateString);
