@@ -295,19 +295,7 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-    window.addEventListener('scroll', function() {
-        var scrollPosition = window.scrollY;
-        var myPageMenu = document.querySelector('.mypagemenu');
-        var distanceFromBottom = 1100;
-
-        if (scrollPosition > distanceFromBottom) {
-            myPageMenu.style.position = 'absolute';
-            myPageMenu.style.top = (scrollPosition - distanceFromBottom) + 'px';
-        } else {
-            myPageMenu.style.position = 'fixed';
-            myPageMenu.style.top = '230px';
-        }
-    });
+   
     
     const groupKeyElement = document.getElementById('groupkey'); // #groupkey 요소를 가져옵니다.
     const groupKey = groupKeyElement.textContent.trim(); // #groupkey 요소의 텍스트 내용을 가져옵니다.
@@ -324,6 +312,20 @@
     } else {
         nullProductElement.style.display = 'none'; // nullProductElement 숨김
         myPAgeBoxElement.style.display = 'block;';
+        //스크롤 이벤트
+        window.addEventListener('scroll', function() {
+            var scrollPosition = window.scrollY;
+            var myPageMenu = document.querySelector('.mypagemenu');
+            var distanceFromBottom = 300;
+
+            if (scrollPosition > distanceFromBottom) {
+                myPageMenu.style.position = 'absolute';
+                myPageMenu.style.top = (scrollPosition - distanceFromBottom) + 'px';
+            } else {
+                myPageMenu.style.position = 'fixed';
+                myPageMenu.style.top = '230px';
+            }
+        });
     }
     
 		//배송위치 확인함수 시작
