@@ -36,6 +36,7 @@
 - **NCP** : Naver Cloud Platform
 - **아이디어 회의** : Slack, Zoom
 
+
 ## 📌 주요 기능
 - 결제 및 배송
 - 냉장고 재료, 다이어트 상태 기반 레시피 추천
@@ -44,3 +45,10 @@
 
 ## 💻 참고자료
 - [https://www.10000recipe.com/](https://www.data.go.kr/index.do)
+
+## 데이터베이스
+![ERDddd](https://github.com/rhrn456/refrigerator/assets/154101606/d7dd5ce6-9cf1-4870-8bbe-02878ea2495f)
+
+## VPC
+![Untitled](https://github.com/rhrn456/refrigerator/assets/154101606/73ab025d-5594-4021-a59e-b4797b65fefc)
+
