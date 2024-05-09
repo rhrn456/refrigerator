@@ -109,9 +109,21 @@ h2 {
 	height: 40px;
 	border-radius: 15px;
 	background-color: #dc2e5e;
-	border-color: #dc2e5e;
+	border-color: white;
+	color:white;
+	display: flex; 
+    justify-content: center; 
+    align-items: center;
+	text-align: center;
 }
 
+#sendProductsButton:hover {
+	 cursor: pointer;
+}
+
+#removebutton:hover {
+	 cursor: pointer;
+}
 #productImage {
 	-webkit-border-radius: 6px;
 }
@@ -141,7 +153,7 @@ img {
 		<div class="row justify-content-center" style="margin-top: 150px; margin-left: 200px;">
 			<ul id="cartproductList" class="row mt-3"></ul>
 		</div>
-		<button id="sendProductsButton" onclick="openModal()">구매하기</button>
+		<div id="sendProductsButton" onclick="openModal()">구매하기</div>
 	</div>
 	<!-- Cart Page End -->
 	
@@ -451,7 +463,8 @@ img {
             removeButton.style.cursor = 'pointer'; // 커서 모양 변경
             removeButton.textContent = 'X'; // 텍스트 설정
             removeButton.style.backgroundColor = '#dc2e5e'; // 패딩 설정
-			
+            removeButton.id = 'removebutton';
+            
             priceList.appendChild(removeButton);
             
             listItem.appendChild(priceList);
