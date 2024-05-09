@@ -23,60 +23,60 @@ public class AutoEmailSendService {
 	private EmailService emailService;
 	
 	// 24시간마다 작동                 서버실행 최초에는 작동하지 않게 하고싶을 시 활성화
-	@Scheduled(fixedDelay = 86400000/*, initialDelay = 86400000*/)
-	public void run() {
-	
-		
-		List<String> overLimitProduct = new ArrayList<String>();
-		List<EmailSendDTO> overLimitProductList = getOverLimitProduct();
-		
-		//현재날짜를 불러옴
-		java.util.Date now = new java.util.Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String date = dateFormat.format(now);
-		Date nowDate;
-		try {
-			nowDate = dateFormat.parse(date);
-			
-			//소비기한이 지난 제품이 있으면 각 유저의 메일로 보내줌
-			if (overLimitProductList != null) {
-				String currentMail = overLimitProductList.get(0).getMail();
-				int count = 0;
-				
-				for (EmailSendDTO refrigeratorProdcut : overLimitProductList) {	
-					count++;
-					
-					if(refrigeratorProdcut.getMail().equals(currentMail)) {						
-						classificationProductDate(refrigeratorProdcut, overLimitProduct, nowDate);				
-					} else {
-						StringBuilder str = new StringBuilder();
-						for (int i = 0; i < overLimitProduct.size() - 1; i++) {
-							str.append(overLimitProduct.get(i) + ", ");
-						}					
-						str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");					
-						emailService.sendSimpleMessage(currentMail, "소비기한 알림", str.toString());
-						overLimitProduct.clear();
-						
-						classificationProductDate(refrigeratorProdcut, overLimitProduct, nowDate);	
-					}
-					
-					if (count == overLimitProductList.size()) {					
-						StringBuilder str = new StringBuilder();
-						for (int i = 0; i < overLimitProduct.size() - 1; i++) {
-							str.append(overLimitProduct.get(i) + ", ");
-						}
-						str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");
-						
-						emailService.sendSimpleMessage(refrigeratorProdcut.getMail(), "소비기한 알림", str.toString());
-					}				
-					currentMail = refrigeratorProdcut.getMail();
-				}
-			}	
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}			
-	
-	}
+//	@Scheduled(fixedDelay = 86400000/*, initialDelay = 86400000*/)
+//	public void run() {
+//	
+//		
+//		List<String> overLimitProduct = new ArrayList<String>();
+//		List<EmailSendDTO> overLimitProductList = getOverLimitProduct();
+//		
+//		//현재날짜를 불러옴
+//		java.util.Date now = new java.util.Date();
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		String date = dateFormat.format(now);
+//		Date nowDate;
+//		try {
+//			nowDate = dateFormat.parse(date);
+//			
+//			//소비기한이 지난 제품이 있으면 각 유저의 메일로 보내줌
+//			if (overLimitProductList != null) {
+//				String currentMail = overLimitProductList.get(0).getMail();
+//				int count = 0;
+//				
+//				for (EmailSendDTO refrigeratorProdcut : overLimitProductList) {	
+//					count++;
+//					
+//					if(refrigeratorProdcut.getMail().equals(currentMail)) {						
+//						classificationProductDate(refrigeratorProdcut, overLimitProduct, nowDate);				
+//					} else {
+//						StringBuilder str = new StringBuilder();
+//						for (int i = 0; i < overLimitProduct.size() - 1; i++) {
+//							str.append(overLimitProduct.get(i) + ", ");
+//						}					
+//						str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");					
+//						emailService.sendSimpleMessage(currentMail, "소비기한 알림", str.toString());
+//						overLimitProduct.clear();
+//						
+//						classificationProductDate(refrigeratorProdcut, overLimitProduct, nowDate);	
+//					}
+//					
+//					if (count == overLimitProductList.size()) {					
+//						StringBuilder str = new StringBuilder();
+//						for (int i = 0; i < overLimitProduct.size() - 1; i++) {
+//							str.append(overLimitProduct.get(i) + ", ");
+//						}
+//						str.append(overLimitProduct.get(overLimitProduct.size()-1) + ".");
+//						
+//						emailService.sendSimpleMessage(refrigeratorProdcut.getMail(), "소비기한 알림", str.toString());
+//					}				
+//					currentMail = refrigeratorProdcut.getMail();
+//				}
+//			}	
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}			
+//	
+//	}
 	
 	//만료된 물품과 만료될 물품의 정보를 가져옴
 	private List<EmailSendDTO> getOverLimitProduct() {
