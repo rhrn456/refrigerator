@@ -226,6 +226,10 @@ public class UserController {
     public String userLikeUP(@RequestParam int recipe_id, HttpServletRequest request) {
     	HttpSession session = request.getSession();
 	    String user_id = (String) session.getAttribute("userId");
+	    System.out.println(user_id);
+	    if(user_id == null) {
+	    	return "fail";
+	    }
     	boolean result = userService.insertUserLike(recipe_id, user_id);
     	return "success";
     }

@@ -332,7 +332,13 @@
 	                        url: '/userLikeUP',
 	                        data: { recipe_id: recipeId },
 	                        success: function (response) {
-	                            $likeBtn.find('i').css('color', 'red');
+	                            if (response === 'success') {
+	                                // 좋아요 성공 시 처리
+	                                $likeBtn.find('i').css('color', 'red');
+	                            } else if (response === 'fail') {
+	                                // 로그인 필요 시 로그인 페이지로 리다이렉트
+	                                window.location.href = '/loginPage';
+	                            }
 	                        },
 	                        error: function (xhr, status, error) {
 	                            console.error('좋아요 업데이트 중 에러가 발생하였습니다:', error);
