@@ -39,34 +39,35 @@ public class BoardController {
 	@Autowired
 	private EmailService emailService;
 	
-//	// 게시판 카테고리/페이징
-//	@GetMapping("/getBoardByCategoryNo")
-//	@ResponseBody
-//	public Map<String, Object> getBoardByCategoryNo(@RequestParam("CategoryNo") int CategoryNo, @RequestParam int page, @RequestParam int pageSize) {
-//	    Map<String, Object> parameters = new HashMap<>();
-//		List<BoardDTO> boardList = service.getBoardByCategory(CategoryNo);
-//	    List<BoardDTO> boards = service.getBoardByCategoryAndPage(CategoryNo, page, pageSize);
-//	    int totalBoards = boardList.size();
-//	    int totalPages = (int) Math.ceil((double) totalBoards / pageSize); 
-//		if(totalPages > 5) {
-//			totalPages = 5;
-//		}
-//		
-//	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
-//										.total(totalBoards)
-//										.pageAmount(totalPages)
-//										.currentPage(page)
-//										.amount(pageSize)
-//										.build();
-//	    parameters.put("boards", boards);
-//	    parameters.put("pageInfo", pageRequestDTO);
-//	    return parameters;
-//	}
+	// 게시판 카테고리/페이징
+	@GetMapping("/getBoardByCategoryNoAndSearch")
+	@ResponseBody
+	public Map<String, Object> getBoardByCategoryNo(@RequestParam("CategoryNo") int CategoryNo,@RequestParam String keyword, @RequestParam int page, @RequestParam int pageSize) {
+		Map<String, Object> parameters = new HashMap<>();
+		List<BoardDTO> boardList = service.getAllBoardByCategoryNo(CategoryNo, keyword);
+	    List<BoardDTO> boards = service.getBoardByCategoryAndPage(CategoryNo,keyword, page, pageSize);
+	    int totalBoards = boardList.size();
+	    int totalPages = (int) Math.ceil((double) totalBoards / pageSize); 
+		if(totalPages > 5) {
+			totalPages = 5;
+		}
+		
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO().builder()
+										.total(totalBoards)
+										.pageAmount(totalPages)
+										.currentPage(page)
+										.amount(pageSize)
+										.build();
+	    parameters.put("boards", boards);
+	    parameters.put("pageInfo", pageRequestDTO);
+	    return parameters;
+	}
 	
 	// Read
 	@GetMapping("/board")
 	public String getAllBoardByCategoryNo(@RequestParam("CategoryNo") int CategoryNo, @RequestParam(defaultValue = "1") int page, Model model) {
 		String Category = "";
+		String keyword = "";
 		int pageSize = 10;
 		
 		if(CategoryNo == 1) {
@@ -79,8 +80,8 @@ public class BoardController {
 			return "error/error";
 		}
 		
-		List<BoardDTO> boardList = service.getAllBoardByCategoryNo(CategoryNo);
-		List<BoardDTO> boards = service.getBoardByCategoryAndPage(CategoryNo, page, pageSize);
+		List<BoardDTO> boardList = service.getAllBoardByCategoryNo(CategoryNo, keyword);
+		List<BoardDTO> boards = service.getBoardByCategoryAndPage(CategoryNo, keyword, page, pageSize);
 	    int totalBoards = boardList.size();
 	    int totalPages = (int) Math.ceil((double) totalBoards / pageSize); 
 		if(totalPages > 5) {

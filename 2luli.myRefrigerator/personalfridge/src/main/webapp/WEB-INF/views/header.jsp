@@ -38,7 +38,7 @@
 					</div>
                 </div>
             </div>
-            <div class="container px-0">
+            <div class="container px-0" style="width:100%;">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
                     <a href="/" class="navbar-brand"><img src="${pageContext.request.contextPath}/img/house-AI-BI.png" style="width:200px;" ></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
