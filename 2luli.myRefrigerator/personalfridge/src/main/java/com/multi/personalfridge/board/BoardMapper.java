@@ -11,7 +11,7 @@ import com.multi.personalfridge.dto.ProductDTO;
 @Mapper
 public interface BoardMapper {
 
-	public List<BoardDTO> getAllBoardByCategoryNo(int CategoryNo);
+	public List<BoardDTO> getAllBoardByCategoryNo(Map parameters);
 
 	public BoardDTO getBoardByBoardNo(int boardNo);
 
@@ -21,7 +21,6 @@ public interface BoardMapper {
 
 	public int deleteBoardByBoardNo(int boardNo);
 
-	public List<BoardDTO> getBoardByCategory(Map parameters);
 
 	public List<BoardDTO> getBoardByCategoryAndPage(Map parameters);
 

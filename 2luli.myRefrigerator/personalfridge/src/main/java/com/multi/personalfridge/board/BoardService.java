@@ -16,8 +16,11 @@ public class BoardService {
 	@Autowired
 	private BoardMapper mapper;
 
-	public List<BoardDTO> getAllBoardByCategoryNo(int CategoryNo) {
-		return mapper.getAllBoardByCategoryNo(CategoryNo);
+	public List<BoardDTO> getAllBoardByCategoryNo(int CategoryNo, String keyword) {
+		 Map<String, Object> parameters = new HashMap<>();
+		    parameters.put("CategoryNo", CategoryNo);
+		    parameters.put("keyword", keyword);
+		return mapper.getAllBoardByCategoryNo(parameters);
 	}
 
 	public BoardDTO getBoardByBoardNo(int boardNo) {
@@ -57,18 +60,12 @@ public class BoardService {
 		return mapper.getCategoryName(CategoryNo);
 	}
 	
-	// 게시판 카테고리 모두 가져오기
-	public List<BoardDTO> getBoardByCategory(int CategoryNo) {
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("CategoryNo", CategoryNo);
-		return mapper.getBoardByCategory(parameters);
-	}
-	
 	// 게시판 카테고리 페이지 보여주기
-	public List<BoardDTO> getBoardByCategoryAndPage(int CategoryNo, int page, int pageSize) {
+	public List<BoardDTO> getBoardByCategoryAndPage(int CategoryNo, String keyword, int page, int pageSize) {
 		 int offset = (page - 1) * pageSize;
 		    Map<String, Object> parameters = new HashMap<>();
 		    parameters.put("CategoryNo", CategoryNo);
+		    parameters.put("keyword", keyword);
 		    parameters.put("pageSize", pageSize);
 		    parameters.put("offset", offset);
 		    return mapper.getBoardByCategoryAndPage(parameters);

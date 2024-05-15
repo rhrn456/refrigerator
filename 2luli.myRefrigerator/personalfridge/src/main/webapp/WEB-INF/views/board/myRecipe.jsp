@@ -34,13 +34,180 @@
 	<!-- Navbar End -->
 	
 	    <style>
-		    .fruite-categorie li {
-		        margin-bottom: 15px; /* 목록 항목 간의 간격을 늘립니다. */
-		    }
+	    table {
+		  border-collapse: collapse;
+		  border-spacing: 0;
+		}
+		section.notice {
+		  padding: 80px 0;
+		}
 		
-		    .fruite-categorie a {
-		        font-size: 18px; /* 링크(글자)의 크기를 키웁니다. */
-		    }
+		.page-title {
+		  margin-bottom: 60px;
+		}
+		.page-title h3 {
+		  font-size: 28px;
+		  color: #333333;
+		  font-weight: 400;
+		  text-align: center;
+		}
+		
+		#board-search .search-window {
+		  padding: 15px 0;
+		}
+		#board-search .search-window .search-wrap {
+		  position: relative;
+		/*   padding-right: 124px; */
+		  margin: 0 auto;
+		  width: 80%;
+		  max-width: 564px;
+		}
+		#board-search .search-window .search-wrap input {
+		  height: 40px;
+		  width: 100%;
+		  font-size: 14px;
+		  padding: 7px 14px;
+		  border: 1px solid #fc9a9a;
+		}
+		#board-search .search-window .search-wrap input:focus {
+		  border-color: #333;
+		  outline: 0;
+		  border-width: 1px;
+		}
+		#board-search .search-window .search-wrap .btn {
+		  position: absolute;
+		  right: 0;
+		  top: 0;
+		  bottom: 0;
+		  width: 108px;
+		  padding: 0;
+		  font-size: 16px;
+		}
+		
+		.board-table {
+		  font-size: 13px;
+		  width: 100%;
+		
+		}
+		
+		.board-table a {
+		  color: #333;
+		  display: inline-block;
+		  line-height: 1.4;
+		  word-break: break-all;
+		  vertical-align: middle;
+		}
+		.board-table a:hover {
+		  text-decoration: underline;
+		}
+		.board-table th {
+		  text-align: center;
+		}
+		
+		.board-table .th-num {
+		  width: 100px;
+		  text-align: center;
+		}
+		
+		.board-table .th-date {
+		  width: 200px;
+		}
+		
+		.board-table th, .board-table td {
+		  padding: 14px 0;
+		}
+		
+		.board-table tbody td {
+		  border-top: 1px solid #e7e7e7;
+		  text-align: center;
+		}
+		
+		.board-table tbody th {
+		  padding-left: 28px;
+		  padding-right: 14px;
+		  border-top: 1px solid #e7e7e7;
+		  text-align: left;
+		}
+		
+		.board-table tbody th p{
+		  display: none;
+		}
+		
+		.btn {
+		  display: inline-block;
+		  padding: 0 30px;`
+		  font-size: 15px;
+		  font-weight: 400;
+		  background: transparent;
+		  text-align: center;
+		  white-space: nowrap;
+		  vertical-align: middle;
+		  -ms-touch-action: manipulation;
+		  touch-action: manipulation;
+		  cursor: pointer;
+		  -webkit-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		  border: 1px solid transparent;
+		  text-transform: uppercase;
+		  -webkit-border-radius: 0;
+		  -moz-border-radius: 0;
+		  border-radius: 0;
+		  -webkit-transition: all 0.3s;
+		  -moz-transition: all 0.3s;
+		  -ms-transition: all 0.3s;
+		  -o-transition: all 0.3s;
+		  transition: all 0.3s;
+		}
+		
+		.btn-dark {
+		  background: #fc9a9a;
+		  color: #fff;
+		}
+		
+		
+		
+		
+		.btn-dark:hover, .btn-dark:focus {
+		  background: #dc3545;
+		  border-color: #dc3545;
+		  color: #fff;
+		}
+		
+		/* reset */
+		
+		* {
+		  list-style: none;
+		  text-decoration: none;
+		  padding: 0;
+		  margin: 0;
+		  box-sizing: border-box;
+		}
+		.clearfix:after {
+		  content: '';
+		  display: block;
+		  clear: both;
+		}
+		.container {
+		  width: 1100px;
+		  margin: 0 auto;
+		}
+		.blind {
+		  position: absolute;
+		  overflow: hidden;
+		  clip: rect(0 0 0 0);
+		  margin: -1px;
+		  width: 1px;
+		  height: 1px;
+		}
+		td {
+		    border-left: white !important;
+		    border-right: white !important;
+		    border-bottom: 1px solid #fc9a9a;
+		}
+			    
+		 
 		</style>
 	
 </head>
@@ -62,114 +229,97 @@
         </div>
         <!-- Single Page Header End -->
 		
-        <!-- Fruits Shop Start-->
-        <div class="container-fluid fruite py-5">
-            <div class="container py-5">
-                <div class="row g-4">
-                    <div class="col-lg-12">
-                        <div class="row g-4">
-                            <div class="col-lg-3">
-								<div class="row g-4">
-									<div class="col-lg-12">
-										<div class="mb-3">
-											<h3>카테고리</h3>
-											<br>
-											<ul class="list-unstyled fruite-categorie">
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="/recipeshop"><i class="fas fa-apple-alt me-2"></i>이루리 요리책</a>
-												</div>
-											</li>
-											<li>
-												<div class="d-flex justify-content-between fruite-name">
-													<a href="#"><i class="fas fa-apple-alt me-2"></i>나만의 레시피</a>
-												</div>
-											</li>
-										</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-                            <c:set var="pageSize" value="9" />
-							<c:set var="currentPage" value="${not empty param.page ? param.page : 1}" />
-                            <div class="col-lg-9">
-                                <div class="row g-4r">
-                                	<table>
-									<thead>
-										<tr>
-											<th>제목</th>
-											<th>I D</th>
-											<th>작성날짜</th>
-											<th>조회수</th>
-										</tr>
-									</thead>
-									<c:forEach items="${boards}" var="board">
-											<tbody>
-												<tr>
-													<td><a href="/view?boardNo=${board.board_no}">${board.title}</a></td>
-													<td>${board.user_id}</td>
-													<td><fmt:formatDate value="${board.board_create_date}" pattern="yyyy-MM-dd" /></td>
-													<td>${board.hit}</td>
-												</tr>
-											</tbody>
-									</c:forEach>
-								</table>
-								
-								<div class="col-12">
-					                <div class="pagination d-flex justify-content-center mt-5" id="paginationContainer">
-						                <!-- 총 페이지 수 계산 -->
-					                    <c:set var="totalPages" value="${pageInfo.pageAmount}" />
-										<div class="col-auto">
-										    <nav class="page navigation">
-										        <ul class="pagination">
-										            <!-- Prev 버튼 -->
-										            <c:if test="${pageInfo.prev}">
-										                <li class="page-item">
-										                    <a class="page-link rounded ${pageInfo.startPage - 1 == pageInfo.currentPage ? 'active' : ''}"
-										                       href="#" data-value="${pageInfo.startPage - 1}" aria-label="Previous">Prev</a>
-										                </li>
-										            </c:if>
-										            
-										            <!-- 페이지 버튼 -->
-										            <c:forEach var="pageNumber" begin="1" end="${totalPages}">
-										                <li class="page-item">
-										                    <a href="#" class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}" data-value="${pageNumber}">
-										                        ${pageNumber}
-										                    </a>
-										                </li>
-										            </c:forEach>
-										            
-										            <!-- Next 버튼 -->
-										            <c:if test="${pageInfo.next}">
-										                <li class="page-item next">
-										                    <a class="page-link rounded ${pageInfo.endPage + 1 == pageInfo.currentPage ? 'active' : ''}"
-										                       href="#" data-value="${pageInfo.endPage + 1}" aria-label="next">Next</a>
-										                </li>
-										            </c:if>
-										        </ul>
-										    </nav>
-					                	</div>
-					                </div>
-					                <c:if test="${not empty sessionScope.userId}">
-					                	<a href="/mypage/boardInsert" style="float:right; border: 1px solid #ffB524; padding:10px">글쓰기</a>
-					                </c:if>
-					            </div>
-							</div>
-						</div>
-					</div>
-				</div>
+		
+		
+<section class="notice">
+
+    <!-- board seach area -->
+    <div id="board-search">
+        <div class="container">
+            <div class="search-window">
+                    <div class="search-wrap">
+                        <label for="search" class="blind">공지사항 내용 검색</label>
+                        <input id="searchInput1" type="search" name="" placeholder="검색어를 입력해주세요." value="">
+                        <button id="searchButton" type="submit" class="btn btn-dark">검색</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+   
+  <!-- board list area -->
+    <div id="board-list">
+        <div class="container">
+            <table class="board-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-title">제목</th>
+                    <th scope="col" class="th-id">작성자</th>
+                    <th scope="col" class="th-date">등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${boards}" var="board">
+						<tbody>
+							<tr>
+								<td>${board.board_no}</td>
+								<td><a href="/view?boardNo=${board.board_no}">${board.title}</a></td>
+								<td>${board.user_id}</td>
+								<td><fmt:formatDate value="${board.board_create_date}" pattern="yyyy-MM-dd" /></td>
+							</tr>
+						</tbody>
+				</c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+		<div class="col-12">
+		<div class="pagination d-flex justify-content-center mt-5"
+			id="paginationContainer">
+			<!-- 총 페이지 수 계산 -->
+			<c:set var="totalPages" value="${pageInfo.pageAmount}" />
+			<div class="col-auto">
+				<nav class="page navigation">
+					<ul class="pagination">
+						<!-- Prev 버튼 -->
+						<c:if test="${pageInfo.prev}">
+							<li class="page-item"><a
+								class="page-link rounded ${pageInfo.startPage - 1 == pageInfo.currentPage ? 'active' : ''}"
+								href="#" data-value="${pageInfo.startPage - 1}"
+								aria-label="Previous">Prev</a></li>
+						</c:if>
+
+						<!-- 페이지 버튼 -->
+						<c:forEach var="pageNumber" begin="1" end="${totalPages}">
+							<li class="page-item"><a href="#"
+								class="page-link rounded ${pageNumber == pageInfo.currentPage ? 'active' : ''}"
+								data-value="${pageNumber}"> ${pageNumber} </a></li>
+						</c:forEach>
+
+						<!-- Next 버튼 -->
+						<c:if test="${pageInfo.next}">
+							<li class="page-item next"><a
+								class="page-link rounded ${pageInfo.endPage + 1 == pageInfo.currentPage ? 'active' : ''}"
+								href="#" data-value="${pageInfo.endPage + 1}"
+								aria-label="next">Next</a></li>
+						</c:if>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</div>
+               <c:if test="${not empty sessionScope.userId}">
+               	<a href="/mypage/boardInsert" style="float:right; border: 1px solid #ffB524; padding:10px">글쓰기</a>
+               </c:if>
+</section>
+		
 	<!-- Fruits Shop End-->
 	
 	<!-- footer start -->
 	<%@ include file="../footer.jsp"%>
 	<!-- footer End -->
 	
-	<!-- Back to Top -->
-	<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-
+	
 	<!-- JavaScript Libraries -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -178,17 +328,38 @@
 	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="js/main.js">
-	var CategoryNo = "";
+	<script src="js/main.js"></script>
+	<script>
+	var CategoryNo = 3;
+	var keyword = "";
+	var page = 1;
+
+	$('#searchButton').on('click', function() {
+	    executeSearch();
+	});
 	
-	function getBoardByCategoryNo(CategoryNo, page) {
+	// Enter 키를 누를 때 검색 실행
+	$('#searchInput1').on('keypress', function(e) {
+	    if (e.which === 13) { // Enter 키를 누르면
+	        executeSearch();
+	    }
+	});
+
+	 // 검색 실행 함수
+	 function executeSearch() {
+	     keyword = $('#searchInput1').val().trim();
+	     console.log(keyword);
+	     getBoardByCategoryNoAndSearch(CategoryNo, keyword, page);
+	 }
+ 
+	function getBoardByCategoryNoAndSearch(CategoryNo, keyword, page) {
 	    var pageSize = 10; // 페이지당 아이템 수
-	    
 	    $.ajax({
 	        type: "GET",
-	        url: "/getBoardByCategoryNo",
+	        url: "/getBoardByCategoryNoAndSearch",
 	        data: {
 	        	CategoryNo : CategoryNo,
+	         	keyword: keyword,
 	            page : page,
 	            pageSize : pageSize
 	        },
@@ -201,16 +372,80 @@
 	    });
 	}
 	
-	function createPaginationButtons(totalPages, currentPage) {
-	    var paginationContainer = $('#paginationContainer');
-	    paginationContainer.empty();
-	    
-	    for (var i = 1; i <= totalPages; i++) {
-	        var button = $('<a href="#" class="page-link rounded ' + (i == currentPage ? 'active' : '') + '">' + i + '</a>');
-	        paginationContainer.append(button);
-	    }
 	
+	function updateBoards(response) {
+	    $('#board-list').empty();
+
+	    var boardListHTML = '';
+	    $.each(response.boards, function(index, board) {
+	        boardListHTML += '<tr>' +
+	            '<td>' + board.board_no + '</td>' +
+	            '<td><a href="/view?boardNo=' + board.board_no + '">' + board.title + '</a></td>' +
+	            '<td>' + board.user_id + '</td>' +
+	            '<td>' + formatDate(board.board_create_date) + '</td>' +
+	            '</tr>';
+	    });
+
+
+	    $('#board-list').html('<div class="container">' +
+	        '<table class="board-table">' +
+	        '<thead>' +
+	        '<tr>' +
+	        '<th scope="col" class="th-num">번호</th>' +
+	        '<th scope="col" class="th-title">제목</th>' +
+	        '<th scope="col" class="th-id">작성자</th>' +
+	        '<th scope="col" class="th-date">등록일</th>' +
+	        '</tr>' +
+	        '</thead>' +
+	        '<tbody>' +
+	        boardListHTML +
+	        '</tbody>' +
+	        '</table>' +
+	        '</div>');
+	    $('#paginationContainer').empty();
+	    createPaginationButtons(response.pageInfo);
 	}
+
+	function formatDate(dateStr) {
+	    var date = new Date(dateStr);
+	    return date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+	}
+	
+	
+	  // 페이지 버튼 생성 함수
+    function createPaginationButtons(pageInfo) {
+		
+    	 var paginationContainer = $('#paginationContainer');
+         var paginationHTML =
+             '<div class="col-auto">' +
+             '<nav class="page navigation">' +
+             '<ul class="pagination">';
+
+         if (pageInfo.prev) {
+             paginationHTML += '<li class="page-item">' +
+                 '<a class="page-link rounded ' + (pageInfo.startPage - 1 === pageInfo.currentPage ? 'active' : '') + '" aria-label="Previous" data-value="' + (pageInfo.startPage - 1) + '" href="#">Prev</a>' +
+                 '</li>';
+         }
+
+         for (var num = pageInfo.startPage; num <= pageInfo.endPage; num++) {
+             paginationHTML += '<li class="page-item ' + (pageInfo.currentPage == num ? "active" : "") + '">' +
+                 '<a class="page-link rounded ' + (num == pageInfo.currentPage ? 'active' : '') + '" href="#" data-value="' + num + '">' + num + '</a>' +
+                 '</li>';
+         }
+
+         if (pageInfo.next) {
+             paginationHTML += '<li class="page-item next">' +
+                 '<a class="page-link rounded" aria-label="next" data-value="' + (pageInfo.endPage + 1) + '" href="#">Next</a>' +
+                 '</li>';
+         }
+
+         paginationHTML += '</ul>' +
+             '</nav>' +
+             '</div>';
+             
+         paginationContainer.append(paginationHTML);
+         
+     }
 	
 	$('#paginationContainer').on('click', 'a', function(e) {
 	    e.preventDefault();
@@ -219,8 +454,9 @@
 	        // Prev 또는 Next 링크를 클릭한 경우
 	        page = $(this).attr('value');
 	    }
-	    getBoardByCategoryNo(CategoryNo, page);
+	    getBoardByCategoryNoAndSearch(CategoryNo,keyword, page);
 	});
+	
 	
 	</script>
 </body>
